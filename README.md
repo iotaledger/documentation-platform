@@ -1,14 +1,11 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/lord/img/master/logo-slate.png" alt="Slate: API Documentation Generator" width="226">
-  <br>
-  <a href="https://travis-ci.org/lord/slate"><img src="https://travis-ci.org/lord/slate.svg?branch=master" alt="Build Status"></a>
+  <img src="https://github.com/HeinrichReimer/iota-docs/blob/master/iota_logo_github.png" alt="IOTA" width="196">
 </p>
 
-<p align="center">Slate helps you create beautiful, intelligent, responsive API documentation.</p>
+<p align="center"><b>THE BACKBONE OF IOT IS HERE</b></p>
+<p align="center">Scalable, Decentralized, Modular, No Fees</p>
 
-<p align="center"><img src="https://dl.dropboxusercontent.com/u/95847291/github%20images/slate/slate_screenshot_new.png" width=700 alt="Screenshot of Example Documentation created with Slate"></p>
-
-<p align="center"><em>The example above was created with Slate. Check it out at <a href="https://lord.github.io/slate">lord.github.io/slate</a>.</em></p>
+<p align="center"><em>This API docs were created with Slate. Check it out at <a href="https://lord.github.io/slate">lord.github.io/slate</a>.</em></p>
 
 Features
 ------------
