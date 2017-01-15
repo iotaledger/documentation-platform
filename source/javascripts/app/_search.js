@@ -51,12 +51,18 @@
       if (results.length) {
         searchResults.empty();
         $.each(results, function (index, result) {
-          var elem = document.getElementById(result.ref);
-          searchResults.append("<li><a href='#" + result.ref + "'>" + $(elem).text() + "</a></li>");
+            var elem = $(document.getElementById(result.ref)),
+                li = $(document.createElement("li")),
+                a = $(document.createElement("a"));
+            a.text(elem.text());
+            a.attr("href", "#" + result.ref);
+            a.click(searchScrollTo);
+            li.append(a);
+            searchResults.append(li);
         });
         highlight.call(this);
       } else {
-        searchResults.html('<li></li>');
+          searchResults.html('<li class="no-results"></li>');
         $('.search-results li').text('No Results Found for "' + this.value + '"');
       }
     } else {
@@ -72,4 +78,23 @@
   function unhighlight() {
     content.unhighlight(highlightOpts);
   }
+
+    function searchScrollTo() {
+        var elem = $($(this).attr("href"))[0],
+            duration = 0;
+
+        console.log(elem);
+
+        // Once all animations on the page are complete, this callback function will be called
+        $("html, body").promise().done(function () {
+            // Animates the html and body element scrolltops
+            $("html, body").animate({
+                // Sets the jQuery `scrollTop` to the top offset of the HTML div tag that matches the current list item's `data-unique` tag
+                "scrollTop": $('div[data-unique="' + $(elem).attr("id") + '"]').next().offset().top - 72 - 16 + "px"
+            }, {
+                // Sets the smoothScroll animation time duration to the smoothScrollSpeed option
+                "duration": duration
+            });
+        });
+    }
 })();

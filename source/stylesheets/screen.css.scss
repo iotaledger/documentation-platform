@@ -57,7 +57,7 @@ html, body {
 
 .tocify-wrapper {
   @extend %nav-font;
-  @include shadow-4dp;
+  @include shadow-8dp;
   transition: left 0.3s ease-in-out;
   overflow-y: auto;
   overflow-x: hidden;
@@ -251,13 +251,19 @@ html, body {
 // button to show navigation on mobile devices
 #nav-button {
   .material-icons {
-    padding: 24px 24px 24px 16px;
-    border-radius: 0 36px 36px 0;
-    background: $nav-bg;
+    $nav-border-space: $app-bar-border-width + 1px;
+    $nav-button-padding: ($header-height - $nav-border-space - 24px)/2;
+    padding: $nav-button-padding ($nav-button-padding + 16px) $nav-button-padding 16px;
     color: $nav-text;
     position: absolute;
     top: 0;
     left: 0;
+    background: $nav-bg;
+    $nav-button-width: 24px + 16px + $nav-button-padding + 16px;
+    $nav-button-bg-middle-stop: 100% - 100% * (16px / $nav-button-width);
+    background: -moz-linear-gradient(left, rgba($nav-bg, 1) 0%, rgba($nav-bg, 1) $nav-button-bg-middle-stop, rgba($nav-bg, 0) 100%);
+    background: -webkit-linear-gradient(left, rgba($nav-bg, 1) 0%, rgba($nav-bg, 1) $nav-button-bg-middle-stop, rgba($nav-bg, 0) 100%);
+    background: linear-gradient(to right, rgba($nav-bg, 1) 0%, rgba($nav-bg, 1) $nav-button-bg-middle-stop, rgba($nav-bg, 0) 100%);
 
     &:first-child {
       opacity: 1;
@@ -273,15 +279,10 @@ html, body {
   left: 0;
   z-index: 100;
   text-decoration: none;
-  opacity: 0.7;
 
   transition: left 0.3s ease-in-out, opacity 0.3s ease;
 
-  &:hover {
-    opacity: 1;
-  }
   &.open {
-    opacity: 1;
     left: $nav-width;
 
     .material-icons {
@@ -315,7 +316,7 @@ html, body {
   // I know, it's hackish, but it's the simplist way to make the left
   // half of the content always this background color.
   .dark-box {
-    @include shadow-4dp;
+    @include shadow-8dp;
     width: $examples-width;
     background-color: $examples-bg;
     position: absolute;
@@ -332,7 +333,7 @@ html, body {
 }
 
 .lang-selector {
-  @include shadow-2dp;
+  @include shadow-4dp;
   background-color: $lang-select-bg;
   width: 100%;
   font-weight: 500;
@@ -343,6 +344,7 @@ html, body {
     text-decoration: none;
     padding: 0 16px;
     line-height: $header-height - $lang-select-border-width;
+    height: $header-height - $lang-select-border-width;
     outline: 0;
     transition: background 0.3s ease, color 0.3s ease;
     text-transform: capitalize;
@@ -373,6 +375,7 @@ html, body {
   // to place content above the dark box
   position: relative;
   z-index: 30;
+  padding-top: $header-height;
 
   &:after {
     content: '';
@@ -380,12 +383,11 @@ html, body {
     clear: both;
   }
 
-  &>h1, &>h2, &>h3, &>h4, &>h5, &>h6, &>p, &>table, &>ul, &>ol, &>aside, &>dl {
+  & > header, & > h1, & > h2, & > h3, & > h4, & > h5, & > h6, & > p, & > table, & > ul, & > ol, & > aside, & > dl {
     margin-right: $examples-width;
     padding: 0 $main-padding;
     box-sizing: border-box;
     display: block;
-    text-shadow: $main-embossed-text-shadow;
 
     @extend %left-col;
   }
@@ -408,12 +410,30 @@ html, body {
     margin-bottom: $h1-margin-bottom;
     margin-top: 2em;
     border-top: 1px solid $divider-color;
+
+    &:first-of-type {
+      border-top-width: 0;
+      margin-top: 0;
+    }
   }
 
-  h1:first-child, div:first-child + h1 {
-    border-top-width: 0;
+  header.app-bar {
+    @extend %app-bar-font;
+    box-sizing: border-box;
+    margin-bottom: $h1-margin-bottom;
     margin-top: 0;
+    @include shadow-4dp;
+    font-size: 26px;
+    position: fixed;
+    top: 0;
+    width: calc(100% - #{$examples-width} - #{1 - $examples-width/100%} * #{$nav-width});
+    height: $header-height;
+    line-height: $header-height - $app-bar-border-width;
+    border-bottom: $app-bar-border-width solid $app-bar-border;
+    background: $app-bar-bg;
+    color: $app-bar-text;
   }
+
 
   h2 {
     @extend %header-font;
@@ -439,8 +459,8 @@ html, body {
     margin-bottom: 0.8em;
   }
 
-  h4, h5, h6 {
-    font-size: 10px;
+  h5, h6 {
+    font-size: 13px;
   }
 
   hr {
@@ -511,11 +531,11 @@ html, body {
   }
 
   a {
-    color: $main-text;
+    color: $link-text;
     transition: color 0.3s ease;
 
     &:hover {
-      color: $link-text;
+      color: $link-active-text;
     }
   }
 
@@ -526,7 +546,7 @@ html, body {
   }
 
   aside {
-    @include shadow-2dp;
+    @include inner-right-shadow-8dp-shadow-2dp;
     padding-top: 16px;
     padding-bottom: 16px;
     margin-top: 16px;
@@ -536,12 +556,10 @@ html, body {
 
     &.warning {
       background-color: $aside-warning-bg;
-      text-shadow: 0 1px 0 $aside-warning-bg;
     }
 
     &.success {
       background-color: $aside-success-bg;
-      text-shadow: 0 1px 0 $aside-success-bg;
     }
   }
 
@@ -635,12 +653,13 @@ html, body {
     margin-left: 0;
   }
 
-  #nav-button {
-    display: block;
+  .content header.app-bar {
+    padding-left: 72px;
+    width: 100% - $examples-width;
   }
 
-  .content h1:first-child, .content div:first-child + h1 {
-    margin-top: 72px;
+  #nav-button {
+    display: block;
   }
 }
 
@@ -651,6 +670,15 @@ html, body {
 
   %left-col {
     margin-right: 0;
+  }
+
+  .content {
+    header.app-bar {
+      width: 100%;
+    }
+    aside {
+      @include shadow-2dp;
+    }
   }
 
   .tocify-wrapper .lang-selector {

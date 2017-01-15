@@ -22,7 +22,7 @@ under the License.
 
 // THEME COLORS
 ////////////////////
-$primary-color: #2979FF !default;
+$primary-color: #00E676 !default;
 
 // BACKGROUND COLORS
 ////////////////////
@@ -30,10 +30,12 @@ $nav-bg: #212121 !default;
 $nav-subitem-bg: #111111 !default;
 $nav-active-bg: $primary-color !default;
 $nav-hover-bg: rgba($nav-active-bg, 0.4) !default;
+$app-bar-bg: #212121 !default;
 $examples-bg: #424242 !default;
 $code-bg: #515151 !default;
 $code-annotation-bg: #FAFAFA !default;
 $toc-bg: $primary-color !default;
+$app-bar-border: $primary-color !default;
 $lang-select-border: $primary-color !default;
 $lang-select-bg: #212121 !default;
 $lang-select-active-bg: $primary-color !default;
@@ -53,6 +55,7 @@ $link-active-text: $primary-color !default; // main content active link text col
 $link-text: mix($main-text, $link-active-text, 0.8) !default; // main content link text color
 $nav-text: #fff !default;
 $nav-active-text: #fff !default;
+$app-bar-text: #fff !default;
 $lang-select-text: rgba(#fff, 0.7) !default; // color of unselected language tab text
 $lang-select-active-text: #fff !default; // color of selected language tab text
 $code-text: #fff !default; // code text color
@@ -70,6 +73,7 @@ $nav-v-padding: 16px !default; // padding used vertically around search boxes an
 $nav-indent: 12px !default; // extra padding for ToC subitems
 $code-annotation-padding: 16px !default; // padding inside code annotations
 $lang-select-border-width: 2px !default; // width of the lang select border
+$app-bar-border-width: 2px !default; // width of the lang select border
 $h1-margin-bottom: 16px !default; // padding under the largest header tags
 $header-height: 72px !default; // height of the header
 $tablet-width: 1200px !default; // min width before reverting to tablet size
@@ -100,6 +104,12 @@ $phone-width: $tablet-width - $nav-width !default; // min width before reverting
   font-size: 20px;
 }
 
+%app-bar-font {
+  @extend %header-font;
+  font-weight: 500;
+  font-size: 26px;
+}
+
 %code-font {
   font-family: "Roboto Mono", Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
   font-size: 13px;
@@ -114,7 +124,6 @@ $nav-active-shadow: rgba(0, 0, 0, 0) !default;
 $nav-footer-border-color: rgba(#fff, 0.12) !default;
 $nav-embossed-border-top: rgba(0, 0, 0, 0) !default;
 $nav-embossed-border-bottom: rgba(0, 0, 0, 0) !default;
-$main-embossed-text-shadow: 0 !default;
 $search-box-border-color: #fff !default;
 
 

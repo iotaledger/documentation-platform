@@ -15,12 +15,13 @@
       selectors: 'h1, h2',
       extendPage: false,
       theme: 'none',
-      smoothScroll: false,
+        smoothScroll: false
+        ,
       showEffectSpeed: 0,
       hideEffectSpeed: 180,
       ignoreSelector: '.toc-ignore',
-      highlightOffset: 60,
-      scrollTo: -1,
+        highlightOffset: 72,
+        scrollTo: 72 - 1,
       scrollHistory: true,
       hashGenerator: function (text, element) {
         return element.prop('id');

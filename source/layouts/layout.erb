@@ -74,6 +74,9 @@ under the License.
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
+        <header class="app-bar">
+          <%= current_page.data.title || "API Documentation" %>
+        </header>
         <%= yield %>
         <% current_page.data.includes && current_page.data.includes.each do |include| %>
           <%= partial "includes/#{include}" %>
