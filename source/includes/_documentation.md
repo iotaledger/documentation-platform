@@ -25,7 +25,7 @@ your choice, change your requests accordingly then).
 All API calls need to be sent to http://localhost:14265 (if you are using the standard port) via a POST HTTP request. 
 The data which will be sent is a **JSON object** which follows the same standard schema of:
 ```json
-{'command': 'YOURCOMMANDHERE'}
+{"command": "YOURCOMMANDHERE"}
 ``` 
 Additional parameters are simply added as additional key-value pairs. If the command is successfully executed, your 
 requested information is returned as either an object or a stringified object (use `json.parse` or equivalent to turn it 
@@ -64,9 +64,9 @@ Parameter | Type | Description
 `message` | `string` | Tryte-encoded string which can contain arbitrary information and is sent alongside a transaction.<br> The message value is publicly visible. The max value is 2187 trytes, which is 6561 trits (or roughly 1312 bytes).
 `transaction / hash` | `string` | Hash of a transaction. A single transaction hash is 81-chars long.
 `trytes` | `string` | The raw data of a transaction.
-`bundles` | `list` | Contains a list of transaction bundles.<br> Bundles are basically linked, individual transactions which were created with a single transfer. They are uniquely identified by a 27-char hash.
+`bundles` | `list` | Contains a list of transaction bundles.<br> Bundles are basically linked, individual transactions which were created with a single transfer.<br> They are uniquely identified by a 27-char hash.
 `addresses` | `list` | A list of addresses. A single address is 81-chars long.
 `tags` | `list` | The tag of a transaction.
 `approvees` | `list` | A list of transaction which were referenced by this transaction
-`securityLevel` | `int` | Specifies the security level of your transaction.<br> Can either by 0 (for 81-trit security), 1 (for 162-trit security) and 2 (for 243-trit security). Lower security transactions are faster to generate.
+`securityLevel` | `int` | Specifies the security level of your transaction.<br> Can either by 0 (for 81-trit security), 1 (for 162-trit security) and 2 (for 243-trit security).<br> Lower security transactions are faster to generate.
 `minWeightMagnitude` | `int` | Specifies the amount of Proof of Work that will be carried out. Currently can only take the value 18.
