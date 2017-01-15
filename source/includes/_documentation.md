@@ -22,11 +22,15 @@ your choice, change your requests accordingly then).
 
 ## Making Requests
 
+```json
+{
+    "command": "YOURCOMMANDHERE"
+}
+``` 
+
 All API calls need to be sent to http://localhost:14265 (if you are using the standard port) via a POST HTTP request. 
 The data which will be sent is a **JSON object** which follows the same standard schema of:
-```json
-{"command": "YOURCOMMANDHERE"}
-``` 
+
 Additional parameters are simply added as additional key-value pairs. If the command is successfully executed, your 
 requested information is returned as either an object or a stringified object (use `json.parse` or equivalent to turn it 
 into an object).
