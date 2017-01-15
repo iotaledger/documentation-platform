@@ -551,8 +551,12 @@ html, body {
     padding-bottom: 16px;
     margin-top: 16px;
     margin-bottom: 16px;
-    background: $aside-notice-bg;
+    background: $aside-default-bg;
     line-height: 1.5;
+
+    &.notice {
+      background-color: $aside-notice-bg;
+    }
 
     &.warning {
       background-color: $aside-warning-bg;

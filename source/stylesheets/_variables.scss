@@ -41,10 +41,10 @@ $lang-select-bg: #212121 !default;
 $lang-select-active-bg: $primary-color !default;
 $lang-select-hover-bg: rgba($lang-select-active-bg, 0.4) !default;
 $main-bg: #FAFAFA !default;
+$aside-default-bg: #90CAF9 !default;
 $aside-notice-bg: #FFE082 !default;
 $aside-warning-bg: #EF9A9A !default;
 $aside-success-bg: #A5D6A7 !default;
-$search-notice-bg: #90CAF9 !default;
 $search-highlight-bg: rgba(#FDD835, 0.4) !default;
 
 
@@ -52,7 +52,7 @@ $search-highlight-bg: rgba(#FDD835, 0.4) !default;
 ////////////////////
 $main-text: rgba(#000, 0.87) !default; // main content text color
 $link-active-text: $primary-color !default; // main content active link text color
-$link-text: mix($main-text, $link-active-text, 0.8) !default; // main content link text color
+$link-text: mix($main-text, $link-active-text, 80%) !default; // main content link text color
 $nav-text: #fff !default;
 $nav-active-text: #fff !default;
 $app-bar-text: #fff !default;

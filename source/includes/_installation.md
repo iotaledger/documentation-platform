@@ -16,7 +16,7 @@ As a first step, you should download Nostalgia from our [GitHub](https://github.
     <a href="https://github.com/domschiener/nostalgia">https://github.com/domschiener/nostalgia</a>
 </aside>
 
-```shell
+```shell--no-tab
 git clone https://github.com/domschiener/nostalgia
 ```
 
@@ -54,7 +54,7 @@ Once you have a list of neighbors, you have to start IRI.
 
 #### On Linux/Mac
 
-```shell
+```shell--no-tab
 sudo java -jar IRI.jar YOURPORT udp://NODE1:PORT udp://NODE2:PORT
 ```
 
@@ -62,7 +62,8 @@ Now for Linux/Mac users, simply open up the terminal and type in:
 
 #### On Windows
 
-Follow the tutorial from here: http://iotasupport.com/headlessnode.shtml#headless-node-on-windows
+Follow the tutorial from here: 
+[http://iotasupport.com/headlessnode.shtml#headless-node-on-windows](http://iotasupport.com/headlessnode.shtml#headless-node-on-windows)
 
 ### 5. Run Nostalgia
 
