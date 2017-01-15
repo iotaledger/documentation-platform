@@ -1,38 +1,32 @@
-@font-face {
-  font-family: 'slate';
-  src:font-url('slate.eot?-syv14m');
-  src:font-url('slate.eot?#iefix-syv14m') format('embedded-opentype'),
-    font-url('slate.woff2?-syv14m') format('woff2'),
-    font-url('slate.woff?-syv14m') format('woff'),
-    font-url('slate.ttf?-syv14m') format('truetype'),
-    font-url('slate.svg?-syv14m#slate') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-
 %icon {
-  font-family: 'slate';
-  speak: none;
-  font-style: normal;
+  font-family: 'Material Icons', monospace;
   font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
+  font-style: normal;
+  font-size: 16px;
   line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
 }
 
 %icon-exclamation-sign {
   @extend %icon;
-  content: "\e600";
+  content: "warning";
 }
 %icon-info-sign {
   @extend %icon;
-  content: "\e602";
+  content: "info";
 }
 %icon-ok-sign {
   @extend %icon;
-  content: "\e606";
+  content: "lightbulb_outline";
 }
 %icon-search {
   @extend %icon;
-  content: "\e607";
+  content: "search";
 }

@@ -20,78 +20,102 @@ under the License.
 ////////////////////////////////////////////////////////////////////////////////
 // Use these settings to help adjust the appearance of Slate
 
+// THEME COLORS
+////////////////////
+$primary-color: #2979FF !default;
 
 // BACKGROUND COLORS
 ////////////////////
-$nav-bg: #393939 !default;
-$examples-bg: #393939 !default;
-$code-bg: #292929 !default;
-$code-annotation-bg: #1c1c1c !default;
-$nav-subitem-bg: #262626 !default;
-$nav-active-bg: #2467af !default;
-$lang-select-border: #000 !default;
-$lang-select-bg: #222 !default;
-$lang-select-active-bg: $examples-bg !default; // feel free to change this to blue or something
-$lang-select-pressed-bg: #111 !default; // color of language tab bg when mouse is pressed
-$main-bg: #eaf2f6 !default;
-$aside-notice-bg: #8fbcd4 !default;
-$aside-warning-bg: #c97a7e !default;
-$aside-success-bg: #6ac174 !default;
-$search-notice-bg: #c97a7e !default;
+$nav-bg: #212121 !default;
+$nav-subitem-bg: #111111 !default;
+$nav-active-bg: $primary-color !default;
+$nav-hover-bg: rgba($nav-active-bg, 0.4) !default;
+$examples-bg: #424242 !default;
+$code-bg: #515151 !default;
+$code-annotation-bg: #FAFAFA !default;
+$toc-bg: $primary-color !default;
+$lang-select-border: $primary-color !default;
+$lang-select-bg: #212121 !default;
+$lang-select-active-bg: $primary-color !default;
+$lang-select-hover-bg: rgba($lang-select-active-bg, 0.4) !default;
+$main-bg: #FAFAFA !default;
+$aside-notice-bg: #FFE082 !default;
+$aside-warning-bg: #EF9A9A !default;
+$aside-success-bg: #A5D6A7 !default;
+$search-notice-bg: #90CAF9 !default;
+$search-highlight-bg: rgba(#FDD835, 0.4) !default;
 
 
 // TEXT COLORS
 ////////////////////
-$main-text: #333 !default; // main content text color
+$main-text: rgba(#000, 0.87) !default; // main content text color
+$link-active-text: $primary-color !default; // main content active link text color
+$link-text: mix($main-text, $link-active-text, 0.8) !default; // main content link text color
 $nav-text: #fff !default;
 $nav-active-text: #fff !default;
-$lang-select-text: #fff !default; // color of unselected language tab text
+$lang-select-text: rgba(#fff, 0.7) !default; // color of unselected language tab text
 $lang-select-active-text: #fff !default; // color of selected language tab text
-$lang-select-pressed-text: #fff !default; // color of language tab text when mouse is pressed
+$code-text: #fff !default; // code text color
+$code-annotation-text: rgba(#000, 0.7) !default; // code annotation text color
 
 
 // SIZES
 ////////////////////
-$nav-width: 230px !default; // width of the navbar
-$examples-width: 50% !default; // portion of the screen taken up by code examples
-$logo-margin: 20px !default; // margin between nav items and logo, ignored if search is active
-$main-padding: 28px !default; // padding to left and right of content & examples
-$nav-padding: 15px !default; // padding to left and right of navbar
-$nav-v-padding: 10px !default; // padding used vertically around search boxes and results
-$nav-indent: 10px !default; // extra padding for ToC subitems
-$code-annotation-padding: 13px !default; // padding inside code annotations
-$h1-margin-bottom: 21px !default; // padding under the largest header tags
-$tablet-width: 930px !default; // min width before reverting to tablet size
+$nav-width: 260px !default; // width of the navbar
+$examples-width: 40% !default; // portion of the screen taken up by code examples
+$logo-margin: 16px !default; // margin between nav items and logo, ignored if search is active
+$main-padding: 16px !default; // padding to left and right of content & examples
+$nav-padding: 16px !default; // padding to left and right of navbar
+$nav-v-padding: 16px !default; // padding used vertically around search boxes and results
+$nav-indent: 12px !default; // extra padding for ToC subitems
+$code-annotation-padding: 16px !default; // padding inside code annotations
+$lang-select-border-width: 2px !default; // width of the lang select border
+$h1-margin-bottom: 16px !default; // padding under the largest header tags
+$header-height: 72px !default; // height of the header
+$tablet-width: 1200px !default; // min width before reverting to tablet size
 $phone-width: $tablet-width - $nav-width !default; // min width before reverting to mobile size
 
 
 // FONTS
 ////////////////////
 %default-font {
-  font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei","微软雅黑", STXihei, "华文细黑", sans-serif;
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "微软雅黑", STXihei, "华文细黑", sans-serif;
   font-size: 13px;
+}
+
+%nav-font {
+  @extend %default-font;
+  font-size: 15px;
+}
+
+%nav-footer-font {
+  @extend %nav-font;
+  font-size: 13px;
+  line-height: 1.25;
 }
 
 %header-font {
   @extend %default-font;
-  font-weight: bold;
+  font-weight: 500;
+  font-size: 20px;
 }
 
 %code-font {
-  font-family: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
-  font-size: 12px;
+  font-family: "Roboto Mono", Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
+  font-size: 13px;
   line-height: 1.5;
 }
 
 
 // OTHER
 ////////////////////
-$nav-active-shadow: #000 !default;
-$nav-footer-border-color: #666 !default;
-$nav-embossed-border-top: #000 !default;
-$nav-embossed-border-bottom: #939393 !default;
-$main-embossed-text-shadow: 0px 1px 0px #fff !default;
-$search-box-border-color: #666 !default;
+$divider-color: rgba(#000, 0.12) !default;
+$nav-active-shadow: rgba(0, 0, 0, 0) !default;
+$nav-footer-border-color: rgba(#fff, 0.12) !default;
+$nav-embossed-border-top: rgba(0, 0, 0, 0) !default;
+$nav-embossed-border-bottom: rgba(0, 0, 0, 0) !default;
+$main-embossed-text-shadow: 0 !default;
+$search-box-border-color: #fff !default;
 
 
 ////////////////////////////////////////////////////////////////////////////////
