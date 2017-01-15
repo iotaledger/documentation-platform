@@ -5,7 +5,7 @@
 <p align="center"><b>THE BACKBONE OF IOT IS HERE</b></p>
 <p align="center">Scalable, Decentralized, Modular, No Fees</p>
 
-<p align="center"><em>This API docs were created with Slate. Check it out at <a href="https://lord.github.io/slate">lord.github.io/slate</a>.</em></p>
+<p align="center"><em>This <a href=https://heinrichreimer.github.io/iota-docs>API docs</a> were created with Slate. Check it out at <a href="https://lord.github.io/slate">lord.github.io/slate</a>.</em></p>
 
 Building this API docs:
 -----------------------
