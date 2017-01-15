@@ -58,20 +58,15 @@ Here we list and describe all additional parameters which are required to be pas
 
 Parameter | Type | Description
 --------- | ------- | -----------
-`seed` | `string` | Tryte encoded string which contains the accounts seed.  
-The seed must be correctly encoded trytes:  only uppercase latin letters and 9’s. No other characters are allowed.  
-The maximum security level is 81-trytes, but you can choose longer/shorter seeds.
+`seed` | `string` | Tryte encoded string which contains the accounts seed.<br> The seed must be correctly encoded trytes:  only uppercase latin letters and 9’s. No other characters are allowed.<br> The maximum security level is 81-trytes, but you can choose longer/shorter seeds.
 `address` | `string` | 81-trytes long address of the recipient of a transaction.
 `value` | `string` | The quantity of IOTA’s which should be transferred.
-`message` | `string` | Tryte-encoded string which can contain arbitrary information and is sent alongside a transaction.  
-The message value is publicly visible. The max value is 2187 trytes, which is 6561 trits (or roughly 1312 bytes).
+`message` | `string` | Tryte-encoded string which can contain arbitrary information and is sent alongside a transaction.<br> The message value is publicly visible. The max value is 2187 trytes, which is 6561 trits (or roughly 1312 bytes).
 `transaction / hash` | `string` | Hash of a transaction. A single transaction hash is 81-chars long.
 `trytes` | `string` | The raw data of a transaction.
-`bundles` | `list` | Contains a list of transaction bundles.  
-Bundles are basically linked, individual transactions which were created with a single transfer. They are uniquely identified by a 27-char hash.
+`bundles` | `list` | Contains a list of transaction bundles.<br> Bundles are basically linked, individual transactions which were created with a single transfer. They are uniquely identified by a 27-char hash.
 `addresses` | `list` | A list of addresses. A single address is 81-chars long.
 `tags` | `list` | The tag of a transaction.
 `approvees` | `list` | A list of transaction which were referenced by this transaction
-`securityLevel` | `int` | Specifies the security level of your transaction.  
-Can either by 0 (for 81-trit security), 1 (for 162-trit security) and 2 (for 243-trit security). Lower security transactions are faster to generate.
+`securityLevel` | `int` | Specifies the security level of your transaction.<br> Can either by 0 (for 81-trit security), 1 (for 162-trit security) and 2 (for 243-trit security). Lower security transactions are faster to generate.
 `minWeightMagnitude` | `int` | Specifies the amount of Proof of Work that will be carried out. Currently can only take the value 18.
