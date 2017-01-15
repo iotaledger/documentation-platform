@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/HeinrichReimer/iota-docs/blob/master/iota_logo_github.png" alt="IOTA" width="196">
+  <img src="https://github.com/HeinrichReimer/iota-docs/blob/gh-pages/images/iota_logo_github.png" alt="IOTA" width="196">
 </p>
 
 <p align="center"><b>THE BACKBONE OF IOT IS HERE</b></p>
