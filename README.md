@@ -5,7 +5,7 @@
 <p align="center"><b>THE BACKBONE OF IOT IS HERE</b></p>
 <p align="center">Scalable, Decentralized, Modular, No Fees</p>
 
-<p align="center"><em>This <a href=https://heinrichreimer.github.io/iota-docs>API docs</a> were created with Slate. Check it out at <a href="https://lord.github.io/slate">lord.github.io/slate</a>.</em></p>
+<p align="center"><em>This <a href=https://heinrichreimer.github.io/iota-docs>API docs</a> were created with Slate. Check it out at <a href="https://github.com/lord/slate/">github.com/lord/slate/</a>.</em></p>
 
 Building this API docs:
 -----------------------
@@ -18,23 +18,40 @@ You're going to need:
  - **Ruby, version 2.2.5 or newer**
  - **Bundler** — If Ruby is already installed, but the `bundle` command doesn't work, just run `gem install bundler` in a terminal.
 
-### Getting Set Up
+### Changing colors
 
-1. Clone this repository to your hard drive with `git clone https://github.com/HeinrichReimer/iota-docs.git`
+You can change any color or size by modifying [*_variables.scss*](https://github.com/HeinrichReimer/iota-docs/blob/master/source/stylesheets/_variables.scss). As long as you don't change any unit everything should work as expected.
+
+### Editing markdown
+
+Basically everything is Github Flavored Markdown. You can find a more detailed documentation of what's possible [here](https://github.com/lord/slate/wiki/Markdown-Syntax).
+
+### Testing locally
+
+1. Clone this repository to your hard drive with `git clone https://github.com/yourusername/iota-docs.git`
 2. `cd iota-docs`
 3. Initialize and start Slate. You can either do this locally, or with Vagrant:
 
 ```shell
-# either run this to run locally
 bundle install
 bundle exec middleman server
-
-# OR run this to run with vagrant
-vagrant up
 ```
 
-You can now see the docs at http://localhost:4567. Whoa! That was fast!
+You can now see the docs at <a href="http://localhost:4567" target="_blank">http://localhost:4567</a>. Whoa! That was fast!
 
-Now that Slate is all set up on your machine, you'll probably want to learn more about [editing Slate markdown](https://github.com/lord/slate/wiki/Markdown-Syntax), or [how to publish your docs](https://github.com/lord/slate/wiki/Deploying-Slate).
+### Publishing using GitHub Pages
 
-If you'd prefer to use Docker, instructions are available [in the wiki](https://github.com/lord/slate/wiki/Docker).
+ 1. Make sure your `origin` is a Slate fork in your own account, not the original repo.
+ 1. Commit your changes to the markdown source: `git commit -a -m "Update index.md"`!
+ 2. Push the *markdown source* changes to Github: `git push`
+ 3. Run `./deploy.sh`
+
+Done! Your changes should now be live on http://yourusername.github.io/iota-docs, and the main branch should be updated with your edited markdown. Note that if this is your first time publishing Slate, it can sometimes take ten minutes or so before your content is available online.
+
+#### Custom domains
+
+See the original [Slate documentation](https://github.com/lord/slate/wiki/Deploying-Slate#custom-domains-with-github).
+
+### Publishing on your own server
+
+Read more about how to publish the docs to your own server in the original [Slate documentation](https://github.com/lord/slate/wiki/Deploying-Slate#publishing-your-docs-to-your-own-server).
