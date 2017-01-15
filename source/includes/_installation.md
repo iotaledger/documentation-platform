@@ -69,7 +69,7 @@ Follow the tutorial from here:
 
 Now in order to run nostalgia, all you need to do is open up the `nostalgia.html` file in your web browser.
 
-<aside class="notíce">
+<aside class="notice">
     If you are using a different port than <b>14265</b>, change line 18 in <code>nostalgia.html</code> to the correct 
     port.
 </aside>
