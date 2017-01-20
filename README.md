@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./images/iota-logo.png" alt="IOTA" width="196">
+  <img src="./source/images/iota-logo.png" alt="IOTA" width="550">
 </p>
 
 <p align="center"><b>Central Documentation Repository</b></p>
