@@ -1,13 +1,16 @@
 <p align="center">
-  <img src="https://github.com/HeinrichReimer/iota-docs/blob/gh-pages/images/iota_logo_github.png" alt="IOTA" width="196">
+  <img src="./images/iota-logo.png" alt="IOTA" width="196">
 </p>
 
-<p align="center"><b>THE BACKBONE OF IOT IS HERE</b></p>
-<p align="center">Scalable, Decentralized, Modular, No Fees</p>
+<p align="center"><b>Central Documentation Repository</b></p>
 
-<p align="center"><em>This <a href=https://heinrichreimer.github.io/iota-docs>API docs</a> were created with Slate. Check it out at <a href="https://github.com/lord/slate/">github.com/lord/slate/</a>.</em></p>
 
-Building this API docs:
+Purpose of this Repository
+-----------------------
+The purpose of this repository is to be the central repository for all the IOTA related documentation websites. Each documentation is a different branch in this repository and will be maintained by the developers and contributors. We are using Slate, check it out at <a href="https://github.com/lord/slate/">github.com/lord/slate/</a>. More information will follow soon.
+
+
+Building this API docs
 -----------------------
 
 ### Prerequisites
@@ -28,8 +31,8 @@ Basically everything is Github Flavored Markdown. You can find a more detailed d
 
 ### Testing locally
 
-1. Clone this repository to your hard drive with `git clone https://github.com/yourusername/iota-docs.git`
-2. `cd iota-docs`
+1. Clone this repository to your hard drive with `git clone https://github.com/iotaledger/documentation.git`
+2. `cd documentation`
 3. Initialize and start Slate. You can either do this locally, or with Vagrant:
 
 ```shell
@@ -38,20 +41,3 @@ bundle exec middleman server
 ```
 
 You can now see the docs at <a href="http://localhost:4567" target="_blank">http://localhost:4567</a>. Whoa! That was fast!
-
-### Publishing using GitHub Pages
-
- 1. Make sure your `origin` is a Slate fork in your own account, not the original repo.
- 1. Commit your changes to the markdown source: `git commit -a -m "Update index.md"`!
- 2. Push the *markdown source* changes to Github: `git push`
- 3. Run `./deploy.sh`
-
-Done! Your changes should now be live on http://yourusername.github.io/iota-docs, and the main branch should be updated with your edited markdown. Note that if this is your first time publishing Slate, it can sometimes take ten minutes or so before your content is available online.
-
-#### Custom domains
-
-See the original [Slate documentation](https://github.com/lord/slate/wiki/Deploying-Slate#custom-domains-with-github).
-
-### Publishing on your own server
-
-Read more about how to publish the docs to your own server in the original [Slate documentation](https://github.com/lord/slate/wiki/Deploying-Slate#publishing-your-docs-to-your-own-server).
