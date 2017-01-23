@@ -23,7 +23,7 @@ You're going to need:
 
 ### Changing colors
 
-You can change any color or size by modifying [*_variables.scss*](https://github.com/HeinrichReimer/iota-docs/blob/master/source/stylesheets/_variables.scss). As long as you don't change any unit everything should work as expected.
+You can change any color or size by modifying [*_variables.scss*](./source/stylesheets/_variables.scss). As long as you don't change any unit everything should work as expected.
 
 ### Editing markdown
 
