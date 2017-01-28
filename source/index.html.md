@@ -68,7 +68,7 @@ Another important thing to keep in mind is that all the API calls, except for `a
 curl -X POST \
      -H 'Content-Type: application/json' \
      -d '{"command": "attachToTangle", "trunkTransaction": "JVMTDGDPDFYHMZPMWEKKANBQSLSDTIIHAYQUMZOKHXXXGJHJDQPOMDOMNRDKYCZRUFZROZDADTHZC9999", "branchTransaction": "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "minWeightMagnitude": 13, "trytes": ["YOURTRYTESHERE"]}' \
-     "https://sandbox.iotatoken.com/api/v1/commands/attachToTangle"
+     "https://sandbox.iotatoken.com/api/v1/commands"
 ```
 
 > The above command returns JSON structured like this:
