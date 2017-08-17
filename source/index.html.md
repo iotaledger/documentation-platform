@@ -33,7 +33,7 @@ The easiest way to use the Sandbox environment is to simply use one of the offic
 ```
 // Create IOTA instance with host and port as provider
 var iota = new IOTA({
-    'provider'  : 'http://sandbox.iotatoken.com/api/v1/',
+    'provider'  : 'https://sandbox.iota.org/api/v1/',
     'sandbox'   :  true,
     'token'     : 'EXAMPLE-TOKEN-HERE'
 });
@@ -41,18 +41,18 @@ var iota = new IOTA({
 
 The official Javascript library ([iota.lib.js](https://github.com/iotaledger/iota.lib.js)), takes care of the heavy-lifting for you and has implemented some logic to easily interact with the Sandbox environment. Simply install it either via npm, bower or directly in the browser.
 
-When instantiating IOTA, use the Sandbox with the respective endpoint and version as the provider for the library (e.g. `http://sandbox.iotatoken.com/api/v1/` is the current, only valid provider of the Sandbox). Make sure to set the `sandbox` flag as true and provide a `token` in case you have one.    
+When instantiating IOTA, use the Sandbox with the respective endpoint and version as the provider for the library (e.g. `https://sandbox.iota.org/api/v1/` is the current, only valid provider of the Sandbox). Make sure to set the `sandbox` flag as true and provide a `token` in case you have one.    
 
 ---
 
 # API Endpoints
 
-The Sandbox itself is hosted at `http://sandbox.iotatoken.com/api/v1`. Currently there is only one version of the API, but that might change in the future, giving you flexibility to choose which API endpoints to use. In case you want to interact with the Sandbox directly and not use one of the provided libraries, you can send a `POST` (for commands) or `GET` (for jobs) HTTP request to the API endpoints directly.
+The Sandbox itself is hosted at `https://sandbox.iota.org/api/v1`. Currently there is only one version of the API, but that might change in the future, giving you flexibility to choose which API endpoints to use. In case you want to interact with the Sandbox directly and not use one of the provided libraries, you can send a `POST` (for commands) or `GET` (for jobs) HTTP request to the API endpoints directly.
 
 ## commands
 
 ```
-curl http://sandbox.iotatoken.com/api/v1/commands \
+curl https://sandbox.iota.org/api/v1/commands \
   -X POST \
   -H 'Content-Type: application/json' \
   -d '{"command": "getNodeInfo"}'
@@ -68,7 +68,7 @@ Another important thing to keep in mind is that all the API calls, except for `a
 curl -X POST \
      -H 'Content-Type: application/json' \
      -d '{"command": "attachToTangle", "trunkTransaction": "JVMTDGDPDFYHMZPMWEKKANBQSLSDTIIHAYQUMZOKHXXXGJHJDQPOMDOMNRDKYCZRUFZROZDADTHZC9999", "branchTransaction": "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "minWeightMagnitude": 13, "trytes": ["YOURTRYTESHERE"]}' \
-     "https://sandbox.iotatoken.com/api/v1/commands"
+     "https://sandbox.iota.org/api/v1/commands"
 ```
 
 > The above command returns JSON structured like this:
@@ -107,7 +107,7 @@ The status of the job can then be queried via the `/jobs/:id` endpoint. You can 
 > **Get A Job**
 
 ```
-curl "https://sandbox.iotatoken.com/api/v1/jobs/70fef55d-6933-49fb-ae17-ec5d02bc9117"
+curl "https://sandbox.iota.org/api/v1/jobs/70fef55d-6933-49fb-ae17-ec5d02bc9117"
 ```
 
 The above command returns JSON structured like one of the following, depending on the job's status:
