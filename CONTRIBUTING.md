@@ -5,7 +5,7 @@
 1. See [open issues](https://github.com/iotaledger/documentation/issues).
 2. Filter by the `Help Wanted` label.
 3. Pick something that you'd like to work on yourself.
-4. Comment on the issue that you'd like to work on this.
+4. Comment on the issue that you'd like to work on.
 5. [See how to write and format content](#how-to-write-and-format-content).
 6. [See how to work with GitHub and Git](#Use-GitHub-and-Git).
 
@@ -38,11 +38,11 @@ We recommend using a code editor that supports `MarkDown` files. One candidate i
 We use MarkDown for documentation files. Please refer to [Writing and formatting syntax](https://help.github.com/articles/basic-writing-and-formatting-syntax/) if you haven't used MarkDown before. Formatting MarkDown can take some time getting used to, but when its basic rules are followed, the formatting is much more predicatble then when using standard WYSIWYG editors in content management systems.
 
 
-### Describe the What, the Why, When, and the How in each article
+### Describe the What, Why, When, and How in each article
 
 Each article that covers a specific scenario should explain not only **how** to perform the scenario, but also **why** a user would want to perform the scenario. What does it achieve? Why is it needed?
 
-A brief introduction in the form of a **what** is the scenario about. A **when** part to put the scenario in context to other scenarios that might tie into it is also useful. For example, a scenario on **Running IRI** should mention that you need to **Download and install IRI** first.
+A brief introduction in the form of a **what** is the scenario about. A **when** section to put the scenario in context with other scenarios. For example, a scenario on **Running IRI** should mention that you need to **Download and install IRI** first.
 
 The general flow of a docuemntation article would be:
 
