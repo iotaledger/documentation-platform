@@ -89,7 +89,7 @@ If you are familiar with Git and GitHub and know how to create a PR from your ow
 ### Setting up your fork of the repository
 
 1. Create a new GitHub account if you don't have one yet.
-2. Set up your computer with Git. Follow the instructions in the [Setting up Git Tutorial][https://help.github.com/articles/set-up-git/].
+2. Set up your computer with Git. Follow the instructions in the [Setting up Git Tutorial](https://help.github.com/articles/set-up-git/).
 3. Create your own fork of this repository. Use the **Fork** button at the top of the page.
 4. Copy your fork to your local machine. Use GitBash or any other command prompt and enter:
 
