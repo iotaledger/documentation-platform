@@ -5,10 +5,13 @@
 1. See [open issues](https://github.com/iotaledger/documentation/issues).
 2. Filter by the `Help Wanted` label.
 3. Pick something that you'd like to work on yourself.
-4. [See how to work with GitHub and Git](#Use-GitHub-and-Git).
+4. Comment on the issue that you'd like to work on this.
 5. [See how to write and format content](#how-to-write-and-format-content).
+6. [See how to work with GitHub and Git](#Use-GitHub-and-Git).
 
 We'll be adding more of these issues in the coming weeks as we identify more content to be added.
+
+Use our [Discord](https://discordapp.com/invite/fNGZXvh) to join the discussion in the #Documentation channel and ask questions.
 
 Thanks! :heart:
 
