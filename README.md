@@ -1,9 +1,12 @@
-**NOTICE: The IOTA Docs have moved!**
--------------------------------------
+# React-Static - Documentation Example
 
-All IOTA documentation may now be found conveniently through our websites:
+This example includes:
 
-- [iota.org](https://iota.org)
-- [docs.iota.org](https://docs.iota.org)
+* Styled-Components
+* Basic Documentation Setup w/ styles
 
-Contributions to `docs.iota.org` are welcome [here](https://github.com/iotaledger/docs).
+To get started:
+
+1.  Run `react-static create` and use the `documentation` template.
+2.  Follow installation instructions
+3.  Edit `TODO` commented items `static.config.js
