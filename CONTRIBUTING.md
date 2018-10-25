@@ -8,7 +8,7 @@
 4. [See how to work with GitHub and Git](#Use-GitHub-and-Git).
 5. [See how to write and format content](#how-to-write-and-format-content).
 
-We'll be adding more of these issues in the coming weeks as we identify more content to be added. Before writing new content, please refer to the [CONTRIBUTING.md](contribution guidelines).
+We'll be adding more of these issues in the coming weeks as we identify more content to be added.
 
 Thanks! :heart:
 

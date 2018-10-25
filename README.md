@@ -9,7 +9,7 @@ All IOTA documentation may now be found conveniently through our websites:
 Contributions to `docs.iota.org` are welcome [here](https://github.com/iotaledger/docs).
 
 # Accepting contributions
-If you'd like to help us build missing content, please see [open issues](https://github.com/iotaledger/documentation/issues) and filter by the `Help Wanted` label. We'll be adding more of these issues in the coming weeks as we identify more content to be added. Before writing new content, please refer to the [CONTRIBUTING.md](contribution guidelines).
+If you'd like to help us build missing content, please see [open issues](https://github.com/iotaledger/documentation/issues) and filter by the `Help Wanted` label. We'll be adding more of these issues in the coming weeks as we identify more content to be added. Before writing new content, please refer to the [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Use our [Discord](https://discordapp.com/invite/fNGZXvh) to join the discussion in the #Documentation channel and ask questions.
 
