@@ -1,0 +1,39 @@
+{
+  "name": "IOTA_Documentation",
+  "version": "0.0.2",
+  "description": "IOTA Documentation",
+  "keywords": [
+    "iota",
+    "docs",
+    "documentation"
+  ],
+  "license": "Apache-2.0",
+  "scripts": {
+    "start": "react-static start",
+    "stage": "react-static build --staging",
+    "build": "yarn index && react-static build",
+    "serve": "serve dist -p 3000",
+    "index": "node buildSearchIndex.js docs src/components/Search/index.json src/components/Search/corpus.json"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "lunr": "^2.3.3",
+    "markdown-it": "^8.4.2",
+    "nprogress": "^0.2.0",
+    "react": "^16.0.0",
+    "react-click-outside": "^3.0.1",
+    "react-dom": "^16.0.0",
+    "react-router": "^4.2.0",
+    "react-smackdown": "^1.0.0-beta.3",
+    "react-star-rating-component": "^1.4.1",
+    "react-static": "^5.9.8",
+    "reprism": "^0.0.11",
+    "styled-components": "^3"
+  },
+  "devDependencies": {
+    "babel-plugin-styled-components": "^1.3.0",
+    "eslint-config-react-tools": "1.x.x",
+    "serve": "^6.1.0"
+  }
+}
