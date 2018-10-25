@@ -128,6 +128,16 @@ Branches help make contributing seamless. Make sure each branch only addresses o
 3. When you are done, type the following in the prompt:
 ```cmd
 git add .
+```
+Note:  you may be asked to set your account's default identity
+```
+Please tell me who you are
+Run 
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
+```
+Then, continue committing your changes
+```
 git commit -v -a -m "<Describe the changes you made>"
 ```
 4. Make any additional changes to the same file/s in subsequent commits as you work. Not all changes need to be in the same commit.
@@ -140,7 +150,7 @@ When you're finished editing the content:
 2. In GitHub, go to the repository that you forked from `iotaledger/documentation`.
 3. Click the **Pull Request** button at the top of the page.
 4. Ensure that the Base branch is `iotaledger/documentation@master` and the Head branch is `<your username>/documentation@<your branch name>`.
-5. Click the **Update Commit Range** button.
+5. Click the **Update Commit Range** button or the **Compare & pull request** button.
 6. Give your pull request a Title, and describe all the changes you're making.
 7. Submit the pull request.
 
