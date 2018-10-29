@@ -124,7 +124,8 @@ Branches help make contributing seamless. Make sure each branch only addresses o
 #### Edit and add documentation content
 
 1. Please see [How write and format content](#how-to-write-and-format-content) before you start writing and editing articles.
-2. Edit the content.
+2. Edit existing content or create a new file:
+   - Note that files need to have the `.MD` extension. Files should be named after the scenario. If the scenario you are writing about is "Installing IRI", name the file `installing-iri.MD`.
 3. When you are done, type the following in the prompt:
 ```cmd
 git add .
