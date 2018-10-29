@@ -37,6 +37,11 @@ We recommend using a code editor that supports `MarkDown` files. One candidate i
 
 We use MarkDown for documentation files. Please refer to [Writing and formatting syntax](https://help.github.com/articles/basic-writing-and-formatting-syntax/) if you haven't used MarkDown before. Formatting MarkDown can take some time getting used to, but when its basic rules are followed, the formatting is much more predicatble then when using standard WYSIWYG editors in content management systems.
 
+### Files names and folder structure
+
+- Files need to have the `.MD` extension. 
+- Files should be named after the scenario. If the scenario you are writing about is "Installing IRI", name the file `installing-iri.MD`.
+- Please review the folder structure before deciding where to create the file. For example, if you are creating a scenario for IRI, create the page in the `iri` folder.
 
 ### Describe the What, Why, When, and How in each article
 
