@@ -1,6 +1,6 @@
 ---
 name: Documentation issue template
-about: How an idea on how to improve the documentation?
+about: Have an idea on how to improve the documentation?
 
 ---
 
