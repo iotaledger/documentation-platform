@@ -28,7 +28,7 @@ General description of the API, disclaimers should also be here:
 ## (Optional) Related APIs (link to other product documentation)
 
 | API     | Description ||
-|:---------------|:--------|
+|:---------------|:--------|:--------|
 | [API name link]()  | Description of the API  |
 
 ## (Optional) Permissions and authentication
