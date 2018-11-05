@@ -20,10 +20,12 @@ RUN mkdir docs/TRINITY
 RUN cp -R iota.js/api_reference.md docs/IOTA/api_reference.md
 
 # Copy MD files of MAM under current folder docs/MAM
-RUN cp -R mam.client.js/docs/*.md docs/MAM/
+#RUN cp -R mam.client.js/**/*.md mam.client.js/*.md docs/MAM/
+RUN find mam.client.js -iname '*.md' -exec cp \{\} docs/MAM/ \;
 
 # Copy MD files of MAM under current folder docs/MAM
-RUN cp -R trinity-wallet/docs/**/*.md docs/TRINITY/
+#RUN cp -R trinity-wallet/**/*.md docs/TRINITY/
+RUN find trinity-wallet -iname '*.md' -exec cp \{\} docs/TRINITY/ \;
 
 # Removing the hole mam repo - not anymore needed
 RUN rm -rf mam.client.js
