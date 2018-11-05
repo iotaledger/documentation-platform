@@ -142,6 +142,15 @@ export default () => (
           <Card to={{ pathname: '/docs/HUB/README', state: { project: 'HUB' }}} background="#efbb3c">
             RPC HUB
           </Card>
+          <Card to={{ pathname: '/docs/HUB/README', state: { project: 'HUB' }}} background="#ff6073">
+            MAM
+          </Card>
+          <Card to={{ pathname: '/docs/HUB/README', state: { project: 'HUB' }}} background="#efbb3c">
+            IOTA
+          </Card>
+          <Card to={{ pathname: '/docs/HUB/README', state: { project: 'HUB' }}} background="#ff6073">
+            TRINITY
+          </Card>
         </Cards>
         <div className="github">
           <Link to={repoURL}>
