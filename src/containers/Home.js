@@ -142,13 +142,13 @@ export default () => (
           <Card to={{ pathname: '/docs/HUB/README', state: { project: 'HUB' }}} background="#efbb3c">
             RPC HUB
           </Card>
-          <Card to={{ pathname: '/docs/HUB/README', state: { project: 'HUB' }}} background="#ff6073">
+          <Card to={{ pathname: '/docs/MAM/overview', state: { project: 'MAM' }}} background="#ff6073">
             MAM
           </Card>
-          <Card to={{ pathname: '/docs/HUB/README', state: { project: 'HUB' }}} background="#efbb3c">
+          <Card to={{ pathname: '/docs/IOTA/api_reference', state: { project: 'IOTA' }}} background="#efbb3c">
             IOTA
           </Card>
-          <Card to={{ pathname: '/docs/HUB/README', state: { project: 'HUB' }}} background="#ff6073">
+          <Card to={{ pathname: '/docs/TRINITY/featureguide', state: { project: 'TRINITY' }}} background="#ff6073">
             TRINITY
           </Card>
         </Cards>
