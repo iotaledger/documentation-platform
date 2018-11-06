@@ -3,6 +3,8 @@ import styled, { css } from 'styled-components'
 import { SiteData, Link, withRouter } from 'react-static'
 import ClickOutside from 'components/ClickOutside'
 import Search from 'components/Search'
+import Dropdown from 'components/Dropdown'
+import { getVersion, getProjectName } from 'utils/helpers'
 
 const breakpoint = 800
 const sidebarBackground = '#f7f7f7'
@@ -175,7 +177,8 @@ class Sidebar extends React.Component {
   render () {
     const { children, location } = this.props
     const { isOpen } = this.state
-    const project = location.pathname !== '/404' && location.pathname.match(/(?<=docs\/).*?(?=\/+)/)[0]
+    const project = location.pathname !== '/404' && getProjectName(location.pathname);
+    const version = location.pathname !== '/404' && getVersion(location.pathname);
 
     if (typeof document !== 'undefined') {
       const target = document.querySelector('span.search-keyword');
@@ -211,10 +214,10 @@ class Sidebar extends React.Component {
                   <Link to="/" className="back">
                     ← Back to Site
                   </Link>
-                  <div className="version">v{process.env.REPO_VERSION}</div>
+                  <Dropdown items={menu[project].versions}/>
                 </div>
                 <div className="scroll">
-                  { project && <Menu items={menu[project]} /> }
+                  { project && <Menu items={menu[project].versions[version]} /> }
                 </div>
               </div>
             </ClickOutside>

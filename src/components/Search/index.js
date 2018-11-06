@@ -2,6 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import lunr from 'lunr'
 import { Link } from "react-static";
+import { getVersion } from 'utils/helpers'
 import json from './index.json'
 import corpus from './corpus.json'
 
@@ -65,11 +66,12 @@ class Search extends React.Component {
             {
               searchResults.map(doc =>
                 <header key={doc.name}>
+                  { console.log(doc) }
                   <Link to={{
                     pathname: `/${doc.id}`,
                     state: { query }
                   }}>
-                    <h4>{doc.name}</h4>
+                    <h4>v.{getVersion(doc.id)}: {doc.name}</h4>
                   </Link>
                 </header>
               )
