@@ -8,7 +8,7 @@ class Dropdown extends React.Component {
     super(props);
 
     this.state = {
-      selected: getVersion(props.location.pathname),
+      selected: props.version,
     };
 
     this.selectItem = this.selectItem.bind(this);
@@ -24,14 +24,13 @@ class Dropdown extends React.Component {
   }
 
   render() {
-    const { location, items } = this.props;
+    const { items } = this.props;
     const { selected } = this.state;
-    const currentVersion = getVersion(location.pathname);
 
     return (
       <DropdownWrapper>
         <Dropdownlist value={selected} onChange={this.selectItem}>
-          {Object.keys(items).map(item => (
+          {items.map(item => (
             <DropdownItem key={item} value={item}>
               {item}
             </DropdownItem>
