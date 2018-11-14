@@ -3,6 +3,93 @@ import styled, { css } from 'styled-components'
 import { SiteData, Link, withRouter } from 'react-static'
 import ClickOutside from 'components/ClickOutside'
 import Search from 'components/Search'
+import Dropdown from 'components/Dropdown'
+import { getVersion, getProjectName } from 'utils/helpers'
+
+const Menu = ({ items }) => (
+  <div className="list">
+    {items.map(({ name, link, children }) => (
+      <div key={name + link} className="item">
+        {link ? (
+          <Link to={link} exact activeClassName="active">
+            {name}
+          </Link>
+        ) : (
+          <div className="name">{name}</div>
+        )}
+        {children ? <Menu items={children} /> : null}
+      </div>
+    ))}
+  </div>
+)
+
+class Sidebar extends React.Component {
+  state = {
+    isOpen: false,
+  }
+
+  toggle(isOpen) {
+    this.setState({ isOpen })
+  }
+
+  render () {
+    const { children, location } = this.props
+    const { isOpen } = this.state
+    const project = location.pathname !== '/404' && getProjectName(location.pathname);
+    const version = location.pathname !== '/404' && getVersion(location.pathname);
+
+    if (!project || !version) return <div/>
+
+    if (typeof document !== 'undefined') {
+      const target = document.querySelector('span.search-keyword');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+      }
+    }
+
+    return (
+      <SiteData
+        render={({ menu }) => (
+          <SidebarStyles className="sidebar" isOpen={isOpen}>
+            <Search />
+            <ClickOutside
+              onClickOutside={() => {
+                if (isOpen) {
+                  this.setState({
+                    isOpen: false,
+                  })
+                }
+              }}
+            >
+              <div className="sidebar">
+                <button
+                  className="toggle"
+                  onClick={() => {
+                    this.toggle(!isOpen)
+                  }}
+                >
+                  ⇤
+                </button>
+                <div className="header">
+                  <Link to="/" className="back">
+                    ← Back to Site
+                  </Link>
+                  <Dropdown version={version} items={Object.keys(menu[project].versions)}/>
+                </div>
+                <div className="scroll">
+                  <Menu items={menu[project].versions[version]} />
+                </div>
+              </div>
+            </ClickOutside>
+            <div className="content">{children}</div>
+          </SidebarStyles>
+        )}
+      />
+    )
+  }
+}
+
+export default withRouter(Sidebar);
 
 const breakpoint = 800
 const sidebarBackground = '#f7f7f7'
@@ -145,85 +232,3 @@ const SidebarStyles = styled.div`
     padding: 1rem 2.5rem;
   }
 `
-
-const Menu = ({ items }) => (
-  <div className="list">
-    {items.map(({ name, link, children }) => (
-      <div key={name + link} className="item">
-        {link ? (
-          <Link to={link} exact activeClassName="active">
-            {name}
-          </Link>
-        ) : (
-          <div className="name">{name}</div>
-        )}
-        {children ? <Menu items={children} /> : null}
-      </div>
-    ))}
-  </div>
-)
-
-class Sidebar extends React.Component {
-  state = {
-    isOpen: false,
-  }
-
-  toggle(isOpen) {
-    this.setState({ isOpen })
-  }
-
-  render () {
-    const { children, location } = this.props
-    const { isOpen } = this.state
-    const project = location.pathname !== '/404' && location.pathname.match(/(?<=docs\/).*?(?=\/+)/)[0]
-
-    if (typeof document !== 'undefined') {
-      const target = document.querySelector('span.search-keyword');
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-      }
-    }
-
-    return (
-      <SiteData
-        render={({ menu }) => (
-          <SidebarStyles className="sidebar" isOpen={isOpen}>
-            <Search />
-            <ClickOutside
-              onClickOutside={() => {
-                if (isOpen) {
-                  this.setState({
-                    isOpen: false,
-                  })
-                }
-              }}
-            >
-              <div className="sidebar">
-                <button
-                  className="toggle"
-                  onClick={() => {
-                    this.toggle(!isOpen)
-                  }}
-                >
-                  ⇤
-                </button>
-                <div className="header">
-                  <Link to="/" className="back">
-                    ← Back to Site
-                  </Link>
-                  <div className="version">v{process.env.REPO_VERSION}</div>
-                </div>
-                <div className="scroll">
-                  { project && <Menu items={menu[project]} /> }
-                </div>
-              </div>
-            </ClickOutside>
-            <div className="content">{children}</div>
-          </SidebarStyles>
-        )}
-      />
-    )
-  }
-}
-
-export default withRouter(Sidebar);

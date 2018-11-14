@@ -114,7 +114,7 @@ const Card = styled(Link)`
 
 export default () => (
   <SiteData
-    render={({ repo, repoURL, repoName }) => (
+    render={({ menu, repo, repoURL, repoName }) => (
       <Styles>
         <Head>
           <title>Home | {repoName}</title>
@@ -136,21 +136,13 @@ export default () => (
           This awesome site was built to help you find product documentation across all IOTA's libraries and services.
         </p>
         <Cards>
-          <Card to={{ pathname: '/docs/IRI/intro', state: { project: 'IRI' }}} background="#ff6073">
-            IRI
-          </Card>
-          <Card to={{ pathname: '/docs/HUB/README', state: { project: 'HUB' }}} background="#efbb3c">
-            RPC HUB
-          </Card>
-          <Card to={{ pathname: '/docs/MAM/overview', state: { project: 'MAM' }}} background="#ff6073">
-            MAM
-          </Card>
-          <Card to={{ pathname: '/docs/IOTA/api_reference', state: { project: 'IOTA' }}} background="#efbb3c">
-            IOTA
-          </Card>
-          <Card to={{ pathname: '/docs/TRINITY/featureguide', state: { project: 'TRINITY' }}} background="#ff6073">
-            TRINITY
-          </Card>
+          {
+            Object.values(menu).map(({ name, versions }) =>
+              <Card key={name} to={{ pathname: `/docs/${name}/reference/${Object.keys(versions)[Object.keys(versions).length - 1]}/README`, state: { project: name }}} background="#ff6073">
+                {name}
+              </Card>
+            )
+          }
         </Cards>
         <div className="github">
           <Link to={repoURL}>

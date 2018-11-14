@@ -22,12 +22,18 @@ const getDocPages = baseDir => {
 const buildMenuItems = baseDir => {
   const projects = getProjects(baseDir)
   const menu = {}
+  const versions = {}
   projects.forEach(name => {
-    const children = listFiles(`${baseDir}/${name}`).map(file => ({
-      name: file.match(/[^\/]+$/)[0].replace('.md', ''),
-      link: `/${file.replace('.md', '')}`
-    }))
-    menu[name] = [{ name, children }]
+    const projectVersions = getProjects(`${baseDir}/${name}/reference`)
+    projectVersions.forEach(version => {
+      const children = listFiles(`${baseDir}/${name}/reference/${version}`).map(file => ({
+        name: file.match(/[^\/]+$/)[0].replace('.md', ''),
+        link: `/${file.replace('.md', '')}`
+      }))
+      versions[version] = children
+    })
+
+    menu[name] = { name, versions }
   })
   return menu
 }
