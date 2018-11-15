@@ -1,4 +1,4 @@
-FROM node:8.12-alpine
+FROM node:10.13.0-alpine
 
 
 # install git from Alpine packages
@@ -43,7 +43,7 @@ RUN npm run index
 
 # Change exposed port
 #EXPOSE 8080/tcp
-EXPOSE 3000
-CMD ["npm","start"]
+EXPOSE 3000:3000
+CMD ["npm" , "start"]
 
 
