@@ -44,6 +44,5 @@ RUN npm run index
 # Change exposed port
 #EXPOSE 8080/tcp
 EXPOSE 3000:3000
+
 CMD ["npm" , "start"]
-
-
