@@ -1,9 +1,8 @@
 import React from 'react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 const Paragraph = ({ children, className }) => (
-  <p className={classNames('paragraph', className)}>{children}</p>
+  <p className={`paragraph ${className}`}>{children}</p>
 )
 
 Text.propTypes = {
