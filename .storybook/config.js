@@ -9,7 +9,7 @@ import { configure, addDecorator, setAddon } from '@storybook/react';
 import { setOptions } from '@storybook/addon-options';
 import infoAddon, { setDefaults } from '@storybook/addon-info';
 
-// import '../styles/globalStyles.scss';
+import '../styles/globalStyles.scss';
 
 addDecorator(story => (
   <div style={{ padding: '2em' }}>
