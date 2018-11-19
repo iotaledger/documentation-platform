@@ -1,9 +1,8 @@
 import React from 'react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 const Text = ({ children, className }) => (
-  <span className={classNames('text', className)}>{children}</span>
+  <span className={`text ${className}`}>{children}</span>
 )
 
 Text.propTypes = {
