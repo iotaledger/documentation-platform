@@ -1,6 +1,7 @@
 import React from "react";
 import { SiteData, Link, Head } from "react-static";
 import styled from "styled-components";
+import Button from '../components/atoms/Button';
 
 import logoImg from "../logo.png";
 
@@ -144,6 +145,7 @@ export default () => (
             )
           }
         </Cards>
+        <Button onClick={() => console.log('button clicked')}>Hello</Button>
         <div className="github">
           <Link to={repoURL}>
             <img
