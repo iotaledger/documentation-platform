@@ -11,15 +11,14 @@ import infoAddon, { setDefaults } from '@storybook/addon-info';
 
 import '../styles/globalStyles.scss';
 
+const req = require.context('../src/components', true, /.stories.js$/);
+const loadStories = () => req.keys().forEach(filename => req(filename));
+
 addDecorator(story => (
   <div style={{ padding: '2em' }}>
     {story()}
   </div>
 ));
-
-function loadStories() {
-  require('../src/stories/Button');
-}
 
 setOptions({
   name: 'IOTA Documentation',
