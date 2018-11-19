@@ -5,9 +5,7 @@ import { action } from '@storybook/addon-actions';
 import Button from '.';
 
 storiesOf('Button', module)
-  .add('default', withInfo({
-      text: 'Add text description here',
-    })(() => (
+  .add('default', withInfo({ text: 'Add text description here' })(() => (
     <Button onClick={action('clicked')}>Hello</Button>
   )))
   .add('large', withInfo({})(() => (

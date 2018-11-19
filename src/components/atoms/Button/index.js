@@ -2,16 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-const Button = ({
-  id,
-  onClick,
-  children,
-  large,
-  small,
-  className,
-  isLoading,
-  isDisabled,
-}) => (
+const Button = ({ id, onClick, children, large, small, className, isLoading, isDisabled }) => (
   <button
     id={id}
     onClick={onClick}
@@ -32,7 +23,6 @@ Button.propTypes = {
   large: PropTypes.bool,
   small: PropTypes.bool,
   className: PropTypes.string,
-
   onClick: PropTypes.func,
   children: PropTypes.node,
   isDisabled: PropTypes.bool,
