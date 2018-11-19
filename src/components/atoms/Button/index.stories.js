@@ -14,3 +14,6 @@ storiesOf('Button', module)
   .add('small', withInfo({})(() => (
     <Button small onClick={action('clicked')}>Hello</Button>
   )))
+  .add('disabled', withInfo({})(() => (
+    <Button disabled onClick={action('clicked')}>Hello</Button>
+  )))
