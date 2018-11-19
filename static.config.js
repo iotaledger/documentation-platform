@@ -102,5 +102,27 @@ export default {
         </Html>
       );
     }
-  }
+  },
+  webpack: [
+    (config, { defaultLoaders }) => {
+      config.module.rules = [
+        {
+          oneOf: [
+            {
+              test: /\.s?css$/,
+              use: ['style-loader', 'raw-loader', 'sass-loader'],
+              include: [ path.resolve(__dirname, './styles/') ],
+            },
+            defaultLoaders.cssLoader,
+            defaultLoaders.jsLoader,
+            defaultLoaders.fileLoader,
+          ]
+        }
+      ]
+      return config
+    },
+    config => {
+      console.log(config.module.rules) // Log out the final set of rules
+    }
+  ],
 };

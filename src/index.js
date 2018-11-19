@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+import '../styles/globalStyles.scss';
+
 // Your top level component
 import App from './App'
 
