@@ -125,8 +125,8 @@ export default {
       ]
       return config
     },
-    config => {
-      console.log(config.module.rules) // Log out the final set of rules
-    }
+    // config => {
+    //   console.log(config.module.rules) // Log out the final set of rules
+    // }
   ],
 };

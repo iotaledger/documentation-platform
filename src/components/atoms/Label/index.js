@@ -19,4 +19,8 @@ Label.propTypes = {
   children: PropTypes.node,
 };
 
+Label.defaultProps = {
+  className: '',
+};
+
 export default Label;

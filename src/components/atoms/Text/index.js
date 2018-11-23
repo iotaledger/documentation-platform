@@ -10,4 +10,8 @@ Text.propTypes = {
   classNames: PropTypes.string,
 };
 
+Text.defaultProps = {
+  className: '',
+};
+
 export default Text;

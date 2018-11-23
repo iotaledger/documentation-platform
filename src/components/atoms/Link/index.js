@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import Text from '../Text';
 
 const Link = ({ id, href, target, text, className, children }) => (
