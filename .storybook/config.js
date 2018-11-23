@@ -1,4 +1,5 @@
 import React from 'react';
+import WebFontLoader from 'webfontloader';
 
 if (process.env.NODE_ENV !== 'production') {
   const { whyDidYouUpdate } = require('why-did-you-update');
@@ -13,6 +14,12 @@ import '../styles/globalStyles.scss';
 
 const req = require.context('../src/components', true, /.stories.js$/);
 const loadStories = () => req.keys().forEach(filename => req(filename));
+
+WebFontLoader.load({
+  google: {
+    families: ['Nunito Sans:300,400,600,700', 'Material Icons'],
+  },
+});
 
 addDecorator(story => (
   <div style={{ padding: '2em' }}>
