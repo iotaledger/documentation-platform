@@ -2,8 +2,16 @@ import React from "react";
 import { SiteData, Link, Head } from "react-static";
 import styled from "styled-components";
 import Button from '../components/atoms/Button';
+import Select from '../components/atoms/Select';
+import Card from '../components/molecules/Card';
+import contentHomePage from '../contentHomePage.json';
 
-import logoImg from "../logo.png";
+import logoImg from "../assets/Logo.svg";
+import card1 from "../assets/1.png";
+import card2 from "../assets/2.png";
+import card3 from "../assets/3.png";
+
+const cards = [card1, card2, card3]
 
 const Styles = styled.div`
   display: flex;
@@ -89,7 +97,7 @@ const Cards = styled.div`
   max-width: 95%;
 `;
 
-const Card = styled(Link)`
+const CardElement = styled(Link)`
   flex: 1 1 150px;
   border: 2px solid rgba(0, 0, 0, 0.1);
   background: ${props => props.background};
@@ -113,48 +121,68 @@ const Card = styled(Link)`
   }
 `;
 
-export default () => (
-  <SiteData
-    render={({ menu, repo, repoURL, repoName }) => (
-      <Styles>
-        <Head>
-          <title>Home | {repoName}</title>
-        </Head>
-        <div className="backgrounds">
-          <div className="background1" />
-          <div className="background2" />
-        </div>
-        <img
-          src={logoImg}
-          alt=""
-          style={{ display: "block", margin: "0 auto" }}
-        />
-        <h1>IOTA Documentation</h1>
-        <h2>
-          The most bestest blazingliest fastest freaking documentation site.
-        </h2>
-        <p>
-          This awesome site was built to help you find product documentation across all IOTA's libraries and services.
-        </p>
-        <Cards>
-          {
-            Object.values(menu).map(({ name, versions }) =>
-              <Card key={name} to={{ pathname: `/docs/${name}/reference/${Object.keys(versions)[Object.keys(versions).length - 1]}/README`, state: { project: name }}} background="#ff6073">
-                {name}
-              </Card>
-            )
-          }
-        </Cards>
-        <Button onClick={() => console.log('button clicked')}>Hello</Button>
-        <div className="github">
-          <Link to={repoURL}>
+class Home extends React.Component {
+  render() {
+    return (
+      <SiteData
+        render={({ menu, repo, repoURL, repoName }) => (
+          <Styles>
+            <Head>
+              <title>Home | {repoName}</title>
+            </Head>
+            <div className="backgrounds">
+              <div className="background1" />
+              <div className="background2" />
+            </div>
             <img
-              src={`https://img.shields.io/github/stars/${repo}.svg?style=social&label=Star`}
-              alt="Github Stars"
+              src={logoImg}
+              alt=""
+              style={{ display: "block", margin: "0 auto" }}
             />
-          </Link>
-        </div>
-      </Styles>
-    )}
-  />
-);
+            <h1>IOTA Documentation</h1>
+            <h2>
+              The most bestest blazingliest fastest freaking documentation site.
+            </h2>
+            <p>
+              This awesome site was built to help you find product documentation across all IOTA's libraries and services.
+            </p>
+            <Cards>
+              {
+                Object.values(menu).map(({ name, versions }) =>
+                  <CardElement key={name} to={{ pathname: `/docs/${name}/reference/${Object.keys(versions)[Object.keys(versions).length - 1]}/README`, state: { project: name }}} background="#ff6073">
+                    {name}
+                  </CardElement>
+                )
+              }
+            </Cards>
+            <Button onClick={() => console.log('button clicked')}>Hello</Button>
+            <Select
+              label='Please select'
+              options={['one', 'two', 'three']}
+              selectedOption={'two'}
+              onChange={(value) => console.log('onChange', value)}
+              required
+            />
+            <div className="cardsWrapper">
+            {
+              contentHomePage.cards.map((card, index) =>
+                <Card key={card.text} content={{...card, image: cards[index]}}/>
+              )
+            }
+            </div>
+            <div className="github">
+              <Link to={repoURL}>
+                <img
+                  src={`https://img.shields.io/github/stars/${repo}.svg?style=social&label=Star`}
+                  alt="Github Stars"
+                />
+              </Link>
+            </div>
+          </Styles>
+        )}
+      />
+    )
+  }
+}
+
+export default Home;

@@ -1,0 +1,6 @@
+.link {
+  cursor: pointer;
+  & .text {
+    color: $gunmetal-grey;
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "cards": [
+    {
+      "href": "https://iota.org",
+      "image": "../../assets/1.png",
+      "alt": "IOTA Foundation",
+      "text": "What is IOTA?"
+    },
+    {
+      "href": "https://iota.org",
+      "image": "../assets/2.png",
+      "alt": "IOTA Foundation",
+      "text": "Getting Started"
+    },
+    {
+      "href": "https://iota.org",
+      "image": "../assets/3.png",
+      "alt": "IOTA Foundation",
+      "text": "Next Steps"
+    }
+  ]
+}
