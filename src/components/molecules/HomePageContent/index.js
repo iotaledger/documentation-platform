@@ -15,7 +15,7 @@ const HomePageContent = ({ id, className, content: { header, subheader, topics }
     <div className="project-topics">
       {
         topics.map(topic =>
-            <Link key={topic.header} href={topic.href} className="project-topic__wrapper">
+            <Link key={topic.header} href={topic.href} className="project-topic__link">
               <Text className="project-topic__heading text--level6">
                 {topic.header}
               </Text>
