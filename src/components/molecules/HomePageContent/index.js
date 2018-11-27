@@ -5,24 +5,24 @@ import Heading from '../../atoms/Heading';
 import Text from '../../atoms/Text';
 
 const HomePageContent = ({ id, className, content: { header, subheader, topics } }) => (
-  <div id={id} className={`home-page-content ${className}`}>
-    <Heading className="home-page-content__heading" level={2}>
+  <div id={id} className={`project ${className}`}>
+    <Heading className="project__heading" level={2}>
       {header}
     </Heading>
-    <Text className="home-page-content__subheading">
+    <Text className="project__subheading">
       {subheader}
     </Text>
-    <div className="home-page-content-topics">
+    <div className="project-topics">
       {
         topics.map(topic =>
-            <div key={topic.header} className="home-page-content-topic__wrapper">
-              <Text className="home-page-content-topic__heading text--level6">
+            <Link key={topic.header} href={topic.href} className="project-topic__wrapper">
+              <Text className="project-topic__heading text--level6">
                 {topic.header}
               </Text>
-              <Text className="home-page-content-topic__subheading" html>
+              <Text className="project-topic__subheading" html>
                 {topic.subheader}
               </Text>
-            </div>
+            </Link>
         )
       }
     </div>

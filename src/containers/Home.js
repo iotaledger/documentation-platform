@@ -151,7 +151,7 @@ class Home extends React.Component {
                 )
               }
             </div>
-            <div className="content__wrapper">
+            <div className="project__wrapper">
               {
                 contentHomePage.content.map(content =>
                   <Content key={content.header} content={content} />
