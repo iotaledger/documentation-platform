@@ -15,7 +15,7 @@ const HomePageContent = ({ id, className, content: { header, subheader, topics }
     <div className="home-page-content-topics">
       {
         topics.map(topic =>
-            <div className="home-page-content-topic__wrapper">
+            <div key={topic.header} className="home-page-content-topic__wrapper">
               <Text className="home-page-content-topic__heading text--level6">
                 {topic.header}
               </Text>
