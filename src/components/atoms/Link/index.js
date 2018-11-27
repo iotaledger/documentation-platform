@@ -10,7 +10,7 @@ const Link = ({ id, href, target, text, className, children }) => (
     rel={target === '_blank' ? 'noopener noreferrer' : false}
     className={`link ${className}`}
   >
-    <Text>{children || text}</Text>
+    { children || <Text>{text}</Text> }
   </a>
 );
 

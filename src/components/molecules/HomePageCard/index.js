@@ -2,18 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from '../../atoms/Link';
 import Image from '../../atoms/Image';
-import Heading from '../../atoms/Heading';
+import Text from '../../atoms/Text';
 
-const Card = ({ id, className, content: { image, href, alt, text } }) => (
+const HomePageCard = ({ id, className, content: { image, href, alt, text } }) => (
   <div id={id} className={`card ${className}`}>
-    <Link href={href}>
-      <Image src={image} alt={alt} />
-      <Heading level={4} text={text} />
+    <Link href={href} className="card__link">
+      <Image src={image} alt={alt} className="card__image" />
+      <div className="card__wrapper">
+        <Text className="text--level5 card__label" >{text}</Text>
+      </div>
     </Link>
   </div>
 );
 
-Card.propTypes = {
+HomePageCard.propTypes = {
   id: PropTypes.string,
   className: PropTypes.string,
   content: PropTypes.exact({
@@ -24,8 +26,8 @@ Card.propTypes = {
   }),
 };
 
-Card.defaultProps = {
+HomePageCard.defaultProps = {
   className: '',
 };
 
-export default Card;
+export default HomePageCard;

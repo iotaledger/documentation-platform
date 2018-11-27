@@ -3,7 +3,8 @@ import { SiteData, Link, Head } from "react-static";
 import styled from "styled-components";
 import Button from '../components/atoms/Button';
 import Select from '../components/atoms/Select';
-import Card from '../components/molecules/Card';
+import Card from '../components/molecules/HomePageCard';
+import Content from '../components/molecules/HomePageContent';
 import contentHomePage from '../contentHomePage.json';
 
 import logoImg from "../assets/Logo.svg";
@@ -60,26 +61,6 @@ const Styles = styled.div`
         transparent 15px
       );
     }
-  }
-
-  img {
-    width: 600px;
-  }
-
-  h1 {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  h2 {
-    width: 400px;
-    max-width: 100%;
-    color: rgba(0, 0, 0, 0.8);
-  }
-
-  p {
-    max-width: 750px;
   }
 
   .github {
@@ -163,12 +144,19 @@ class Home extends React.Component {
               onChange={(value) => console.log('onChange', value)}
               required
             />
-            <div className="cardsWrapper">
-            {
-              contentHomePage.cards.map((card, index) =>
-                <Card key={card.text} content={{...card, image: cards[index]}}/>
-              )
-            }
+            <div className="cards__wrapper">
+              {
+                contentHomePage.cards.map((card, index) =>
+                  <Card key={card.text} content={{...card, image: cards[index]}}/>
+                )
+              }
+            </div>
+            <div className="content__wrapper">
+              {
+                contentHomePage.content.map(content =>
+                  <Content key={content.header} content={content} />
+                )
+              }
             </div>
             <div className="github">
               <Link to={repoURL}>

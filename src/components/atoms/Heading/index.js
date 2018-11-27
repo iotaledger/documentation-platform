@@ -6,7 +6,7 @@ const Heading = ({ level = 1, children, text, className }) =>
   React.createElement(
     `h${level}`,
     { className: `heading ${className}` },
-    <Text>{children || text}</Text>
+    children || <Text>{text}</Text>
   );
 
 Heading.propTypes = {
