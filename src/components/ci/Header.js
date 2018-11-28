@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-
+import logo from './../../assets/Logo.svg'
 
 class Header extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class Header extends React.Component {
   </div>
   <div className="header__wrapper">
     <section className="header__head">
-      <img className="header__brand" src="assets/Logo.svg" />
+      <img className="header__brand" src={logo} />
       <div className="header__icon"><i className="fas fa-bars fa-2x"></i></div>
     </section>
     <section className="header__body">

@@ -9,6 +9,7 @@ import Routes from "react-static-routes";
 
 import "nprogress/nprogress.css";
 import "react-smackdown/themes/smackdown-light.css";
+import "css-styleguid";
 
 import jsx from "reprism/languages/jsx";
 import bash from "reprism/languages/bash";
