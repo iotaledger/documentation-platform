@@ -1,9 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-// import '../styles/globalStyles.scss';
-import "css-styleguide";
-
 // Your top level component
 import App from './App'
 

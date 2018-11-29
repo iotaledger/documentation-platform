@@ -5,6 +5,7 @@ import Sidebar from 'components/Sidebar'
 import CommentModal from 'components/Modal'
 import Feedback from 'components/Feedback'
 import api from '../utils/api';
+import { getProjectName } from '../utils/helpers'
 
 class Doc extends React.Component {
   constructor(props) {
@@ -57,7 +58,7 @@ class Doc extends React.Component {
       const prevText = this.getTextContent(node, true);
       const nextText = this.getTextContent(node, false);
       const { location } = this.props;
-      const project = location.pathname !== '/404' && location.pathname.match(/(?<=docs\/).*?(?=\/+)/)[0];
+      const project = location.pathname !== '/404' && getProjectName(location.pathname);
 
       return {
         link,
@@ -108,7 +109,7 @@ class Doc extends React.Component {
 
   async submitFeedback(rating, comments) {
     const document = this.props.location.pathname;
-    const project = document !== '/404' && document.match(/(?<=docs\/).*?(?=\/+)/)[0];
+    const project = document !== '/404' && getProjectName(document);
     const response = await api('submitFeedback', { rating, comments, project, document });
   }
 

@@ -70,7 +70,7 @@ class Sidebar extends React.Component {
                 >
                   ⇤
                 </button>
-                <div className="header">
+                <div className="menu-header">
                   <Link to="/" className="back">
                     ← Back to Site
                   </Link>
@@ -166,7 +166,7 @@ const SidebarStyles = styled.div`
         `};
     }
 
-    .header {
+    .menu-header {
       flex: 0 0 auto;
       display: flex;
       align-items: center;
