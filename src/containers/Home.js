@@ -18,7 +18,9 @@ export default () => (
         </Head>
         <Header />
         <CardContainer />
-        <ProjectTopics />
+        <div style={{ padding: '0 40px' }}>
+          <ProjectTopics />
+        </div>
       </Container>
     )}
   />
