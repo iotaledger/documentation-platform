@@ -11,7 +11,7 @@ class Menu extends React.Component {
     return (<section class={`side-menu ${this.props.classes}`} style={this.props.styles}>
   <h4 class="side-menu__caption">
     <span>Navigation</span>
-    <i class="fas fa-times"></i>
+    <i class="fas fa-times" onClick={e => this.props.onCloseClick()}></i>
   </h4>
   <section class="side-menu__group">
     <h5 class="side-menu__heading">

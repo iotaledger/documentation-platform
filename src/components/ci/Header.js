@@ -3,6 +3,21 @@ import styled, { css } from 'styled-components'
 import logo from './../../assets/Logo.svg'
 import Menu from './Menu'
 
+const menuHidden = {
+  position: 'fixed',
+  zIndex: 2,
+  right: '-311px',
+  top: 0,
+  transition: '500ms ease'
+}
+const menuShown = {
+  position: 'fixed',
+  zIndex: 2,
+  right: 0,
+  top: 0,
+  transition: '500ms ease'
+}
+
 class Header extends React.Component {
   constructor(props) {
     super(props)
@@ -37,6 +52,7 @@ class Header extends React.Component {
       <div className="header__icon" onClick={this.handleBurgerClick}>
         <i className="fas fa-bars fa-2x"></i>
       </div>
+      <Menu onCloseClick={this.handleBurgerClick} styles={this.state.isMenuOpen ? menuShown : menuHidden}/>
     </section>
     <section className="header__body">
       <span className="text text--level1 text--secondary">{this.props.headerTitle}</span>
