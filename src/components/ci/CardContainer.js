@@ -11,22 +11,22 @@ class CardContainer extends React.Component {
   }
 
   render() {
-    return (<section class="cards-container">
-      <div class="cards-container__caption">
-          <span class="cards-container__text">New to IOTA?</span>
+    return (<section className="cards-container">
+      <div className="cards-container__caption">
+          <span className="cards-container__text">New to IOTA?</span>
       </div>
 
-      <div class="card">
-        <img class="card__image" src={iotaIntroImg} alt="IOTA intro" />
-        <a href="#" class="card__label text text--level5">What is IOTA?</a>
+      <div className="card">
+        <img className="card__image" src={iotaIntroImg} alt="IOTA intro" />
+        <a href="#" className="card__label text text--level5">What is IOTA?</a>
       </div>
-      <div class="card">
-        <img class="card__image" src={gettingStartImg} alt="IOTA intro" />
-        <a href="#" class="card__label text text--level5">Getting Started</a>
+      <div className="card">
+        <img className="card__image" src={gettingStartImg} alt="IOTA intro" />
+        <a href="#" className="card__label text text--level5">Getting Started</a>
       </div>
-      <div class="card">
-        <img class="card__image" src={nextSetp} alt="IOTA intro" />
-        <a href="#" class="card__label text text--level5">Next Steps</a>
+      <div className="card">
+        <img className="card__image" src={nextSetp} alt="IOTA intro" />
+        <a href="#" className="card__label text text--level5">Next Steps</a>
       </div>
     </section>)
   }

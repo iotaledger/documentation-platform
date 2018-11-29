@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Container from './../components/Container'
 import Header from './../components/ci/Header'
 import CardContainer from './../components/ci/CardContainer'
+import ProjectTopics from './../components/ci/ProjectTopics'
+
 
 import logoImg from "../logo.png";
 
@@ -16,6 +18,7 @@ export default () => (
         </Head>
         <Header />
         <CardContainer />
+        <ProjectTopics />
       </Container>
     )}
   />
