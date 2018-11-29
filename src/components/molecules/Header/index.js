@@ -11,7 +11,7 @@ const Header = ({ className, logo, topLinks }) => (
         <div className="top-header__items">
           {
             topLinks.map(item =>
-              <Link href={item.href}>
+              <Link href={item.href} key={item.text}>
                 <Text className="top-header__item">
                   {item.text}
                 </Text>
