@@ -8,6 +8,7 @@ module.exports = {
         use: ['style-loader', 'raw-loader', 'sass-loader'],
         include: [
           path.resolve(__dirname, '../styles/'),
+          path.resolve(__dirname, '../node_modules/css-styleguide'),
         ],
       },
       {
