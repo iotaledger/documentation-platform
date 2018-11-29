@@ -92,8 +92,14 @@ export default {
               content="width=device-width, initial-scale=1"
             />
             <link
-              href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i"
+              href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700%7CMaterial+Icons"
               rel="stylesheet"
+            />
+            <link
+              rel="stylesheet"
+              href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+              integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+              crossorigin="anonymous"
             />
             {renderMeta.styleTags}
             <title>{repoName}</title>
@@ -103,30 +109,4 @@ export default {
       );
     }
   },
-  webpack: [
-    (config, { defaultLoaders }) => {
-      config.module.rules = [
-        {
-          oneOf: [
-            {
-              test: /\.s?css$/,
-              use: ['style-loader', 'raw-loader', 'sass-loader'],
-              include: [ path.resolve(__dirname, './styles/') ],
-            },
-            {
-              test: /\.(png|svg|jpe?g|woff2?|ttf|eot)$/,
-              use: ['url-loader?limit=50000'],
-            },
-            defaultLoaders.cssLoader,
-            defaultLoaders.jsLoader,
-            defaultLoaders.fileLoader,
-          ]
-        }
-      ]
-      return config
-    },
-    // config => {
-    //   console.log(config.module.rules) // Log out the final set of rules
-    // }
-  ],
 };

@@ -1,4 +1,26 @@
 {
+  "topHeaderLinks": [
+    {
+      "href": "https://iota.org",
+      "text": "iota.org"
+    },
+    {
+      "href": "https://iota.org",
+      "text": "news"
+    },
+    {
+      "href": "https://iota.org",
+      "text": "wallet"
+    },
+    {
+      "href": "https://iota.org",
+      "text": "qubic"
+    },
+    {
+      "href": "https://iota.org",
+      "text": "ecosystem"
+    }
+  ],
   "cards": [
     {
       "href": "https://iota.org",

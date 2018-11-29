@@ -20,7 +20,7 @@
     "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.2",
     "classnames": "^2.2.6",
-    "iota-css-theme": "iotaledger/iota-css-theme",
+    "css-styleguide": "iotaledger/iota-css-theme",
     "lunr": "^2.3.3",
     "markdown-it": "^8.4.2",
     "nprogress": "^0.2.0",
@@ -33,8 +33,7 @@
     "react-star-rating-component": "^1.4.1",
     "react-static": "^5.9.8",
     "reprism": "^0.0.11",
-    "styled-components": "^3",
-    "webfontloader": "^1.6.28"
+    "styled-components": "^3"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.0.0",
@@ -43,11 +42,8 @@
     "@storybook/react": "^3.0.0",
     "babel-plugin-styled-components": "^1.3.0",
     "eslint-config-react-tools": "1.x.x",
-    "node-sass": "^4.10.0",
-    "raw-loader": "^0.5.1",
-    "sass-loader": "^7.1.0",
     "serve": "^10.0.2",
-    "style-loader": "^0.23.1",
+    "webfontloader": "^1.6.28",
     "why-did-you-update": "^0.1.1"
   }
 }
