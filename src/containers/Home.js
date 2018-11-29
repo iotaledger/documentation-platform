@@ -16,7 +16,10 @@ export default () => (
         <Head>
           <title>Home | {repoName}</title>
         </Head>
-        <Header />
+        <Header
+          headerTitle='Developer Documentation'
+          topTitles={['IOTA.ORG', 'NEWS', 'WALLET', 'QUBIIC', 'ECOSYSTEM']}
+        />
         <CardContainer />
         <div style={{ padding: '0 40px' }}>
           <ProjectTopics />
