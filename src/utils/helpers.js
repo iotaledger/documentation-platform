@@ -1,9 +1,18 @@
 export const getVersion = path => {
-  if (path.indexOf('reference/') > -1 || path.indexOf('examples/') > -1) {
-    const matchArr = path.match(/(?<=(reference|examples)\/).*?(?=\/+)/)
-    return matchArr.length > 0 ? matchArr[0] : null
+  let regex = new RegExp('\\w+');
+  if (path.indexOf('reference/') > -1) {
+    regex = new RegExp(/\/reference\/\s*(.*?)\s*\//g);
+  } else if (path.indexOf('examples/') > -1) {
+    regex = new RegExp(/\/examples\/\s*(.*?)\s*\//g);
+  } else {
+    return null
   }
-  return null
+  const matches = regex.exec(path)
+  return matches.length >= 2 ? matches[1] : null
 }
 
-export const getProjectName = path => path.match(/(?<=docs\/).*?(?=\/+)/)[0];
+export const getProjectName = path => {
+  const regex = new RegExp(/\/docs\/\s*(.*?)\s*\//g);
+  const matches = regex.exec(path)
+  return matches.length >= 2 ? matches[1] : null
+}
