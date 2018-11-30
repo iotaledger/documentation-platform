@@ -20,6 +20,15 @@ export default () => (
           headerTitle='Developer Documentation'
           topTitles={['IOTA.ORG', 'NEWS', 'WALLET', 'QUBIIC', 'ECOSYSTEM']}
         />
+        {/*<Cards> these will be reserved for the left floating div
+          {
+            Object.values(menu).map(({ name, versions }) =>
+              <CardElement key={name} to={{ pathname: `/docs/${name}/reference/${Object.keys(versions)[Object.keys(versions).length - 1]}/README`, state: { project: name }}} background="#ff6073">
+                {name}
+              </CardElement>
+            )
+          }
+        </Cards>*/}
         <CardContainer />
         <div style={{ padding: '0 40px' }}>
           <ProjectTopics />

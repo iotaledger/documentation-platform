@@ -1,8 +1,8 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import iotaIntroImg from '../../assets/Images/1.png'
-import gettingStartImg from '../../assets/Images/2.png'
-import nextSetp from '../../assets/Images/3.png'
+import iotaIntroImg from '../../assets/1.png'
+import gettingStartImg from '../../assets/2.png'
+import nextSetp from '../../assets/3.png'
 
 
 class CardContainer extends React.Component {
