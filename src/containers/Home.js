@@ -62,10 +62,10 @@ export default () => (
           }
         </Cards>
         <HomePageLayout>
-          <div className="left-column" style={{flexGrow: 1}}>
+          <div className="left-column" style={{flex: 1}}>
             <FloatingMenu styles={{ }} />
           </div>
-          <div className="righ-column" style={{flexGrow: 3}}>
+          <div className="righ-column" style={{flex: 3}}>
             <CardContainer />
             <ProjectTopics />
           </div>

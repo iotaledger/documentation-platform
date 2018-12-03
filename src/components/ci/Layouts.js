@@ -19,13 +19,15 @@ const media = {
 
 const HomePageLayout = styled.div`
   display: flex;
-  width: 100%;
+  //width: 100%;
   .left-column {
     display: none;
     width: 100%;
+    flex: 1;
   }
   .righ-column {
     width: 100%;
+    flex: 3;
   }
   ${media.desktop`
     .left-column {
