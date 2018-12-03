@@ -7,6 +7,7 @@ import CardContainer from './../components/ci/CardContainer'
 import ProjectTopics from './../components/ci/ProjectTopics'
 import { HomePageLayout } from './../components/ci/Layouts'
 import FloatingMenu from './../components/ci/FloatingMenu'
+import contentHomePage from '../contentHomePage.json';
 
 import logoImg from "../logo.png";
 const Cards = styled.div`
@@ -50,9 +51,9 @@ export default () => (
         </Head>
         <Header
           headerTitle='Developer Documentation'
-          topTitles={['IOTA.ORG', 'NEWS', 'WALLET', 'QUBIIC', 'ECOSYSTEM']}
+          topTitles={contentHomePage.topHeaderLinks}
         />
-        <Cards>
+        {/*<Cards>
           {
             Object.values(menu).map(({ name, versions }) =>
               <CardElement key={name} to={{ pathname: `/docs/${name}/reference/${Object.keys(versions)[Object.keys(versions).length - 1]}/README`, state: { project: name }}} background="#ff6073">
@@ -60,13 +61,13 @@ export default () => (
               </CardElement>
             )
           }
-        </Cards>
+        </Cards>*/}
         <HomePageLayout>
           <div className="left-column" style={{}}>
-            <FloatingMenu styles={{ }} />
+            <FloatingMenu styles={{padding: '0 114px', position: 'fixed'}} />
           </div>
           <div className="righ-column" style={{}}>
-            <CardContainer />
+            <CardContainer styles={{padding: '70px 70px 70px 0'}} />
             <ProjectTopics />
           </div>
         </HomePageLayout>

@@ -40,9 +40,9 @@ class Header extends React.Component {
       </div>
       <div className="top-header__items">
         {this.props.topTitles.map((topTitle, index) =>
-          (<span key={index} className="top-header__item">
-            {topTitle}
-          </span>)
+          (<a href={topTitle.href}><span key={index} className="top-header__item">
+            {topTitle.text.toUpperCase()}
+          </span></a>)
         )}
       </div>
   </div>

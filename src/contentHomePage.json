@@ -1,0 +1,217 @@
+{
+  "topHeaderLinks": [
+    {
+      "href": "https://iota.org",
+      "text": "iota.org"
+    },
+    {
+      "href": "https://iota.org",
+      "text": "news"
+    },
+    {
+      "href": "https://iota.org",
+      "text": "wallet"
+    },
+    {
+      "href": "https://iota.org",
+      "text": "qubic"
+    },
+    {
+      "href": "https://iota.org",
+      "text": "ecosystem"
+    }
+  ],
+  "cards": [
+    {
+      "href": "https://iota.org",
+      "image": "../../assets/1.png",
+      "alt": "IOTA Foundation",
+      "text": "What is IOTA?"
+    },
+    {
+      "href": "https://iota.org",
+      "image": "../assets/2.png",
+      "alt": "IOTA Foundation",
+      "text": "Getting Started"
+    },
+    {
+      "href": "https://iota.org",
+      "image": "../assets/3.png",
+      "alt": "IOTA Foundation",
+      "text": "Next Steps"
+    }
+  ],
+  "content": [
+    {
+      "header": "IOTA Basics",
+      "subheader": "Learn about the basic ideas and concepts around IOTA",
+      "topics": [
+        {
+          "href": "https://iota.org",
+          "header": "Introduction",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Seeds, Private Keys & Accounts",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Transactions",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Networks",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Support",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        }
+      ]
+    },
+    {
+      "header": "Tangle Concepts",
+      "subheader": "The Tangle is the distributed ledger network behind IOTA",
+      "topics": [
+        {
+          "href": "https://iota.org",
+          "header": "Introduction",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Tip Selection",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Consensus in the Tangle",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Proof of Work",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        }
+      ]
+    },
+    {
+      "header": "IRI",
+      "subheader": "Essential for operation a supporting node on the IOTA Tangle network",
+      "topics": [
+        {
+          "href": "https://iota.org",
+          "header": "Introduction",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Quick Start",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Knowledge Base",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Networking",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "API Reference",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        }
+      ]
+    },
+    {
+      "header": "HUB",
+      "subheader": "Learn about the basic ideas and concepts behind IOTA Hub",
+      "topics": [
+        {
+          "href": "https://iota.org",
+          "header": "Introduction",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Seeds, Private Keys & Accounts",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Transactions",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Networks",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Support",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        }
+      ]
+    },
+    {
+      "header": "Trinity Wallet",
+      "subheader": "Learn about the basic ideas and concepts behind Trinity",
+      "topics": [
+        {
+          "href": "https://iota.org",
+          "header": "Introduction",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Quick Strat",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Desktop Setup",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Interact",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Information",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        }
+      ]
+    },
+    {
+      "header": "Client Libraries",
+      "subheader": "Reference on JS, Golang, Java, Python, and C# Libraries",
+      "topics": [
+        {
+          "href": "https://iota.org",
+          "header": "Introduction",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "Quick Strat",
+          "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+        },
+        {
+          "href": "https://iota.org",
+          "header": "API Reference",
+          "subheader": "Learn about language implementation for <a href='#'>JS</a>, <a href='#'>Golang</a>, <a href='#'>Java</a>, <a href='#'>Python</a>, <a href='#'>C#</a>"
+        }
+      ]
+    }
+  ]
+}
