@@ -5,7 +5,8 @@ import Container from './../components/Container'
 import Header from './../components/ci/Header'
 import CardContainer from './../components/ci/CardContainer'
 import ProjectTopics from './../components/ci/ProjectTopics'
-
+import { HomePageLayout } from './../components/ci/Layouts'
+import FloatingMenu from './../components/ci/FloatingMenu'
 
 import logoImg from "../logo.png";
 const Cards = styled.div`
@@ -60,10 +61,15 @@ export default () => (
             )
           }
         </Cards>
-        <CardContainer />
-        <div style={{ padding: '0 40px' }}>
-          <ProjectTopics />
-        </div>
+        <HomePageLayout>
+          <div className="left-column" style={{flexGrow: 1}}>
+            <FloatingMenu styles={{ }} />
+          </div>
+          <div className="righ-column" style={{flexGrow: 3}}>
+            <CardContainer />
+            <ProjectTopics />
+          </div>
+        </HomePageLayout>
       </Container>
     )}
   />
