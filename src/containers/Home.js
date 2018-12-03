@@ -8,6 +8,7 @@ import ProjectTopics from './../components/ci/ProjectTopics'
 import { HomePageLayout } from './../components/ci/Layouts'
 import FloatingMenu from './../components/ci/FloatingMenu'
 import contentHomePage from '../contentHomePage.json';
+import ProjectTopicsContainer from './../components/ci/ProjectTopicsContainer'
 
 import logoImg from "../logo.png";
 const Cards = styled.div`
@@ -67,8 +68,8 @@ export default () => (
             <FloatingMenu styles={{padding: '0 114px', position: 'fixed'}} />
           </div>
           <div className="righ-column" style={{}}>
-            <CardContainer styles={{padding: '70px 70px 70px 0'}} />
-            <ProjectTopics />
+            <CardContainer styles={{padding: '70px 0px 70px 0'}} />
+            <ProjectTopicsContainer contentHomePage={contentHomePage}  />
           </div>
         </HomePageLayout>
       </Container>
