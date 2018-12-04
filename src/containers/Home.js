@@ -72,7 +72,9 @@ export default () => (
         <HomePageLayout>
           <div className="left-column" >
             <div style={{backgroundColor: '#f3f2f1', width: '100%', height: '482px'}}></div>
-            <FloatingMenu styles={{ position: 'fixed', top: '400px'}} />
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+              <FloatingMenu styles={{ position: 'fixed', top: '400px'}} />
+            </div>
           </div>
           <div className="righ-column" style={{}}>
             <CardContainer styles={{padding: '70px 0px 70px 0'}} />
