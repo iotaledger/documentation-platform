@@ -3,6 +3,7 @@ import { SiteData, Link, Head } from "react-static";
 import styled from "styled-components";
 import Container from './../components/Container'
 import Header from './../components/ci/Header'
+import Footer from './../components/molecules/Footer'
 import CardContainer from './../components/ci/CardContainer'
 import ProjectTopics from './../components/ci/ProjectTopics'
 import { HomePageLayout } from './../components/ci/Layouts'
@@ -85,6 +86,7 @@ export default () => (
             <ProjectTopicsContainer contentHomePage={contentHomePage}  />
           </div>
         </HomePageLayout>
+        <Footer content={contentHomePage.footer} />
       </Container>
     )}
   />
