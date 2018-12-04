@@ -9,7 +9,12 @@ import { HomePageLayout } from './../components/ci/Layouts'
 import FloatingMenu from './../components/ci/FloatingMenu'
 import contentHomePage from '../contentHomePage.json';
 import ProjectTopicsContainer from './../components/ci/ProjectTopicsContainer'
-
+/*
+background-color: red;
+width: 280%;
+margin-left: -100%;
+height: 100px;
+*/
 import logoImg from "../logo.png";
 const Cards = styled.div`
   display: flex;
@@ -65,7 +70,8 @@ export default () => (
         </Cards>*/}
 
         <HomePageLayout>
-          <div className="left-column" style={{padding: '0 114px'}}>
+          <div className="left-column" >
+            <div style={{backgroundColor: '#f3f2f1', width: '100%', height: '482px'}}></div>
             <FloatingMenu styles={{ position: 'fixed', top: '400px'}} />
           </div>
           <div className="righ-column" style={{}}>

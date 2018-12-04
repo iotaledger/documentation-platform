@@ -28,7 +28,7 @@ const HomePageLayout = styled.div`
   }
   .righ-column {
     width: 100%;
-    flex: 7;
+    flex: 3;
   }
   ${media.desktop`
     .left-column {
