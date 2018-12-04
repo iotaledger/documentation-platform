@@ -68,16 +68,20 @@ export default () => (
             )
           }
         </Cards>*/}
-
+        <HomePageLayout style={{backgroundColor: '#f3f2f1', width: '100%', minHeight: '482px'}}>
+            <div className="left-column">
+            </div>
+            <div className="righ-column" style={{}}>
+                <CardContainer styles={{padding: '70px 0px 70px 0'}} />
+            </div>
+        </HomePageLayout>
         <HomePageLayout>
           <div className="left-column" >
-            <div style={{backgroundColor: '#f3f2f1', width: '100%', height: '482px'}}></div>
             <div style={{display: 'flex', justifyContent: 'center'}}>
               <FloatingMenu styles={{ position: 'fixed', top: '400px'}} />
             </div>
           </div>
           <div className="righ-column" style={{}}>
-            <CardContainer styles={{padding: '70px 0px 70px 0'}} />
             <ProjectTopicsContainer contentHomePage={contentHomePage}  />
           </div>
         </HomePageLayout>
