@@ -8,9 +8,9 @@ class Card extends React.Component {
   }
 
   render() {
-    return (<div class="card">
-    <img class="card__image" src="assets/1.png" alt="IOTA intro" />
-    <a href="#" class="card__label text text--level5">What is IOTA?</a>
+    return (<div className="card">
+    <img className="card__image" src="assets/1.png" alt="IOTA intro" />
+    <a href="#" className="card__label text text--level5">What is IOTA?</a>
     </div>)
   }
 }
