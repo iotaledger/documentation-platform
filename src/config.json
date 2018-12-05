@@ -1,3 +1,4 @@
 {
-  "domain": "https://us-central1-iota-documentation.cloudfunctions.net"
+  "domain": "https://us-central1-iota-documentation.cloudfunctions.net",
+  "siteRoot": "https://iota-documentation.firebaseapp.com"
 }

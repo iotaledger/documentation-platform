@@ -5,6 +5,7 @@ import React, { Component } from "react";
 import { ServerStyleSheet } from "styled-components";
 import chokidar from "chokidar";
 import { getDocPages, buildMenuItems } from './buildList'
+import { siteRoot } from './src/config.json'
 
 chokidar.watch("../docs").on("all", () => reloadRoutes());
 
@@ -38,6 +39,7 @@ const fixReprismSyntaxHighlighting = content => content
 
 // No need to touch any of this, unless you want to.
 export default {
+  siteRoot,
   getSiteData: () => ({
     menu,
     repo,
