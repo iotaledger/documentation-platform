@@ -5,7 +5,7 @@ import Container from './../components/Container'
 import Header from './../components/ci/Header'
 import Footer from './../components/molecules/Footer'
 import ProjectTopicsContainer from './../components/molecules/ProjectTopics'
-import CardContainer from './../components/ci/CardContainer'
+import CardContainer from './../components/molecules/HomePageCard'
 import { HomePageLayout } from './../components/ci/Layouts'
 import FloatingMenu from './../components/ci/FloatingMenu'
 import contentHomePage from '../contentHomePage.json';
@@ -73,7 +73,7 @@ export default () => (
             <div className="left-column">
             </div>
             <div className="right-column" style={{}}>
-                <CardContainer styles={{padding: '70px 0px 70px 0'}} />
+                <CardContainer content={contentHomePage.cards} />
             </div>
         </HomePageLayout>
         <HomePageLayout>
