@@ -4,7 +4,6 @@ import styled, { css } from 'styled-components'
 import Link from '../../atoms/Link';
 import Text from '../../atoms/Text';
 import Heading from '../../atoms/Heading';
-import './footer.css'
 
 class Footer extends React.Component {
   constructor(props) {
