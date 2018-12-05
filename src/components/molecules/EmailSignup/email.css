@@ -1,0 +1,87 @@
+.email-signup {
+  display: flex;
+  justify-content: center;
+  height: 160px;
+  background-color: #f6f6f6;
+}
+
+.email-signup__wrapper {
+  max-width: 1420px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.email-signup__content {
+  padding: 0 30px;
+}
+
+.email-signup__content, .input-register-container {
+  width: 50%;
+}
+
+.email-signup__content h2 {
+  margin: 37px 0 0;
+}
+
+.email-signup__content h2 .text {
+  color: #20a49d;
+}
+
+.email-signup__content p {
+  color: #1c1e21;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.76;
+  margin-top: 5px;
+}
+
+.input-register-container {
+  display: flex;
+  flex-direction: row;
+  margin: auto 30px;
+  justify-content: flex-end;
+}
+
+.input-register-container .input-register {
+  height: 55px;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border: 1px solid #c4c4c4;
+  color: #696f76;
+  font-size: 17px;
+}
+
+@media (max-width: 768px) {
+  .email-signup {
+    height: auto;
+  }
+
+  .email-signup__wrapper {
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .email-signup__content, .input-register-container {
+    width: 100%;
+  }
+
+  .email-signup__content h2 {
+    font-size: 24px;
+    margin: 25px 0 0;
+  }
+
+  .input-register-container {
+    margin: 35px 30px 25px;
+    justify-content: flex-start;
+  }
+
+  .input-register-container .input-register {
+    width: 270px;
+  }
+}
