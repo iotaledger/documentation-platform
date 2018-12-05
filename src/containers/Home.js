@@ -4,12 +4,11 @@ import styled from "styled-components";
 import Container from './../components/Container'
 import Header from './../components/ci/Header'
 import Footer from './../components/molecules/Footer'
+import ProjectTopicsContainer from './../components/molecules/ProjectTopics'
 import CardContainer from './../components/ci/CardContainer'
-import ProjectTopics from './../components/ci/ProjectTopics'
 import { HomePageLayout } from './../components/ci/Layouts'
 import FloatingMenu from './../components/ci/FloatingMenu'
 import contentHomePage from '../contentHomePage.json';
-import ProjectTopicsContainer from './../components/ci/ProjectTopicsContainer'
 /*
 background-color: red;
 width: 280%;
