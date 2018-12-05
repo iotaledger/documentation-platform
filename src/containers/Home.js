@@ -72,7 +72,7 @@ export default () => (
         <HomePageLayout style={{backgroundColor: '#f3f2f1', width: '100%', minHeight: '482px'}}>
             <div className="left-column">
             </div>
-            <div className="righ-column" style={{}}>
+            <div className="right-column" style={{}}>
                 <CardContainer styles={{padding: '70px 0px 70px 0'}} />
             </div>
         </HomePageLayout>
@@ -82,7 +82,7 @@ export default () => (
               <FloatingMenu styles={{ position: 'fixed', top: '400px'}} />
             </div>
           </div>
-          <div className="righ-column" style={{}}>
+          <div className="right-column" style={{}}>
             <ProjectTopicsContainer contentHomePage={contentHomePage}  />
           </div>
         </HomePageLayout>

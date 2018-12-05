@@ -26,7 +26,7 @@ const HomePageLayout = styled.div`
     flex: 1;
     min-width: 150px;
   }
-  .righ-column {
+  .right-column {
     width: 100%;
     flex: 3;
   }
