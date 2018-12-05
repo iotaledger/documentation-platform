@@ -58,7 +58,8 @@ export default () => (
         </Head>
         <Header
           headerTitle='Developer Documentation'
-          topTitles={contentHomePage.topHeaderLinks}
+          // headerTopLinks={contentHomePage.headerTopLinks}
+          topTitles={contentHomePage.headerTopLinks}
         />
         {/*<Cards>
           {
