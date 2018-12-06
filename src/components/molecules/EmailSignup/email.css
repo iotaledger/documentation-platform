@@ -1,7 +1,7 @@
 .email-signup {
   display: flex;
   justify-content: center;
-  height: 160px;
+  min-height: 160px;
   background-color: #f6f6f6;
 }
 
@@ -38,13 +38,24 @@
 }
 
 .input-register-container {
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.input-register-container__wrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.input-register-container__form {
   display: flex;
   flex-direction: row;
   margin: auto 30px;
   justify-content: flex-end;
 }
 
-.input-register-container .input-register {
+.input-register-container__form .input-register {
   height: 55px;
   -webkit-border-top-left-radius: 5px;
   -webkit-border-bottom-left-radius: 5px;
@@ -55,6 +66,26 @@
   border: 1px solid #c4c4c4;
   color: #696f76;
   font-size: 17px;
+}
+
+.input-register__button {
+  outline: none;
+  cursor: pointer;
+}
+
+.error-message {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  color: red;
+  margin: auto 30px;
+  position: absolute;
+  bottom: 20px;
+}
+
+.success-message {
+  color: green;
+  margin: auto 30px;
 }
 
 @media (max-width: 768px) {
@@ -69,6 +100,7 @@
 
   .email-signup__content, .input-register-container {
     width: 100%;
+    justify-content: flex-start;
   }
 
   .email-signup__content h2 {
@@ -76,12 +108,16 @@
     margin: 25px 0 0;
   }
 
-  .input-register-container {
-    margin: 35px 30px 25px;
-    justify-content: flex-start;
+  .input-register-container__form {
+    margin: 5px 30px 25px;
   }
 
-  .input-register-container .input-register {
-    width: 270px;
+  .input-register-container__form .input-register {
+    width: 280px;
+  }
+
+  .error-message {
+    margin: auto 30px;
+    bottom: 0;
   }
 }

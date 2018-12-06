@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
 const cors = require('cors')({ origin: true });
-const { submitComment, submitFeedback } = require('./firebase');
+const { submitComment, submitFeedback, submitEmail } = require('./firebase');
 
 exports.submitComment = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
@@ -39,6 +39,23 @@ exports.submitFeedback = functions.https.onRequest((req, res) => {
     } catch (error) {
       console.log('submitFeedback failed. Error: ', error);
       return res.status(403).json({ error });
+    }
+  });
+});
+
+exports.submitEmail = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    const packet = req.body;
+    if (!packet || !packet.email) {
+      console.log('submitEmail failed. Packet: ', packet);
+      return res.status(400).json({ message: 'Ensure all fields are included' });
+    }
+
+    try {
+      return res.json({ message: await submitEmail(packet) });
+    } catch (error) {
+      console.log('submitEmail failed. Error: ', error);
+      return res.status(403).json({ message: error });
     }
   });
 });
