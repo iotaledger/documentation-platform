@@ -9,7 +9,7 @@ import Routes from "react-static-routes";
 
 import "nprogress/nprogress.css";
 import "react-smackdown/themes/smackdown-light.css";
-import "css-styleguide";
+import "iota-css-theme";
 
 import jsx from "reprism/languages/jsx";
 import bash from "reprism/languages/bash";

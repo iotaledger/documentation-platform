@@ -18,7 +18,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.2",
-    "css-styleguide": "iotaledger/iota-css-theme",
+    "iota-css-theme": "iotaledger/iota-css-theme",
     "classnames": "^2.2.6",
     "lunr": "^2.3.3",
     "markdown-it": "^8.4.2",
