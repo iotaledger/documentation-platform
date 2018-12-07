@@ -37,3 +37,13 @@ exports.submitFeedback = async ({
 
   return true;
 };
+
+exports.submitEmail = async ({ email }) => {
+  await admin
+    .firestore()
+    .collection('emails')
+    .doc(email)
+    .set({ email });
+
+  return 'Successfully sent!';
+};
