@@ -89,7 +89,7 @@ export default () => (
               <FloatingMenu styles={{ position: 'fixed', top: '400px'}} />
             </div>
           </div>
-          <div className="right-column">
+          <div className="right-column" style={{ margin: '25px' }}>
             <ProjectTopicsContainer contentHomePage={contentHomePage}  />
           </div>
         </HomePageLayout>
