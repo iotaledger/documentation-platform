@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
+const maxWidthLayout = 1420;
 const tabletWidth = 768;
 const desktopWidth = 1024;
 
@@ -45,6 +46,7 @@ const DocPageLayout = styled.div`
 
 export {
   media,
+  maxWidthLayout,
   HomePageLayout,
   DocPageLayout
 }

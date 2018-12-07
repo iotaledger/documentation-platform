@@ -54,7 +54,7 @@ class Header extends React.Component {
       </div>
       <Menu onCloseClick={this.handleBurgerClick} styles={this.state.isMenuOpen ? menuShown : menuHidden}/>
     </section>
-    <section className="header__body">
+    <section className="header__body" style={{}}>
       <span className="text text--level1 text--secondary">{this.props.headerTitle}</span>
       <div className="header__search">
         <div className="input-wrapper">

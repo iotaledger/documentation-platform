@@ -9,6 +9,8 @@ import CardContainer from './../components/molecules/HomePageCard'
 import { HomePageLayout } from './../components/ci/Layouts'
 import FloatingMenu from './../components/ci/FloatingMenu'
 import contentHomePage from '../contentHomePage.json';
+import { maxWidthLayout } from './../components/ci/Layouts'
+
 /*
 background-color: red;
 width: 280%;
@@ -69,14 +71,18 @@ export default () => (
             )
           }
         </Cards>*/}
-        <HomePageLayout style={{backgroundColor: '#f3f2f1', width: '100%', minHeight: '482px'}}>
-            <div className="left-column">
-            </div>
-            <div className="right-column" style={{}}>
-                <CardContainer content={contentHomePage.cards} />
-            </div>
+        <div style={{backgroundColor: '#f3f2f1'}}>
+        <HomePageLayout style={{backgroundColor: '#f3f2f1', width: '100%', minHeight: '482px', maxWidth: maxWidthLayout, margin: 'auto'}}>
+
+              <div className="left-column">
+              </div>
+              <div className="right-column" style={{}}>
+                  <CardContainer content={contentHomePage.cards} />
+              </div>
+
         </HomePageLayout>
-        <HomePageLayout>
+        </div>
+        <HomePageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto' }}>
           <div className="left-column" >
             <div style={{display: 'flex', justifyContent: 'center'}}>
               <FloatingMenu styles={{ position: 'fixed', top: '400px'}} />
