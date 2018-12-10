@@ -60,7 +60,7 @@ class Menu extends React.Component {
     {this.state.menuData.map((menuItem, index) => (<section key={index} className={`side-menu__group ${menuItem.expand ? 'side-menu__group--selected' : ''}`}>
       <h5 className="side-menu__heading" onClick={(e) => this.handleHeadingClick(index)}>
         <span>{menuItem.heading}</span>
-        <i className="fas fa-angle-down"></i>
+        <i className={` ${menuItem.expand ? 'fas fa-angle-up' : 'fas fa-angle-down'}`}></i>
       </h5>
       <ul className="side-menu__list">
           {menuItem.menuList.map((menuListItem, miIndex) => (
