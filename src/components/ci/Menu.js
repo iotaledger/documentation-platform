@@ -44,7 +44,7 @@ class Menu extends React.Component {
         menuData:
         state.menuData.map((item, ind) =>
         (ind == index ?
-          {...item, expand: true} :
+          {...item, expand: !item.expand} :
           {...item, expand: false}
         ))
       };
