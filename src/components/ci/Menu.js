@@ -5,6 +5,21 @@ import logo from './../../assets/Logo.svg'
 class Menu extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      menuData : [{
+        heading: 'Heading 1',
+        menuList: ['item1', 'item2', 'item3'],
+        expand: false
+      }, {
+        heading: 'Heading 2',
+        menuList: ['item1', 'item2', 'item3'],
+        expand: true
+      }, {
+        heading: 'Heading 3',
+        menuList: ['item1', 'item2', 'item3'],
+        expand: false
+      }]
+    }
   }
 
   render() {
@@ -13,50 +28,18 @@ class Menu extends React.Component {
     <span>Navigation</span>
     <i className="fas fa-times" onClick={e => this.props.onCloseClick()}></i>
   </h4>
-  <section className="side-menu__group">
-    <h5 className="side-menu__heading">
-      <span>Heading 1</span>
-      <i className="fas fa-angle-down"></i>
-    </h5>
-    <ul className="side-menu__list">
-        <li>list item 1 </li>
-        <li>list item 2 </li>
-        <li>list item 3 </li>
-    </ul>
-  </section>
-  <section className="side-menu__group side-menu__group--selected">
-    <h5 className="side-menu__heading">
-      <span>Heading 2</span>
-      <i className="fas fa-angle-up"></i>
-    </h5>
-    <ul className="side-menu__list">
-        <li>list item 4 </li>
-        <li>list item 5 </li>
-        <li>list item 6 </li>
-    </ul>
-  </section>
-  <section className="side-menu__group">
-    <h5 className="side-menu__heading">
-      <span>Heading 3</span>
-      <i className="fas fa-angle-down"></i>
-    </h5>
-    <ul className="side-menu__list">
-        <li>list item 7 </li>
-        <li>list item 8 </li>
-        <li>list item 9 </li>
-    </ul>
-  </section>
-  <section className="side-menu__group">
-    <h5 className="side-menu__heading">
-      <span>Heading 4</span>
-      <i className="fas fa-angle-down"></i>
-    </h5>
-    <ul className="side-menu__list">
-        <li>list item 10 </li>
-        <li>list item 11 </li>
-        <li>list item 12 </li>
-    </ul>
-  </section>
+
+    {this.state.menuData.map((menuItem, index) => (<section key={index} className={`side-menu__group ${menuItem.expand ? 'side-menu__group--selected' : ''}`}>
+      <h5 className="side-menu__heading">
+        <span>{menuItem.heading}</span>
+        <i className="fas fa-angle-down"></i>
+      </h5>
+      <ul className="side-menu__list">
+          {menuItem.menuList.map((menuListItem, miIndex) => (
+            <li key={miIndex}>{menuListItem}</li>
+          ))}
+      </ul>
+    </section>))}
 </section>)
   }
 }
