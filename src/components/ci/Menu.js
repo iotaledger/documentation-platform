@@ -6,6 +6,10 @@ class Menu extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      menuData: []
+    }
+    /*
+    this.state = {
       menuData : [{
         heading: 'Heading 1',
         menuList: ['item1', 'item2', 'item3'],
@@ -19,8 +23,18 @@ class Menu extends React.Component {
         menuList: ['item1', 'item2', 'item3'],
         expand: false
       }]
-    }
+    } */
     this.handleHeadingClick = this.handleHeadingClick.bind(this)
+  }
+  componentDidMount() {
+    let data = Object.values(this.props.data).map(obj => {
+      let latestVersion = Math.max(...Object.keys(obj.versions))
+      let menuList = obj.versions[`${latestVersion}.0`].map(({name, link}) => name.split("\\")[4])
+      return { expand: false, heading: obj.name, menuList }
+    })
+    this.setState({
+      menuData: data
+    })
   }
   handleHeadingClick(index) {
     this.setState((state, props) => {

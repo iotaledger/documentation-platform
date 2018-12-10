@@ -52,7 +52,11 @@ class Header extends React.Component {
       <div className="header__icon" onClick={this.handleBurgerClick}>
         <i className="fas fa-bars fa-2x"></i>
       </div>
-      <Menu onCloseClick={this.handleBurgerClick} styles={this.state.isMenuOpen ? menuShown : menuHidden}/>
+      <Menu
+        data={this.props.data}
+        onCloseClick={this.handleBurgerClick}
+        styles={this.state.isMenuOpen ? menuShown : menuHidden}
+      />
     </section>
     <section className="header__body" style={{}}>
       <span className="text text--level1 text--secondary">{this.props.headerTitle}</span>

@@ -31,6 +31,7 @@ export default () => (
           headerTitle='Developer Documentation'
           // headerTopLinks={contentHomePage.headerTopLinks}
           topTitles={contentHomePage.headerTopLinks}
+          data={menu}
         />
 
         <div style={{backgroundColor: '#f3f2f1'}}>
