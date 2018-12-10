@@ -28,8 +28,10 @@ class Menu extends React.Component {
   }
   componentDidMount() {
     let data = Object.values(this.props.data).map(obj => {
-      let latestVersion = Math.max(...Object.keys(obj.versions))
-      let menuList = obj.versions[`${latestVersion}.0`].map(({name, link}) => name.split("\\")[4])
+      let versionsNbrs = Object.keys(obj.versions)
+      let latestVersion = versionsNbrs[versionsNbrs.length - 1] // get the last version
+      console.log(obj.versions[latestVersion])
+      let menuList = obj.versions[latestVersion].map(({name, link}) => name.split("\\")[name.split("\\").length - 1])
       return { expand: false, heading: obj.name, menuList }
     })
     this.setState({
@@ -39,13 +41,12 @@ class Menu extends React.Component {
   handleHeadingClick(index) {
     this.setState((state, props) => {
       return {
-        menuData: state.menuData.map((item, ind) => {
-          if(ind == index) {
-            return {...item, expand: true}
-          } else {
-            return {...item, expand: false}
-          }
-        })
+        menuData:
+        state.menuData.map((item, ind) =>
+        (ind == index ?
+          {...item, expand: true} :
+          {...item, expand: false}
+        ))
       };
     });
   }
