@@ -13,13 +13,27 @@ class Menu extends React.Component {
       }, {
         heading: 'Heading 2',
         menuList: ['item1', 'item2', 'item3'],
-        expand: true
+        expand: false
       }, {
         heading: 'Heading 3',
         menuList: ['item1', 'item2', 'item3'],
         expand: false
       }]
     }
+    this.handleHeadingClick = this.handleHeadingClick.bind(this)
+  }
+  handleHeadingClick(index) {
+    this.setState((state, props) => {
+      return {
+        menuData: state.menuData.map((item, ind) => {
+          if(ind == index) {
+            return {...item, expand: true}
+          } else {
+            return {...item, expand: false}
+          }
+        })
+      };
+    });
   }
 
   render() {
@@ -30,7 +44,7 @@ class Menu extends React.Component {
   </h4>
 
     {this.state.menuData.map((menuItem, index) => (<section key={index} className={`side-menu__group ${menuItem.expand ? 'side-menu__group--selected' : ''}`}>
-      <h5 className="side-menu__heading">
+      <h5 className="side-menu__heading" onClick={(e) => this.handleHeadingClick(index)}>
         <span>{menuItem.heading}</span>
         <i className="fas fa-angle-down"></i>
       </h5>
