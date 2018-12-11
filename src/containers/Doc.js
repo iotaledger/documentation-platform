@@ -10,6 +10,8 @@ import Container from './../components/Container'
 import Search from 'components/Search'
 import Dropdown from 'components/Dropdown'
 import { maxWidthLayout, DocPageLayout } from './../components/ci/Layouts'
+import FloatingMenu from './../components/ci/FloatingMenu'
+import TreeMenu from './../components/ci/TreeMenu'
 
 
 class Doc extends React.Component {
@@ -125,7 +127,7 @@ class Doc extends React.Component {
 
     return (
       <SiteData
-        render={({ repoName }) => (
+        render={({ menu, repoName }) => (
           <RouteData
             render={({ editPath, markdown, title }) => (
               <Container>
@@ -135,6 +137,9 @@ class Doc extends React.Component {
                 <Search />
                 <DocPageLayout>
                   <section className="left-column">
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                      <FloatingMenu data={menu} styles={{ position: 'fixed', top: '400px'}} />
+                    </div>
                   </section>
                   <section className="middle-column">
                     <Markdown source={query ?
@@ -170,6 +175,7 @@ class Doc extends React.Component {
                       ) : null}
                   </section>
                   <section className="right-column">
+                    <TreeMenu />
                   </section>
                 </DocPageLayout>
 

@@ -46,17 +46,15 @@ padding: 0 16px;
   display: none;
   width: 100%;
   flex: 1;
-  //min-width: 150px;
 }
 .middle-column {
   width: 100%;
-  flex: 1;
-  //min-width: 150px;
+  flex: 3;
 }
 .right-column {
   display: none;
   width: 100%;
-  flex: 3;
+  flex: 1;
 }
   ${media.desktop`
     .left-column {
