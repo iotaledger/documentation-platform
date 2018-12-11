@@ -1,13 +1,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Text from './Text';
 
 const Heading = ({ level = 1, children, text, className }) =>
   React.createElement(
     `h${level}`,
-    { className: `heading ${className}` },
-    children || <Text>{text}</Text>
+    { className: `heading text ${className}` },
+    children || <React.Fragment>{text}</React.Fragment>
   );
 
 Heading.propTypes = {

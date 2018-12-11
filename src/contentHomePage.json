@@ -314,11 +314,15 @@
         "IOTA Foundation", "c/o Nextland", "Strassburgerstraße 55", "10405 Berlin", "Germany"
       ],
       "legal": [
-        "© 2018 IOTA Foundation - <a href='https://www.iota.org/research/privacy-policy'>Privacy Policy</a>",
+        "&copy; 2018 IOTA Foundation - <a href='https://www.iota.org/research/privacy-policy'>Privacy Policy</a>",
         "Email: <a href='mailto:contact@iota.org'>contact@iota.org</a>",
         "Board of Directors: Dominik Schiener, David Sønstebø, Ralf Rottmann, Serguei Popov &amp; Sergey Ivancheglo",
         "ID/Company No.: 3416/1234/2",
         "EU public ID number in the EU Transparency Register: 500027331119-04"
+      ],
+      "copyright": [
+        "<a href='https://www.iota.org/research/privacy-policy'>Privacy Policy</a>",
+        "&copy; 2018 IOTA Foundation"
       ]
     }
   }

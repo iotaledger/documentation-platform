@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from '../../atoms/Link';
-import Text from '../../atoms/Text';
 import Heading from '../../atoms/Heading';
+import Text from '../../atoms/Text';
 
 class Footer extends React.Component {
   constructor(props) {
@@ -27,13 +27,11 @@ class Footer extends React.Component {
             {
               footerSections.map(({ heading, links }) =>
                 <section key={heading} className="footer-top-content__wrapper">
-                  <Heading level={3} text={heading} />
+                  <Heading level={3} text={heading} className="footer-top-content__heading" />
                   {
                     links.map(({ href, text }) =>
                       <Link href={href} key={text} className="footer-top-content__link">
-                        <Text className="footer-top-content__item">
-                          {text}
-                        </Text>
+                        {text}
                       </Link>
                     )
                   }
@@ -42,27 +40,29 @@ class Footer extends React.Component {
             }
           </div>
           <div className="footer-top-content__dropdown-wrapper">
-            <Heading level={3} text="Jump to a section" />
-            <select onChange={this.handleClick} defaultValue="" className="select footer-top-content__dropdown">
-              <option value="">Select a topic</option>
-              {
-                footerSections.map(({ heading, links }) =>
-                  <optgroup key={heading} label={heading}>
-                    {
-                      links.map(({ href, text }) =>
-                        <option key={text} value={href}>{text}</option>
-                      )
-                    }
-                  </optgroup>
-                )
-              }
-            </select>
+            <Heading level={3} text="Jump to a section" className="footer-top-content__heading" />
+            <div className="select-wrapper">
+              <select onChange={this.handleClick} defaultValue="" className="select footer-top-content__dropdown">
+                <option value="">Select a topic</option>
+                {
+                  footerSections.map(({ heading, links }) =>
+                    <optgroup key={heading} label={heading}>
+                      {
+                        links.map(({ href, text }) =>
+                          <option key={text} value={href}>{text}</option>
+                        )
+                      }
+                    </optgroup>
+                  )
+                }
+              </select>
+            </div>
           </div>
           <div className="footer-bottom-content">
             <section className="footer-bottom-content__wrapper">
               {
                 footerStaticContent.address.map(text =>
-                  <Text key={text} className="footer-bottom-content__item">
+                  <Text key={text} className="footer-bottom-content__item" html>
                     {text}
                   </Text>
                 )
@@ -77,10 +77,14 @@ class Footer extends React.Component {
                 )
               }
             </section>
-            <section className="footer-bottom-content__copyright">
-              <Text className="footer-bottom-content__item">
-                © 2018 IOTA Foundation
-              </Text>
+            <section className="footer-bottom-content__wrapper copyright">
+              {
+                footerStaticContent.copyright.map(text =>
+                  <Text key={text} className="footer-bottom-content__item" html>
+                    {text}
+                  </Text>
+                )
+              }
             </section>
           </div>
         </div>
@@ -100,7 +104,8 @@ Footer.propTypes = {
     })),
     footerStaticContent: PropTypes.exact({
       address: PropTypes.arrayOf(PropTypes.string).isRequired,
-      legal: PropTypes.arrayOf(PropTypes.string).isRequired
+      legal: PropTypes.arrayOf(PropTypes.string).isRequired,
+      copyright: PropTypes.arrayOf(PropTypes.string).isRequired,
     })
   })
 };
