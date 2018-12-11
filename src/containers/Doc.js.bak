@@ -6,11 +6,6 @@ import CommentModal from 'components/Modal'
 import Feedback from 'components/Feedback'
 import api from '../utils/api';
 import { getProjectName } from '../utils/helpers'
-import Container from './../components/Container'
-import Search from 'components/Search'
-import Dropdown from 'components/Dropdown'
-import { maxWidthLayout, DocPageLayout } from './../components/ci/Layouts'
-
 
 class Doc extends React.Component {
   constructor(props) {
@@ -128,56 +123,47 @@ class Doc extends React.Component {
         render={({ repoName }) => (
           <RouteData
             render={({ editPath, markdown, title }) => (
-              <Container>
+              <Sidebar>
                 <Head>
                   <title>{`${title} | ${repoName}`}</title>
                 </Head>
-                <Search />
-                <DocPageLayout>
-                  <section className="left-column">
-                  </section>
-                  <section className="middle-column">
-                    <Markdown source={query ?
-                      markdown.replace(new RegExp(query, 'gi'), `<span class="search-keyword">${query}</span>`)
-                      : markdown}
-                    />
-                    <div>
-                      <a href={editPath}>Edit this page on Github</a>
-                    </div>
-                    <div className="erratumHint">
-                      <p>Found a mistake on the page? Select a text and press <b>Ctrl+Enter</b> or <b>Shift+Enter</b></p>
-                    </div>
-                    {
-                      selection ? (
-                        <CommentModal show={isOpen} closeModal={this.closeModal}>
-                          <div className="modalHeader">
-                            <h3>Found a mistake?</h3>
-                            <button onClick={this.closeModal}>
-                              Close
-                            </button>
-                          </div>
-                          <p dangerouslySetInnerHTML={{ __html: erratum }} />
-                          <textarea
-                            value={comments}
-                            placeholder="Additional comments"
-                            name="comments"
-                            onChange={this.handleTextChange}
-                          />
-                          <button onClick={this.submitErratum}>
-                            Submit
-                          </button>
-                        </CommentModal>
-                      ) : null}
-                  </section>
-                  <section className="right-column">
-                  </section>
-                </DocPageLayout>
-
+                <Markdown source={query ?
+                  markdown.replace(new RegExp(query, 'gi'), `<span class="search-keyword">${query}</span>`)
+                  : markdown}
+                />
+                <div>
+                  <a href={editPath}>Edit this page on Github</a>
+                </div>
+                <div className="erratumHint">
+                  <p>Found a mistake on the page? Select a text and press <b>Ctrl+Enter</b> or <b>Shift+Enter</b></p>
+                </div>
+                {
+                  selection ? (
+                    <CommentModal show={isOpen} closeModal={this.closeModal}>
+                      <div className="modalHeader">
+                        <h3>Found a mistake?</h3>
+                        <button onClick={this.closeModal}>
+                          Close
+                        </button>
+                      </div>
+                      <p dangerouslySetInnerHTML={{ __html: erratum }} />
+                      <textarea
+                        value={comments}
+                        placeholder="Additional comments"
+                        name="comments"
+                        onChange={this.handleTextChange}
+                      />
+                      <button onClick={this.submitErratum}>
+                        Submit
+                      </button>
+                    </CommentModal>
+                  ) : null
+                }
                 <Feedback
                   title="Did you find this page helpful?"
                   submitFn={this.submitFeedback}
                 />
-              </Container>
+              </Sidebar>
             )}
           />
         )}

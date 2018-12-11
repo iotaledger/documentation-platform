@@ -39,8 +39,33 @@ const HomePageLayout = styled.div`
 `;
 
 const DocPageLayout = styled.div`
-  ${media.tablet``};
-  ${media.desktop``};
+display: flex;
+padding: 0 16px;
+//width: 100%;
+.left-column {
+  display: none;
+  width: 100%;
+  flex: 1;
+  //min-width: 150px;
+}
+.middle-column {
+  width: 100%;
+  flex: 1;
+  //min-width: 150px;
+}
+.right-column {
+  display: none;
+  width: 100%;
+  flex: 3;
+}
+  ${media.desktop`
+    .left-column {
+      display: block;
+    }
+    .right-column {
+      display: block;
+    }
+  `};
 `;
 
 
