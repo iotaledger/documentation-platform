@@ -12,11 +12,11 @@ export default class Sticky extends PureComponent {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this.setSticky);
+    document.addEventListener('scroll', this.setSticky);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.setSticky);
+    document.removeEventListener('scroll', this.setSticky);
   }
 
   onScrollToTop() {
@@ -27,20 +27,22 @@ export default class Sticky extends PureComponent {
   setSticky() {
     const { elem } = this;
     const { top } = this.props;
-    window.requestAnimationFrame(() => {
-      const scrollTop =
-        window.pageYOffset !== undefined
-          ? window.pageYOffset
-          : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    if (typeof window !== 'undefined') {
+      window.requestAnimationFrame(() => {
+        const scrollTop =
+          window.pageYOffset !== undefined
+            ? window.pageYOffset
+            : (document.documentElement || document.body.parentNode || document.body).scrollTop;
 
-      if (scrollTop >= top) {
-        elem.style.position = 'fixed';
-        elem.style.bottom = '130px';
-      } else {
-        elem.style.position = 'relative';
-        elem.style.bottom = 'unset';
-      }
-    });
+        if (scrollTop >= top) {
+          elem.style.position = 'fixed';
+          elem.style.bottom = '130px';
+        } else {
+          elem.style.position = 'relative';
+          elem.style.bottom = 'unset';
+        }
+      });
+    }
   }
 
   render() {
