@@ -3,18 +3,42 @@ import classNames from 'classnames';
 import { Link } from 'react-static'
 import logo from './../../assets/Logo.svg'
 import InputSearch from  './../Search'
+import Menu from './Menu'
+
+const menuHidden = {
+  position: 'fixed',
+  zIndex: 2,
+  right: '-311px',
+  top: 0,
+  transition: '500ms ease'
+}
+const menuShown = {
+  position: 'fixed',
+  zIndex: 2,
+  right: 0,
+  top: 0,
+  transition: '500ms ease'
+}
 
 class StickyHeader extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       inputExpanded: false,
-      searchResults: []
+      searchResults: [],
+      isMenuOpen: false
     }
 
     this.inputExpandHandler = this.inputExpandHandler.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
     this.onDataSearch = this.onDataSearch.bind(this)
+    this.handleBurgerClick = this.handleBurgerClick.bind(this)
+  }
+  
+  handleBurgerClick() {
+    this.setState((prevState, prevProps) => ({
+      isMenuOpen: !prevState.isMenuOpen
+    }));
   }
   onDataSearch(data) {
     console.log(data)
@@ -30,6 +54,7 @@ class StickyHeader extends React.Component {
   }
 
   render() {
+    const { isMenuOpen } = this.state;
     return (
       <header className="sticky-header">
         <div className="sticky-header__wrapper">
@@ -51,7 +76,18 @@ class StickyHeader extends React.Component {
                   onDataSearch={this.onDataSearch}
                 />
               </div>
-              <button className="sticky-header__icon"><i className="fas fa-bars fa-2x"></i></button>
+              <Menu
+                isMenuOpen={isMenuOpen}
+                data={this.props.data}
+                onCloseClick={this.handleBurgerClick}
+                styles={isMenuOpen ? menuShown : menuHidden}
+              />
+              <button
+                className="sticky-header__icon"
+                onClick={this.handleBurgerClick}
+              >
+                <i className="fas fa-bars fa-2x"></i>
+              </button>
             </div>
           </section>
         </div>

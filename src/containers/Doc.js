@@ -141,7 +141,9 @@ class Doc extends React.Component {
                 <Head>
                   <title>{`${title} | ${repoName}`}</title>
                 </Head>
-                <StickyHeader />
+                <StickyHeader
+                  data={menu}
+                />
                 <DocPageLayout style={{maxWidth: maxWidthLayout, margin: 'auto'}}>
                   <section className="left-column">
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
