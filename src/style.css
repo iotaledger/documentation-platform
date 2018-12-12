@@ -6,3 +6,9 @@ a.simple-link:hover {
   text-decoration: none;
   color: #20a49d;
 }
+
+.scroll-to-top {
+  right: 20px;
+  cursor: pointer;
+  z-index: 100;
+}
