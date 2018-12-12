@@ -1,5 +1,6 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import classNames from 'classnames';
+import { Link } from 'react-static'
 import logo from './../../assets/Logo.svg'
 import InputSearch from  './../Search'
 
@@ -9,45 +10,53 @@ class StickyHeader extends React.Component {
     this.state = {
       inputExpanded: false
     }
+
     this.inputExpandHandler = this.inputExpandHandler.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
   }
+
   handleKeyUp(e) {
     if(e.key === "Escape") {
       this.setState({ inputExpanded: false })
     }
   }
-  inputExpandHandler(e) {
+
+  inputExpandHandler() {
     this.setState({ inputExpanded: true })
   }
+
   render() {
-    return (<header class="sticky-header">
-      <div class="sticky-header__wrapper">
-        <section class="sticky-header__head">
-          <img class="sticky-header__brand" src={logo} />
-          <div class="sticky-header__control">
-                <div
-                  onClick={this.inputExpandHandler}
-                  class={`input-sticky-wrapper
-                          ${this.state.inputExpanded ? 'input-sticky-wrapper--expanded' : ''}`
-                        }
-                >
+    return (
+      <header className="sticky-header">
+        <div className="sticky-header__wrapper">
+          <section className="sticky-header__head">
+            <Link to="/" exact>
+              <img classNameName="sticky-header__brand" src={logo} />
+            </Link>
+            <div className="sticky-header__control">
+              <div
+                onClick={this.inputExpandHandler}
+                className={classNames('input-sticky-wrapper', {
+                  'input-sticky-wrapper--expanded': this.state.inputExpanded
+                })}
+              >
                 <InputSearch
-                  class="input-search-sticky"
+                  className="input-search-sticky"
                   onKeyUp={this.handleKeyUp}
                 />
                 {/*<input
                     onKeyUp={this.handleKeyUp}
-                    type="text" class="input-search-sticky"
+                    type="text" className="input-search-sticky"
                     placeholder="Search for topics"
                   />*/}
               </div>
-              <button class="sticky-header__icon"><i class="fas fa-bars fa-2x"></i></button>
-          </div>
-        </section>
-      </div>
-    </header>)
-
+              <button className="sticky-header__icon"><i className="fas fa-bars fa-2x"></i></button>
+            </div>
+          </section>
+        </div>
+      </header>
+    )
   }
 }
- export default StickyHeader
+
+export default StickyHeader
