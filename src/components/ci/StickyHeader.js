@@ -13,7 +13,7 @@ class StickyHeader extends React.Component {
   }
   handleKeyUp(e) {
     if(e.key === "Escape") {
-     this.setState({ inputExpanded: false })
+      this.setState({ inputExpanded: false })
     }
   }
   inputExpandHandler(e) {
