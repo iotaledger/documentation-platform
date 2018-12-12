@@ -31,7 +31,7 @@ class StickyHeader extends React.Component {
         <div className="sticky-header__wrapper">
           <section className="sticky-header__head">
             <Link to="/" exact>
-              <img classNameName="sticky-header__brand" src={logo} />
+              <img className="sticky-header__brand" src={logo} />
             </Link>
             <div className="sticky-header__control">
               <div
