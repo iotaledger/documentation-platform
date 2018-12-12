@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import logo from './../../assets/Logo.svg'
+import InputSearch from  './../Search'
 
 class StickyHeader extends React.Component {
   constructor(props) {
@@ -31,7 +32,15 @@ class StickyHeader extends React.Component {
                           ${this.state.inputExpanded ? 'input-sticky-wrapper--expanded' : ''}`
                         }
                 >
-                <input onKeyUp={this.handleKeyUp} type="text" class="input-search-sticky" placeholder="Search for topics" />
+                <InputSearch
+                  class="input-search-sticky"
+                  onKeyUp={this.handleKeyUp}
+                />
+                {/*<input
+                    onKeyUp={this.handleKeyUp}
+                    type="text" class="input-search-sticky"
+                    placeholder="Search for topics"
+                  />*/}
               </div>
               <button class="sticky-header__icon"><i class="fas fa-bars fa-2x"></i></button>
           </div>

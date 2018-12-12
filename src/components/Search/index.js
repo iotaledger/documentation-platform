@@ -46,49 +46,35 @@ class Search extends React.Component {
   render () {
     const { searchResults, query } = this.state
     return (
-      <SearchWrapper>
-        <form id="search-form" onSubmit={this.search} onReset={this.reset}>
-          <input
-            type="search"
-            placeholder="search"
-            value={query}
-            name="query"
-            onChange={this.handleInputChange}
-          />
-          <div className="query-error"></div>
-          <div className="controls">
-            <button type="submit">Search</button>
-            <button type="reset">Reset</button>
-          </div>
-        </form>
-        <div className="searchResults">
-          <div>
-            {
-              searchResults.map(doc =>
-                <header key={doc.name}>
-                  { console.log(doc) }
-                  <Link to={{
-                    pathname: `/${doc.id}`,
-                    state: { query }
-                  }}>
-                    <h4>v.{getVersion(doc.id)}: {doc.name}</h4>
-                  </Link>
-                </header>
-              )
-            }
-          </div>
-        </div>
-      </SearchWrapper>
+      <input
+        {...this.props}
+        type="search"
+        placeholder="search"
+        value={query}
+        name="query"
+        onChange={this.handleInputChange}
+      >
+          {/*<div className="query-error"></div>*/}
+          {/*<div className="searchResults">
+            <div>
+              {
+                searchResults.map(doc =>
+                  <header key={doc.name}>
+                    { console.log(doc) }
+                    <Link to={{
+                      pathname: `/${doc.id}`,
+                      state: { query }
+                    }}>
+                      <h4>v.{getVersion(doc.id)}: {doc.name}</h4>
+                    </Link>
+                  </header>
+                )
+              }
+            </div>
+          </div>*/}
+      </input>
     )
   }
 }
 
 export default Search
-
-const SearchWrapper = styled.div`
-  form {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
-`
