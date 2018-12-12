@@ -11,6 +11,7 @@ import FloatingMenu from './../components/ci/FloatingMenu';
 import { DocPageLayout } from './../components/ci/Layouts';
 import TreeMenu from './../components/ci/TreeMenu';
 import Container from './../components/Container';
+import StickyHeader from './../components/ci/StickyHeader';
 
 class Doc extends React.Component {
   constructor(props) {
@@ -126,6 +127,7 @@ class Doc extends React.Component {
                   <title>{`${title} | ${repoName}`}</title>
                 </Head>
                 <Search />
+                <StickyHeader />
                 <DocPageLayout>
                   <section className="left-column">
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
