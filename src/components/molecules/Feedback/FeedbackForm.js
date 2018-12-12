@@ -4,6 +4,7 @@ import React from 'react';
 
 class FeedbackForm extends React.Component {
   static propTypes = {
+    isExpanded: PropTypes.bool,
     onSubmit: PropTypes.func
   };
 

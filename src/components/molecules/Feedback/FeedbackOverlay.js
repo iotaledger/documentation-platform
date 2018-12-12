@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -21,7 +22,12 @@ class FeedbackOverlay extends React.Component {
 
   render() {
     return (
-      <div className='feedback-overlay'>
+      <div className={
+        classNames(
+          'feedback-overlay',
+          { 'feedback-overlay--expanded': this.props.isExpanded }
+        )
+      }>
         <button
           className="feedback-overlay-close"
           onClick={this.handleClose}>

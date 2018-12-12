@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import FeedbackButton from './FeedbackButton';
@@ -25,12 +26,13 @@ class Feedback extends React.Component {
   handleOnExpand(expand) {
     this.setState({ isExpanded: expand }, () => {
       if (expand) {
-        // Show the form and hide the button content immediately
-        this.setState({ showForm: true, showButtonContent: false });
-        // Wait for animation completion before hiding scroll
+        // Hide the button content immediately
+        this.setState({ showButtonContent: false });
         setTimeout(() => {
+          this.setState({ showForm: true });
+          // Wait for animation completion before hiding scroll
           document.body.classList.toggle('no-scroll', true);
-        }, 500);
+        }, 200);
       } else {
         // Hide form straight away
         this.setState({ showForm: false }, () => {
@@ -60,11 +62,9 @@ class Feedback extends React.Component {
           onClick={() => this.handleOnExpand(true)}
           isExpanded={this.state.isExpanded}
           showButtonContent={this.state.showButtonContent} />
-        {this.state.showForm && (
-          <FeedbackOverlay onClose={() => this.handleOnExpand(false)}>
-            <FeedbackForm onSubmit={this.handleOnSubmit} />
-          </FeedbackOverlay>
-        )}
+        <FeedbackOverlay onClose={() => this.handleOnExpand(false)} isExpanded={this.state.showForm}>
+          <FeedbackForm onSubmit={this.handleOnSubmit} />
+        </FeedbackOverlay>
       </div>
     )
   }
