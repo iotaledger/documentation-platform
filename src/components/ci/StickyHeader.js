@@ -9,6 +9,12 @@ class StickyHeader extends React.Component {
       inputExpanded: false
     }
     this.inputExpandHandler = this.inputExpandHandler.bind(this)
+    this.handleKeyUp = this.handleKeyUp.bind(this)
+  }
+  handleKeyUp(e) {
+    if(e.key === "Escape") {
+     this.setState({ inputExpanded: false })
+    }
   }
   inputExpandHandler(e) {
     this.setState({ inputExpanded: true })
@@ -25,7 +31,7 @@ class StickyHeader extends React.Component {
                           ${this.state.inputExpanded ? 'input-sticky-wrapper--expanded' : ''}`
                         }
                 >
-                <input type="text" class="input-search-sticky" placeholder="Search for topics" />
+                <input onKeyUp={this.handleKeyUp} type="text" class="input-search-sticky" placeholder="Search for topics" />
               </div>
               <button class="sticky-header__icon"><i class="fas fa-bars fa-2x"></i></button>
           </div>
