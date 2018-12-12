@@ -1,18 +1,16 @@
-import React from 'react'
-import { SiteData, RouteData, Head, withRouter } from 'react-static'
-import Markdown from 'components/Markdown'
-import Sidebar from 'components/Sidebar'
-import CommentModal from 'components/Modal'
-import Feedback from 'components/Feedback'
+import Markdown from 'components/Markdown';
+import CommentModal from 'components/Modal';
+import Search from 'components/Search';
+import React from 'react';
+import { Head, RouteData, SiteData, withRouter } from 'react-static';
+import Feedback from '../components/molecules/Feedback';
 import api from '../utils/api';
-import { getProjectName } from '../utils/helpers'
-import Container from './../components/Container'
-import Search from 'components/Search'
-import Dropdown from 'components/Dropdown'
-import { maxWidthLayout, DocPageLayout } from './../components/ci/Layouts'
-import FloatingMenu from './../components/ci/FloatingMenu'
-import TreeMenu from './../components/ci/TreeMenu'
-
+import { submitFeedback } from "../utils/feedbackHelper";
+import { getProjectName } from '../utils/helpers';
+import FloatingMenu from './../components/ci/FloatingMenu';
+import { DocPageLayout } from './../components/ci/Layouts';
+import TreeMenu from './../components/ci/TreeMenu';
+import Container from './../components/Container';
 
 class Doc extends React.Component {
   constructor(props) {
@@ -26,14 +24,13 @@ class Doc extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.submitErratum = this.submitErratum.bind(this);
-    this.submitFeedback = this.submitFeedback.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     document.addEventListener('keydown', this.keydown, false);
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     document.removeEventListener('keydown', this.keydown, false);
   }
 
@@ -114,12 +111,6 @@ class Doc extends React.Component {
     this.closeModal();
   }
 
-  async submitFeedback(rating, comments) {
-    const document = this.props.location.pathname;
-    const project = document !== '/404' && getProjectName(document);
-    const response = await api('submitFeedback', { rating, comments, project, document });
-  }
-
   render() {
     const { location } = this.props;
     const { isOpen, comments, selection, erratum } = this.state;
@@ -137,8 +128,8 @@ class Doc extends React.Component {
                 <Search />
                 <DocPageLayout>
                   <section className="left-column">
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
-                      <FloatingMenu data={menu} styles={{ position: 'fixed', top: '400px'}} />
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                      <FloatingMenu data={menu} styles={{ position: 'fixed', top: '400px' }} />
                     </div>
                   </section>
                   <section className="middle-column">
@@ -180,8 +171,8 @@ class Doc extends React.Component {
                 </DocPageLayout>
 
                 <Feedback
-                  title="Did you find this page helpful?"
-                  submitFn={this.submitFeedback}
+                  styles={{ position: 'fixed', bottom: '130px', left: '20px' }}
+                  onSubmit={(data) => submitFeedback(this.props.location.document, data)}
                 />
               </Container>
             )}

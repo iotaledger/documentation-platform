@@ -1,7 +1,8 @@
 import React from "react";
 import { Head, SiteData } from "react-static";
-import Feedback from '../components/molecules/Feedback/Feedback';
+import Feedback from '../components/molecules/Feedback';
 import contentHomePage from '../contentHomePage.json';
+import { submitFeedback } from "../utils/feedbackHelper";
 import FloatingMenu from './../components/ci/FloatingMenu';
 import Header from './../components/ci/Header';
 import { HomePageLayout, maxWidthLayout } from './../components/ci/Layouts';
@@ -10,7 +11,6 @@ import EmailSignup from './../components/molecules/EmailSignup';
 import Footer from './../components/molecules/Footer';
 import CardContainer from './../components/molecules/HomePageCard';
 import ProjectTopicsContainer from './../components/molecules/ProjectTopics';
-
 
 export default () => (
   <SiteData
@@ -39,9 +39,9 @@ export default () => (
           <div className="left-column" >
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <FloatingMenu data={menu} styles={{ position: 'fixed', top: '400px' }} />
-              <Feedback styles={{ position: 'fixed', top: '400px', left: '20px' }} onSubmit={(feedback => {
-                console.log('Feedback submitted', feedback);
-              })} />
+              <Feedback
+                styles={{ position: 'fixed', top: '400px', left: '20px' }}
+                onSubmit={(data) => { submitFeedback(`/home`, data) }} />
             </div>
           </div>
           <div className="right-column" style={{ padding: '25px' }}>

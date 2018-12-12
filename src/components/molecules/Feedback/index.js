@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import FeedbackButton from './FeedbackButton';
@@ -15,6 +14,7 @@ class Feedback extends React.Component {
 
     this.state = {
       isExpanded: false,
+      wasItUseful: undefined,
       showButtonContent: true,
       showForm: false
     };
@@ -48,6 +48,7 @@ class Feedback extends React.Component {
   }
 
   handleOnSubmit(e) {
+    this.setState({ wasItUseful: e.wasItUseful });
     const { onSubmit } = this.props;
     if (onSubmit) {
       onSubmit(e);
@@ -61,9 +62,12 @@ class Feedback extends React.Component {
         <FeedbackButton
           onClick={() => this.handleOnExpand(true)}
           isExpanded={this.state.isExpanded}
-          showButtonContent={this.state.showButtonContent} />
+          showButtonContent={this.state.showButtonContent}
+          wasItUseful={this.state.wasItUseful} />
         <FeedbackOverlay onClose={() => this.handleOnExpand(false)} isExpanded={this.state.showForm}>
-          <FeedbackForm onSubmit={this.handleOnSubmit} />
+          {this.state.showForm && (
+            <FeedbackForm onSubmit={this.handleOnSubmit} />
+          )}
         </FeedbackOverlay>
       </div>
     )

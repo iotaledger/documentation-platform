@@ -13,7 +13,7 @@ class FeedbackForm extends React.Component {
 
     this.state = {
       wasItUseful: undefined,
-      thoughts: ""
+      comments: ""
     };
 
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
@@ -25,7 +25,7 @@ class FeedbackForm extends React.Component {
     if (onSubmit) {
       onSubmit({
         wasItUseful: this.state.wasItUseful,
-        thoughts: this.state.thoughts
+        comments: this.state.comments
       });
     }
     e.preventDefault();
@@ -83,8 +83,8 @@ class FeedbackForm extends React.Component {
           <textarea
             placeholder="Leave additional thoughts or feedback"
             rows="6"
-            value={this.state.thoughts}
-            onChange={(e) => this.setState({ thoughts: e.target.value })}
+            value={this.state.comments}
+            onChange={(e) => this.setState({ comments: e.target.value })}
           ></textarea>
           <button
             className="feedback-form-button-submit"

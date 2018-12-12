@@ -14,5 +14,5 @@ export const getVersion = path => {
 export const getProjectName = path => {
   const regex = new RegExp(/\/docs\/\s*(.*?)\s*\//g);
   const matches = regex.exec(path)
-  return matches.length >= 2 ? matches[1] : null
+  return matches && matches.length >= 2 ? matches[1] : null
 }

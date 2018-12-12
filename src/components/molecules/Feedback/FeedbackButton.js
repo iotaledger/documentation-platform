@@ -5,6 +5,7 @@ import React from 'react';
 class FeedbackButton extends React.Component {
   static propTypes = {
     isExpanded: PropTypes.bool,
+    wasItUseful: PropTypes.string,
     showButtonContent: PropTypes.bool,
     onClick: PropTypes.func
   };
@@ -39,7 +40,14 @@ class FeedbackButton extends React.Component {
             )
           }
           onClick={this.handleOnClick}>
-          <span className="feedback-button--icon"></span>
+          <span 
+          className={
+            classNames(
+              'feedback-button--icon',
+              { 'feedback-button--icon-yes': this.props.wasItUseful === "yes" },
+              { 'feedback-button--icon-no': this.props.wasItUseful === "no" }
+            )
+          }></span>
         </button>
       </div>
     )

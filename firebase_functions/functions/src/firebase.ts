@@ -25,7 +25,7 @@ exports.submitComment = async ({
 };
 
 exports.submitFeedback = async ({
-  project, document, rating = null, comments = null
+  project, document, wasItUseful = null, comments = null
 }) => {
   await admin
     .firestore()
@@ -33,7 +33,7 @@ exports.submitFeedback = async ({
     .doc(project)
     .collection(getFormattedDocument(document, project))
     .doc()
-    .set({ document, comments, rating });
+    .set({ document, comments, wasItUseful });
 
   return true;
 };
