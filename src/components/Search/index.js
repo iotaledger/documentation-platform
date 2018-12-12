@@ -20,7 +20,7 @@ class Search extends React.Component {
   handleKeyChange(e) {
     this.props.onKeyUp(e)
     if(e.key === 'Enter'){
-      this.search(e) 
+      this.search(e)
     }
   }
   buildDocuments() {
@@ -42,7 +42,8 @@ class Search extends React.Component {
     const results = idx.search(query)
     const documents = this.buildDocuments()
     const searchResults = results.map(result => documents[result.ref])
-    this.setState({ searchResults })
+    //this.setState({ searchResults })
+    this.props.onDataSearch(searchResults)
   }
 
   reset() {

@@ -8,13 +8,17 @@ class StickyHeader extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      inputExpanded: false
+      inputExpanded: false,
+      searchResults: []
     }
 
     this.inputExpandHandler = this.inputExpandHandler.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
+    this.onDataSearch = this.onDataSearch.bind(this)
   }
-
+  onDataSearch(data) {
+    console.log(data)
+  }
   handleKeyUp(e) {
     if(e.key === "Escape") {
       this.setState({ inputExpanded: false })
@@ -44,6 +48,7 @@ class StickyHeader extends React.Component {
                   class="input-search-sticky"
                   placeholder="Search for topics"
                   onKeyUp={this.handleKeyUp}
+                  onDataSearch={this.onDataSearch}
                 />
               </div>
               <button className="sticky-header__icon"><i className="fas fa-bars fa-2x"></i></button>
