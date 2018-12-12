@@ -45,7 +45,7 @@ class StickyHeader extends React.Component {
                 })}
               >
                 <InputSearch
-                  class="input-search-sticky"
+                  className="input-search-sticky"
                   placeholder="Search for topics"
                   onKeyUp={this.handleKeyUp}
                   onDataSearch={this.onDataSearch}
