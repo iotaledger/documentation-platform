@@ -15,8 +15,14 @@ class Search extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this)
     this.reset = this.reset.bind(this)
     this.search = this.search.bind(this)
+    this.handleKeyChange = this.handleKeyChange.bind(this)
   }
-
+  handleKeyChange(e) {
+    this.props.onKeyUp(e)
+    if(e.key === 'Enter'){
+      this.search(e) 
+    }
+  }
   buildDocuments() {
     const documents = corpus.reduce((memo, doc) => {
       memo[doc.id] = doc
@@ -49,10 +55,10 @@ class Search extends React.Component {
       <input
         {...this.props}
         type="search"
-        placeholder="search"
         value={query}
         name="query"
         onChange={this.handleInputChange}
+        onKeyUp={this.handleKeyChange}
       >
           {/*<div className="query-error"></div>*/}
           {/*<div className="searchResults">
