@@ -4,6 +4,9 @@ class Navigator extends React.Component {
   constructor(props) {
     super(props)
   }
+  componentDidMount() {
+    console.log(this.props.data)
+  }
 
   render() {
     return (<section className="navigator">

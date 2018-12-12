@@ -194,7 +194,9 @@ class Doc extends React.Component {
                     <TreeMenu />
                   </section>
                 </DocPageLayout>
-                <Navigator />
+                <Navigator
+                  data={menu}
+                />
                 <Feedback
                   styles={{ position: 'fixed', bottom: '130px', left: '20px' }}
                   onSubmit={(data) => submitFeedback(this.props.location.document, data)}

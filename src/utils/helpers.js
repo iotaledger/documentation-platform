@@ -16,3 +16,13 @@ export const getProjectName = path => {
   const matches = regex.exec(path)
   return matches && matches.length >= 2 ? matches[1] : null
 }
+
+export const getNextPage = (currProjectName, currTitle, currVersion, indexData) => {
+
+  return { nextName, nextUrl }
+}
+
+export const getPreviousPage = (currProjectName, currTitle, currVersion, indexData) => {
+
+  return { nextName, nextUrl }
+}
