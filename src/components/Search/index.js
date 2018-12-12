@@ -54,7 +54,8 @@ class Search extends React.Component {
     const { searchResults, query } = this.state
     return (
       <input
-        {...this.props}
+        className={this.props.className}
+        placeholder={this.props.placeholder}
         type="search"
         value={query}
         name="query"
