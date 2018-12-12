@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import Link from '../atoms/Link';
 import logo from './../../assets/Logo.svg'
 
 class Menu extends React.Component {
@@ -31,7 +32,8 @@ class Menu extends React.Component {
       let versionsNbrs = Object.keys(obj.versions)
       let latestVersion = versionsNbrs[versionsNbrs.length - 1] // get the last version
       console.log(obj.versions[latestVersion])
-      let menuList = obj.versions[latestVersion].map(({name, link}) => name.split("\\")[name.split("\\").length - 1])
+      let menuList = obj.versions[latestVersion].map(({name, link}) =>
+        ({name: name.split("\\")[name.split("\\").length - 1], link}))
       return { expand: false, heading: obj.name, menuList }
     })
     this.setState({
@@ -65,7 +67,11 @@ class Menu extends React.Component {
       </h5>
       <ul className="side-menu__list">
           {menuItem.menuList.map((menuListItem, miIndex) => (
-            <li key={miIndex}>{menuListItem}</li>
+            <li key={miIndex}>
+              <Link href={menuListItem.link} className="simple-link">
+                {menuListItem.name}
+              </Link>
+            </li>
           ))}
       </ul>
     </section>))}
