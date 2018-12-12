@@ -9,7 +9,6 @@ class InputRegister extends React.Component {
     super(props);
     this.state = {
       email: '',
-      captcha: null,
       loading: false,
       success: false,
       apiMessage: null,
@@ -18,22 +17,15 @@ class InputRegister extends React.Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.submit = this.submit.bind(this);
-    // this.verify = this.verify.bind(this);
   }
 
   handleInputChange({ target }) {
     this.setState({ email: target.value, error: null });
   }
 
-  // verify(data) {
-  //   this.setState({ captcha: data, loading: false });
-  // }
-
   async submit(e) {
     e.preventDefault();
     const { captcha, loading, email } = this.state;
-
-    // if (loading) return;
 
     if (!email) {
       return this.setState({ error: 'Please provide valid email' });
@@ -41,15 +33,9 @@ class InputRegister extends React.Component {
 
     const validate = this.validateEmail(email)
 
-    // if (!captcha) {
-    //   return this.setState({ error: 'Please complete the captcha' });
-    // }
-
     if (this.validateEmail(email)) {
       this.setState({ loading: true }, async () => {
-        console.log('Sending email', email);
         const response = await api('submitEmail', { email });
-        console.log('response', response);
         this.setState({ success: true, loading: false, apiMessage: response.message });
       });
     } else {
@@ -93,19 +79,5 @@ class InputRegister extends React.Component {
     )
   }
 }
-
-// InputRegister.propTypes = {
-//   id: PropTypes.string,
-//   large: PropTypes.bool,
-//   small: PropTypes.bool,
-//   disabled: PropTypes.bool,
-//   classNameName: PropTypes.string,
-//   onClick: PropTypes.func,
-//   children: PropTypes.node,
-// };
-//
-// InputRegister.defaultProps = {
-//   classNameName: '',
-// };
 
 export default InputRegister;
