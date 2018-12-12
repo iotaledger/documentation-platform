@@ -45,11 +45,6 @@ class StickyHeader extends React.Component {
                   placeholder="Search for topics"
                   onKeyUp={this.handleKeyUp}
                 />
-                {/*<input
-                    onKeyUp={this.handleKeyUp}
-                    type="text" className="input-search-sticky"
-                    placeholder="Search for topics"
-                  />*/}
               </div>
               <button className="sticky-header__icon"><i className="fas fa-bars fa-2x"></i></button>
             </div>
