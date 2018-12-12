@@ -13,6 +13,7 @@ import { DocPageLayout, maxWidthLayout } from './../components/ci/Layouts';
 import TreeMenu from './../components/ci/TreeMenu';
 import Container from './../components/Container';
 import StickyHeader from './../components/ci/StickyHeader';
+import SubHeader from './../components/ci/SubHeader';
 
 class Doc extends React.Component {
   constructor(props) {
@@ -144,6 +145,7 @@ class Doc extends React.Component {
                 <StickyHeader
                   data={menu}
                 />
+                <SubHeader />
                 <DocPageLayout style={{maxWidth: maxWidthLayout, margin: 'auto'}}>
                   <section className="left-column">
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
