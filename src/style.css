@@ -1,8 +1,8 @@
-a.link.simple-link {
+a.simple-link {
   color: #ffffff;
 }
 
-a.link.simple-link:hover {
+a.simple-link:hover {
   text-decoration: none;
   color: #20a49d;
 }
