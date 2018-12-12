@@ -8,7 +8,8 @@ import api from '../utils/api';
 import { submitFeedback } from "../utils/feedbackHelper";
 import { getProjectName } from '../utils/helpers';
 import FloatingMenu from './../components/ci/FloatingMenu';
-import { DocPageLayout } from './../components/ci/Layouts';
+import { DocPageLayout, maxWidthLayout } from './../components/ci/Layouts';
+
 import TreeMenu from './../components/ci/TreeMenu';
 import Container from './../components/Container';
 import StickyHeader from './../components/ci/StickyHeader';
@@ -127,7 +128,7 @@ class Doc extends React.Component {
                   <title>{`${title} | ${repoName}`}</title>
                 </Head>
                 <StickyHeader />
-                <DocPageLayout>
+                <DocPageLayout style={{maxWidth: maxWidthLayout, margin: 'auto'}}>
                   <section className="left-column">
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                       <FloatingMenu data={menu} styles={{ position: 'fixed', top: '400px' }} />
