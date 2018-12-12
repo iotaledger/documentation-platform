@@ -18,7 +18,14 @@ class Doc extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { isOpen: false, comments: '', selection: null, erratum: null };
+    this.state = {
+      isOpen: false,
+      comments: '',
+      selection: null,
+      erratum: null,
+      projectName: '',
+      projectFullURL: ''
+     };
 
     this.getSelection = this.getSelection.bind(this);
     this.getTextContent = this.getTextContent.bind(this);
@@ -30,6 +37,13 @@ class Doc extends React.Component {
 
   componentDidMount() {
     document.addEventListener('keydown', this.keydown, false);
+    ///docs/HUB/reference/2.0/README
+    const projectFullURL = this.props.location.pathname
+    const projectName = projectFullURL.split('/')[2]
+    this.setState({
+      projectName,
+      projectFullURL
+    })
   }
 
   componentWillUnmount() {
@@ -131,7 +145,11 @@ class Doc extends React.Component {
                 <DocPageLayout style={{maxWidth: maxWidthLayout, margin: 'auto'}}>
                   <section className="left-column">
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
-                      <FloatingMenu data={menu} styles={{ position: 'fixed', top: '400px' }} />
+                      <FloatingMenu
+                        data={menu}
+                        highlightedItem={this.state.projectName}
+                        styles={{ position: 'fixed', top: '400px' }}
+                      />
                     </div>
                   </section>
                   <section className="middle-column">

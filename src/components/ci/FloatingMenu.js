@@ -9,11 +9,14 @@ class FloatingMenu extends React.Component {
     return (<ul className="floating-menu" style={this.props.styles}>
       {Object.values(this.props.data).map(({ name, versions }) => (
         <li
-          className="floating-menu__item"
+          className={`floating-menu__item ${this.props.highlightedItem === name ? 'floating-menu__item--selected' : ''}`}
           key={name}
           to={{ state: { project: name } }}
         >
-          <a onClick={(e) => window.open(`/docs/${name}/reference/${Object.keys(versions)[Object.keys(versions).length - 1]}/README`, '_blank')}>{name}</a>
+          <a
+            onClick={(e) => window.open(`/docs/${name}/reference/${Object.keys(versions)[Object.keys(versions).length - 1]}/README`, '_blank')}>
+            {name}
+          </a>
         </li>)
       )}
 
