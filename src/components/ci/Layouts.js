@@ -48,8 +48,9 @@ padding: 0 16px;
   flex: 1;
 }
 .middle-column {
-  width: 100%;
-  flex: 3;
+  padding: 15px 20px 0px 0px;
+  width: 60%;
+  flex: 5;
 }
 .right-column {
   display: none;
