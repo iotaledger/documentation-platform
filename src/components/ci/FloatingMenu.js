@@ -1,35 +1,27 @@
 import React from 'react';
+import classNames from 'classnames';
+import { Link } from 'react-static'
 
-class FloatingMenu extends React.Component {
-  constructor(props) {
-    super(props)
-    this.handleNavigate = this.handleNavigate.bind(this)
-  }
-  handleNavigate(name, versions) {
-    const url = `/docs/${name}/reference/${Object.keys(versions)[Object.keys(versions).length - 1]}/README`
-    if(this.props.samePage) {
-      window.open(url, "_self")
+const getLink = (name, versions) =>
+  `/docs/${name}/reference/${Object.keys(versions)[Object.keys(versions).length - 1]}/README`
 
-    } else {
-      window.open(url, '_blank')
-    }
-  }
-  render() {
-    return (<ul className="floating-menu" style={this.props.styles}>
-      {Object.values(this.props.data).map(({ name, versions }) => (
+const FloatingMenu = ({ data, highlightedItem, styles }) => (
+  <ul className="floating-menu" style={styles}>
+    {
+      Object.values(data).map(({ name, versions }) => (
         <li
-          className={`floating-menu__item ${this.props.highlightedItem === name ? 'floating-menu__item--selected' : ''}`}
           key={name}
-          to={{ state: { project: name } }}
+          className={classNames('floating-menu__item', {
+            'floating-menu__item--selected': highlightedItem === name
+          })}
         >
-          <a
-            onClick={e =>this.handleNavigate(name, versions)}>
+          <Link to={getLink(name, versions)} exact>
             {name}
-          </a>
-        </li>)
-      )}
+          </Link>
+        </li>
+      ))
+    }
+  </ul>
+)
 
-    </ul>)
-  }
-}
 export default FloatingMenu

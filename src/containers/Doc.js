@@ -148,7 +148,6 @@ class Doc extends React.Component {
                       <FloatingMenu
                         data={menu}
                         highlightedItem={this.state.projectName}
-                        samePage={true}
                         styles={{ position: 'fixed', top: '400px' }}
                       />
                     </div>
