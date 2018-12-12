@@ -14,6 +14,7 @@ import TreeMenu from './../components/ci/TreeMenu';
 import Container from './../components/Container';
 import StickyHeader from './../components/ci/StickyHeader';
 import SubHeader from './../components/ci/SubHeader';
+import Navigator from './../components/ci/Navigator';
 
 class Doc extends React.Component {
   constructor(props) {
@@ -193,7 +194,7 @@ class Doc extends React.Component {
                     <TreeMenu />
                   </section>
                 </DocPageLayout>
-
+                <Navigator />
                 <Feedback
                   styles={{ position: 'fixed', bottom: '130px', left: '20px' }}
                   onSubmit={(data) => submitFeedback(this.props.location.document, data)}
