@@ -126,7 +126,6 @@ class Doc extends React.Component {
                 <Head>
                   <title>{`${title} | ${repoName}`}</title>
                 </Head>
-                <Search />
                 <StickyHeader />
                 <DocPageLayout>
                   <section className="left-column">
