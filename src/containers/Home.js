@@ -8,7 +8,6 @@ import Header from './../components/ci/Header';
 import { HomePageLayout, maxWidthLayout } from './../components/ci/Layouts';
 import Container from './../components/Container';
 import EmailSignup from './../components/molecules/EmailSignup';
-import Footer from './../components/molecules/Footer';
 import CardContainer from './../components/molecules/HomePageCard';
 import ProjectTopicsContainer from './../components/molecules/ProjectTopics';
 
@@ -21,7 +20,6 @@ export default () => (
         </Head>
         <Header
           headerTitle='Developer Documentation'
-          // headerTopLinks={contentHomePage.headerTopLinks}
           topTitles={contentHomePage.headerTopLinks}
           data={menu}
         />
@@ -49,7 +47,6 @@ export default () => (
           </div>
         </HomePageLayout>
         <EmailSignup />
-        <Footer content={contentHomePage.footer} />
       </Container>
     )}
   />
