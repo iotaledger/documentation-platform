@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import ClickOutside from '../ClickOutside'
-import Link from '../atoms/Link';
+import { Link } from 'react-static'
 import logo from './../../assets/Logo.svg'
 
 class Menu extends React.Component {
@@ -86,7 +86,7 @@ class Menu extends React.Component {
               <ul className="side-menu__list">
                 {menuItem.menuList.map((menuListItem, miIndex) => (
                   <li key={miIndex}>
-                    <Link href={menuListItem.link} className="simple-link">
+                    <Link to={menuListItem.link} exact activeClassName="active" className="simple-link">
                       {menuListItem.name}
                     </Link>
                   </li>
