@@ -5,15 +5,26 @@ import logo from './../../assets/Logo.svg'
 class StickyHeader extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      inputExpanded: false
+    }
+    this.inputExpandHandler = this.inputExpandHandler.bind(this)
   }
-
+  inputExpandHandler(e) {
+    this.setState({ inputExpanded: true })
+  }
   render() {
     return (<header class="sticky-header">
       <div class="sticky-header__wrapper">
         <section class="sticky-header__head">
           <img class="sticky-header__brand" src={logo} />
           <div class="sticky-header__control">
-              <div class="input-sticky-wrapper [modifier class]">
+                <div
+                  onClick={this.inputExpandHandler}
+                  class={`input-sticky-wrapper
+                          ${this.state.inputExpanded ? 'input-sticky-wrapper--expanded' : ''}`
+                        }
+                >
                 <input type="text" class="input-search-sticky" placeholder="Search for topics" />
               </div>
               <button class="sticky-header__icon"><i class="fas fa-bars fa-2x"></i></button>
