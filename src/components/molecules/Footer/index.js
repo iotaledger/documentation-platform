@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Link from '../../atoms/Link';
 import Heading from '../../atoms/Heading';
 import Text from '../../atoms/Text';
+import { footerSections, footerStaticContent } from '../../../contentFooter.json';
 
 class Footer extends React.Component {
   constructor(props) {
@@ -19,7 +20,6 @@ class Footer extends React.Component {
   }
 
   render() {
-    const { content: { footerSections, footerStaticContent } } = this.props;
     return (
       <footer className="footer">
         <div className="footer__wrapper">

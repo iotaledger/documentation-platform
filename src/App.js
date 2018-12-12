@@ -4,7 +4,6 @@ import styled, { injectGlobal } from "styled-components";
 import { hot } from "react-hot-loader";
 import nprogress from "nprogress";
 import { loadLanguages } from "reprism";
-//
 import Routes from "react-static-routes";
 
 import "nprogress/nprogress.css";
