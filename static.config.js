@@ -14,6 +14,8 @@ const repoName = "IOTA Documentation";
 const repo = "iotaledger/documentation";
 const repoURL = `https://github.com/${repo}`;
 
+const webifyPath = (p) => p.replace(/\\/g, "/");
+
 try {
   // eslint-disable-next-line
   process.env.REPO_VERSION = require(path.resolve(packageFile)).version;
@@ -58,11 +60,11 @@ export default {
         markdown: fixReprismSyntaxHighlighting(await readFile(page.markdownSrc)),
         editPath:
           repoURL +
-          path.join(
-            "/blob/master/",
-            __dirname.split("/").pop(),
+          "/blob/master/" +
+          webifyPath(path.join(
+            webifyPath(__dirname).split("/").pop(),
             page.markdownSrc
-          ),
+          )),
         title: page.title
       })
     })),

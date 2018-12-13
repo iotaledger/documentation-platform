@@ -7,13 +7,15 @@ const listFiles = dir => statSync(dir).isDirectory()
   ? Array.prototype.concat(...readdirSync(dir).map(f => listFiles(join(dir, f))))
   : dir;
 
+const webifyPath = (p) => p.replace(/\\/g, "/");
+
 const getDocPages = baseDir => {
   const dirs = getProjects(baseDir)
   const files = Array.prototype.concat(...dirs.map(dir =>
     listFiles(`${baseDir}/${dir}`).map(file => ({
-      path: file.replace('.md',''),
-      title: `${dir} ${file.replace(`docs/${dir}/`, '').replace('.md','')}`,
-      markdownSrc: file
+      path: webifyPath(file).replace('.md',''),
+      title: `${webifyPath(dir)} ${webifyPath(file).replace(`docs/${webifyPath(dir)}/`, '').replace('.md','')}`,
+      markdownSrc: webifyPath(file)
     }))
   ))
   return files
@@ -27,8 +29,8 @@ const buildMenuItems = baseDir => {
     const projectVersions = getProjects(`${baseDir}/${name}/reference`)
     projectVersions.forEach(version => {
       const children = listFiles(`${baseDir}/${name}/reference/${version}`).map(file => ({
-        name: file.match(/[^\/]+$/)[0].replace('.md', ''),
-        link: `/${file.replace('.md', '')}`
+        name: webifyPath(file).match(/[^\/]+$/)[0].replace('.md', ''),
+        link: `/${webifyPath(file).replace('.md', '')}`
       }))
       versions[version] = children
     })
