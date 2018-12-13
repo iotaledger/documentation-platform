@@ -193,6 +193,7 @@ class Doc extends React.Component {
                 </DocPageLayout>
                 <Navigator
                   data={menu}
+                  pathname={this.props.location.pathname}
                 />
                 <Feedback
                   styles={{ position: 'fixed', bottom: '130px', left: '20px' }}
