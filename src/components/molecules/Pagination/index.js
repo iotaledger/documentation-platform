@@ -27,7 +27,7 @@ class Pagination extends React.Component {
       <ul class="pagination">
         ({
           Array.from(Array(this.props.total).keys()).map(p => (
-            <li className={
+            <li key={p} className={
               classNames(
                 'pagination-item',
                 { 'pagination-item--selected': (p + 1) === this.props.value }
