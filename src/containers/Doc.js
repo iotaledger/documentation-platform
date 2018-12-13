@@ -143,7 +143,10 @@ class Doc extends React.Component {
                 <StickyHeader
                   data={menu}
                 />
-                <SubHeader />
+                <SubHeader
+                  data={menu}
+                  pathname={this.props.location.pathname}
+                />
                 <DocPageLayout style={{maxWidth: maxWidthLayout, margin: 'auto'}}>
                   <section className="left-column">
                     <div style={{ display: 'flex', justifyContent: 'center' }}>

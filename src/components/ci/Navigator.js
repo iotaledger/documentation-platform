@@ -11,7 +11,6 @@ class Navigator extends React.Component {
       previousTitle: '',
       previousUrl: ''
     }
-    this.navigate = this.navigate.bind(this)
   }
   componentDidMount() {
     // /docs/IRI/reference/2.0/getInclusionStates
@@ -28,9 +27,6 @@ class Navigator extends React.Component {
       previousTitle: previousName,
       previousUrl: previousUrl
     })
-  }
-  navigate(direction) {
-    alert('coming soon, please dont touch!')
   }
   render() {
     return (<section className="navigator">
