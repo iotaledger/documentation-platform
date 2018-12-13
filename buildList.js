@@ -24,9 +24,11 @@ const getDocPages = baseDir => {
 const buildMenuItems = baseDir => {
   const projects = getProjects(baseDir)
   const menu = {}
-  const versions = {}
   projects.forEach(name => {
+    const versions = {}
+
     const projectVersions = getProjects(`${baseDir}/${name}/reference`)
+
     projectVersions.forEach(version => {
       const children = listFiles(`${baseDir}/${name}/reference/${version}`).map(file => ({
         name: webifyPath(file).match(/[^\/]+$/)[0].replace('.md', ''),
