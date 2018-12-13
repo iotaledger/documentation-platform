@@ -2,6 +2,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+// <Pagination value={this.state.currentPage} total={this.state.totalPages} onChange={(newPage) => this.setState({ currentPage: newPage})} />
+
 class Pagination extends React.Component {
   static propTypes = {
     value: PropTypes.number.isRequired,
