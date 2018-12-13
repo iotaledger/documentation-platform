@@ -46,7 +46,7 @@ export default () => (
         <EmailSignup />
         <Feedback
             styles={{ position: 'fixed', bottom: '130px', left: '20px' }}
-            onSubmit={(data) => { submitFeedback(`/home`, data) }} />
+            onSubmit={(data) => { submitFeedback(`/docs/home/`, data) }} />
       </Container>
     )}
   />

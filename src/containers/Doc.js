@@ -6,7 +6,6 @@ import { Head, RouteData, SiteData, withRouter } from 'react-static';
 import Feedback from '../components/molecules/Feedback';
 import api from '../utils/api';
 import { submitFeedback } from "../utils/feedbackHelper";
-import { getProjectName } from '../utils/helpers';
 import FloatingMenu from './../components/ci/FloatingMenu';
 import { DocPageLayout, maxWidthLayout } from './../components/ci/Layouts';
 
@@ -80,11 +79,9 @@ class Doc extends React.Component {
       const prevText = this.getTextContent(node, true);
       const nextText = this.getTextContent(node, false);
       const { location } = this.props;
-      const project = location.pathname !== '/404' && getProjectName(location.pathname);
 
       return {
         link,
-        project,
         selected,
         fullText,
         textAround: `${prevText} ${fullText} ${nextText}`,

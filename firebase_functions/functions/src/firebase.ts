@@ -1,49 +1,57 @@
-import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import * as functions from 'firebase-functions';
+import { IComment } from './models/IComment';
+import { IEmail } from './models/IEMail';
+import { IFeedback } from './models/IFeedback';
 
 admin.initializeApp(functions.config().firebase);
 
 const firestore = admin.firestore();
 firestore.settings({ timestampsInSnapshots: true });
 
-const getFormattedDocument = (document, project) => document
-  .replace(`/docs/${project}/`, '')
-  .replace(/\//g, ' => ')
+function getProject(document: string): string {
+  const regex = new RegExp(/\/docs\/\s*(.*?)\s*\//g);
+  const matches = regex.exec(document);
+  return matches && matches.length >= 2 ? matches[1] : "no-project";
+}
 
-exports.submitComment = async ({
-  project, document, selected, fullText, textAround, link = null, comments = null
-}) => {
+function getCollection(document: string, project: string): string {
+  const remain = document.replace(`/docs/${project}/`, '');
+  return remain && remain.length > 0 ? remain.replace(/\//g, ' => ') : "default";
+}
+
+export async function storeComment(data: IComment): Promise<boolean> {
+  const project = getProject(data.document);
   await admin
     .firestore()
     .collection('comments')
     .doc(project)
-    .collection(getFormattedDocument(document, project))
+    .collection(getCollection(data.document, project))
     .doc()
-    .set({ selected, fullText, textAround, link, document, comments });
+    .set(data);
 
   return true;
-};
+}
 
-exports.submitFeedback = async ({
-  project, document, wasItUseful = null, comments = null
-}) => {
+export async function storeFeedback(data: IFeedback): Promise<boolean> {
+  const project = getProject(data.document);
   await admin
     .firestore()
     .collection('feedback')
-    .doc(project)
-    .collection(getFormattedDocument(document, project))
+    .doc(getProject(data.document))
+    .collection(getCollection(data.document, project))
     .doc()
-    .set({ document, comments, wasItUseful });
+    .set(data);
 
   return true;
-};
+}
 
-exports.submitEmail = async ({ email }) => {
+export async function storeEmail(data: IEmail): Promise<string> {
   await admin
     .firestore()
     .collection('emails')
-    .doc(email)
-    .set({ email });
+    .doc(data.email)
+    .set(data);
 
   return 'Successfully sent!';
-};
+}
