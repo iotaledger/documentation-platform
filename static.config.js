@@ -69,6 +69,10 @@ export default {
       })
     })),
     {
+      path: "/search",
+      component: "src/containers/Search"
+    },
+    {
       is404: true,
       component: "src/containers/404"
     }
