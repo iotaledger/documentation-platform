@@ -37,9 +37,6 @@ export default () => (
           <div className="left-column" >
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <FloatingMenu data={menu} styles={{ position: 'fixed', top: '400px' }} />
-              <Feedback
-                styles={{ position: 'fixed', top: '400px', left: '20px' }}
-                onSubmit={(data) => { submitFeedback(`/home`, data) }} />
             </div>
           </div>
           <div className="right-column" style={{ padding: '25px' }}>
@@ -47,6 +44,9 @@ export default () => (
           </div>
         </HomePageLayout>
         <EmailSignup />
+        <Feedback
+            styles={{ position: 'fixed', bottom: '130px', left: '20px' }}
+            onSubmit={(data) => { submitFeedback(`/home`, data) }} />
       </Container>
     )}
   />
