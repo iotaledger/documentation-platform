@@ -1,5 +1,6 @@
 import React from 'react'
 import { getNextPage, getPreviousPage } from './../../utils/helpers'
+import { Link } from 'react-static'
 
 class Navigator extends React.Component {
   constructor(props) {
@@ -33,14 +34,18 @@ class Navigator extends React.Component {
   }
   render() {
     return (<section className="navigator">
-   <button className="navigator__back" onClick={this.navigate}>
-     <div className="navigator__label">Prev</div>
-     <span className="navigator__title">{this.state.previousTitle}</span>
-   </button>
-   <button className="navigator__next" onClick={this.navigate}>
-     <div className="navigator__label">Next</div>
-     <span className="navigator__title">{this.state.nextTitle}</span>
-   </button>
+       <button className="navigator__back">
+         <Link to={this.state.previousUrl} exact>
+           <div className="navigator__label">Prev</div>
+           <span className="navigator__title">{this.state.previousTitle}</span>
+         </Link>
+       </button>
+       <button className="navigator__next">
+         <Link to={this.state.nextUrl} exact>
+           <div className="navigator__label">Next</div>
+           <span className="navigator__title">{this.state.nextTitle}</span>
+         </Link>
+       </button>
 </section>)
 
   }
