@@ -14,30 +14,19 @@ import Container from './../components/Container';
 import StickyHeader from './../components/ci/StickyHeader';
 import SubHeader from './../components/ci/SubHeader';
 import Navigator from './../components/ci/Navigator';
-
+import { InputBasic } from './../components/atoms/Input'
 class Doc extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       isOpen: false,
-      comments: '',
-      selection: null,
-      erratum: null,
       projectName: '',
       projectFullURL: ''
      };
-
-    this.getSelection = this.getSelection.bind(this);
-    this.getTextContent = this.getTextContent.bind(this);
-    this.keydown = this.keydown.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.handleTextChange = this.handleTextChange.bind(this);
-    this.submitErratum = this.submitErratum.bind(this);
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', this.keydown, false);
     ///docs/HUB/reference/2.0/README
     const projectFullURL = this.props.location.pathname
     const projectName = projectFullURL.split('/')[2]
@@ -45,85 +34,6 @@ class Doc extends React.Component {
       projectName,
       projectFullURL
     })
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.keydown, false);
-  }
-
-  keydown(event) {
-    if (event.keyCode === 27 && this.state.isOpen) {
-      this.closeModal();
-    }
-    if (event.keyCode === 13) {
-      if (event.ctrlKey || event.shiftKey) {
-        const selection = this.getSelection();
-        if (selection) {
-          const erratum = selection ? selection.fullText.replace(
-            selection.selected, `<span class="erratum-text">${selection.selected}</span>`
-          ) : null;
-          this.setState({ isOpen: true, selection, erratum })
-        }
-      }
-    }
-  }
-
-  getSelection() {
-    const selectionObj = document.getSelection();
-    const selected = selectionObj.toString();
-    const node = selectionObj.baseNode;
-
-    if (selectionObj && selected && node) {
-      const link = node.baseURI;
-      const fullText = node.textContent;
-      const prevText = this.getTextContent(node, true);
-      const nextText = this.getTextContent(node, false);
-      const { location } = this.props;
-
-      return {
-        link,
-        selected,
-        fullText,
-        textAround: `${prevText} ${fullText} ${nextText}`,
-        document: location.pathname,
-      }
-    }
-    return null;
-  }
-
-  getTextContent(node, isPrevious = true) {
-    let obj = isPrevious ? node.previousSibling : node.nextSibling;
-
-    const getText = obj => {
-      const className = obj.className;
-      if (!className || (className && className !== 'line-numbers')) {
-        return obj.textContent || '';
-      }
-    }
-
-    if (obj && obj.textContent) {
-      return getText(obj)
-    } else if (node.parentNode) {
-      obj = isPrevious ? node.parentNode.previousSibling : node.parentNode.nextSibling;
-      if (obj && obj.textContent) {
-        return getText(obj)
-      }
-      return ''
-    }
-  }
-
-  closeModal() {
-    this.setState({ isOpen: false, comments: '', selection: null, erratum: null })
-  }
-
-  handleTextChange({ target: { value } }) {
-    this.setState({ comments: value });
-  }
-
-  async submitErratum() {
-    const { comments, selection } = this.state;
-    const response = await api('submitComment', { ...selection, comments });
-    this.closeModal();
   }
 
   render() {
@@ -151,9 +61,7 @@ class Doc extends React.Component {
                   <section className="left-column">
                   </section>
                   <section className="middle-column" style={{ minHeight: '100vh'}}>
-                    <div class="input-register-container">
-                      <input type="text" class="input-register"/>
-                    </div>
+                    <InputBasic />
                   </section>
                   <section className="right-column">
                   </section>
