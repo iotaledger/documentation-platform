@@ -58,7 +58,7 @@ class Feedback extends React.Component {
 
   render() {
     return (
-      <div style={this.props.styles}>
+      <React.Fragment>
         <FeedbackButton
           onClick={() => this.handleOnExpand(true)}
           isExpanded={this.state.isExpanded}
@@ -69,7 +69,7 @@ class Feedback extends React.Component {
             <FeedbackForm onSubmit={this.handleOnSubmit} />
           )}
         </FeedbackOverlay>
-      </div>
+      </React.Fragment>
     )
   }
 }

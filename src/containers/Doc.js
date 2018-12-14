@@ -1,19 +1,21 @@
 import Markdown from 'components/Markdown';
 import CommentModal from 'components/Modal';
-import Search from 'components/Search';
 import React from 'react';
 import { Head, RouteData, SiteData, withRouter } from 'react-static';
+import BottomSticky from "../components/atoms/BottomSticky";
+import BottomStop from '../components/atoms/BottomStop';
+import ScrollToTop from '../components/atoms/ScrollToTop';
+import FloatingMenu from '../components/ci/FloatingMenu';
+import { DocPageLayout, maxWidthLayout } from '../components/ci/Layouts';
+import Navigator from '../components/ci/Navigator';
+import StickyHeader from '../components/ci/StickyHeader';
+import SubHeader from '../components/ci/SubHeader';
+import TreeMenu from '../components/ci/TreeMenu';
+import Container from '../components/Container';
 import Feedback from '../components/molecules/Feedback';
 import api from '../utils/api';
 import { submitFeedback } from "../utils/feedbackHelper";
-import FloatingMenu from './../components/ci/FloatingMenu';
-import { DocPageLayout, maxWidthLayout } from './../components/ci/Layouts';
 
-import TreeMenu from './../components/ci/TreeMenu';
-import Container from './../components/Container';
-import StickyHeader from './../components/ci/StickyHeader';
-import SubHeader from './../components/ci/SubHeader';
-import Navigator from './../components/ci/Navigator';
 
 class Doc extends React.Component {
   constructor(props) {
@@ -26,7 +28,7 @@ class Doc extends React.Component {
       erratum: null,
       projectName: '',
       projectFullURL: ''
-     };
+    };
 
     this.getSelection = this.getSelection.bind(this);
     this.getTextContent = this.getTextContent.bind(this);
@@ -147,7 +149,7 @@ class Doc extends React.Component {
                   data={menu}
                   pathname={this.props.location.pathname}
                 />
-                <DocPageLayout style={{maxWidth: maxWidthLayout, margin: 'auto'}}>
+                <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto' }}>
                   <section className="left-column">
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                       <FloatingMenu
@@ -194,14 +196,17 @@ class Doc extends React.Component {
                     <TreeMenu />
                   </section>
                 </DocPageLayout>
+                <BottomStop />
                 <Navigator
                   data={menu}
                   pathname={this.props.location.pathname}
                 />
-                <Feedback
-                  styles={{ position: 'fixed', bottom: '130px', left: '20px' }}
-                  onSubmit={(data) => submitFeedback(this.props.location.pathname, data)}
-                />
+                <BottomSticky zIndex={10}>
+                  <Feedback onSubmit={(data) => { submitFeedback(this.props.location.pathname, data) }} />
+                </BottomSticky>
+                <BottomSticky horizontalAlign="right">
+                  <ScrollToTop />
+                </BottomSticky>
               </Container>
             )}
           />

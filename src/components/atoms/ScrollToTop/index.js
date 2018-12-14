@@ -1,18 +1,24 @@
+import classNames from 'classnames';
 import React, { PureComponent } from 'react';
-import button from './../../../assets/back-to-top.svg'
 
 export default class Sticky extends PureComponent {
   static defaultProps = {
-    top: 350,
+    visibleTop: 350
   };
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      isVisible: false
+    };
+
     this.setSticky = this.setSticky.bind(this);
   }
 
   componentDidMount() {
     document.addEventListener('scroll', this.setSticky);
+    this.setSticky();
   }
 
   componentWillUnmount() {
@@ -25,8 +31,6 @@ export default class Sticky extends PureComponent {
   }
 
   setSticky() {
-    const { elem } = this;
-    const { top } = this.props;
     if (typeof window !== 'undefined') {
       window.requestAnimationFrame(() => {
         const scrollTop =
@@ -34,22 +38,23 @@ export default class Sticky extends PureComponent {
             ? window.pageYOffset
             : (document.documentElement || document.body.parentNode || document.body).scrollTop;
 
-        if (scrollTop >= top) {
-          elem.style.position = 'fixed';
-          elem.style.bottom = '130px';
-        } else {
-          elem.style.position = 'relative';
-          elem.style.bottom = 'unset';
-        }
+          this.setState({ isVisible: scrollTop >= this.props.visibleTop});
       });
     }
   }
 
   render() {
     return (
-      <div className="scroll-to-top" ref={elem => (this.elem = elem)} onClick={this.onScrollToTop}>
-        <img src={button} alt="scroll To Top" />
-      </div>
+      <button 
+        className={
+          classNames(
+            'scroll-to-top',
+            { 'scroll-to-top--hidden': !this.state.isVisible }
+          )
+        }
+        onClick={this.onScrollToTop}>
+        <i className="fa fa-chevron-up"></i>
+      </button>
     );
   }
 }

@@ -18,7 +18,7 @@ class Navigator extends React.Component {
     const projectName = fullUrl[2]
     const currTitle = fullUrl[fullUrl.length - 1]
     const currVersion = fullUrl[fullUrl.length - 2]
-    const  { nextName, nextUrl } = getNextPage(projectName, currTitle, currVersion, this.props.data)
+    const { nextName, nextUrl } = getNextPage(projectName, currTitle, currVersion, this.props.data)
     const { previousName, previousUrl } = getPreviousPage(projectName, currTitle, currVersion, this.props.data)
 
     this.setState({
@@ -30,20 +30,16 @@ class Navigator extends React.Component {
   }
   render() {
     return (<section className="navigator">
-       <button className="navigator__back">
-         <Link to={this.state.previousUrl} exact>
-           <div className="navigator__label">Prev</div>
-           <span className="navigator__title">{this.state.previousTitle}</span>
-         </Link>
-       </button>
-       <button className="navigator__next">
-         <Link to={this.state.nextUrl} exact>
-           <div className="navigator__label">Next</div>
-           <span className="navigator__title">{this.state.nextTitle}</span>
-         </Link>
-       </button>
-</section>)
+      <Link to={this.state.previousUrl} exact className="navigator__back">
+        <div className="navigator__label">Prev</div>
+        <span className="navigator__title">{this.state.previousTitle}</span>
+      </Link>
+      <Link to={this.state.nextUrl} exact className="navigator__next">
+        <div className="navigator__label">Next</div>
+        <span className="navigator__title">{this.state.nextTitle}</span>
+      </Link>
+    </section>)
 
   }
 }
- export default Navigator
+export default Navigator
