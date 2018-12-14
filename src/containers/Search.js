@@ -143,61 +143,22 @@ class Doc extends React.Component {
                 <StickyHeader
                   data={menu}
                 />
-                <SubHeader
+                {/*<SubHeader
                   data={menu}
                   pathname={this.props.location.pathname}
-                />
+                />*/}
                 <DocPageLayout style={{maxWidth: maxWidthLayout, margin: 'auto'}}>
                   <section className="left-column">
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                      <FloatingMenu
-                        data={menu}
-                        highlightedItem={this.state.projectName}
-                        styles={{ position: 'fixed', top: '400px' }}
-                      />
-                    </div>
                   </section>
-                  <section className="middle-column">
-                    <Markdown source={query ?
-                      markdown.replace(new RegExp(query, 'gi'), `<span class="search-keyword">${query}</span>`)
-                      : markdown}
-                    />
-                    <div>
-                      <a href={editPath}>Edit this page on Github</a>
+                  <section className="middle-column" style={{ minHeight: '100vh'}}>
+                    <div class="input-register-container">
+                      <input type="text" class="input-register"/>
                     </div>
-                    <div className="erratumHint">
-                      <p>Found a mistake on the page? Select a text and press <b>Ctrl+Enter</b> or <b>Shift+Enter</b></p>
-                    </div>
-                    {
-                      selection ? (
-                        <CommentModal show={isOpen} closeModal={this.closeModal}>
-                          <div className="modalHeader">
-                            <h3>Found a mistake?</h3>
-                            <button onClick={this.closeModal}>
-                              Close
-                            </button>
-                          </div>
-                          <p dangerouslySetInnerHTML={{ __html: erratum }} />
-                          <textarea
-                            value={comments}
-                            placeholder="Additional comments"
-                            name="comments"
-                            onChange={this.handleTextChange}
-                          />
-                          <button onClick={this.submitErratum}>
-                            Submit
-                          </button>
-                        </CommentModal>
-                      ) : null}
                   </section>
                   <section className="right-column">
-                    <TreeMenu />
                   </section>
                 </DocPageLayout>
-                <Navigator
-                  data={menu}
-                  pathname={this.props.location.pathname}
-                />
+
                 <Feedback
                   styles={{ position: 'fixed', bottom: '130px', left: '20px' }}
                   onSubmit={(data) => submitFeedback(this.props.location.pathname, data)}
