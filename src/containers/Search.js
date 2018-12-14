@@ -1,6 +1,6 @@
 import Markdown from 'components/Markdown';
 import CommentModal from 'components/Modal';
-import Search from 'components/Search';
+import InputSearch from 'components/Search';
 import React from 'react';
 import { Head, RouteData, SiteData, withRouter } from 'react-static';
 import Feedback from '../components/molecules/Feedback';
@@ -14,18 +14,29 @@ import Container from './../components/Container';
 import StickyHeader from './../components/ci/StickyHeader';
 import SubHeader from './../components/ci/SubHeader';
 import Navigator from './../components/ci/Navigator';
-import { InputBasic } from './../components/atoms/Input'
+import Result from './../components/molecules/Result'
+
 class Doc extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       isOpen: false,
+      foundResult: [],
       projectName: '',
       projectFullURL: ''
      };
+     this.onDataSearch = this.onDataSearch.bind(this)
+     this.handleKeyUp = this.handleKeyUp.bind(this)
   }
-
+  onDataSearch(data) {
+    this.setState({ foundResult: data })
+  }
+  handleKeyUp(e) {
+    if(e.key === "Escape") {
+      this.setState({ inputExpanded: false })
+    }
+  }
   componentDidMount() {
     ///docs/HUB/reference/2.0/README
     const projectFullURL = this.props.location.pathname
@@ -61,7 +72,17 @@ class Doc extends React.Component {
                   <section className="left-column">
                   </section>
                   <section className="middle-column" style={{ minHeight: '100vh'}}>
-                    <InputBasic />
+                      <div className="input-wrapper-basic" style={{position: 'relative', left: '-32px'}}>
+                        <InputSearch
+                          className="input-search-basic"
+                          placeholder="Search for topics"
+                          onKeyUp={this.handleKeyUp}
+                          onDataSearch={this.onDataSearch}
+                        />
+                      </div>
+                      <Result
+                        foundResult={this.state.foundResult}
+                      />
                   </section>
                   <section className="right-column">
                   </section>
