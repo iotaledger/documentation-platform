@@ -2,11 +2,6 @@
   min-height: 100vh;
 }
 
-a {
-  text-decoration: none;
-  color: #108db8;
-}
-
 code.code-inline {
   background: rgba(0,0,0,.05);
   padding: 2px 5px;
@@ -18,15 +13,6 @@ code.code-inline {
 
 .react-syntax-highlighter-line-number {
   pointer-events: none;
-}
-
-a.simple-link {
-  color: #ffffff;
-}
-
-a.simple-link:hover {
-  text-decoration: none;
-  color: #20a49d;
 }
 
 .search-keyword {

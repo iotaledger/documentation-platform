@@ -85,8 +85,8 @@ class Menu extends React.Component {
               </h5>
               <ul className="side-menu__list">
                 {menuItem.menuList.map((menuListItem, miIndex) => (
-                  <li key={miIndex}>
-                    <Link to={menuListItem.link} exact activeClassName="active" className="simple-link">
+                  <li key={miIndex} className="side-menu-item">
+                    <Link to={menuListItem.link} exact activeClassName="side-menu-item--active">
                       {menuListItem.name}
                     </Link>
                   </li>
