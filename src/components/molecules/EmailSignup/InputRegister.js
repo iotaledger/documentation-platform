@@ -1,6 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import React from 'react';
 import api from '../../../utils/api';
 import Paragraph from '../../atoms/Paragraph';
 
@@ -13,6 +12,7 @@ class InputRegister extends React.Component {
       success: false,
       apiMessage: null,
       error: null,
+      diabled: false
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -25,21 +25,16 @@ class InputRegister extends React.Component {
 
   async submit(e) {
     e.preventDefault();
-    const { captcha, loading, email } = this.state;
 
-    if (!email) {
-      return this.setState({ error: 'Please provide valid email' });
-    }
+    const { email } = this.state;
 
-    const validate = this.validateEmail(email)
-
-    if (this.validateEmail(email)) {
+    if (!email || !this.validateEmail(email)) {
+      this.setState({ error: 'Please provide a valid e-mail address.' });
+    } else {
       this.setState({ loading: true }, async () => {
         const response = await api('submitEmail', { email });
         this.setState({ success: true, loading: false, apiMessage: response.message });
       });
-    } else {
-      this.setState({ error: 'Please provide valid email' })
     }
   }
 
@@ -49,32 +44,35 @@ class InputRegister extends React.Component {
   }
 
   render() {
-    const { email, error, success, apiMessage } = this.state;
+    const { email, error, success, apiMessage, loading } = this.state;
     return (
-      <div className="input-register-container">
-        <div className="input-register-container__wrapper">
-          <form
-            onSubmit={this.submit}
-            className={classNames('input-register-container__form', { 'hidden': success })}
-          >
+      <div className="input-register-container__wrapper">
+        <form
+          onSubmit={this.submit}
+          className={classNames('input-register-container__form')}
+          noValidate
+        >
+          <div
+            className={classNames('input-register-container', { 'input-register-container--hidden': success })}>
             <input
               type="email"
               className="input-register"
               placeholder="Add your email address"
               value={email}
+              disabled={loading}
               onChange={this.handleInputChange}
             />
-            <button className="input-register__button" type="submit">
+            <button className="input-register__button" type="submit" disabled={loading}>
               <span className="input-register__button-text">Register</span>
             </button>
-          </form>
-          <Paragraph className={classNames('error-message', { 'hidden': !error || success })}>
-            { error }
-          </Paragraph>
-          <Paragraph className={classNames('success-message', { 'hidden': !success })}>
-            { apiMessage }
-          </Paragraph>
-        </div>
+          </div>
+          <div className="error-message">
+            {error}
+          </div>
+          <div className={classNames('success-message', { 'hidden': !success })}>
+            {apiMessage}
+          </div>
+        </form>
       </div>
     )
   }

@@ -17,10 +17,6 @@
   padding: 0 30px;
 }
 
-.email-signup__content, .input-register-container {
-  width: 50%;
-}
-
 .email-signup__content h2 {
   margin: 37px 0 0;
 }
@@ -37,9 +33,8 @@
   margin-top: 5px;
 }
 
-.input-register-container {
-  flex-direction: row;
-  justify-content: flex-end;
+.input-register-container.input-register-container--hidden {
+  display: none;
 }
 
 .input-register-container__wrapper {
@@ -49,42 +44,18 @@
 
 .input-register-container__form {
   display: flex;
-  flex-direction: row;
-  margin: auto 30px;
-  justify-content: flex-end;
-}
-
-.input-register-container__form .input-register {
-  height: 55px;
-  -webkit-border-top-left-radius: 5px;
-  -webkit-border-bottom-left-radius: 5px;
-  -moz-border-radius-topleft: 5px;
-  -moz-border-radius-bottomleft: 5px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border: 1px solid #c4c4c4;
-  color: #696f76;
-  font-size: 17px;
-}
-
-.input-register__button {
-  outline: none;
-  cursor: pointer;
+  flex-direction: column;
+  margin: 60px 30px 0px 30px;
+  justify-content: flex-start;
 }
 
 .error-message {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+  margin-top: 10px;
   color: red;
-  margin: auto 30px;
-  position: absolute;
-  bottom: 20px;
 }
 
 .success-message {
   color: green;
-  margin: auto 30px;
 }
 
 @media (max-width: 768px) {
@@ -97,26 +68,12 @@
     justify-content: space-between;
   }
 
-  .email-signup__content, .input-register-container {
-    width: 100%;
-    justify-content: flex-start;
-  }
-
   .email-signup__content h2 {
     font-size: 24px;
     margin: 25px 0 0;
   }
 
   .input-register-container__form {
-    margin: 5px 30px 25px;
-  }
-
-  .input-register-container__form .input-register {
-    width: 280px;
-  }
-
-  .error-message {
-    margin: auto 30px;
-    bottom: 0;
+    margin: 0px 30px 25px 30px;
   }
 }

@@ -53,5 +53,5 @@ export async function storeEmail(data: IEmail): Promise<string> {
     .doc(data.email)
     .set(data);
 
-  return 'Successfully sent!';
+  return 'Thank you for signing up!';
 }

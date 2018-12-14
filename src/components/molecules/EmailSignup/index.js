@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import InputRegister from './InputRegister';
-import Paragraph from '../../atoms/Paragraph';
 import Heading from '../../atoms/Heading';
-import './email.css'
+import Paragraph from '../../atoms/Paragraph';
+import './email.css';
+import InputRegister from './InputRegister';
 
 const EmailSignup = () => (
   <section className="email-signup">

@@ -26,7 +26,7 @@ class Pagination extends React.Component {
 
   render() {
     return (
-      <ul class="pagination">
+      <ul className="pagination">
         ({
           Array.from(Array(this.props.total).keys()).map(p => (
             <li key={p} className={
