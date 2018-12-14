@@ -48,7 +48,7 @@ class Search extends React.Component {
     const documents = this.buildDocuments()
     const searchResults = results.map(result => documents[result.ref])
     //this.setState({ searchResults })
-    this.props.onDataSearch(searchResults)
+    this.props.onDataSearch(searchResults, query)
   }
 
   reset() {

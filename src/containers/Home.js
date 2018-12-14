@@ -14,7 +14,7 @@ import ProjectTopicsContainer from '../components/molecules/ProjectTopics';
 import contentHomePage from '../contentHomePage.json';
 import { submitFeedback } from "../utils/feedbackHelper";
 
-export default () => (
+export default (props) => (
   <SiteData
     render={({ menu, repo, repoURL, repoName }) => (
       <Container>
@@ -22,6 +22,7 @@ export default () => (
           <title>Home | {repoName}</title>
         </Head>
         <Header
+          history={props.history}
           headerTitle='Developer Documentation'
           topTitles={contentHomePage.headerTopLinks}
           data={menu}

@@ -2,6 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import logo from './../../assets/Logo.svg'
 import Menu from './Menu'
+import InputSearch from  './../Search'
 
 const menuHidden = {
   position: 'fixed',
@@ -25,12 +26,24 @@ class Header extends React.Component {
       isMenuOpen: false
     }
     this.handleBurgerClick = this.handleBurgerClick.bind(this)
+    this.handleKeyUp = this.handleKeyUp.bind(this)
+    this.onDataSearch = this.onDataSearch.bind(this)
   }
 
   handleBurgerClick() {
     this.setState((prevState, prevProps) => ({
       isMenuOpen: !prevState.isMenuOpen
     }));
+  }
+
+  onDataSearch(data, query) {
+    this.props.history.push(`/search?q=${query}`)
+  }
+
+  handleKeyUp(e) {
+    if(e.key === "Escape") {
+      this.setState({ inputExpanded: false })
+    }
   }
 
   render() {
@@ -64,7 +77,12 @@ class Header extends React.Component {
             <span className="text text--level1 text--secondary">{headerTitle}</span>
             <div className="header__search">
               <div className="input-wrapper">
-                <input type="text" className="input-search" placeholder="Search for topics" />
+                <InputSearch
+                  className="input-search"
+                  placeholder="Search for topics"
+                  onKeyUp={this.handleKeyUp}
+                  onDataSearch={this.onDataSearch}
+                />
               </div>
             </div>
           </section>
