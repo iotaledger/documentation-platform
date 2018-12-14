@@ -20,6 +20,7 @@ class Search extends React.Component {
   componentDidMount() {
     if(this.props.search) {
       let q = this.props.search.split('?q=')[1]
+      this.setState({ query: q })
       this.search(q)
     }
   }
