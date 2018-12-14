@@ -17,6 +17,12 @@ class Search extends React.Component {
     this.search = this.search.bind(this)
     this.handleKeyChange = this.handleKeyChange.bind(this)
   }
+  componentDidMount() {
+    if(this.props.search) {
+      let q = this.props.search.split('?q=')[1]
+      this.search(q)
+    }
+  }
   handleKeyChange(e) {
     this.props.onKeyUp(e)
     if(e.key === 'Enter'){
@@ -35,9 +41,8 @@ class Search extends React.Component {
     this.setState({ query: value })
   }
 
-  search(e) {
-    e.preventDefault()
-    const { query } = this.state
+  search(q) {
+    const query  = this.state.query ? this.state.query : q
     const idx = lunr.Index.load(json)
     const results = idx.search(query)
     const documents = this.buildDocuments()

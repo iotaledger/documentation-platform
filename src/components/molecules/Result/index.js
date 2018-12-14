@@ -7,9 +7,18 @@ import { Link } from 'react-static'
 class Result extends React.Component {
   constructor(props) {
     super(props)
+    this.transformLink = this.transformLink.bind(this)
+  }
+  componentDidMount() {
+  
+
+  }
+  transformLink(link) {
+    return link.replace(/\\/g,"/");
   }
 
   render() {
+
     return (
       <section>
         <Text className='text text--level6'>{`${this.props.foundResult.length} documents found.`}</Text>
@@ -17,8 +26,8 @@ class Result extends React.Component {
           return (<div key={elm.id} style={{}}>
             <section><Text className='text text--level3 text--tertiary'>{elm.name}</Text></section>
             <section>
-              <Link to={elm.id} exact>
-                <Text className='text-paragraph'>{elm.id}</Text>
+              <Link to={`/${this.transformLink(elm.id)}`} exact>
+                <Text on className='text-paragraph'>{`/${this.transformLink(elm.id)}`}</Text>
               </Link>
             </section>
           </div>)

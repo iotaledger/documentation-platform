@@ -74,6 +74,7 @@ class Doc extends React.Component {
                   <section className="middle-column" style={{ minHeight: '100vh'}}>
                       <div className="input-wrapper-basic" style={{position: 'relative', left: '-32px'}}>
                         <InputSearch
+                          search={this.props.location.search}
                           className="input-search-basic"
                           placeholder="Search for topics"
                           onKeyUp={this.handleKeyUp}
