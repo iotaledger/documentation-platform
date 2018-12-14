@@ -143,6 +143,7 @@ class Doc extends React.Component {
                   <title>{`${title} | ${repoName}`}</title>
                 </Head>
                 <StickyHeader
+                  history={this.props.history}
                   data={menu}
                 />
                 <SubHeader

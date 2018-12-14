@@ -34,14 +34,14 @@ class StickyHeader extends React.Component {
     this.onDataSearch = this.onDataSearch.bind(this)
     this.handleBurgerClick = this.handleBurgerClick.bind(this)
   }
-  
+
   handleBurgerClick() {
     this.setState((prevState, prevProps) => ({
       isMenuOpen: !prevState.isMenuOpen
     }));
   }
-  onDataSearch(data) {
-    console.log(data)
+  onDataSearch(data, query) {
+    this.props.history.push(`/search?q=${query}`)
   }
   handleKeyUp(e) {
     if(e.key === "Escape") {
