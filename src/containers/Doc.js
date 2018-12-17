@@ -211,11 +211,13 @@ class Doc extends React.Component {
                       ) : null}
                   </section>
                   <section className="right-column">
-                    <VersionPicker
-                      versions={menu[this.state.projectName]}
-                      currUrl={this.state.projectFullURL}
-                      onChange={this.changeVersion}
-                    />
+                    {menu[this.state.projectName] &&
+                      <VersionPicker
+                        versions={menu[this.state.projectName]}
+                        currUrl={this.state.projectFullURL}
+                        onChange={this.changeVersion}
+                      />
+                    }
                     <TreeMenu />
                   </section>
                 </DocPageLayout>
