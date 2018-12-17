@@ -2,6 +2,7 @@ import React from "react";
 import { Head, SiteData } from "react-static";
 import BottomSticky from "../components/atoms/BottomSticky";
 import BottomStop from "../components/atoms/BottomStop";
+import ScrollInContainer from "../components/atoms/ScrollInContainer";
 import ScrollToTop from '../components/atoms/ScrollToTop';
 import FloatingMenu from '../components/ci/FloatingMenu';
 import Header from '../components/ci/Header';
@@ -28,9 +29,13 @@ export default (props) => (
           data={menu}
         />
 
+        <div id="floating-menu-top-limit"></div>
         <div style={{ backgroundColor: '#f3f2f1' }}>
           <HomePageLayout style={{ backgroundColor: '#f3f2f1', width: '100%', minHeight: '482px', maxWidth: maxWidthLayout, margin: 'auto' }}>
-            <div className="left-column">
+            <div className="left-column" style={{ display: "flex", justifyContent: "center" }}>
+              <ScrollInContainer topOffset={60} bottomOffset={120} topMarker="floating-menu-top-limit" bottomMarker="floating-menu-bottom-limit">
+                <FloatingMenu data={menu} />
+              </ScrollInContainer>
             </div>
             <div className="right-column" style={{}}>
               <CardContainer content={contentHomePage.cards} />
@@ -39,14 +44,12 @@ export default (props) => (
         </div>
         <HomePageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto' }}>
           <div className="left-column" >
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <FloatingMenu data={menu} styles={{ position: 'fixed', top: '400px' }} />
-            </div>
           </div>
           <div className="right-column" style={{ padding: '25px' }}>
             <ProjectTopicsContainer contentHomePage={contentHomePage} />
           </div>
         </HomePageLayout>
+        <div id="floating-menu-bottom-limit" />
         <BottomStop />
         <EmailSignup />
         <BottomSticky zIndex={10}>

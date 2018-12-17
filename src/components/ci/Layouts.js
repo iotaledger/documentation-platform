@@ -20,7 +20,6 @@ const media = {
 
 const HomePageLayout = styled.div`
   display: flex;
-  //width: 100%;
   .left-column {
     display: none;
     width: 100%;
