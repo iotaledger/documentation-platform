@@ -15,6 +15,8 @@ import StickyHeader from './../components/ci/StickyHeader';
 import SubHeader from './../components/ci/SubHeader';
 import Navigator from './../components/ci/Navigator';
 import Result from './../components/molecules/Result'
+import Pagination from '../components/molecules/Pagination';
+
 
 class Doc extends React.Component {
   constructor(props) {
@@ -24,10 +26,17 @@ class Doc extends React.Component {
       isOpen: false,
       foundResult: [],
       projectName: '',
-      projectFullURL: ''
+      projectFullURL: '',
+      indexStart: 0,
+      indexEnd: 10,
      };
      this.onDataSearch = this.onDataSearch.bind(this)
      this.handleKeyUp = this.handleKeyUp.bind(this)
+     this.onDataPaginated = this.onDataPaginated.bind(this)
+  }
+  onDataPaginated(start, end) {
+    console.log(start, end)
+    this.setState({ indexStart: start, indexEnd: end })
   }
   onDataSearch(data) {
     this.setState({ foundResult: data })
@@ -83,6 +92,12 @@ class Doc extends React.Component {
                       </div>
                       <Result
                         foundResult={this.state.foundResult}
+                        indexStart={this.state.indexStart}
+                        indexEnd={this.state.indexEnd}
+                      />
+                      <Pagination
+                        total={this.state.foundResult}
+                        onDataPaginated={this.onDataPaginated}
                       />
                   </section>
                   <section className="right-column">

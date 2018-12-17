@@ -6,37 +6,52 @@ import React from 'react';
 
 class Pagination extends React.Component {
   static propTypes = {
-    value: PropTypes.number.isRequired,
-    total: PropTypes.number.isRequired,
+    total: PropTypes.array.isRequired,
     onChange: PropTypes.func
   };
 
   constructor(props) {
     super(props)
-
-    this.handleOnChange = this.handleOnChange.bind(this);
+    this.state = {
+      maxPerPage: 10,
+      nbrPage: 1,
+      currentPage: 0
+    }
+    this.handleNext = this.handleNext.bind(this);
   }
-
-  handleOnChange(newIndex) {
-    const { onChange } = this.props;
-    if (onChange) {
-      onChange(newIndex);
+  componentDidUpdate(prevProps) {
+    if (this.props.total.length !== prevProps.total.length && this.props.total.length) {
+      //console.log(this.props.total.length / this.state.maxPerPage)
+      this.setState({
+        nbrPage: Math.floor(this.props.total.length / this.state.maxPerPage)
+      })
+    }
+  }
+  handleNext(newIndex) {
+    if (this.props.onDataPaginated) {
+      //onChange(newIndex);
+      this.props.onDataPaginated(newIndex * this.state.maxPerPage , newIndex * this.state.maxPerPage + this.state.maxPerPage)
+      this.setState({ currentPage: newIndex })
     }
   }
 
   render() {
     return (
       <ul className="pagination">
-        ({
-          Array.from(Array(this.props.total).keys()).map(p => (
-            <li key={p} className={
+        {
+          [...Array(this.state.nbrPage)].map((p, index) => (
+            <li key={index} className={
               classNames(
                 'pagination-item',
-                { 'pagination-item--selected': (p + 1) === this.props.value }
+                { 'pagination-item--selected': this.state.currentPage === index }
               )
-            }><a onClick={() => this.handleOnChange(p + 1)}>{p + 1}</a></li>
+            }>
+              <a onClick={() => this.handleNext(index)}>
+                {index + 1}
+              </a>
+            </li>
           ))
-        })
+        }
       </ul>
     )
   }
