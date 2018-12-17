@@ -61,10 +61,10 @@ class Tabs extends React.Component {
           </ul>
           <div className="tab-header-copy">
             <span className={classNames(
-                  "tab-header-copy-text",
-                  { "tab-header-copy-text--active": this.state.copyActive },
-                  { "tab-header-copy-text--failed": !this.state.copySuccess }
-                )}>{this.state.copySuccess ? "Copied" : "Failed"}</span>
+              "tab-header-copy-text",
+              { "tab-header-copy-text--active": this.state.copyActive },
+              { "tab-header-copy-text--failed": !this.state.copySuccess && this.state.copyActive }
+            )}>{this.state.copySuccess ? "Copied" : "Failed"}</span>
             <button className="tab-header-copy-button" onClick={() => this.handleCopy()}><i className="fa fa-copy"></i></button>
           </div>
         </div>
