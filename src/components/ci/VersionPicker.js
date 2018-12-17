@@ -1,9 +1,7 @@
 import React from 'react'
 
 const versionStyle = {
-  position: 'fixed',
-  bottom: '200px',
-  left: '31px'
+  margin: "20px"
 }
 
 class VersionPicker extends React.Component {
@@ -25,12 +23,10 @@ class VersionPicker extends React.Component {
 
   render() {
     return (<div style={versionStyle}>
-      <div>
-        <select value={this.state.currVersion} onChange={(e) => this.props.onChange(e.target.value)}>
-          <option value="">Jump to version</option>
-          {this.state.versions.map((version, indx) => (<option key={indx} value={version} >{version}</option>))}
-        </select>
-      </div>
+      <span>Version&nbsp;</span>
+      <select value={this.state.currVersion} onChange={(e) => this.props.onChange(e.target.value)}>
+        {this.state.versions.map((version, indx) => (<option key={indx} value={version} >{version}</option>))}
+      </select>
     </div>)
   }
 }

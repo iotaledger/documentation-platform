@@ -7,7 +7,8 @@ class ScrollInContainer extends React.Component {
     topOffset: 0,
     bottomOffset: 0,
     topMarker: undefined,
-    bottomMarker: undefined
+    bottomMarker: undefined,
+    widthContainer: undefined
   };
 
   static propTypes = {
@@ -16,13 +17,15 @@ class ScrollInContainer extends React.Component {
     bottomOffset: PropTypes.number,
     topMarker: PropTypes.string,
     bottomMarker: PropTypes.string,
+    widthContainer: PropTypes.string
   };
 
   constructor(props) {
     super(props)
 
     this.state = {
-      top: this.props.bottomOffset
+      top: this.props.topOffset,
+      width: undefined
     };
 
     this.handleScroll = this.handleScroll.bind(this);
@@ -32,6 +35,7 @@ class ScrollInContainer extends React.Component {
   componentDidMount() {
     document.addEventListener('scroll', this.handleScroll);
     window.addEventListener('resize', this.handleResize);
+
     this.handleScroll();
   }
 
@@ -45,8 +49,8 @@ class ScrollInContainer extends React.Component {
   }
 
   handleScroll() {
-    const topMarker = document.querySelectorAll(`#${this.props.topMarker}`);
-    const bottomMarker = document.querySelectorAll(`#${this.props.bottomMarker}`);
+    const topMarker = document.querySelectorAll(this.props.topMarker);
+    const bottomMarker = document.querySelectorAll(this.props.bottomMarker);
 
     const thisDom = ReactDOM.findDOMNode(this);
     const docDom = ReactDOM.findDOMNode(document.body);
@@ -68,14 +72,21 @@ class ScrollInContainer extends React.Component {
       newTop = bottomLimit - this.props.bottomOffset - thisRect.height;
     }
 
-    this.setState({top: newTop});
+    const widthContainer = document.querySelectorAll(this.props.widthContainer);
+    const newWidth = widthContainer && widthContainer.length > 0 ?
+      ReactDOM.findDOMNode(widthContainer[0]).getBoundingClientRect().width : undefined;
+
+    console.log(this.state.top, newTop);
+
+    this.setState({ top: newTop, width: newWidth });
   }
 
   render() {
     const style = {
       ...this.props.styles,
       position: "fixed",
-      top: this.state.top
+      top: this.state.top,
+      width: this.state.width
     };
 
     return (
