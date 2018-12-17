@@ -76,8 +76,6 @@ class ScrollInContainer extends React.Component {
     const newWidth = widthContainer && widthContainer.length > 0 ?
       ReactDOM.findDOMNode(widthContainer[0]).getBoundingClientRect().width : undefined;
 
-    console.log(this.state.top, newTop);
-
     this.setState({ top: newTop, width: newWidth });
   }
 
