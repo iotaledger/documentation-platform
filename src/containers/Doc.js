@@ -152,18 +152,16 @@ class Doc extends React.Component {
                 />
                 <div id="floating-menu-top-limit"></div>
                 <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto' }}>
-                  <TabletHidden>
-                    <section className="left-column">
-                      <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <ScrollInContainer topOffset={40} bottomOffset={120} topMarker="floating-menu-top-limit" bottomMarker="floating-menu-bottom-limit">
-                          <FloatingMenu
-                            data={menu}
-                            highlightedItem={this.state.projectName}
-                          />
-                        </ScrollInContainer>
-                      </div>
-                    </section>
-                  </TabletHidden>
+                  <section className="left-column">
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                      <ScrollInContainer topOffset={40} bottomOffset={120} topMarker="floating-menu-top-limit" bottomMarker="floating-menu-bottom-limit">
+                        <FloatingMenu
+                          data={menu}
+                          highlightedItem={this.state.projectName}
+                        />
+                      </ScrollInContainer>
+                    </div>
+                  </section>
                   <section className="middle-column">
                     <Markdown source={query ?
                       markdown.replace(new RegExp(query, 'gi'), `<span class="search-keyword">${query}</span>`)
@@ -197,11 +195,9 @@ class Doc extends React.Component {
                         </CommentModal>
                       ) : null}
                   </section>
-                  <TabletHidden>
-                    <section className="right-column">
-                      <TreeMenu />
-                    </section>
-                  </TabletHidden>
+                  <section className="right-column">
+                    <TreeMenu />
+                  </section>
                 </DocPageLayout>
                 <div id="floating-menu-bottom-limit" />
                 <BottomStop />

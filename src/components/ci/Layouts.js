@@ -10,6 +10,11 @@ const media = {
       ${css(...args)};
     }
   `,
+  tabletDown: (...args) => css`
+    @media (max-width: ${tabletWidth - 1}px) {
+      ${css(...args)};
+    }
+  `,
   desktop: (...args) => css`
     @media (min-width: ${desktopWidth}px) {
       ${css(...args)};
@@ -18,9 +23,9 @@ const media = {
 }
 
 const TabletHidden = styled.div`
-  @media (max-width: ${tabletWidth}px) {
-      display: none;
-  };
+  ${media.tabletDown`
+    display: none;
+  `}
 `;
 
 const HomePageLayout = styled.div`
@@ -34,6 +39,11 @@ const HomePageLayout = styled.div`
     width: 100%;
     flex: 3;
   }
+  ${media.tabletDown`
+    .left-column {
+      display: none;
+    }
+  `};
 `;
 
 const DocPageLayout = styled.div`
@@ -41,20 +51,24 @@ display: flex;
 padding: 0 16px;
 
 .left-column {
-  display: none;
-  width: 100%;
   flex: 1;
 }
 .middle-column {
   padding: 15px 20px 0px 0px;
-  width: 60%;
   flex: 5;
 }
 .right-column {
-  display: none;
-  width: 100%;
   flex: 1;
 }
+${media.tabletDown`
+.left-column {
+  display: none;
+}
+.right-column {
+  display: none;
+}
+`};
+
 `;
 
 

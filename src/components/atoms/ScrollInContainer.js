@@ -26,15 +26,22 @@ class ScrollInContainer extends React.Component {
     };
 
     this.handleScroll = this.handleScroll.bind(this);
+    this.handleResize = this.handleResize.bind(this);
   }
 
   componentDidMount() {
     document.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('resize', this.handleResize);
     this.handleScroll();
   }
 
   componentWillUnmount() {
     document.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  handleResize() {
+    this.handleScroll();
   }
 
   handleScroll() {
