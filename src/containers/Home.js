@@ -32,10 +32,18 @@ export default (props) => (
         <div id="floating-menu-top-limit"></div>
         <div style={{ backgroundColor: '#f3f2f1' }}>
           <HomePageLayout style={{ backgroundColor: '#f3f2f1', width: '100%', minHeight: '482px', maxWidth: maxWidthLayout, margin: 'auto' }}>
-            <div className="left-column" style={{ display: "flex", justifyContent: "center" }}>
-              <ScrollInContainer topOffset={60} bottomOffset={120} topMarker="floating-menu-top-limit" bottomMarker="floating-menu-bottom-limit">
+            <div className="left-column">
+              <ScrollInContainer
+                topOffset={60}
+                bottomOffset={120}
+                topMarker="#floating-menu-top-limit"
+                bottomMarker="#floating-menu-bottom-limit"
+                widthContainer=".left-column"
+              >
                 <TabletHidden>
-                  <FloatingMenu data={menu} />
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <FloatingMenu data={menu} />
+                  </div>
                 </TabletHidden>
               </ScrollInContainer>
             </div>

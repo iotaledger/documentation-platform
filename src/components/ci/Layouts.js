@@ -31,12 +31,10 @@ const TabletHidden = styled.div`
 const HomePageLayout = styled.div`
   display: flex;
   .left-column {
-    width: 100%;
     flex: 1;
-    min-width: 150px;
+    min-width: 200px;
   }
   .right-column {
-    width: 100%;
     flex: 3;
   }
   ${media.tabletDown`
@@ -51,6 +49,7 @@ display: flex;
 padding: 0 16px;
 
 .left-column {
+  min-width: 200px;
   flex: 1;
 }
 .middle-column {
