@@ -14,6 +14,7 @@ import json from "reprism/languages/json";
 import jsx from "reprism/languages/jsx";
 import python from "reprism/languages/python";
 import Heading from '../../atoms/Heading';
+import HeadingLabel from '../../atoms/HeadingLabel';
 import Tabs from '../../molecules/Tabs';
 import "./markdown.css";
 
@@ -28,8 +29,29 @@ class Markdown extends PureComponent {
     }
 
     this.tabContainers = [];
+    this.headingLabels = [];
 
     this.html = this.html.bind(this);
+  }
+  
+  componentDidMount() {
+    const tabContainers = this.findTabContainers(this.props.source);
+    let content = this.props.source;
+
+    for (let i = 0; i < tabContainers.length; i++) {
+      this.tabContainers.push(this.findTabs(tabContainers[i]));
+      content = content.replace(`<tabs>${tabContainers[i]}</tabs>`, `<tabs index="${i}"></tabs>`)
+    }
+
+    this.headingLabels = this.findHeadingLabels(this.props.source);
+
+    for (let i = 0; i < this.headingLabels.length; i++) {
+      content = content.replace(`<heading-label style="${this.headingLabels[i].style}">${this.headingLabels[i].content}<\/heading-label>`, `<heading-label index="${i}"></heading-label>`)
+    }
+
+    this.setState({
+      content
+    })
   }
 
   findTabContainers(content) {
@@ -65,18 +87,19 @@ class Markdown extends PureComponent {
     return tabs;
   }
 
-  componentDidMount() {
-    const tabContainers = this.findTabContainers(this.props.source);
-    let content = this.props.source;
+  findHeadingLabels(content) {
+    const headingLabels = [];
+    const re = /<heading-label style="(.*)">([\S\s]*?)<\/heading-label>/g;
 
-    for (let i = 0; i < tabContainers.length; i++) {
-      this.tabContainers.push(this.findTabs(tabContainers[i]));
-      content = content.replace(`<tabs>${tabContainers[i]}</tabs>`, `<tabs index="${i}"></tabs>`)
-    }
+    let match;
+    do {
+      match = re.exec(content);
+      if (match && match.length === 3) {
+        headingLabels.push({ style: match[1], content: match[2]});
+      }
+    } while (match);
 
-    this.setState({
-      content
-    })
+    return headingLabels;
   }
 
   html(props) {
@@ -105,6 +128,15 @@ class Markdown extends PureComponent {
         return (
           <div dangerouslySetInnerHTML={{ __html: `<blockquote>${match[1].trim().replace(/\n/g, "<br/>")}</blockquote>` }} />
         )
+      }
+    } else if (props.value.startsWith("<heading-label")) {
+      const re = /<heading-label index="(.*)">/;
+      let match = re.exec(props.value);
+
+      if (match && match.length === 2) {
+        const index = parseInt(match[1], 10);
+        const headingLabel = this.headingLabels[index];
+        return (<HeadingLabel style={headingLabel.style}>{headingLabel.content}</HeadingLabel>);
       }
     }
 
@@ -171,6 +203,10 @@ class Markdown extends PureComponent {
     return (
       <Heading className='text--tertiary' level={props.level}>{props.children[0].props.value}</Heading>
     );
+  }
+
+  virtualHtml(props) {
+    console.log(props);
   }
 
   render() {
