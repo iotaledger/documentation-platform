@@ -23,19 +23,21 @@ Ordered list
 
 1. Item 1
 1. Item 2
-  1. Item 2a
-  1. Item 2b
+1. Item 2a
+1. Item 2b
+
+Blah blah
 
 <blockquote>
-  This is a blockquote.<br/>
-  This is a blockquote.<br/>
-  This is a blockquote.<br/>
-  This is a blockquote.<br/>
+  This is a blockquote.
+  This is a blockquote.
+  This is a blockquote.
+  This is a blockquote.
 </blockquote>
 
 ### A Third Level Heading
 
-Just some plain code.
+Just some JavaScript code.
 
 ```js
 var React = require('react');
@@ -46,6 +48,15 @@ React.render(
   document.getElementById('content')
 );
 ```
+
+Just some Python code.
+
+```python
+x = 1
+if x == 1:
+    # indented four spaces
+    print("x is 1.")
+  ```
 
 #### Fourth Level Heading
 
@@ -70,13 +81,30 @@ A separator is below
 And how about a tabbed control.
 
 <tabs>
-  <tab title="Tab 1">
-    This the content of tab1
+  <tab title="JavaScript">
+
+```js
+var React = require('react');
+var Markdown = require('react-markdown');
+
+React.render(
+  <Markdown source="# Your markdown here" />,
+  document.getElementById('content')
+);
+```
+
   </tab>
-  <tab title="Tab 2">
-    This the content of tab2
+  <tab title="Python">
+
+```python
+x = 1
+if x == 1:
+    # indented four spaces
+    print("x is 1.")
+```
+
   </tab>
-</tab>
+</tabs>
 
 Or an image
 
@@ -85,6 +113,9 @@ Or an image
 How about emojis
 
 :smile: `:smile:`
+
 :laughing: `:laughing:`
+
 :santa: `:santa:`
+
 :christmas_tree: `:christmas_tree:`

@@ -1,4 +1,4 @@
-import Markdown from 'components/Markdown';
+import Markdown from 'components/organisms/Markdown';
 import CommentModal from 'components/Modal';
 import React from 'react';
 import { Head, RouteData, SiteData, withRouter } from 'react-static';

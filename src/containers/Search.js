@@ -1,4 +1,4 @@
-import Markdown from 'components/Markdown';
+import Markdown from 'components/organisms/Markdown';
 import CommentModal from 'components/Modal';
 import InputSearch from 'components/Search';
 import React from 'react';
