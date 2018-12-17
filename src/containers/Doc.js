@@ -1,12 +1,13 @@
-import Markdown from 'components/organisms/Markdown';
 import CommentModal from 'components/Modal';
+import Markdown from 'components/organisms/Markdown';
 import React from 'react';
 import { Head, RouteData, SiteData, withRouter } from 'react-static';
 import BottomSticky from "../components/atoms/BottomSticky";
 import BottomStop from '../components/atoms/BottomStop';
+import ScrollInContainer from '../components/atoms/ScrollInContainer';
 import ScrollToTop from '../components/atoms/ScrollToTop';
 import FloatingMenu from '../components/ci/FloatingMenu';
-import { DocPageLayout, maxWidthLayout } from '../components/ci/Layouts';
+import { DocPageLayout, maxWidthLayout, TabletHidden } from '../components/ci/Layouts';
 import Navigator from '../components/ci/Navigator';
 import StickyHeader from '../components/ci/StickyHeader';
 import SubHeader from '../components/ci/SubHeader';
@@ -165,11 +166,12 @@ class Doc extends React.Component {
                 <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto' }}>
                   <section className="left-column">
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
-                      <FloatingMenu
-                        data={menu}
-                        highlightedItem={this.state.projectName}
-                        styles={{ position: 'fixed', top: '400px' }}
-                      />
+                      <ScrollInContainer topOffset={40} bottomOffset={120} topMarker="floating-menu-top-limit" bottomMarker="floating-menu-bottom-limit">
+                        <FloatingMenu
+                          data={menu}
+                          highlightedItem={this.state.projectName}
+                        />
+                      </ScrollInContainer>
                     </div>
                   </section>
                   <section className="middle-column">
@@ -209,13 +211,16 @@ class Doc extends React.Component {
                     <TreeMenu />
                   </section>
                 </DocPageLayout>
+                <div id="floating-menu-bottom-limit" />
                 <BottomStop />
                 <Navigator
                   data={menu}
                   pathname={this.props.location.pathname}
                 />
                 <BottomSticky zIndex={10}>
-                  <Feedback onSubmit={(data) => { submitFeedback(this.props.location.pathname, data) }} />
+                  <TabletHidden>
+                    <Feedback onSubmit={(data) => { submitFeedback(this.props.location.pathname, data) }} />
+                  </TabletHidden>
                 </BottomSticky>
                 <BottomSticky horizontalAlign="right">
                   <ScrollToTop />
