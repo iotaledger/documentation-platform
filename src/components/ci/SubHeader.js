@@ -18,8 +18,8 @@ class SubHeader extends React.Component {
     // /docs/IRI/reference/2.0/getInclusionStates
     const fullUrl = this.props.pathname.split('/')
     const projectName = fullUrl[2]
+    const currVersion = fullUrl[4]
     const currTitle = fullUrl[fullUrl.length - 1]
-    const currVersion = fullUrl[fullUrl.length - 2]
     const  { nextName, nextUrl } = getNextPage(projectName, currTitle, currVersion, this.props.data)
     const { previousName, previousUrl } = getPreviousPage(projectName, currTitle, currVersion, this.props.data)
 
