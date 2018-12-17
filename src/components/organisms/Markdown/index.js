@@ -108,9 +108,20 @@ class Markdown extends PureComponent {
       }
     }
 
-    return (
-      <div dangerouslySetInnerHTML={{ __html: props.value }} />
-    )
+    // Do default html processing
+    // https://github.com/rexxars/react-markdown/blob/b6caaba0437b00132d58337913e66a7d1bfb30ce/src/renderers.js#L100-L113
+    if (props.skipHtml) {
+      return null
+    }
+
+    const tag = props.isBlock ? 'div' : 'span';
+    if (props.escapeHtml) {
+      const comp = React.Fragment || tag;
+      return React.createElement(comp, null, props.value);
+    }
+
+    const nodeProps = { dangerouslySetInnerHTML: { __html: props.value } };
+    return React.createElement(tag, nodeProps);
   }
 
   aLink(props) {
@@ -140,6 +151,14 @@ class Markdown extends PureComponent {
     )
   }
 
+  inlineCodeBlock(props) {
+    return (
+      <div
+        className="text text-inline--code markdown-code-inline"
+        dangerouslySetInnerHTML={{ __html: props.value }} />
+    )
+  }
+
   textRenderer(props) {
     return props.children.replace(/:\w+:/gi, name => emoji.getUnicode(name))
   }
@@ -160,6 +179,7 @@ class Markdown extends PureComponent {
       renderers={{
         text: this.textRenderer,
         code: (props) => this.codeBlock(props, true),
+        inlineCode: (props) => this.inlineCodeBlock(props),
         html: this.html,
         link: this.aLink,
         paragraph: this.paragraph,

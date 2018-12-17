@@ -2,6 +2,11 @@
   background: none;
   margin: 0;
   padding: 0;
+  overflow: visible;
+}
+
+code[class*="language-"], pre[class*="language-"] {
+  font-family: 'Source Code Pro', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 }
 
 .markdown-code {
@@ -9,4 +14,15 @@
   border-radius: 0px 0px 5px 5px;
   background-color: #f8f8f8;
   padding: 22px;
+  overflow: auto;
+  margin-bottom: 20px;
+}
+
+.markdown-code-inline {
+  display: inline;
+  border: 1px solid #ececec;
+  border-radius: 3px;
+  background-color: #f8f8f8;
+  padding: 0px 5px 0px 5px;
+  line-height: 1.5;
 }
