@@ -7,7 +7,7 @@ import BottomStop from '../components/atoms/BottomStop';
 import ScrollInContainer from '../components/atoms/ScrollInContainer';
 import ScrollToTop from '../components/atoms/ScrollToTop';
 import FloatingMenu from '../components/ci/FloatingMenu';
-import { DocPageLayout, maxWidthLayout } from '../components/ci/Layouts';
+import { DocPageLayout, maxWidthLayout, TabletHidden } from '../components/ci/Layouts';
 import Navigator from '../components/ci/Navigator';
 import StickyHeader from '../components/ci/StickyHeader';
 import SubHeader from '../components/ci/SubHeader';
@@ -152,16 +152,18 @@ class Doc extends React.Component {
                 />
                 <div id="floating-menu-top-limit"></div>
                 <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto' }}>
-                  <section className="left-column">
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                      <ScrollInContainer topOffset={40} bottomOffset={120} topMarker="floating-menu-top-limit" bottomMarker="floating-menu-bottom-limit">
-                        <FloatingMenu
-                          data={menu}
-                          highlightedItem={this.state.projectName}
-                        />
-                      </ScrollInContainer>
-                    </div>
-                  </section>
+                  <TabletHidden>
+                    <section className="left-column">
+                      <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <ScrollInContainer topOffset={40} bottomOffset={120} topMarker="floating-menu-top-limit" bottomMarker="floating-menu-bottom-limit">
+                          <FloatingMenu
+                            data={menu}
+                            highlightedItem={this.state.projectName}
+                          />
+                        </ScrollInContainer>
+                      </div>
+                    </section>
+                  </TabletHidden>
                   <section className="middle-column">
                     <Markdown source={query ?
                       markdown.replace(new RegExp(query, 'gi'), `<span class="search-keyword">${query}</span>`)
@@ -195,9 +197,11 @@ class Doc extends React.Component {
                         </CommentModal>
                       ) : null}
                   </section>
-                  <section className="right-column">
-                    <TreeMenu />
-                  </section>
+                  <TabletHidden>
+                    <section className="right-column">
+                      <TreeMenu />
+                    </section>
+                  </TabletHidden>
                 </DocPageLayout>
                 <div id="floating-menu-bottom-limit" />
                 <BottomStop />
@@ -206,7 +210,9 @@ class Doc extends React.Component {
                   pathname={this.props.location.pathname}
                 />
                 <BottomSticky zIndex={10}>
-                  <Feedback onSubmit={(data) => { submitFeedback(this.props.location.pathname, data) }} />
+                  <TabletHidden>
+                    <Feedback onSubmit={(data) => { submitFeedback(this.props.location.pathname, data) }} />
+                  </TabletHidden>
                 </BottomSticky>
                 <BottomSticky horizontalAlign="right">
                   <ScrollToTop />

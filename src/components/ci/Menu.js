@@ -74,7 +74,7 @@ class Menu extends React.Component {
         <section className="side-menu" style={this.props.styles}>
           <h4 className="side-menu__caption">
             <span>Navigation</span>
-            <i className="fas fa-times" onClick={this.props.onCloseClick}></i>
+            <button className="side-menu__close" onClick={this.props.onCloseClick}><i className="fas fa-times"></i></button>
           </h4>
 
           {this.state.menuData.map((menuItem, index) => (

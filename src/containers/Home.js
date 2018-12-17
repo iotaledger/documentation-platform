@@ -6,7 +6,7 @@ import ScrollInContainer from "../components/atoms/ScrollInContainer";
 import ScrollToTop from '../components/atoms/ScrollToTop';
 import FloatingMenu from '../components/ci/FloatingMenu';
 import Header from '../components/ci/Header';
-import { HomePageLayout, maxWidthLayout } from '../components/ci/Layouts';
+import { HomePageLayout, maxWidthLayout, TabletHidden } from '../components/ci/Layouts';
 import Container from '../components/Container';
 import EmailSignup from '../components/molecules/EmailSignup';
 import Feedback from '../components/molecules/Feedback';
@@ -32,19 +32,23 @@ export default (props) => (
         <div id="floating-menu-top-limit"></div>
         <div style={{ backgroundColor: '#f3f2f1' }}>
           <HomePageLayout style={{ backgroundColor: '#f3f2f1', width: '100%', minHeight: '482px', maxWidth: maxWidthLayout, margin: 'auto' }}>
-            <div className="left-column" style={{ display: "flex", justifyContent: "center" }}>
-              <ScrollInContainer topOffset={60} bottomOffset={120} topMarker="floating-menu-top-limit" bottomMarker="floating-menu-bottom-limit">
-                <FloatingMenu data={menu} />
-              </ScrollInContainer>
-            </div>
+            <TabletHidden>
+              <div className="left-column" style={{ display: "flex", justifyContent: "center" }}>
+                <ScrollInContainer topOffset={60} bottomOffset={120} topMarker="floating-menu-top-limit" bottomMarker="floating-menu-bottom-limit">
+                  <FloatingMenu data={menu} />
+                </ScrollInContainer>
+              </div>
+            </TabletHidden>
             <div className="right-column" style={{}}>
               <CardContainer content={contentHomePage.cards} />
             </div>
           </HomePageLayout>
         </div>
         <HomePageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto' }}>
-          <div className="left-column" >
-          </div>
+          <TabletHidden>
+            <div className="left-column" >
+            </div>
+          </TabletHidden>
           <div className="right-column" style={{ padding: '25px' }}>
             <ProjectTopicsContainer contentHomePage={contentHomePage} />
           </div>
@@ -53,7 +57,9 @@ export default (props) => (
         <BottomStop />
         <EmailSignup />
         <BottomSticky zIndex={10}>
-          <Feedback onSubmit={(data) => { submitFeedback(`/docs/home/`, data) }} />
+          <TabletHidden>
+            <Feedback onSubmit={(data) => { submitFeedback(`/docs/home/`, data) }} />
+          </TabletHidden>
         </BottomSticky>
         <BottomSticky horizontalAlign="right">
           <ScrollToTop />

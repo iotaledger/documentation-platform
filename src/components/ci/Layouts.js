@@ -1,5 +1,4 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components';
 
 const maxWidthLayout = 1420;
 const tabletWidth = 768;
@@ -18,10 +17,15 @@ const media = {
   `
 }
 
+const TabletHidden = styled.div`
+  @media (max-width: ${tabletWidth}px) {
+      display: none;
+  };
+`;
+
 const HomePageLayout = styled.div`
   display: flex;
   .left-column {
-    display: none;
     width: 100%;
     flex: 1;
     min-width: 150px;
@@ -30,17 +34,12 @@ const HomePageLayout = styled.div`
     width: 100%;
     flex: 3;
   }
-  ${media.desktop`
-    .left-column {
-      display: block;
-    }
-  `};
 `;
 
 const DocPageLayout = styled.div`
 display: flex;
 padding: 0 16px;
-//width: 100%;
+
 .left-column {
   display: none;
   width: 100%;
@@ -56,20 +55,8 @@ padding: 0 16px;
   width: 100%;
   flex: 1;
 }
-  ${media.desktop`
-    .left-column {
-      display: block;
-    }
-    .right-column {
-      display: block;
-    }
-  `};
 `;
 
 
-export {
-  media,
-  maxWidthLayout,
-  HomePageLayout,
-  DocPageLayout
-}
+export { media, maxWidthLayout, HomePageLayout, DocPageLayout, TabletHidden };
+
