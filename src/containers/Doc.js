@@ -15,7 +15,7 @@ import Container from '../components/Container';
 import Feedback from '../components/molecules/Feedback';
 import api from '../utils/api';
 import { submitFeedback } from "../utils/feedbackHelper";
-
+import VersionPicker from './../components/ci/VersionPicker'
 
 class Doc extends React.Component {
   constructor(props) {
@@ -36,8 +36,15 @@ class Doc extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.submitErratum = this.submitErratum.bind(this);
+    this.changeVersion = this.changeVersion.bind(this);
   }
-
+  changeVersion(newVersion) {
+    let urlSplit = this.state.projectFullURL.split('/')
+    let currPage = urlSplit[urlSplit.length - 1]
+    let newURL =  `/docs/${this.state.projectName}/reference/${newVersion}/${currPage}`
+    console.log(newURL)
+    this.props.history.push(newURL)
+  }
   componentDidMount() {
     document.addEventListener('keydown', this.keydown, false);
     ///docs/HUB/reference/2.0/README
@@ -149,6 +156,11 @@ class Doc extends React.Component {
                 <SubHeader
                   data={menu}
                   pathname={this.props.location.pathname}
+                />
+                <VersionPicker
+                  versions={menu[this.state.projectName]}
+                  currUrl={this.state.projectFullURL}
+                  onChange={this.changeVersion}
                 />
                 <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto' }}>
                   <section className="left-column">
