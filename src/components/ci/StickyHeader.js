@@ -1,9 +1,9 @@
-import React from 'react'
 import classNames from 'classnames';
-import { Link } from 'react-static'
-import logo from './../../assets/Logo.svg'
-import InputSearch from  './../Search'
-import Menu from './Menu'
+import React from 'react';
+import { Link, withRouter } from 'react-static';
+import logo from '../../assets/Logo.svg';
+import InputSearch from '../molecules/InputSearch';
+import Menu from './Menu';
 
 const menuHidden = {
   position: 'fixed',
@@ -31,7 +31,7 @@ class StickyHeader extends React.Component {
 
     this.inputExpandHandler = this.inputExpandHandler.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
-    this.onDataSearch = this.onDataSearch.bind(this)
+    this.onSearch = this.onSearch.bind(this)
     this.handleBurgerClick = this.handleBurgerClick.bind(this)
   }
 
@@ -40,9 +40,11 @@ class StickyHeader extends React.Component {
       isMenuOpen: !prevState.isMenuOpen
     }));
   }
-  onDataSearch(data, query) {
+
+  onSearch(query) {
     this.props.history.push(`/search?q=${query}`)
   }
+
   handleKeyUp(e) {
     if(e.key === "Escape") {
       this.setState({ inputExpanded: false })
@@ -73,7 +75,7 @@ class StickyHeader extends React.Component {
                   className="input-search-sticky"
                   placeholder="Search for topics"
                   onKeyUp={this.handleKeyUp}
-                  onDataSearch={this.onDataSearch}
+                  onSearch={this.onSearch}
                 />
               </div>
               <Menu
@@ -96,4 +98,4 @@ class StickyHeader extends React.Component {
   }
 }
 
-export default StickyHeader
+export default withRouter(StickyHeader)

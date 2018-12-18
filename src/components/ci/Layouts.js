@@ -55,6 +55,7 @@ padding: 0 16px;
 .middle-column {
   padding: 15px 20px 0px 0px;
   flex: 5;
+  overflow:hidden;
 }
 .right-column {
   flex: 1;

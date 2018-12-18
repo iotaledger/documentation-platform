@@ -13,7 +13,7 @@
     "stage": "react-static build --staging",
     "build": "yarn index && react-static build",
     "serve": "serve dist -p 3000",
-    "index": "node buildSearchIndex.js docs src/components/Search/index.json src/components/Search/corpus.json"
+    "index": "node buildSearchIndex.js docs src/searchData/index.json src/searchData/corpus.json"
   },
   "dependencies": {
     "axios": "^0.18.0",

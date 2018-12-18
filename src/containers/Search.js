@@ -1,71 +1,98 @@
-import Markdown from 'components/organisms/Markdown';
-import CommentModal from 'components/Modal';
-import InputSearch from 'components/Search';
+import lunr from 'lunr';
 import React from 'react';
 import { Head, RouteData, SiteData, withRouter } from 'react-static';
+import BottomSticky from '../components/atoms/BottomSticky';
+import BottomStop from '../components/atoms/BottomStop';
+import ScrollToTop from '../components/atoms/ScrollToTop';
+import { DocPageLayout, maxWidthLayout, TabletHidden } from '../components/ci/Layouts';
+import StickyHeader from '../components/ci/StickyHeader';
+import Container from '../components/Container';
 import Feedback from '../components/molecules/Feedback';
-import api from '../utils/api';
-import { submitFeedback } from "../utils/feedbackHelper";
-import FloatingMenu from './../components/ci/FloatingMenu';
-import { DocPageLayout, maxWidthLayout } from './../components/ci/Layouts';
-
-import TreeMenu from './../components/ci/TreeMenu';
-import Container from './../components/Container';
-import StickyHeader from './../components/ci/StickyHeader';
-import SubHeader from './../components/ci/SubHeader';
-import Navigator from './../components/ci/Navigator';
-import Result from './../components/molecules/Result'
 import Pagination from '../components/molecules/Pagination';
+import SearchResult from '../components/molecules/SearchResult';
+import InputSearch from '../components//molecules/InputSearch';
+import corpus from '../searchData/corpus.json';
+import json from '../searchData/index.json';
+import { submitFeedback } from "../utils/feedbackHelper";
 
-
-class Doc extends React.Component {
+class Search extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       isOpen: false,
       foundResult: [],
-      projectName: '',
-      projectFullURL: '',
       indexStart: 0,
-      indexEnd: 10,
-     };
-     this.onDataSearch = this.onDataSearch.bind(this)
-     this.handleKeyUp = this.handleKeyUp.bind(this)
-     this.onDataPaginated = this.onDataPaginated.bind(this)
+      indexEnd: 9,
+      query: this.props.location.search ? this.props.location.search.replace("?q=", "") : undefined
+    };
+
+    this.onSearch = this.onSearch.bind(this)
+    this.handleKeyUp = this.handleKeyUp.bind(this)
+    this.onDataPaginated = this.onDataPaginated.bind(this)
+    this.search = this.search.bind(this)
   }
+
+  componentDidMount() {
+    this.search();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location.search !== prevProps.location.search) {
+      this.setState({ query: this.props.location.search.replace("?q=", "") }, () => {
+        this.search();
+      });
+    }
+  }
+
   onDataPaginated(start, end) {
-    console.log(start, end)
     this.setState({ indexStart: start, indexEnd: end })
+    const target = document.querySelector('#main');
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-  onDataSearch(data) {
-    this.setState({ foundResult: data })
+
+  onSearch(query) {
+    this.setState({ query }, () => {
+      this.search();
+    });
   }
+
   handleKeyUp(e) {
-    if(e.key === "Escape") {
+    if (e.key === "Escape") {
       this.setState({ inputExpanded: false })
     }
   }
-  componentDidMount() {
-    ///docs/HUB/reference/2.0/README
-    const projectFullURL = this.props.location.pathname
-    const projectName = projectFullURL.split('/')[2]
-    this.setState({
-      projectName,
-      projectFullURL
-    })
+
+  buildDocuments() {
+    const documents = corpus.reduce((memo, doc) => {
+      memo[doc.id] = doc
+      return memo
+    }, {})
+    return documents
+  }
+
+  search() {
+    let searchResults;
+    if (this.state.query) {
+      const idx = lunr.Index.load(json)
+      const results = idx.search(this.state.query)
+      const documents = this.buildDocuments()
+      searchResults = results.map(result => documents[result.ref])
+    }
+
+    if (searchResults && searchResults.length > 0) {
+      this.setState({ foundResult: searchResults, indexStart: 0, indexEnd: Math.min(9, searchResults.length - 1) });
+    } else {
+      this.setState({ foundResult: [], indexStart: 0, indexEnd: 0 });
+    }
   }
 
   render() {
-    const { location } = this.props;
-    const { isOpen, comments, selection, erratum } = this.state;
-    const query = location.state && location.state.query || '';
-
     return (
       <SiteData
         render={({ menu, repoName }) => (
           <RouteData
-            render={({ editPath, markdown, title }) => (
+            render={({ title }) => (
               <Container>
                 <Head>
                   <title>{`${title} | ${repoName}`}</title>
@@ -73,41 +100,47 @@ class Doc extends React.Component {
                 <StickyHeader
                   data={menu}
                 />
-                {/*<SubHeader
-                  data={menu}
-                  pathname={this.props.location.pathname}
-                />*/}
-                <DocPageLayout style={{maxWidth: maxWidthLayout, margin: 'auto'}}>
+                <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto', paddingBottom: "100px" }}>
                   <section className="left-column">
                   </section>
-                  <section className="middle-column" style={{ minHeight: '100vh'}}>
-                      <div className="input-wrapper-basic" style={{position: 'relative', left: '-32px'}}>
-                        <InputSearch
-                          search={this.props.location.search}
-                          className="input-search-basic"
-                          placeholder="Search for topics"
-                          onKeyUp={this.handleKeyUp}
-                          onDataSearch={this.onDataSearch}
-                        />
-                      </div>
-                      <Result
-                        foundResult={this.state.foundResult}
-                        indexStart={this.state.indexStart}
-                        indexEnd={this.state.indexEnd}
+                  <section className="middle-column" style={{ minHeight: '100vh' }}>
+                    <div className="input-wrapper-basic" style={{ position: 'relative', left: '-16px' }}>
+                      <InputSearch
+                        query={this.state.query}
+                        className="input-search-basic"
+                        placeholder="Search for topics"
+                        onKeyUp={this.handleKeyUp}
+                        onSearch={this.onSearch}
                       />
+                    </div>
+                    <SearchResult
+                      foundResult={this.state.foundResult}
+                      indexStart={this.state.indexStart}
+                      indexEnd={this.state.indexEnd}
+                      query={this.state.query}
+                    />
+                    <div style={{ display: "flex", justifyContent: "center", marginTop: "30px" }}>
                       <Pagination
                         total={this.state.foundResult}
                         onDataPaginated={this.onDataPaginated}
                       />
+                    </div>
                   </section>
                   <section className="right-column">
                   </section>
                 </DocPageLayout>
-
-                <Feedback
-                  styles={{ position: 'fixed', bottom: '130px', left: '20px' }}
-                  onSubmit={(data) => submitFeedback(this.props.location.pathname, data)}
-                />
+                <BottomStop />
+                <BottomSticky zIndex={10}>
+                  <TabletHidden>
+                    <Feedback
+                      styles={{ position: 'fixed', bottom: '130px', left: '20px' }}
+                      onSubmit={(data) => submitFeedback(this.props.location.pathname, data)}
+                    />
+                  </TabletHidden>
+                </BottomSticky>
+                <BottomSticky horizontalAlign="right">
+                  <ScrollToTop />
+                </BottomSticky>
               </Container>
             )}
           />
@@ -117,4 +150,4 @@ class Doc extends React.Component {
   }
 }
 
-export default withRouter(Doc);
+export default withRouter(Search);

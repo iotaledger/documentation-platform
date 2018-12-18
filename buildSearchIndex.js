@@ -9,6 +9,8 @@ const dir = process.argv[2]
 const indexFile = process.argv[3]
 const corpusFile = process.argv[4]
 
+const webifyPath = (p) => p.replace(/\\/g, "/");
+
 if (!dir) {
   console.log('\nUsage: \ndirectory\n')
   process.exit(1)
@@ -35,7 +37,7 @@ const indexDocs = callback => {
       const renderedHtml = md.render(file);
       const $ = cheerio.load(renderedHtml);
 
-      const docName = fileLocation.match(/[^\/]+$/)[0].replace('.md', '');
+      const docName = webifyPath(fileLocation).match(/[^\/]+$/)[0].replace('.md', '');
 
       let docTitle = $('h1').first().text();
       // set the docTitle
@@ -44,14 +46,14 @@ const indexDocs = callback => {
       }
 
       corpus.push({
-        id: fileLocation.replace('.md', ''),
+        id: webifyPath(fileLocation).replace('.md', ''),
         name: docTitle
       })
 
       const indexDoc = {
         docTitle,
         docBody: $.html(),
-        id: fileLocation.replace('.md', '')
+        id: webifyPath(fileLocation).replace('.md', '')
       };
 
       this.add(indexDoc);

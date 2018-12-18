@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { SiteData, Link, withRouter } from 'react-static'
 import ClickOutside from 'components/ClickOutside'
-import Search from 'components/Search'
+import InputSearch from 'components/molecules/InputSearch'
 import Dropdown from 'components/Dropdown'
 import { getVersion, getProjectName } from 'utils/helpers'
 
@@ -51,7 +51,7 @@ class Sidebar extends React.Component {
       <SiteData
         render={({ menu }) => (
           <SidebarStyles className="sidebar" isOpen={isOpen}>
-            <Search />
+            <InputSearch />
             <ClickOutside
               onClickOutside={() => {
                 if (isOpen) {

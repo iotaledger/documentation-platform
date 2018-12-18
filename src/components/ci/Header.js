@@ -1,8 +1,7 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
-import logo from './../../assets/Logo.svg'
-import Menu from './Menu'
-import InputSearch from  './../Search'
+import React from 'react';
+import InputSearch from '../molecules/InputSearch';
+import logo from './../../assets/Logo.svg';
+import Menu from './Menu';
 
 const menuHidden = {
   position: 'fixed',
@@ -27,7 +26,7 @@ class Header extends React.Component {
     }
     this.handleBurgerClick = this.handleBurgerClick.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
-    this.onDataSearch = this.onDataSearch.bind(this)
+    this.onSearch = this.onSearch.bind(this)
   }
 
   handleBurgerClick() {
@@ -36,7 +35,7 @@ class Header extends React.Component {
     }));
   }
 
-  onDataSearch(data, query) {
+  onSearch(query) {
     this.props.history.push(`/search?q=${query}`)
   }
 
@@ -81,7 +80,7 @@ class Header extends React.Component {
                   className="input-search"
                   placeholder="Search for topics"
                   onKeyUp={this.handleKeyUp}
-                  onDataSearch={this.onDataSearch}
+                  onSearch={this.onSearch}
                 />
               </div>
             </div>
