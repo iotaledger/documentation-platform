@@ -28,12 +28,7 @@ Ordered list
 
 Blah blah
 
-<blockquote>
-  This is a blockquote.
-  This is a blockquote.
-  This is a blockquote.
-  This is a blockquote.
-</blockquote>
+> Two possibilities exist: either we are alone in the Universe or we are not. Both are equally terrifying.
 
 ### A Third Level Heading
 
@@ -74,14 +69,47 @@ How about a link [IOTA](https://www.iota.org)
 
 ###### A Sixth Level Heading
 
-A separator is below
+Heading labels and project topics
+
+---
+
+### **OFFICIAL SUPPORT** ###
 
 ---------------
 
+#### **JavaScript Library** ####
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
+
+---
+
+#### **C Library** ####
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
+
+---------------
+
+### __COMMUNITY SUPPORT__ ###
+
+---------------
+
+#### __JavaScript Library__ ####
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
+
+---
+
+#### Python Library ####
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
+
+---------------
+
+
+A separator is below
+
+---
+
 And how about a tabbed control.
 
-<tabs>
-  <tab title="JavaScript">
+--------------------
+###  JavaScript
 
 ```js
 var React = require('react');
@@ -93,8 +121,8 @@ React.render(
 );
 ```
 
-  </tab>
-  <tab title="Python">
+---
+###  Python
 
 ```python
 x = 1
@@ -102,9 +130,7 @@ if x == 1:
     # indented four spaces
     print("x is 1.")
 ```
-
-  </tab>
-</tabs>
+--------------------
 
 Or an image
 
@@ -119,3 +145,4 @@ How about emojis
 :santa: `:santa:`
 
 :christmas_tree: `:christmas_tree:`
+

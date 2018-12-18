@@ -17,6 +17,8 @@ import Heading from '../../atoms/Heading';
 import HeadingLabel from '../../atoms/HeadingLabel';
 import Tabs from '../../molecules/Tabs';
 import "./markdown.css";
+import ProjectTopicsContainer from '../../molecules/ProjectTopics';
+import ProjectTopicsInner from '../../molecules/ProjectTopics/ProjectTopicsInner';
 
 loadLanguages(jsx, bash, c, cpp, java, javascript, json, python);
 
@@ -29,24 +31,30 @@ class Markdown extends PureComponent {
     }
 
     this.tabContainers = [];
+    this.projectTopicContainers = [];
     this.headingLabels = [];
 
     this.html = this.html.bind(this);
   }
-  
+
   componentDidMount() {
-    const tabContainers = this.findTabContainers(this.props.source);
     let content = this.props.source;
 
-    for (let i = 0; i < tabContainers.length; i++) {
-      this.tabContainers.push(this.findTabs(tabContainers[i]));
-      content = content.replace(`<tabs>${tabContainers[i]}</tabs>`, `<tabs index="${i}"></tabs>`)
+    const tabMatches = this.findTabContainers(this.props.source);
+    for (let i = 0; i < tabMatches.length; i++) {
+      this.tabContainers.push(this.findTabs(tabMatches[i]));
+      content = content.replace(tabMatches[i], `<tabs index="${i}"></tabs>`)
     }
 
-    this.headingLabels = this.findHeadingLabels(this.props.source);
+    const projectTopicMatches = this.findProjectTopicContainers(this.props.source);
+    for (let i = 0; i < projectTopicMatches.length; i++) {
+      this.projectTopicContainers.push(this.findProjectTopics(projectTopicMatches[i]));
+      content = content.replace(projectTopicMatches[i], `<project-topics index="${i}"></tabs>`)
+    }
 
-    for (let i = 0; i < this.headingLabels.length; i++) {
-      content = content.replace(`<heading-label style="${this.headingLabels[i].style}">${this.headingLabels[i].content}<\/heading-label>`, `<heading-label index="${i}"></heading-label>`)
+    const headingMatches = this.findHeadingLabels(this.props.source);
+    for (let i = 0; i < headingMatches.length; i++) {
+      content = content.replace(headingMatches[i], `<heading-label index="${i}"></heading-label>`)
     }
 
     this.setState({
@@ -55,23 +63,23 @@ class Markdown extends PureComponent {
   }
 
   findTabContainers(content) {
-    const tabContainers = [];
-    const re = /<tabs>([\S\s]*?)<\/tabs>/g;
+    const matches = [];
+    const re = /^--------------------$([\S\s]*?)^--------------------$/gm;
 
     let match;
     do {
       match = re.exec(content);
       if (match && match.length === 2) {
-        tabContainers.push(match[1]);
+        matches.push(match[0]);
       }
     } while (match);
 
-    return tabContainers;
+    return matches;
   }
 
   findTabs(tabContainer) {
     const tabs = [];
-    const re = /<tab title="(.*)">([\S\s]*?)<\/tab>/g;
+    const re = /### (.*)([\S\s]*?)---/g;
 
     let match;
     do {
@@ -87,19 +95,86 @@ class Markdown extends PureComponent {
     return tabs;
   }
 
-  findHeadingLabels(content) {
-    const headingLabels = [];
-    const re = /<heading-label style="(.*)">([\S\s]*?)<\/heading-label>/g;
+  findProjectTopicContainers(content) {
+    const matches = [];
+    const re = /^---------------$([\S\s]*?)^---------------$/gm;
 
     let match;
     do {
       match = re.exec(content);
-      if (match && match.length === 3) {
-        headingLabels.push({ style: match[1], content: match[2]});
+      if (match && match.length === 2) {
+        matches.push(match[0]);
       }
     } while (match);
 
-    return headingLabels;
+    return matches;
+  }
+
+  findProjectTopics(projectTopicContainer) {
+    const projectTopics = [];
+    const re = /#### (.*)([\S\s]*?)---/g;
+
+    let match;
+    do {
+      match = re.exec(projectTopicContainer);
+      if (match && match.length === 3) {
+        let matchPrimary = /\*\*(.*)\*\* ####/g.exec(match[1]);
+        if (matchPrimary && matchPrimary.length === 2) {
+          projectTopics.push({ 
+            bullet: "primary",
+            header: matchPrimary[1],
+            subheader: match[2] 
+          });
+        } else {
+          let matchSecondary = /__(.*)__ ####/g.exec(match[1]);
+          if (matchSecondary && matchSecondary.length === 2) {
+            projectTopics.push({ 
+              bullet: "secondary",
+              header: matchSecondary[1],
+              subheader: match[2] 
+            });
+          } else {
+            let matchPlain = /(.*) ####/g.exec(match[1]);
+            if (matchPlain && matchPlain.length === 2) {
+                projectTopics.push({ 
+                bullet: "none",
+                header: matchPlain[1],
+                subheader: match[2] 
+              });
+            }
+          }
+        }
+      }
+    } while (match);
+
+    return projectTopics;
+  }
+
+  findHeadingLabels(content) {
+    const matches = [];
+    const re = /### (.*) ###/g;
+    const rePrimary = /\*\*(.*)\*\*/g;
+    const reSecondary = /__(.*)__/g;
+
+    let match;
+    do {
+      match = re.exec(content);
+      if (match && match.length === 2) {
+        let matchPrimary = rePrimary.exec(match[1]);
+        if (matchPrimary && matchPrimary.length === 2) {
+          this.headingLabels.push({ style: "primary", content: matchPrimary[1] });
+          matches.push(match[0]);
+        } else {
+          let matchSecondary = reSecondary.exec(match[1]);
+          if (matchSecondary && matchSecondary.length === 2) {
+            this.headingLabels.push({ style: "secondary", content: matchSecondary[1] });
+            matches.push(match[0]);
+          }
+        }
+      }
+    } while (match);
+
+    return matches;
   }
 
   html(props) {
@@ -120,14 +195,13 @@ class Markdown extends PureComponent {
         ));
         return (<Tabs headers={headers} contents={content} />);
       }
-    } else if (props.value.startsWith("<blockquote")) {
-      const re = /<blockquote>([\S\s]*?)<\/blockquote>/;
+    } else if (props.value.startsWith("<project-topics")) {
+      const re = /<project-topics index="(.*)">/;
       let match = re.exec(props.value);
 
       if (match && match.length === 2) {
-        return (
-          <div dangerouslySetInnerHTML={{ __html: `<blockquote>${match[1].trim().replace(/\n/g, "<br/>")}</blockquote>` }} />
-        )
+        const index = parseInt(match[1], 10);
+        return (<ProjectTopicsInner topics={this.projectTopicContainers[index]} compressed={true}/>);
       }
     } else if (props.value.startsWith("<heading-label")) {
       const re = /<heading-label index="(.*)">/;
@@ -203,10 +277,6 @@ class Markdown extends PureComponent {
     return (
       <Heading className='text--tertiary' level={props.level}>{props.children[0].props.value}</Heading>
     );
-  }
-
-  virtualHtml(props) {
-    console.log(props);
   }
 
   render() {

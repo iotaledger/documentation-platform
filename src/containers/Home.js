@@ -56,7 +56,7 @@ export default (props) => (
           <div className="left-column" >
           </div>
           <div className="right-column" style={{ padding: '25px' }}>
-            <ProjectTopicsContainer contentHomePage={contentHomePage} />
+            <ProjectTopicsContainer content={contentHomePage.content} />
           </div>
         </HomePageLayout>
         <div id="floating-menu-bottom-limit" />
