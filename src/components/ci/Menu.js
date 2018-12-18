@@ -1,8 +1,6 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
-import ClickOutside from '../ClickOutside'
-import { Link } from 'react-static'
-import logo from './../../assets/Logo.svg'
+import React from 'react';
+import { Link } from 'react-static';
+import ClickOutside from '../ClickOutside';
 
 class Menu extends React.Component {
   constructor(props) {

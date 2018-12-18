@@ -11,7 +11,7 @@ import Container from '../components/Container';
 import EmailSignup from '../components/molecules/EmailSignup';
 import Feedback from '../components/molecules/Feedback';
 import CardContainer from '../components/molecules/HomePageCard';
-import ProjectTopicsContainer from '../components/molecules/ProjectTopics';
+import ProjectTopicsContainer from '../components/molecules/ProjectTopicsContainer';
 import contentHomePage from '../contentHomePage.json';
 import { submitFeedback } from "../utils/feedbackHelper";
 

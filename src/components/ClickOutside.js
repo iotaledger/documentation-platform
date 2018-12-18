@@ -1,6 +1,5 @@
 import { PureComponent } from 'react'
 import reactClickOutside from 'react-click-outside'
-//
 
 class ClickOutside extends PureComponent {
   handleClickOutside () {

@@ -15,7 +15,7 @@ import jsx from "reprism/languages/jsx";
 import python from "reprism/languages/python";
 import Heading from '../../atoms/Heading';
 import HeadingLabel from '../../atoms/HeadingLabel';
-import ProjectTopicsInner from '../../molecules/ProjectTopics/ProjectTopicsInner';
+import ProjectTopicsInner from '../../molecules/ProjectTopicsContainer/ProjectTopicsInner';
 import Tabs from '../../molecules/Tabs';
 import "./markdown.css";
 

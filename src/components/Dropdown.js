@@ -1,7 +1,7 @@
 import React from 'react';
+import { withRouter } from 'react-static';
 import styled from 'styled-components';
-import { Link, withRouter } from 'react-static'
-import { getVersion } from 'utils/helpers'
+import { getVersion } from 'utils/helpers';
 
 class Dropdown extends React.Component {
   constructor(props) {

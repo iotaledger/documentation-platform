@@ -1,6 +1,4 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
-import logo from './../../assets/Logo.svg'
+import React from 'react';
 
 class TreeMenu extends React.Component {
   constructor(props) {

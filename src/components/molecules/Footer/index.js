@@ -1,9 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import Link from '../../atoms/Link';
-import Heading from '../../atoms/Heading';
-import Text from '../../atoms/Text';
+import React from 'react';
 import { footerSections, footerStaticContent } from '../../../contentFooter.json';
+import Heading from '../../atoms/Heading';
+import Link from '../../atoms/Link';
+import Text from '../../atoms/Text';
 
 class Footer extends React.Component {
   constructor(props) {

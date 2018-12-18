@@ -1,10 +1,10 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
-import { SiteData, Link, withRouter } from 'react-static'
-import ClickOutside from 'components/ClickOutside'
-import InputSearch from 'components/molecules/InputSearch'
-import Dropdown from 'components/Dropdown'
-import { getVersion, getProjectName } from 'utils/helpers'
+import ClickOutside from 'components/ClickOutside';
+import Dropdown from 'components/Dropdown';
+import InputSearch from 'components/molecules/InputSearch';
+import React from 'react';
+import { Link, SiteData, withRouter } from 'react-static';
+import styled, { css } from 'styled-components';
+import { getProjectName, getVersion } from '../utils/helpers';
 
 const Menu = ({ items }) => (
   <div className="list">

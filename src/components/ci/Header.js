@@ -1,6 +1,6 @@
 import React from 'react';
 import InputSearch from '../molecules/InputSearch';
-import logo from './../../assets/Logo.svg';
+import logo from '../../assets/Logo.svg';
 import Menu from './Menu';
 
 const menuHidden = {

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-static';
-import { parseProjectUrl } from "../../utils/helpers";
-import { getNextPage, getPreviousPage } from './../../utils/helpers';
+import { getNextPage, getPreviousPage, parseProjectUrl } from "../../utils/helpers";
 
 class Navigator extends React.Component {
   constructor(props) {

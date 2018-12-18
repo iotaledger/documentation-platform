@@ -1,4 +1,3 @@
-import Markdown from 'components/organisms/Markdown';
 import React from 'react';
 import { Head, RouteData, SiteData, withRouter } from 'react-static';
 import BottomSticky from "../components/atoms/BottomSticky";
@@ -14,6 +13,7 @@ import TreeMenu from '../components/ci/TreeMenu';
 import VersionPicker from '../components/ci/VersionPicker';
 import Container from '../components/Container';
 import Feedback from '../components/molecules/Feedback';
+import Markdown from '../components/organisms/Markdown';
 import { submitFeedback } from "../utils/feedbackHelper";
 import { combineProjectUrl, parseProjectUrl } from "../utils/helpers";
 
@@ -66,7 +66,7 @@ class Doc extends React.Component {
                   pathname={this.props.location.pathname}
                 />
                 <VersionPicker
-                  versions={Object.keys(menu[this.state.projectName].versions)}
+                  versions={menu[this.state.projectName] ? Object.keys(menu[this.state.projectName].versions) : []}
                   currentVersion={this.state.projectVersion}
                   onChange={this.changeVersion}
                 />

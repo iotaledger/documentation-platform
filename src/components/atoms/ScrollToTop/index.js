@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { PureComponent } from 'react';
 
-export default class Sticky extends PureComponent {
+class ScrollToTop extends PureComponent {
   static defaultProps = {
     visibleTop: 350
   };
@@ -58,3 +58,5 @@ export default class Sticky extends PureComponent {
     );
   }
 }
+
+export default ScrollToTop;

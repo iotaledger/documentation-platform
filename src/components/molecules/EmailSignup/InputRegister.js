@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
 import api from '../../../utils/api';
-import Paragraph from '../../atoms/Paragraph';
 
 class InputRegister extends React.Component {
   constructor(props) {
