@@ -51,26 +51,28 @@ class Header extends React.Component {
 
     return (
       <header className="header">
-        <div className="top-header">
-          <ul className="top-header__items">
-            {topTitles.map((topTitle, index) =>
-              (<li key={index} className="top-header__item">
-                <a href={topTitle.href}>{topTitle.text.toUpperCase()}</a>
-              </li>)
-            )}
-          </ul>
-        </div>
         <div className="header__wrapper">
           <section className="header__head">
             <img className="header__brand" src={logo} />
-            <button className="header__icon" onClick={this.handleBurgerClick}>
-              <i className="fas fa-bars fa-2x"></i>
-            </button>
-            <Menu
-              isMenuOpen={isMenuOpen}
-              data={data}
-              onCloseClick={this.handleBurgerClick}
-              styles={isMenuOpen ? menuShown : menuHidden} />
+            <div>
+              <div className="top-header">
+                <ul className="top-header__items">
+                  {topTitles.map((topTitle, index) =>
+                    (<li key={index} className="top-header__item">
+                      <a href={topTitle.href}>{topTitle.text.toUpperCase()}</a>
+                    </li>)
+                  )}
+                </ul>
+              </div>
+              <button className="header__icon" onClick={this.handleBurgerClick}>
+                <i className="fas fa-bars fa-2x"></i>
+              </button>
+              <Menu
+                isMenuOpen={isMenuOpen}
+                data={data}
+                onCloseClick={this.handleBurgerClick}
+                styles={isMenuOpen ? menuShown : menuHidden} />
+            </div>
           </section>
           <section className="header__body" style={{}}>
             <span className="text text--level1 text--secondary">{headerTitle}</span>

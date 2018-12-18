@@ -28,7 +28,7 @@ class ProjectTopicsInner extends React.Component {
             <React.Fragment key={idx}>
               {topic.href && (
                   <Link href={topic.href} className="project-topic__link">
-                    <Text className={
+                    <span className={
                       classNames(
                         'project-topic__heading',
                         'text--level6',
@@ -37,16 +37,16 @@ class ProjectTopicsInner extends React.Component {
                       )
                     }>
                       {topic.header}
-                    </Text>
-                    <Text className="project-topic__subheading" html>
+                    </span>
+                    <span className="project-topic__subheading" html>
                       {topic.subheader}
-                    </Text>
+                    </span>
                   </Link>
                 )
               }
               {!topic.href && (
                   <div className="project-topic__link">
-                    <Text className={
+                    <span className={
                       classNames(
                         'project-topic__heading',
                         'text--level6',
@@ -55,10 +55,10 @@ class ProjectTopicsInner extends React.Component {
                       )
                     }>
                       {topic.header}
-                    </Text>
-                    <Text className="project-topic__subheading" html>
+                    </span>
+                    <span className="project-topic__subheading" html>
                       {topic.subheader}
-                    </Text>
+                    </span>
                   </div>
                 )
               }

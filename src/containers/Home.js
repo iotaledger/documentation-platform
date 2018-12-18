@@ -31,7 +31,7 @@ export default (props) => (
 
         <div id="floating-menu-top-limit"></div>
         <div style={{ backgroundColor: '#f3f2f1' }}>
-          <HomePageLayout style={{ backgroundColor: '#f3f2f1', width: '100%', minHeight: '482px', maxWidth: maxWidthLayout, margin: 'auto' }}>
+          <HomePageLayout style={{ backgroundColor: '#f3f2f1', width: '100%', minHeight: '482px', maxWidth: maxWidthLayout, margin: 'auto', padding: '0 25px', boxSizing: 'border-box' }}>
             <div className="left-column">
               <ScrollInContainer
                 topOffset={60}
@@ -41,7 +41,7 @@ export default (props) => (
                 widthContainer=".left-column"
               >
                 <TabletHidden>
-                  <div style={{ display: "flex", justifyContent: "center" }}>
+                  <div style={{ display: "flex", justifyContent: "flex-start", paddingLeft: "25px" }}>
                     <FloatingMenu data={menu} />
                   </div>
                 </TabletHidden>
@@ -52,10 +52,10 @@ export default (props) => (
             </div>
           </HomePageLayout>
         </div>
-        <HomePageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto' }}>
+        <HomePageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto', padding: '0 25px', boxSizing: 'border-box' }}>
           <div className="left-column" >
           </div>
-          <div className="right-column" style={{ padding: '25px' }}>
+          <div className="right-column">
             <ProjectTopicsContainer content={contentHomePage.content} />
           </div>
         </HomePageLayout>
