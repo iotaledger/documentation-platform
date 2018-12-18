@@ -22,12 +22,12 @@ class VersionPicker extends React.Component {
   }
 
   render() {
-    return (<div style={versionStyle}>
+    return this.state.versions.length > 1 ? (<div style={versionStyle}>
       <span>Version&nbsp;</span>
       <select value={this.state.currVersion} onChange={(e) => this.props.onChange(e.target.value)}>
         {this.state.versions.map((version, indx) => (<option key={indx} value={version} >{version}</option>))}
       </select>
-    </div>)
+    </div>) : null;
   }
 }
 
