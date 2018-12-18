@@ -3,11 +3,15 @@
 ---------------
 
 #### **JavaScript Library** ####
+[link](./reference/1.0/library/JavaScript)
+
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
 
 ---
 
 #### **C Library** ####
+[link](./reference/1.0/library/C)
+
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
 
 ---------------
@@ -18,18 +22,25 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
 
 ---------------
 
-#### __JavaScript Library__ ####
+#### __Java Library__ ####
+[link](./reference/1.0/library/Java)
+
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
 
 ---
 
 #### __Python Library__ ####
+[link](./reference/1.0/library/Python)
+
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
 
 ---
 
 #### __Golang Library__ ####
+[link](./reference/1.0/library/GoLang)
+
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
+
 
 ---------------
 

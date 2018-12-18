@@ -15,10 +15,9 @@ import jsx from "reprism/languages/jsx";
 import python from "reprism/languages/python";
 import Heading from '../../atoms/Heading';
 import HeadingLabel from '../../atoms/HeadingLabel';
+import ProjectTopicsInner from '../../molecules/ProjectTopics/ProjectTopicsInner';
 import Tabs from '../../molecules/Tabs';
 import "./markdown.css";
-import ProjectTopicsContainer from '../../molecules/ProjectTopics';
-import ProjectTopicsInner from '../../molecules/ProjectTopics/ProjectTopicsInner';
 
 loadLanguages(jsx, bash, c, cpp, java, javascript, json, python);
 
@@ -112,34 +111,37 @@ class Markdown extends PureComponent {
 
   findProjectTopics(projectTopicContainer) {
     const projectTopics = [];
-    const re = /#### (.*)([\S\s]*?)---/g;
+    const re = /#### (.*)\n(\[link\]\((.*)\))?([\S\s]*?)---/g;
 
     let match;
     do {
       match = re.exec(projectTopicContainer);
-      if (match && match.length === 3) {
+      if (match && match.length === 5) {
         let matchPrimary = /\*\*(.*)\*\* ####/g.exec(match[1]);
         if (matchPrimary && matchPrimary.length === 2) {
-          projectTopics.push({ 
+          projectTopics.push({
             bullet: "primary",
             header: matchPrimary[1],
-            subheader: match[2] 
+            subheader: match[4],
+            href: match[3]
           });
         } else {
           let matchSecondary = /__(.*)__ ####/g.exec(match[1]);
           if (matchSecondary && matchSecondary.length === 2) {
-            projectTopics.push({ 
+            projectTopics.push({
               bullet: "secondary",
               header: matchSecondary[1],
-              subheader: match[2] 
+              subheader: match[4],
+              href: match[3]
             });
           } else {
             let matchPlain = /(.*) ####/g.exec(match[1]);
             if (matchPlain && matchPlain.length === 2) {
-                projectTopics.push({ 
+              projectTopics.push({
                 bullet: "none",
                 header: matchPlain[1],
-                subheader: match[2] 
+                subheader: match[4],
+                href: match[3]
               });
             }
           }
@@ -201,7 +203,7 @@ class Markdown extends PureComponent {
 
       if (match && match.length === 2) {
         const index = parseInt(match[1], 10);
-        return (<ProjectTopicsInner topics={this.projectTopicContainers[index]} compressed={true}/>);
+        return (<ProjectTopicsInner topics={this.projectTopicContainers[index]} compressed={true} />);
       }
     } else if (props.value.startsWith("<heading-label")) {
       const re = /<heading-label index="(.*)">/;

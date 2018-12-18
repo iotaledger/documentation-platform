@@ -25,23 +25,45 @@ class ProjectTopicsInner extends React.Component {
       }>
         {
           this.props.topics.map((topic, idx) =>
-            <Link key={idx} href={topic.href} className="project-topic__link">
-              <Text className={
-                classNames(
-                  'project-topic__heading',
-                  'text--level6',
-                  { 'project-topic__primary-bullet': topic.bullet === "primary" },
-                  { 'project-topic__secondary-bullet': topic.bullet === "secondary" }
+            <React.Fragment key={idx}>
+              {topic.href && (
+                  <Link href={topic.href} className="project-topic__link">
+                    <Text className={
+                      classNames(
+                        'project-topic__heading',
+                        'text--level6',
+                        { 'project-topic__primary-bullet': topic.bullet === "primary" },
+                        { 'project-topic__secondary-bullet': topic.bullet === "secondary" }
+                      )
+                    }>
+                      {topic.header}
+                    </Text>
+                    <Text className="project-topic__subheading" html>
+                      {topic.subheader}
+                    </Text>
+                  </Link>
                 )
-              }>
-                {topic.header}
-              </Text>
-              <Text className="project-topic__subheading" html>
-                {topic.subheader}
-              </Text>
-            </Link>
-          )
-        }
+              }
+              {!topic.href && (
+                  <div className="project-topic__link">
+                    <Text className={
+                      classNames(
+                        'project-topic__heading',
+                        'text--level6',
+                        { 'project-topic__primary-bullet': topic.bullet === "primary" },
+                        { 'project-topic__secondary-bullet': topic.bullet === "secondary" }
+                      )
+                    }>
+                      {topic.header}
+                    </Text>
+                    <Text className="project-topic__subheading" html>
+                      {topic.subheader}
+                    </Text>
+                  </div>
+                )
+              }
+            </React.Fragment>
+          )}
       </div>
     )
   }

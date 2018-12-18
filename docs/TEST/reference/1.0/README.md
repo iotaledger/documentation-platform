@@ -26,7 +26,7 @@ Ordered list
     1. Item 2a
     1. Item 2b
 
-Blah blah
+A block quote:
 
 > Two possibilities exist: either we are alone in the Universe or we are not. Both are equally terrifying.
 
