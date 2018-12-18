@@ -92,15 +92,18 @@ class Search extends React.Component {
       <SiteData
         render={({ menu, repoName }) => (
           <RouteData
-            render={({ title }) => (
+            render={() => (
               <Container>
                 <Head>
-                  <title>{`${title} | ${repoName}`}</title>
+                  <title>{`Search Results | ${repoName}`}</title>
                 </Head>
                 <StickyHeader
                   data={menu}
                 />
-                <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto', paddingBottom: "100px" }}>
+                <section className="sub-header">
+                  <span className="sub-header__title sub-header-title__fixed">Search results</span>
+                </section>
+                <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto', paddingTop: "40px", paddingBottom: "100px" }}>
                   <section className="left-column">
                   </section>
                   <section className="middle-column" style={{ minHeight: '100vh' }}>
