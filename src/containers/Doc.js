@@ -182,7 +182,7 @@ class Doc extends React.Component {
                       markdown.replace(new RegExp(query, 'gi'), `<span class="search-keyword">${query}</span>`)
                       : markdown}
                     />
-                    <div>
+                    {/* <div>
                       <a href={editPath}>Edit this page on Github</a>
                     </div>
                     <div className="erratumHint">
@@ -208,7 +208,7 @@ class Doc extends React.Component {
                             Submit
                           </button>
                         </CommentModal>
-                      ) : null}
+                      ) : null} */}
                   </section>
                   <section className="right-column">
                     {menu[this.state.projectName] &&

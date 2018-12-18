@@ -103,7 +103,7 @@ class Search extends React.Component {
                 <section className="sub-header">
                   <span className="sub-header__title sub-header-title__fixed">Search results</span>
                 </section>
-                <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto', paddingTop: "40px", paddingBottom: "100px" }}>
+                <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto', paddingTop: "40px" }}>
                   <section className="left-column">
                   </section>
                   <section className="middle-column" style={{ minHeight: '100vh' }}>

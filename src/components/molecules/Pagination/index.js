@@ -34,7 +34,9 @@ class Pagination extends React.Component {
 
   handleNext(newIndex) {
     if (this.props.onDataPaginated) {
-      this.props.onDataPaginated(newIndex * this.state.maxPerPage, Math.min(newIndex * this.state.maxPerPage + this.state.maxPerPage, this.props.total.length))
+      this.props.onDataPaginated(
+        newIndex * this.state.maxPerPage,
+        Math.min(((newIndex + 1) * this.state.maxPerPage) - 1, this.props.total.length - 1))
       this.setState({ currentPage: newIndex })
     }
   }

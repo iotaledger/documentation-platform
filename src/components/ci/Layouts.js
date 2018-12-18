@@ -53,7 +53,7 @@ padding: 0 16px;
   flex: 1;
 }
 .middle-column {
-  padding: 15px 20px 0px 0px;
+  padding: 15px 20px 120px 0px;
   flex: 5;
   overflow:hidden;
 }
