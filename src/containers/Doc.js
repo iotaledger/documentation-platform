@@ -1,4 +1,3 @@
-import CommentModal from 'components/Modal';
 import Markdown from 'components/organisms/Markdown';
 import React from 'react';
 import { Head, RouteData, SiteData, withRouter } from 'react-static';
@@ -15,139 +14,45 @@ import TreeMenu from '../components/ci/TreeMenu';
 import VersionPicker from '../components/ci/VersionPicker';
 import Container from '../components/Container';
 import Feedback from '../components/molecules/Feedback';
-import api from '../utils/api';
 import { submitFeedback } from "../utils/feedbackHelper";
+import { combineProjectUrl, parseProjectUrl } from "../utils/helpers";
 
 class Doc extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isOpen: false,
-      comments: '',
-      selection: null,
-      erratum: null,
+      projectFullURL: '',
       projectName: '',
-      projectFullURL: ''
+      projectVersion: '',
+      projectDocParts: [],
+      projectDoc: '',
+      projectDocTitle: ''
     };
 
-    this.getSelection = this.getSelection.bind(this);
-    this.getTextContent = this.getTextContent.bind(this);
-    this.keydown = this.keydown.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.handleTextChange = this.handleTextChange.bind(this);
-    this.submitErratum = this.submitErratum.bind(this);
     this.changeVersion = this.changeVersion.bind(this);
   }
 
   changeVersion(newVersion) {
-    let urlSplit = this.state.projectFullURL.split('/')
-    let currPage = urlSplit[urlSplit.length - 1]
-    let newURL = `/docs/${this.state.projectName}/reference/${newVersion}/${currPage}`
-    console.log(newURL)
-    this.props.history.push(newURL)
+    const projectParts = parseProjectUrl(this.state.projectFullURL);
+    projectParts.projectVersion = newVersion;
+    this.props.history.push(combineProjectUrl(projectParts));
+    this.setState({ projectVersion: newVersion });
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', this.keydown, false);
-    ///docs/HUB/reference/2.0/README
-    const projectFullURL = this.props.location.pathname
-    const projectName = projectFullURL.split('/')[2]
-    this.setState({
-      projectName,
-      projectFullURL
-    })
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.keydown, false);
-  }
-
-  keydown(event) {
-    if (event.keyCode === 27 && this.state.isOpen) {
-      this.closeModal();
-    }
-    if (event.keyCode === 13) {
-      if (event.ctrlKey || event.shiftKey) {
-        const selection = this.getSelection();
-        if (selection) {
-          const erratum = selection ? selection.fullText.replace(
-            selection.selected, `<span class="erratum-text">${selection.selected}</span>`
-          ) : null;
-          this.setState({ isOpen: true, selection, erratum })
-        }
-      }
-    }
-  }
-
-  getSelection() {
-    const selectionObj = document.getSelection();
-    const selected = selectionObj.toString();
-    const node = selectionObj.baseNode;
-
-    if (selectionObj && selected && node) {
-      const link = node.baseURI;
-      const fullText = node.textContent;
-      const prevText = this.getTextContent(node, true);
-      const nextText = this.getTextContent(node, false);
-      const { location } = this.props;
-
-      return {
-        link,
-        selected,
-        fullText,
-        textAround: `${prevText} ${fullText} ${nextText}`,
-        document: location.pathname,
-      }
-    }
-    return null;
-  }
-
-  getTextContent(node, isPrevious = true) {
-    let obj = isPrevious ? node.previousSibling : node.nextSibling;
-
-    const getText = obj => {
-      const className = obj.className;
-      if (!className || (className && className !== 'line-numbers')) {
-        return obj.textContent || '';
-      }
-    }
-
-    if (obj && obj.textContent) {
-      return getText(obj)
-    } else if (node.parentNode) {
-      obj = isPrevious ? node.parentNode.previousSibling : node.parentNode.nextSibling;
-      if (obj && obj.textContent) {
-        return getText(obj)
-      }
-      return ''
-    }
-  }
-
-  closeModal() {
-    this.setState({ isOpen: false, comments: '', selection: null, erratum: null })
-  }
-
-  handleTextChange({ target: { value } }) {
-    this.setState({ comments: value });
-  }
-
-  async submitErratum() {
-    const { comments, selection } = this.state;
-    const response = await api('submitComment', { ...selection, comments });
-    this.closeModal();
+    this.setState(parseProjectUrl(this.props.location.pathname))
   }
 
   render() {
     const { location } = this.props;
-    const { isOpen, comments, selection, erratum } = this.state;
     const query = location.state && location.state.query || '';
 
     return (
       <SiteData
         render={({ menu, repoName }) => (
           <RouteData
-            render={({ editPath, markdown, title }) => (
+            render={({ markdown, title }) => (
               <Container>
                 <Head>
                   <title>{`${title} | ${repoName}`}</title>
@@ -159,6 +64,11 @@ class Doc extends React.Component {
                 <SubHeader
                   data={menu}
                   pathname={this.props.location.pathname}
+                />
+                <VersionPicker
+                  versions={Object.keys(menu[this.state.projectName].versions)}
+                  currentVersion={this.state.projectVersion}
+                  onChange={this.changeVersion}
                 />
                 <div id="floating-menu-top-limit"></div>
                 <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto' }}>
@@ -182,42 +92,8 @@ class Doc extends React.Component {
                       markdown.replace(new RegExp(query, 'gi'), `<span class="search-keyword">${query}</span>`)
                       : markdown}
                     />
-                    {/* <div>
-                      <a href={editPath}>Edit this page on Github</a>
-                    </div>
-                    <div className="erratumHint">
-                      <p>Found a mistake on the page? Select a text and press <b>Ctrl+Enter</b> or <b>Shift+Enter</b></p>
-                    </div>
-                    {
-                      selection ? (
-                        <CommentModal show={isOpen} closeModal={this.closeModal}>
-                          <div className="modalHeader">
-                            <h3>Found a mistake?</h3>
-                            <button onClick={this.closeModal}>
-                              Close
-                            </button>
-                          </div>
-                          <p dangerouslySetInnerHTML={{ __html: erratum }} />
-                          <textarea
-                            value={comments}
-                            placeholder="Additional comments"
-                            name="comments"
-                            onChange={this.handleTextChange}
-                          />
-                          <button onClick={this.submitErratum}>
-                            Submit
-                          </button>
-                        </CommentModal>
-                      ) : null} */}
                   </section>
                   <section className="right-column">
-                    {menu[this.state.projectName] &&
-                      <VersionPicker
-                        versions={menu[this.state.projectName]}
-                        currUrl={this.state.projectFullURL}
-                        onChange={this.changeVersion}
-                      />
-                    }
                     <TreeMenu />
                   </section>
                 </DocPageLayout>

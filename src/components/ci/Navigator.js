@@ -1,6 +1,7 @@
-import React from 'react'
-import { getNextPage, getPreviousPage } from './../../utils/helpers'
-import { Link } from 'react-static'
+import React from 'react';
+import { Link } from 'react-static';
+import { parseProjectUrl } from "../../utils/helpers";
+import { getNextPage, getPreviousPage } from './../../utils/helpers';
 
 class Navigator extends React.Component {
   constructor(props) {
@@ -12,14 +13,11 @@ class Navigator extends React.Component {
       previousUrl: ''
     }
   }
+
   componentDidMount() {
-    // /docs/IRI/reference/2.0/getInclusionStates
-    const fullUrl = this.props.pathname.split('/')
-    const projectName = fullUrl[2]
-    const currVersion = fullUrl[4]
-    const currTitle = fullUrl[fullUrl.length - 1]
-    const { nextName, nextUrl } = getNextPage(projectName, currTitle, currVersion, this.props.data)
-    const { previousName, previousUrl } = getPreviousPage(projectName, currTitle, currVersion, this.props.data)
+    const projectUrlParts = parseProjectUrl(this.props.pathname);
+    const { nextName, nextUrl } = getNextPage(projectUrlParts, this.props.data)
+    const { previousName, previousUrl } = getPreviousPage(projectUrlParts, this.props.data)
 
     this.setState({
       nextTitle: nextName,
@@ -28,6 +26,7 @@ class Navigator extends React.Component {
       previousUrl: previousUrl
     })
   }
+
   render() {
     return (<section className="navigator">
       <Link to={this.state.previousUrl} exact className="navigator__back">

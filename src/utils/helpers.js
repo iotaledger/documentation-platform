@@ -17,9 +17,9 @@ export const getProjectName = path => {
   return matches && matches.length >= 2 ? matches[1] : null
 }
 
-export const getNextPage = (currProjectName, currTitle, currVersion, data) => {
-  const docList = data[currProjectName].versions[currVersion]
-  let currIndex = docList.findIndex(elm => elm.name == currTitle)
+export const getNextPage = (projectUrlParts, data) => {
+  const docList = data[projectUrlParts.projectName].versions[projectUrlParts.projectVersion]
+  let currIndex = docList.findIndex(elm => elm.name == projectUrlParts.projectDocTitle)
   let nextName = ''
   let nextUrl = ''
   if(currIndex < docList.length - 1) {
@@ -30,10 +30,9 @@ export const getNextPage = (currProjectName, currTitle, currVersion, data) => {
   return { nextName, nextUrl }
 }
 
-export const getPreviousPage = (currProjectName, currTitle, currVersion, data) => {
-
-  const docList = data[currProjectName].versions[currVersion]
-  let currIndex = docList.findIndex(elm => elm.name == currTitle)
+export const getPreviousPage = (projectUrlParts, data) => {
+  const docList = data[projectUrlParts.projectName].versions[projectUrlParts.projectVersion]
+  let currIndex = docList.findIndex(elm => elm.name == projectUrlParts.projectDocTitle)
   let previousName = ''
   let previousUrl = ''
   if(currIndex > 0) {
@@ -43,3 +42,29 @@ export const getPreviousPage = (currProjectName, currTitle, currVersion, data) =
   }
   return { previousName, previousUrl }
 }
+
+export function parseProjectUrl(projectFullURL) {
+  ///docs/HUB/reference/2.0/README/something/something
+
+  const urlParts = projectFullURL.split('/');
+  const projectName = urlParts[2];
+  const projectVersion = urlParts[4];
+  const projectDocParts = urlParts.slice(5);
+  const projectDoc = projectDocParts.join("/");
+
+  return {
+    projectFullURL,
+    projectName,
+    projectVersion,
+    projectDocParts,
+    projectDoc,
+    projectDocTitle: projectDocParts[projectDocParts.length - 1]
+  };
+}
+
+export function combineProjectUrl(projectParts) {
+  ///docs/HUB/reference/2.0/README/something/something
+
+  return `/docs/${projectParts.projectName}/reference/${projectParts.projectVersion}/${projectParts.projectDoc}`;
+}
+
