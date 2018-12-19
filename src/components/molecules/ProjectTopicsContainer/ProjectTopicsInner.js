@@ -2,7 +2,6 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Link from '../../atoms/Link';
-import Text from '../../atoms/Text';
 
 class ProjectTopicsInner extends React.Component {
   static propTypes = {
@@ -38,9 +37,7 @@ class ProjectTopicsInner extends React.Component {
                     }>
                       {topic.header}
                     </span>
-                    <span className="project-topic__subheading" html>
-                      {topic.subheader}
-                    </span>
+                    <span className="project-topic__subheading" dangerouslySetInnerHTML={{ __html: topic.subheader }} />
                   </Link>
                 )
               }
@@ -56,9 +53,7 @@ class ProjectTopicsInner extends React.Component {
                     }>
                       {topic.header}
                     </span>
-                    <span className="project-topic__subheading" html>
-                      {topic.subheader}
-                    </span>
+                    <span className="project-topic__subheading" dangerouslySetInnerHTML={{ __html: topic.subheader }} />
                   </div>
                 )
               }
