@@ -85,7 +85,7 @@ class Doc extends React.Component {
             <div id="floating-menu-top-limit"></div>
             <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto' }}>
               <section className="left-column">
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
                   <ScrollInContainer
                     topOffset={30}
                     bottomOffset={120}

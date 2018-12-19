@@ -45,7 +45,7 @@ class Home extends React.Component {
                 widthContainer=".left-column"
               >
                 <TabletHidden>
-                  <div style={{ display: "flex", justifyContent: "flex-start", paddingLeft: "25px" }}>
+                  <div style={{ display: "flex", justifyContent: "flex-start" }}>
                     <FloatingMenu
                       data={createFloatingMenuEntries(contentHomePage.content)}
                       highlightedItem={this.props.location.hash || "#new_to_iota?"} />
