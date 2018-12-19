@@ -66,3 +66,18 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
 The above markup will produce the following output:
 
 ![Project Topics](./project-topics.png)
+
+### Emojis
+
+To embed emojis in your content add the emoji name you want surrounded by colons.
+
+The names of available emojis can be found here [https://github.com/muan/emojilib/blob/master/emojis.json](https://github.com/muan/emojilib/blob/master/emojis.json)
+
+```markup
+:smile:
+:laughing:
+```
+
+The above markup will produce the following output:
+
+![Emojis](./emojis.png)
