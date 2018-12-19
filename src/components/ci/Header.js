@@ -5,17 +5,21 @@ import Menu from './Menu';
 
 const menuHidden = {
   position: 'fixed',
-  zIndex: 2,
-  right: '-311px',
+  zIndex: 3,
+  right: '-328px',
   top: 0,
-  transition: '500ms ease'
+  transition: '300ms ease',
+  overflowY: 'scroll',
+  paddingRight: '17px'
 }
 const menuShown = {
   position: 'fixed',
-  zIndex: 2,
-  right: 0,
+  zIndex: 3,
+  right: "-32px",
   top: 0,
-  transition: '500ms ease'
+  transition: '300ms ease',
+  overflowY: 'scroll',
+  paddingRight: '17px'
 }
 
 class Header extends React.Component {
@@ -64,9 +68,7 @@ class Header extends React.Component {
                   )}
                 </ul>
               </div>
-              <button className="header__icon" onClick={this.handleBurgerClick}>
-                <i className="fas fa-bars fa-2x"></i>
-              </button>
+              <button className="header__icon" onClick={this.handleBurgerClick}/>
               <Menu
                 isMenuOpen={isMenuOpen}
                 data={data}

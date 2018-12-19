@@ -53,7 +53,7 @@ class ScrollToTop extends PureComponent {
           )
         }
         onClick={this.onScrollToTop}>
-        <i className="fa fa-chevron-up"></i>
+        <i className="icon icon-chevron-up"></i>
       </button>
     );
   }

@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-const maxWidthLayout = 1420;
+const maxWidthLayout = 1500;
 const tabletWidth = 768;
 const desktopWidth = 1024;
 

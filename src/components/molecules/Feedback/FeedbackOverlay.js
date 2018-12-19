@@ -31,7 +31,7 @@ class FeedbackOverlay extends React.Component {
         <button
           className="feedback-overlay-close"
           onClick={this.handleClose}>
-          <i className="fa fa-times fa-2x"></i>
+          <i className="icon icon-cross"></i>
         </button>
         {this.props.children}
       </div>

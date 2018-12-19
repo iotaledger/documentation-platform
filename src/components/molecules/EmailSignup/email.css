@@ -6,7 +6,7 @@
 }
 
 .email-signup__wrapper {
-  max-width: 1420px;
+  max-width: 1500px;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -14,7 +14,7 @@
 }
 
 .email-signup__content {
-  padding: 0 30px;
+  padding: 0 40px;
 }
 
 .email-signup__content h2 {
@@ -45,7 +45,7 @@
 .input-register-container__form {
   display: flex;
   flex-direction: column;
-  margin: 60px 30px 0px 30px;
+  margin: 60px 40px 0px 30px;
   justify-content: flex-start;
 }
 

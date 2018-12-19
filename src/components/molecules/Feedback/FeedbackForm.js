@@ -53,7 +53,7 @@ class FeedbackForm extends React.Component {
               <button
                 className="feedback-form-button-circle"
                 onClick={(e) => this.handleWasItUseful(e, "yes")}>
-                <i className="fa fa-thumbs-up"></i>
+                <i className="icon icon-thumb-up"></i>
               </button>
               <button
                 className="feedback-form-button-label"
@@ -71,7 +71,7 @@ class FeedbackForm extends React.Component {
               <button
                 className="feedback-form-button-circle"
                 onClick={(e) => this.handleWasItUseful(e, "no")}>
-                <i className="fa fa-thumbs-down"></i>
+                <i className="icon icon-thumb-down"></i>
               </button>
               <button
                 className="feedback-form-button-label"

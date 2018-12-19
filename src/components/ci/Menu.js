@@ -72,14 +72,13 @@ class Menu extends React.Component {
         <section className="side-menu" style={this.props.styles}>
           <h4 className="side-menu__caption">
             <span>Navigation</span>
-            <button className="side-menu__close" onClick={this.props.onCloseClick}><i className="fas fa-times"></i></button>
+            <button className="side-menu__close" onClick={this.props.onCloseClick}></button>
           </h4>
 
           {this.state.menuData.map((menuItem, index) => (
             <section key={index} className={`side-menu__group ${menuItem.expand ? 'side-menu__group--selected' : ''}`}>
               <h5 className="side-menu__heading" onClick={() => this.handleHeadingClick(index)}>
                 <span>{menuItem.heading}</span>
-                <i className={` ${menuItem.expand ? 'fas fa-angle-up' : 'fas fa-angle-down'}`}></i>
               </h5>
               <ul className="side-menu__list">
                 {menuItem.menuList.map((menuListItem, miIndex) => (

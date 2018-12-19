@@ -35,7 +35,7 @@ class Home extends React.Component {
         <div style={{ backgroundColor: '#f3f2f1' }}>
           <HomePageLayout
             id="new_to_iota?"
-            style={{ backgroundColor: '#f3f2f1', width: '100%', minHeight: '482px', maxWidth: maxWidthLayout, margin: 'auto', padding: '0 25px', boxSizing: 'border-box' }}>
+            style={{ backgroundColor: '#f3f2f1', width: '100%', minHeight: '482px', maxWidth: maxWidthLayout, margin: 'auto', padding: '0 40px', boxSizing: 'border-box' }}>
             <div className="left-column">
               <ScrollInContainer
                 topOffset={60}
@@ -58,7 +58,7 @@ class Home extends React.Component {
             </div>
           </HomePageLayout>
         </div>
-        <HomePageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto', padding: '0 25px', boxSizing: 'border-box' }}>
+        <HomePageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto', padding: '0 40px', boxSizing: 'border-box' }}>
           <div className="left-column" >
           </div>
           <div className="right-column">

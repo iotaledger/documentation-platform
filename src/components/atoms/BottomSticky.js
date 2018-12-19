@@ -4,7 +4,7 @@ import React from 'react';
 
 class BottomSticky extends React.Component {
   static defaultProps = {
-    horizontalOffset: 20,
+    horizontalOffset: 40,
     horizontalAlign: "left",
     bottomOffset: 20,
     zIndex: undefined

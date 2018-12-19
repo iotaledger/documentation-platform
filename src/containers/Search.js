@@ -134,10 +134,7 @@ class Search extends React.Component {
             <BottomStop />
             <BottomSticky zIndex={10}>
               <TabletHidden>
-                <Feedback
-                  styles={{ position: 'fixed', bottom: '130px', left: '20px' }}
-                  onSubmit={(data) => submitFeedback(this.props.location.pathname, data)}
-                />
+                <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)}/>
               </TabletHidden>
             </BottomSticky>
             <BottomSticky horizontalAlign="right">
