@@ -35,7 +35,7 @@ const HomePageLayout = styled.div`
     min-width: 250px;
   }
   .right-column {
-    flex: 6;
+    flex: 3;
   }
   ${media.tabletDown`
     .left-column {
