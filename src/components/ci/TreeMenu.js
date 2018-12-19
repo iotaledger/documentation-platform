@@ -18,8 +18,16 @@ class TreeMenu extends React.Component {
     super(props)
 
     this.state = {
-      sections: this.buildSections(this.props.data)
+      sections: []
     };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.data !== prevProps.data) {
+      this.setState({
+        sections: this.buildSections(this.props.data)
+      })
+    }
   }
 
   buildSections(data) {

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-static';
 import { getDocumentTitle, getNextPage, getPreviousPage, parseProjectUrl } from '../../utils/helpers';
 
 
@@ -24,10 +23,10 @@ class SubHeader extends React.Component {
 
     this.setState({
       currProject: projectUrlParts.projectName,
-      currTitle: getDocumentTitle(projectUrlParts, this.props.data),
-      nextTitle: nextIndexItem ? nextIndexItem.name : "",
+      currTitle: getDocumentTitle(projectUrlParts, this.props.data).replace(/\//g, " / "),
+      nextTitle: nextIndexItem ? nextIndexItem.name.replace(/\//g, " / ") : "",
       nextUrl: nextIndexItem ? nextIndexItem.link : "",
-      previousTitle: previousIndexItem ? previousIndexItem.name : "",
+      previousTitle: previousIndexItem ? previousIndexItem.name.replace(/\//g, " / ") : "",
       previousUrl: previousIndexItem ? previousIndexItem.link : ""
     })
   }

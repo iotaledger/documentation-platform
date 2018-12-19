@@ -20,9 +20,9 @@ class Navigator extends React.Component {
     const previousIndexItem = getPreviousPage(projectUrlParts, this.props.data)
 
     this.setState({
-      nextTitle: nextIndexItem ? nextIndexItem.name : "",
+      nextTitle: nextIndexItem ? nextIndexItem.name.replace(/\//g, " / ") : "",
       nextUrl: nextIndexItem ? nextIndexItem.link : "",
-      previousTitle: previousIndexItem ? previousIndexItem.name : "",
+      previousTitle: previousIndexItem ? previousIndexItem.name.replace(/\//g, " / ") : "",
       previousUrl: previousIndexItem ? previousIndexItem.link : ""
     })
   }

@@ -53,6 +53,7 @@ padding: 0 16px;
   flex: 1;
 }
 .middle-column {
+  min-height: 500px;
   padding: 15px 20px 120px 0px;
   flex: 5;
   overflow:hidden;
@@ -63,6 +64,9 @@ padding: 0 16px;
 ${media.tabletDown`
 .left-column {
   display: none;
+}
+.middle-column {
+  min-height: unset;
 }
 .right-column {
   display: none;

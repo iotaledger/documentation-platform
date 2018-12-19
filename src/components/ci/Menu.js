@@ -85,7 +85,7 @@ class Menu extends React.Component {
                 {menuItem.menuList.map((menuListItem, miIndex) => (
                   <li key={miIndex} className="side-menu-item">
                     <Link to={menuListItem.link} exact activeClassName="side-menu-item--active">
-                      {menuListItem.name}
+                      {menuListItem.name.replace(/\//g, " / ")}
                     </Link>
                   </li>
                 ))}

@@ -2,34 +2,34 @@
 
 [Introduction](./intro.md)
 
-[addNeighbors](./addNeighbors.md)
+[API/addNeighbors](./addNeighbors.md)
 
-[attachToTangle](./attachToTangle.md)
+[API/attachToTangle](./attachToTangle.md)
 
-[broadcastTransactions](./broadcastTransactions.md)
+[API/broadcastTransactions](./broadcastTransactions.md)
 
-[findTransactions](./findTransactions.md)
+[API/findTransactions](./findTransactions.md)
 
-[getBalances](./getBalances.md)
+[API/getBalances](./getBalances.md)
 
-[getInclusionStates](./getInclusionStates.md)
+[API/getInclusionStates](./getInclusionStates.md)
 
-[getNeighbors](./getNeighbors.md)
+[API/getNeighbors](./getNeighbors.md)
 
-[getNodeInfo](./getNodeInfo.md)
+[API/getNodeInfo](./getNodeInfo.md)
 
-[getTips](./getTips.md)
+[API/getTips](./getTips.md)
 
-[getTransactionsToApprove](./getTransactionsToApprove.md)
+[API/getTransactionsToApprove](./getTransactionsToApprove.md)
 
-[getTrytes](./getTrytes.md)
+[API/getTrytes](./getTrytes.md)
 
-[interruptAttachingToTangle](./interruptAttachingToTangle.md)
+[API/interruptAttachingToTangle](./interruptAttachingToTangle.md)
 
-[removeNeighbors](./removeNeighbors.md)
+[API/removeNeighbors](./removeNeighbors.md)
 
-[storeTransactions](./storeTransactions.md)
+[API/storeTransactions](./storeTransactions.md)
 
-[wereAddressesSpentFrom](./wereAddressesSpentFrom.md)
+[API/wereAddressesSpentFrom](./wereAddressesSpentFrom.md)
 
 [Examples/Introduction](./examples/intro.md)
