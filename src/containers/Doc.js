@@ -99,7 +99,10 @@ class Doc extends React.Component {
                     />
                   </section>
                   <section className="right-column">
-                    <TreeMenu />
+                    <TreeMenu
+                      data={menu[this.state.projectName] ? menu[this.state.projectName].versions[this.state.projectVersion] : []} 
+                      highlightedItem={this.state.projectFullURL}
+                      />
                   </section>
                 </DocPageLayout>
                 <div id="floating-menu-bottom-limit" />
