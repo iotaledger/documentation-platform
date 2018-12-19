@@ -32,10 +32,10 @@ const HomePageLayout = styled.div`
   display: flex;
   .left-column {
     flex: 1;
-    min-width: 200px;
+    min-width: 250px;
   }
   .right-column {
-    flex: 3;
+    flex: 6;
   }
   ${media.tabletDown`
     .left-column {
@@ -49,16 +49,18 @@ display: flex;
 padding: 0 16px;
 
 .left-column {
-  min-width: 200px;
+  min-width: 250px;
   flex: 1;
+  padding: 15px 0px 120px 0px;
 }
 .middle-column {
   min-height: 500px;
-  padding: 15px 20px 120px 0px;
   flex: 5;
+  padding: 15px 20px 120px 0px;
   overflow:hidden;
 }
 .right-column {
+  padding: 15px 0px 120px 0px;
   flex: 1;
 }
 ${media.tabletDown`

@@ -30,6 +30,7 @@ class BottomSticky extends React.Component {
 
   componentDidMount() {
     document.addEventListener('scroll', this.handleBottomStop);
+    window.addEventListener('resize', this.handleBottomStop);
     // Set the initial position on a timer to let the DOM have time to settle
     // Otherwise the initial location is not set correctly
     setTimeout(() => this.handleBottomStop(), 0);
@@ -37,6 +38,7 @@ class BottomSticky extends React.Component {
 
   componentWillUnmount() {
     document.removeEventListener('scroll', this.handleBottomStop);
+    window.removeEventListener('resize', this.handleBottomStop);
   }
 
   handleBottomStop() {
