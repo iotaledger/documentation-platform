@@ -233,7 +233,7 @@ class Markdown extends PureComponent {
   }
 
   aLink(props) {
-    const to = props.href.startsWith('/') ? props.href.replace('.md', '') : props.href;
+    const to = props.href.startsWith('http') ? props.href : props.href.replace(/.md$/i, '');
 
     return (
       <Link to={to}>{props.children[0].props.value}</Link>
