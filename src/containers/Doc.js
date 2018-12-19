@@ -16,6 +16,8 @@ import Feedback from '../components/molecules/Feedback';
 import Markdown from '../components/organisms/Markdown';
 import { submitFeedback } from "../utils/feedbackHelper";
 import { combineProjectUrl, parseProjectUrl } from "../utils/helpers";
+import contentHomePage from '../contentHomePage.json';
+import { createFloatingMenuEntries } from '../utils/helpers';
 
 class Doc extends React.Component {
   constructor(props) {
@@ -81,7 +83,7 @@ class Doc extends React.Component {
                         bottomMarker="#floating-menu-bottom-limit"
                         widthContainer=".left-column">
                         <FloatingMenu
-                          data={menu}
+                          data={createFloatingMenuEntries(contentHomePage.content, menu)}
                           highlightedItem={this.state.projectName}
                         />
                       </ScrollInContainer>

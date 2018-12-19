@@ -92,7 +92,7 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
 ---------------
 
 #### **JavaScript Library** ####
-[Link](./reference/1.0/library/JavaScript)
+[Link](./1.0/reference/library/JavaScript)
 
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
 

@@ -22,17 +22,13 @@ class ProjectTopics extends React.Component {
     const { header, subheader, topics} = this.props.content;
 
     return (
-      <div className="project">
-        {header && (
-          <Heading className="project__heading" level={2}>
-            {header}
-          </Heading>
-        )}
-        {subheader && (
-          <Text className="project__subheading">
-            {subheader}
-          </Text>
-        )}
+      <div className="project" id={header.toLowerCase().replace(/ /g, "_")}>
+        <Heading className="project__heading" level={2}>
+          {header}
+        </Heading>
+        <Text className="project__subheading">
+          {subheader}
+        </Text>
         <ProjectTopicsInner topics={topics} />
       </div>
     )

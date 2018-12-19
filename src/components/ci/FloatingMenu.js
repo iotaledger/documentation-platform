@@ -3,9 +3,6 @@ import React from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-static'
 
-const getLink = (name, versions) =>
-  `/docs/${name}/reference/${Object.keys(versions)[Object.keys(versions).length - 1]}/README`
-
 class FloatingMenu extends React.Component {
   static defaultProps = {
     data: undefined,
@@ -13,23 +10,15 @@ class FloatingMenu extends React.Component {
   };
 
   static propTypes = {
-    data: PropTypes.objectOf(
-      PropTypes.shape(
-        {
-          name: PropTypes.string,
-          versions: PropTypes.objectOf(
-            PropTypes.arrayOf(
-              PropTypes.shape(
-                {
-                  name: PropTypes.string,
-                  link: PropTypes.string
-                }
-              )
-            )
-          )
-        }
-      )
-    ).isRequired,
+    data:
+      PropTypes.arrayOf(
+        PropTypes.shape(
+          {
+            name: PropTypes.string.isRequired,
+            link: PropTypes.string.isRequired
+          }
+        )
+      ).isRequired,
     highlightedItem: PropTypes.string
   };
 
@@ -40,16 +29,25 @@ class FloatingMenu extends React.Component {
   render() {
     return (<ul className="floating-menu" style={this.props.styles}>
       {
-        Object.values(this.props.data).map(({ name, versions }) => (
+        this.props.data.map((item) => (
           <li
-            key={name}
-            className={classNames('floating-menu__item', {
-              'floating-menu__item--selected': this.props.highlightedItem === name
-            })}
+            key={item.name}
+            className={
+              classNames('floating-menu__item',
+                {
+                  'floating-menu__item--selected': this.props.highlightedItem === item.name || (item.link[0] === "#" && this.props.highlightedItem === item.link)
+                })}
           >
-            <Link to={getLink(name, versions)} exact>
-              {name}
-            </Link>
+            {item.link[0] !== "#" && (
+              <Link to={item.link} exact>
+                {item.name}
+              </Link>
+            )}
+            {item.link[0] === "#" && (
+              <Link to={item.link}>
+                {item.name}
+              </Link>
+            )}
           </li>
         ))
       }
