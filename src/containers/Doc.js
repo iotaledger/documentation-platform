@@ -87,7 +87,7 @@ class Doc extends React.Component {
               <section className="left-column">
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                   <ScrollInContainer
-                    topOffset={40}
+                    topOffset={30}
                     bottomOffset={120}
                     topMarker="#floating-menu-top-limit"
                     bottomMarker="#floating-menu-bottom-limit"

@@ -238,8 +238,13 @@ class Markdown extends PureComponent {
         <Link to={props.href} target="_blank">{props.children[0].props.value}</Link>
       );
     } else {
+      // For local links remove .md extension
+      // and also de-escape space characters
+      const localLink = props.href
+        .replace(/.md$/i, '')
+        .replace(/\\ /g, " ");
       return (
-        <Link to={props.href.replace(/.md$/i, '')}>{props.children[0].props.value}</Link>
+        <Link to={localLink}>{props.children[0].props.value}</Link>
       );
     }
   }
@@ -281,7 +286,7 @@ class Markdown extends PureComponent {
 
   heading(props) {
     return (
-      <Heading className='text--tertiary' level={props.level}>{props.children[0].props.value}</Heading>
+      <Heading className='text--tertiary' level={props.level} id={props.children[0].props.value}>{props.children[0].props.value}</Heading>
     );
   }
 

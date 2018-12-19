@@ -51,16 +51,16 @@ padding: 0 16px;
 .left-column {
   min-width: 250px;
   flex: 1;
-  padding: 15px 0px 120px 0px;
+  padding: 25px 0px 120px 0px;
 }
 .middle-column {
   min-height: 500px;
   flex: 5;
-  padding: 15px 20px 120px 0px;
+  padding: 35px 20px 120px 0px;
   overflow:hidden;
 }
 .right-column {
-  padding: 15px 0px 120px 0px;
+  padding: 25px 0px 120px 0px;
   flex: 1;
 }
 ${media.tabletDown`

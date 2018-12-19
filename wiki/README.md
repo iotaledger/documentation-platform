@@ -18,7 +18,7 @@ The tabbed control is fenced by a horizontal separator with 20 hyphens. The indi
 This is the content in tab page 1.
 ---
 ### Tab Page 2
-This is the content in tab page 1.
+This is the content in tab page 2.
 --------------------
 ```
 
