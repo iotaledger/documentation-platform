@@ -111,7 +111,7 @@ class Markdown extends PureComponent {
 
   findProjectTopics(projectTopicContainer) {
     const projectTopics = [];
-    const re = /#### (.*)\n(\[link\]\((.*)\))?([\S\s]*?)---/g;
+    const re = /#### (.*)\n(\[.*\]\((.*)\))?([\S\s]*?)---/g;
 
     let match;
     do {

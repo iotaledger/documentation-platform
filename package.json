@@ -13,7 +13,8 @@
     "stage": "react-static build --staging",
     "build": "yarn index && react-static build",
     "serve": "serve dist -p 3000",
-    "index": "node buildSearchIndex.js docs src/searchData/index.json src/searchData/corpus.json"
+    "index": "node buildSearchIndex.js docs src/searchData/index.json src/searchData/corpus.json",
+    "deploy": "firebase deploy"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -32,7 +33,7 @@
     "react-router": "^4.2.0",
     "react-static": "^5.9.8",
     "reprism": "^0.0.11",
-    "styled-components": "^3"
+    "styled-components": "^3.0.0"
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^1.3.0",

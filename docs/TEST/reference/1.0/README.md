@@ -91,7 +91,14 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
 
 ---------------
 
-#### __JavaScript Library__ ####
+#### **JavaScript Library** ####
+[Link](./reference/1.0/library/JavaScript)
+
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
+
+---
+
+#### __Go Library__ ####
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
 
 ---
@@ -109,27 +116,15 @@ A separator is below
 And how about a tabbed control.
 
 --------------------
-###  JavaScript
+### Tab Page 1
 
-```js
-var React = require('react');
-var Markdown = require('react-markdown');
-
-React.render(
-  <Markdown source="# Your markdown here" />,
-  document.getElementById('content')
-);
-```
+This is the content in tab page 1.
 
 ---
-###  Python
+### Tab Page 2
 
-```python
-x = 1
-if x == 1:
-    # indented four spaces
-    print("x is 1.")
-```
+This is the content in tab page 1.
+
 --------------------
 
 Or an image
