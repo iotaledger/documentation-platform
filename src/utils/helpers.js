@@ -1,5 +1,5 @@
 export const getNextPage = (projectUrlParts, data) => {
-  const projectIndex = getProjectIndex(projectUrlParts, data);
+  const projectIndex = getProjectIndex(projectUrlParts.projectName, projectUrlParts.projectVersion, data);
   if (projectIndex) {
     const currentIndex = projectIndex.findIndex(indexItem => indexItem.link === projectUrlParts.projectFullURL);
     if (currentIndex >= 0 && currentIndex < projectIndex.length) {
@@ -11,7 +11,7 @@ export const getNextPage = (projectUrlParts, data) => {
 }
 
 export const getPreviousPage = (projectUrlParts, data) => {
-  const projectIndex = getProjectIndex(projectUrlParts, data);
+  const projectIndex = getProjectIndex(projectUrlParts.projectName, projectUrlParts.projectVersion, data);
   if (projectIndex) {
     const currentIndex = projectIndex.findIndex(indexItem => indexItem.link === projectUrlParts.projectFullURL);
     if (currentIndex > 0) {
@@ -47,8 +47,8 @@ export function combineProjectUrl(projectParts) {
   return `/docs/${projectParts.projectName}/${projectParts.projectVersion}/${projectParts.projectDoc}`;
 }
 
-export function createFloatingMenuEntries(homePageContent, menuData) {
-  if (!menuData) {
+export function createFloatingMenuEntries(homePageContent, data) {
+  if (!data) {
     return [{ name: "New To IOTA?", link: "#new_to_iota?" }]
       .concat(homePageContent.map(entry => ({
         name: entry.header,
@@ -57,15 +57,12 @@ export function createFloatingMenuEntries(homePageContent, menuData) {
   } else {
     return [{ name: "New To IOTA?", link: "/" }]
       .concat(homePageContent.map(entry => {
-        const projectUrlParts = {
-          projectName: entry.header,
-          projectVersion: getLatestVersion(entry.header, menuData),
-          projectDoc: "README"
-        };
+        const latestVersion = getLatestVersion(entry.header, data);
+        const projectIndex = getProjectIndex(entry.header, latestVersion, data);
 
         return {
           name: entry.header,
-          link: combineProjectUrl(projectUrlParts)
+          link: projectIndex[0].link
         };
       }));
   }
@@ -76,14 +73,14 @@ export function getLatestVersion(projectName, data) {
 }
 
 export function getDocumentTitle(projectUrlParts, data) {
-  const projectIndex = getProjectIndex(projectUrlParts, data);
+  const projectIndex = getProjectIndex(projectUrlParts.projectName, projectUrlParts.projectVersion, data);
   const indexItem = getIndexItem(projectIndex, projectUrlParts.projectFullURL);
   return indexItem ? indexItem.name : "";
 }
 
-export function getProjectIndex(projectUrlParts, data) {
-  return data[projectUrlParts.projectName] && data[projectUrlParts.projectName].versions ?
-    data[projectUrlParts.projectName].versions[projectUrlParts.projectVersion] : undefined;
+export function getProjectIndex(projectName, projectVersion, data) {
+  return data[projectName] && data[projectName].versions ?
+    data[projectName].versions[projectVersion] : undefined;
 }
 
 export function getIndexItem(projectIndex, itemUrl) {
@@ -91,9 +88,7 @@ export function getIndexItem(projectIndex, itemUrl) {
 }
 
 export function replaceVersion(projectUrlParts, newVersion, data) {
-  projectUrlParts.projectVersion = newVersion;
-
-  const projectIndex = getProjectIndex(projectUrlParts, data);
+  const projectIndex = getProjectIndex(projectUrlParts.projectName, newVersion, data);
   if (projectIndex) {
     const newUrl = combineProjectUrl(projectUrlParts);
 
