@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-static';
-import { getNextPage, getPreviousPage, parseProjectUrl } from '../../utils/helpers';
+import { getDocumentTitle, getNextPage, getPreviousPage, parseProjectUrl } from '../../utils/helpers';
 
 
 class SubHeader extends React.Component {
@@ -14,34 +14,35 @@ class SubHeader extends React.Component {
       previousTitle: '',
       previousUrl: ''
     }
+    this.navigateTo = this.navigateTo.bind(this);
   }
 
   componentDidMount() {
     const projectUrlParts = parseProjectUrl(this.props.pathname);
-    const { nextName, nextUrl } = getNextPage(projectUrlParts, this.props.data)
-    const { previousName, previousUrl } = getPreviousPage(projectUrlParts, this.props.data)
+    const nextIndexItem = getNextPage(projectUrlParts, this.props.data)
+    const previousIndexItem = getPreviousPage(projectUrlParts, this.props.data)
 
     this.setState({
       currProject: projectUrlParts.projectName,
-      currTitle: projectUrlParts.projectDocTitle,
-      nextTitle: nextName,
-      nextUrl: nextUrl,
-      previousTitle: previousName,
-      previousUrl: previousUrl
+      currTitle: getDocumentTitle(projectUrlParts, this.props.data),
+      nextTitle: nextIndexItem ? nextIndexItem.name : "",
+      nextUrl: nextIndexItem ? nextIndexItem.link : "",
+      previousTitle: previousIndexItem ? previousIndexItem.name : "",
+      previousUrl: previousIndexItem ? previousIndexItem.link : ""
     })
+  }
+
+  navigateTo(url) {
+    this.props.history.push(url);
   }
 
   render() {
     return (<section className="sub-header">
       <span className="sub-header__title">{this.state.currProject}</span>
       <section className="sub-header__body">
-        <Link to={this.state.previousUrl} exact>
-          <button className="arrow-button arrow-button--left"></button>
-        </Link>
+        <button onClick={() => this.navigateTo(this.state.previousUrl)} className="arrow-button arrow-button--left" disabled={!this.state.previousUrl}></button>
         <span className="sub-header__bottom-title">{this.state.currTitle}</span>
-        <Link to={this.state.nextUrl} exact>
-          <button className="arrow-button arrow-button--right"></button>
-        </Link>
+        <button onClick={() => this.navigateTo(this.state.nextUrl)} className="arrow-button arrow-button--right" disabled={!this.state.nextUrl}></button>
       </section>
     </section>)
 

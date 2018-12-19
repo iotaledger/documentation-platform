@@ -51,7 +51,7 @@ You can add colored bullets to the heading by wrapping the header in ** for prim
 ```markup
 ---------------
 #### **JavaScript Library** ####
-[Link](./1.0/reference/library/JavaScript)
+[Link](./1.0/library/JavaScript)
 
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
 ---

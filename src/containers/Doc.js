@@ -15,7 +15,7 @@ import Container from '../components/Container';
 import Feedback from '../components/molecules/Feedback';
 import Markdown from '../components/organisms/Markdown';
 import { submitFeedback } from "../utils/feedbackHelper";
-import { combineProjectUrl, parseProjectUrl } from "../utils/helpers";
+import { parseProjectUrl, replaceVersion } from "../utils/helpers";
 import contentHomePage from '../contentHomePage.json';
 import { createFloatingMenuEntries } from '../utils/helpers';
 
@@ -35,11 +35,13 @@ class Doc extends React.Component {
     this.changeVersion = this.changeVersion.bind(this);
   }
 
-  changeVersion(newVersion) {
+  changeVersion(newVersion, data) {
     const projectParts = parseProjectUrl(this.state.projectFullURL);
-    projectParts.projectVersion = newVersion;
-    this.props.history.push(combineProjectUrl(projectParts));
-    this.setState({ projectVersion: newVersion });
+    const newUrl = replaceVersion(projectParts, newVersion, data);
+    if (newUrl) {
+      this.props.history.push(newUrl);
+      this.setState({ projectVersion: newVersion });
+    }
   }
 
   componentDidMount() {
@@ -64,13 +66,14 @@ class Doc extends React.Component {
                   data={menu}
                 />
                 <SubHeader
+                  history={this.props.history}
                   data={menu}
                   pathname={this.props.location.pathname}
                 />
                 <VersionPicker
                   versions={menu[this.state.projectName] ? Object.keys(menu[this.state.projectName].versions) : []}
                   currentVersion={this.state.projectVersion}
-                  onChange={this.changeVersion}
+                  onChange={(newVersion) => this.changeVersion(newVersion, menu)}
                 />
                 <div id="floating-menu-top-limit"></div>
                 <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto' }}>
@@ -102,6 +105,7 @@ class Doc extends React.Component {
                 <div id="floating-menu-bottom-limit" />
                 <BottomStop />
                 <Navigator
+                  history={this.props.history}
                   data={menu}
                   pathname={this.props.location.pathname}
                 />

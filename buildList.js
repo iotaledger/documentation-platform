@@ -1,4 +1,4 @@
-const { readdirSync, statSync } = require('fs')
+const { readdirSync, statSync, readFileSync } = require('fs')
 const { join } = require('path')
 
 const getProjects = dir => readdirSync(dir).filter(f => statSync(join(dir, f)).isDirectory())
@@ -13,8 +13,8 @@ const getDocPages = baseDir => {
   const dirs = getProjects(baseDir)
   const files = Array.prototype.concat(...dirs.map(dir =>
     listFiles(`${baseDir}/${dir}`).map(file => ({
-      path: webifyPath(file).replace('.md',''),
-      title: `${webifyPath(dir)} ${webifyPath(file).replace(`docs/${webifyPath(dir)}/`, '').replace('.md','')}`,
+      path: webifyPath(file).replace('.md', ''),
+      title: `${webifyPath(dir)} ${webifyPath(file).replace(`docs/${webifyPath(dir)}/`, '').replace('.md', '')}`,
       markdownSrc: webifyPath(file)
     }))
   ))
@@ -30,11 +30,22 @@ const buildMenuItems = baseDir => {
     const projectVersions = getProjects(`${baseDir}/${name}/`)
 
     projectVersions.forEach(version => {
-      const children = listFiles(`${baseDir}/${name}/${version}/reference/`).map(file => ({
-        name: webifyPath(file).match(/[^\/]+$/)[0].replace('.md', ''),
-        link: `/${webifyPath(file).replace('.md', '')}`
-      }))
-      versions[version] = children
+      const docIndex = readFileSync(`${baseDir}/${name}/${version}/doc-index.md`).toString();
+
+      versions[version] = [];
+
+      const re = /\[(.*)\]\((.*)\)/g;
+
+      let match;
+      do {
+        match = re.exec(docIndex);
+        if (match && match.length === 3) {
+          versions[version].push({
+            name: match[1],
+            link: `/${baseDir}/${name}/${version}/${match[2].replace('.md', '').replace(/^\.\//, "")}`
+          });
+        }
+      } while (match);
     })
 
     menu[name] = { name, versions }

@@ -3,14 +3,14 @@
 ---------------
 
 #### **JavaScript Library** ####
-[Link](./1.0/reference/library/JavaScript)
+[Link](./1.0/library/JavaScript)
 
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
 
 ---
 
 #### **C Library** ####
-[Link](./1.0/reference/library/C)
+[Link](./1.0/library/C)
 
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
 
@@ -30,14 +30,14 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
 ---
 
 #### __Python Library__ ####
-[Link](./1.0/reference/library/Python)
+[Link](./1.0/library/Python)
 
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
 
 ---
 
 #### __Golang Library__ ####
-[Link](./1.0/reference/library/GoLang)
+[Link](./1.0/library/GoLang)
 
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.
 
