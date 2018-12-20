@@ -70,7 +70,7 @@ class Doc extends React.Component {
         return (
             <RouteData
                 render={({ markdown, title }) => (
-                    <Container>
+                    <Container {...this.props}>
                         <Head>
                             <title>{`${title} | ${this.props.repoName}`}</title>
                         </Head>

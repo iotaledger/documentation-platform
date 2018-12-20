@@ -4,27 +4,21 @@
       "heading": "Developer Docs",
       "links": [
         {
-          "href": "https://iota.org",
           "text": "IOTA Basics"
         },
         {
-          "href": "https://iota.org",
           "text": "Tangle Concepts"
         },
         {
-          "href": "https://iota.org",
           "text": "IRI"
         },
         {
-          "href": "https://iota.org",
-          "text": "Hub"
+          "text": "HUB"
         },
         {
-          "href": "https://iota.org",
-          "text": "Trinity"
+          "text": "Trinity Wallet"
         },
         {
-          "href": "https://iota.org",
           "text": "Client Libraries"
         }
       ]

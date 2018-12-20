@@ -7,7 +7,7 @@ const Link = ({ id, href, target, text, className, children }) => (
     id={id}
     target={target}
     href={href}
-    rel={target === '_blank' ? 'noopener noreferrer' : false}
+    rel={target === '_blank' ? 'noopener noreferrer' : undefined}
     className={`link ${className}`}
   >
     { children || <Text>{text}</Text> }

@@ -46,6 +46,20 @@ export function combineProjectUrl(projectParts) {
     return `/docs/${projectParts.projectName}/${projectParts.projectVersion}/${projectParts.projectDoc}`;
 }
 
+export function getLatestVersionLinks(menuData) {
+    const projectNames = Object.keys(menuData);
+    const latestVersionLinks = {};
+
+    for (let i = 0; i < projectNames.length; i++) {
+        const latestVersion = getLatestVersion(projectNames[i], menuData);
+        const projectIndex = getProjectIndex(projectNames[i], latestVersion, menuData);
+
+        latestVersionLinks[projectNames[i]] = projectIndex[0].link;
+    }
+
+    return latestVersionLinks;
+}
+
 export function createFloatingMenuEntries(contentHomePage, menuData) {
     if (!menuData) {
         return [{ name: "New To IOTA?", link: "#new_to_iota?" }]
@@ -54,14 +68,13 @@ export function createFloatingMenuEntries(contentHomePage, menuData) {
                 link: `#${entry.header.toLowerCase().replace(/ /g, "_")}`
             })));
     } else {
+        const latestVersionLinks = getLatestVersionLinks(menuData);
+
         return [{ name: "New To IOTA?", link: "/" }]
             .concat(contentHomePage.map(entry => {
-                const latestVersion = getLatestVersion(entry.header, menuData);
-                const projectIndex = getProjectIndex(entry.header, latestVersion, menuData);
-
                 return {
                     name: entry.header,
-                    link: projectIndex[0].link
+                    link: latestVersionLinks[entry.header]
                 };
             }));
     }

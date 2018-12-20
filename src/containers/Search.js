@@ -95,13 +95,12 @@ class Search extends React.Component {
     }
 
     render() {
-        const { menu, repoName } = this.props;
         return (
             <RouteData
                 render={() => (
-                    <Container>
+                    <Container {...this.props}>
                         <Head>
-                            <title>{`Search Results | ${repoName}`}</title>
+                            <title>{`Search Results | ${this.props.repoName}`}</title>
                         </Head>
                         <div id="search-top"/>
                         <StickyHeader

@@ -7,9 +7,9 @@ const Main = styled.div`
   position: relative;
 `;
 
-export default ({ children }) => (
+export default ({ children, menu, history, location }) => (
   <Main id="main">
     {children}
-    <Footer />
+    <Footer menu={menu} history={history} location={location}/>
   </Main>
 )

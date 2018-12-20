@@ -29,7 +29,7 @@ class NotFound extends React.Component {
         return (
             <RouteData
                 render={() => (
-                    <Container>
+                    <Container {...this.props}>
                         <Head>
                             <title>{`Not Found | ${this.props.repoName}`}</title>
                         </Head>

@@ -32,12 +32,10 @@ class Home extends React.Component {
     }
 
     render() {
-        const { menu, repoName } = this.props;
-
         return (
-            <Container>
+            <Container {...this.props}>
                 <Head>
-                    <title>Home | {repoName}</title>
+                    <title>Home | {this.props.repoName}</title>
                 </Head>
                 <Header
                     history={this.props.history}
