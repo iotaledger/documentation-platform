@@ -13,7 +13,7 @@ import javascript from "reprism/languages/javascript";
 import json from "reprism/languages/json";
 import jsx from "reprism/languages/jsx";
 import python from "reprism/languages/python";
-import { santizeHashId } from '../../../utils/paths';
+import { sanitizeHashId } from '../../../utils/paths';
 import Heading from '../../atoms/Heading';
 import HeadingLabel from '../../atoms/HeadingLabel';
 import ProjectTopicsInner from '../../molecules/ProjectTopicsContainer/ProjectTopicsInner';
@@ -220,7 +220,7 @@ class Markdown extends PureComponent {
         let match = re.exec(props.value);
 
         if (match && match.length === 2) {
-            return (<a id={santizeHashId(match[1])}></a>);
+            return (<a id={sanitizeHashId(match[1])}></a>);
         }
     }
 
@@ -249,12 +249,12 @@ class Markdown extends PureComponent {
         if (props.href.startsWith("#")) {
             // Make sure the tag is consistently named
             return (
-                <Link to={santizeHashId(props.href)}>{props.children[0].props.value}</Link>
+                <Link to={sanitizeHashId(props.href)}>{props.children[0].props.value}</Link>
             );
         } else {
             // For local links remove .md extension
             // and also de-escape space characters
-            const localLink = santizeHashId(props.href).replace(/.md$/i, '');
+            const localLink = sanitizeHashId(props.href).replace(/.md$/i, '');
             return (
                 <Link to={localLink}>{props.children[0].props.value}</Link>
             );
@@ -300,7 +300,7 @@ class Markdown extends PureComponent {
   heading(props) {
     return (
       <React.Fragment>
-        <Heading className='text--tertiary' level={props.level} id={santizeHashId(props.children[0].props.value)}>{props.children[0].props.value}</Heading>
+        <Heading className='text--tertiary' level={props.level} id={sanitizeHashId(props.children[0].props.value)}>{props.children}</Heading>
       </React.Fragment>
     );
   }

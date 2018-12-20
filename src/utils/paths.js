@@ -1,10 +1,10 @@
-export const santizeHashId = (id) => {
+export const sanitizeHashId = (id) => {
     // make lower case
     // de-escape spaces
     // replace spaces with underscore
-    return id
+    return id ? id
         .toLowerCase()
         .replace(/\\ /g, " ")
-        .replace(/ /g, "_");
+        .replace(/ /g, "_") : undefined;
 }
 
