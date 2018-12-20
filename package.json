@@ -14,7 +14,8 @@
     "build": "yarn index && react-static build",
     "serve": "serve dist -p 3000",
     "index": "node buildSearchIndex.js docs src/searchData/index.json src/searchData/corpus.json",
-    "deploy": "firebase deploy"
+    "deploy": "firebase deploy",
+    "lint": "eslint src/**/*.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -33,11 +34,13 @@
     "react-router": "^4.2.0",
     "react-static": "^5.9.8",
     "reprism": "^0.0.11",
-    "styled-components": "^3.0.0"
+    "styled-components": "^4.1.3"
   },
   "devDependencies": {
-    "babel-plugin-styled-components": "^1.3.0",
+    "babel-plugin-styled-components": "^1.10.0",
+    "eslint": "^5.10.0",
     "eslint-config-react-tools": "1.x.x",
+    "eslint-plugin-react": "^7.11.1",
     "serve": "^10.0.2"
   }
 }
