@@ -73,8 +73,8 @@ export default {
       component: "src/containers/Search"
     },
     {
-      is404: true,
-      component: "src/containers/404"
+      path: "/404",
+      component: "src/containers/NotFound"
     }
   ],
   renderToHtml: (render, Comp, meta) => {

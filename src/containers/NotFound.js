@@ -1,7 +1,6 @@
 import lunr from 'lunr';
 import React from 'react';
 import { Head, RouteData, withRouter, withSiteData } from 'react-static';
-import InputSearch from '../components//molecules/InputSearch';
 import BottomSticky from '../components/atoms/BottomSticky';
 import BottomStop from '../components/atoms/BottomStop';
 import ScrollToTop from '../components/atoms/ScrollToTop';
@@ -9,8 +8,6 @@ import { DocPageLayout, maxWidthLayout, TabletHidden } from '../components/ci/La
 import StickyHeader from '../components/ci/StickyHeader';
 import Container from '../components/Container';
 import Feedback from '../components/molecules/Feedback';
-import Pagination from '../components/molecules/Pagination';
-import SearchResult from '../components/molecules/SearchResult';
 import corpus from '../searchData/corpus.json';
 import json from '../searchData/index.json';
 import { submitFeedback } from "../utils/feedbackHelper";
