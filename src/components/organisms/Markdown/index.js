@@ -13,6 +13,7 @@ import javascript from "reprism/languages/javascript";
 import json from "reprism/languages/json";
 import jsx from "reprism/languages/jsx";
 import python from "reprism/languages/python";
+import { santizeHashId } from '../../../utils/paths';
 import Heading from '../../atoms/Heading';
 import HeadingLabel from '../../atoms/HeadingLabel';
 import ProjectTopicsInner from '../../molecules/ProjectTopicsContainer/ProjectTopicsInner';
@@ -214,6 +215,13 @@ class Markdown extends PureComponent {
         const headingLabel = this.headingLabels[index];
         return (<HeadingLabel style={headingLabel.style}>{headingLabel.content}</HeadingLabel>);
       }
+    }  else if (props.value.startsWith("<a name")) {
+        const re = /<a name=\"(.*)\"/i;
+        let match = re.exec(props.value);
+
+        if (match && match.length === 2) {
+            return (<a id={santizeHashId(match[1])}></a>);
+        }
     }
 
     // Do default html processing
@@ -233,19 +241,24 @@ class Markdown extends PureComponent {
   }
 
   aLink(props) {
-    if(props.href.startsWith('http')) {
+    if (props.href.startsWith('http')) {
       return (
         <Link to={props.href} target="_blank">{props.children[0].props.value}</Link>
       );
     } else {
-      // For local links remove .md extension
-      // and also de-escape space characters
-      const localLink = props.href
-        .replace(/.md$/i, '')
-        .replace(/\\ /g, " ");
-      return (
-        <Link to={localLink}>{props.children[0].props.value}</Link>
-      );
+        if (props.href.startsWith("#")) {
+            // Make sure the tag is consistently named
+            return (
+                <Link to={santizeHashId(props.href)}>{props.children[0].props.value}</Link>
+            );
+        } else {
+            // For local links remove .md extension
+            // and also de-escape space characters
+            const localLink = santizeHashId(props.href).replace(/.md$/i, '');
+            return (
+                <Link to={localLink}>{props.children[0].props.value}</Link>
+            );
+        }
     }
   }
 
@@ -286,7 +299,9 @@ class Markdown extends PureComponent {
 
   heading(props) {
     return (
-      <Heading className='text--tertiary' level={props.level} id={props.children[0].props.value}>{props.children[0].props.value}</Heading>
+      <React.Fragment>
+        <Heading className='text--tertiary' level={props.level} id={santizeHashId(props.children[0].props.value)}>{props.children[0].props.value}</Heading>
+      </React.Fragment>
     );
   }
 
