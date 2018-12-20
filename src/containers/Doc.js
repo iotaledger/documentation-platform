@@ -1,6 +1,5 @@
-import SideMenu from '../components/molecules/SideMenu';
 import React from 'react';
-import { Head, RouteData, withSiteData, withRouter } from 'react-static';
+import { Head, RouteData, withRouter, withSiteData } from 'react-static';
 import BottomSticky from "../components/atoms/BottomSticky";
 import BottomStop from '../components/atoms/BottomStop';
 import ScrollInContainer from '../components/atoms/ScrollInContainer';
@@ -14,11 +13,11 @@ import TreeMenu from '../components/ci/TreeMenu';
 import VersionPicker from '../components/ci/VersionPicker';
 import Container from '../components/Container';
 import Feedback from '../components/molecules/Feedback';
+import SideMenu from '../components/molecules/SideMenu';
 import Markdown from '../components/organisms/Markdown';
-import { submitFeedback } from "../utils/feedbackHelper";
-import { parseProjectUrl, replaceVersion } from "../utils/helpers";
 import contentHomePage from '../contentHomePage.json';
-import { createFloatingMenuEntries } from '../utils/helpers';
+import { submitFeedback } from "../utils/feedbackHelper";
+import { createFloatingMenuEntries, parseProjectUrl, replaceVersion } from "../utils/helpers";
 
 class Doc extends React.Component {
     constructor(props) {

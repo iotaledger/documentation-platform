@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import React from 'react';
 import { Link } from 'react-static';
-import ClickOutside from '../ClickOutside';
-import { createSideMenuEntries } from '../../utils/helpers';
+import ClickOutside from '../../ClickOutside';
+import { createSideMenuEntries } from '../../../utils/helpers';
 
 class SideMenu extends React.Component {
     static propTypes = {
