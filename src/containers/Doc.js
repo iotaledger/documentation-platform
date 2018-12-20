@@ -106,7 +106,7 @@ class Doc extends React.Component {
                                         bottomMarker="#floating-menu-bottom-limit"
                                         widthContainer=".left-column">
                                         <FloatingMenu
-                                            data={createFloatingMenuEntries(contentHomePage.content, this.props.menu)}
+                                            menuItems={createFloatingMenuEntries(contentHomePage.content, this.props.menu)}
                                             highlightedItem={this.state.projectName}
                                         />
                                     </ScrollInContainer>
@@ -120,7 +120,7 @@ class Doc extends React.Component {
                             </section>
                             <section className="right-column">
                                 <TreeMenu
-                                    data={this.state.currentProjectIndex}
+                                    menuItems={this.state.currentProjectIndex}
                                     highlightedItem={this.state.projectFullURL}
                                 />
                             </section>

@@ -4,11 +4,12 @@ import React from 'react';
 import { Link } from 'react-static';
 import { createSideMenuEntries } from '../../../utils/helpers';
 import ClickOutside from '../../ClickOutside';
+import { ContentHomePagePropTypes, ContentMenuPropTypes } from '../../../utils/propTypes';
 
 class SideMenu extends React.Component {
     static propTypes = {
-        contentHomePage: PropTypes.any.isRequired,
-        menuData: PropTypes.any.isRequired,
+        contentHomePage: ContentHomePagePropTypes.isRequired,
+        menuData: ContentMenuPropTypes.isRequired,
         onCloseClick: PropTypes.func,
         isMenuOpen: PropTypes.bool,
         highlightedItem: PropTypes.string
