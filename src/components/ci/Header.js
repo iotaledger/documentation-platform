@@ -77,7 +77,7 @@ class Header extends React.Component {
             </div>
           </section>
           <section className="header__body" style={{}}>
-            <span className="text text--level1 text--secondary">{headerTitle}</span>
+            <span className="header__title text text--level1 text--secondary">{headerTitle}</span>
             <div className="header__search">
               <div className="input-wrapper">
                 <InputSearch
