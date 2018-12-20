@@ -54,7 +54,7 @@ class Search extends React.Component {
 
     onDataPaginated(start, end) {
         this.setState({ indexStart: start, indexEnd: end })
-        const target = document.querySelector('#main');
+        const target = document.querySelector('#search-top');
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
@@ -103,10 +103,11 @@ class Search extends React.Component {
                         <Head>
                             <title>{`Search Results | ${repoName}`}</title>
                         </Head>
+                        <div id="search-top"/>
                         <StickyHeader
                             history={this.props.history}
                             data={this.props.menu}
-                            onBurgerClick={this.handleBurgerClick}
+                            onBurgerClick={this.handleBurgerClick}                            
                         />
                         <SideMenu
                             isMenuOpen={this.state.isMenuOpen}
