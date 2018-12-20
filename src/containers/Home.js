@@ -16,7 +16,6 @@ import SideMenu from '../components/molecules/SideMenu';
 import contentHomePage from '../contentHomePage.json';
 import { submitFeedback } from "../utils/feedbackHelper";
 import { createFloatingMenuEntries } from '../utils/helpers';
-
 class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -48,7 +47,8 @@ class Home extends React.Component {
                 />
                 <SideMenu
                     isMenuOpen={this.state.isMenuOpen}
-                    data={menu}
+                    contentHomePage={contentHomePage}
+                    menuData={this.props.menu}
                     onCloseClick={this.handleBurgerClick} 
                     highlightedItem={this.state.projectFullURL}/>
                 <div id="floating-menu-top-limit"></div>

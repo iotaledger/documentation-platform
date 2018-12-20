@@ -81,7 +81,8 @@ class Doc extends React.Component {
                         />
                         <SideMenu
                             isMenuOpen={this.state.isMenuOpen}
-                            data={this.props.menu}
+                            contentHomePage={contentHomePage}
+                            menuData={this.props.menu}
                             onCloseClick={this.handleBurgerClick}
                             highlightedItem={this.state.projectFullURL} />
                         <SubHeader

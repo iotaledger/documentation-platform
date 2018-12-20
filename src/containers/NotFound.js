@@ -8,8 +8,8 @@ import StickyHeader from '../components/ci/StickyHeader';
 import Container from '../components/Container';
 import Feedback from '../components/molecules/Feedback';
 import SideMenu from '../components/molecules/SideMenu';
+import contentHomePage from '../contentHomePage.json';
 import { submitFeedback } from "../utils/feedbackHelper";
-
 class NotFound extends React.Component {
     constructor(props) {
         super(props);
@@ -39,7 +39,8 @@ class NotFound extends React.Component {
                         />
                         <SideMenu
                             isMenuOpen={this.state.isMenuOpen}
-                            data={this.props.menu}
+                            contentHomePage={contentHomePage}
+                            menuData={this.props.menu}
                             onCloseClick={this.handleBurgerClick} />
                         <section className="sub-header">
                             <span className="sub-header__title sub-header-title__fixed">Not Found</span>

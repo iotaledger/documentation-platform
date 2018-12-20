@@ -1,13 +1,14 @@
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-static';
-import ClickOutside from '../../ClickOutside';
 import { createSideMenuEntries } from '../../../utils/helpers';
+import ClickOutside from '../../ClickOutside';
 
 class SideMenu extends React.Component {
     static propTypes = {
-        data: PropTypes.any,
+        contentHomePage: PropTypes.any.isRequired,
+        menuData: PropTypes.any.isRequired,
         onCloseClick: PropTypes.func,
         isMenuOpen: PropTypes.bool,
         highlightedItem: PropTypes.string
@@ -27,14 +28,14 @@ class SideMenu extends React.Component {
         document.addEventListener('keydown', this.keydown, false);
 
         this.setState({
-            menuData: createSideMenuEntries(this.props.data, this.props.highlightedItem)
+            menuData: createSideMenuEntries(this.props.contentHomePage, this.props.menuData, this.props.highlightedItem)
         })
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.highlightedItem !== prevProps.highlightedItem) {
             this.setState({
-                menuData: createSideMenuEntries(this.props.data, this.props.highlightedItem)
+                menuData: createSideMenuEntries(this.props.contentHomePage, this.props.menuData, this.props.highlightedItem)
             })
         }
     }

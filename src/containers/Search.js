@@ -11,8 +11,9 @@ import Container from '../components/Container';
 import Feedback from '../components/molecules/Feedback';
 import Pagination from '../components/molecules/Pagination';
 import SearchResult from '../components/molecules/SearchResult';
-import corpus from '../searchData/corpus.json';
 import SideMenu from '../components/molecules/SideMenu';
+import contentHomePage from '../contentHomePage.json';
+import corpus from '../searchData/corpus.json';
 import json from '../searchData/index.json';
 import { submitFeedback } from "../utils/feedbackHelper";
 
@@ -109,7 +110,8 @@ class Search extends React.Component {
                         />
                         <SideMenu
                             isMenuOpen={this.state.isMenuOpen}
-                            data={this.props.menu}
+                            contentHomePage={contentHomePage}
+                            menuData={this.props.menu}
                             onCloseClick={this.handleBurgerClick} />
                         <section className="sub-header">
                             <span className="sub-header__title sub-header-title__fixed">Search results</span>

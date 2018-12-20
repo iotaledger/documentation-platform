@@ -1,5 +1,5 @@
-export const getNextPage = (projectUrlParts, data) => {
-    const projectIndex = getProjectIndex(projectUrlParts.projectName, projectUrlParts.projectVersion, data);
+export const getNextPage = (projectUrlParts, menuData) => {
+    const projectIndex = getProjectIndex(projectUrlParts.projectName, projectUrlParts.projectVersion, menuData);
     if (projectIndex) {
         const currentIndex = projectIndex.findIndex(indexItem => indexItem.link === projectUrlParts.projectFullURL);
         if (currentIndex >= 0 && currentIndex < projectIndex.length) {
@@ -10,8 +10,8 @@ export const getNextPage = (projectUrlParts, data) => {
     return undefined;
 }
 
-export const getPreviousPage = (projectUrlParts, data) => {
-    const projectIndex = getProjectIndex(projectUrlParts.projectName, projectUrlParts.projectVersion, data);
+export const getPreviousPage = (projectUrlParts, menuData) => {
+    const projectIndex = getProjectIndex(projectUrlParts.projectName, projectUrlParts.projectVersion, menuData);
     if (projectIndex) {
         const currentIndex = projectIndex.findIndex(indexItem => indexItem.link === projectUrlParts.projectFullURL);
         if (currentIndex > 0) {
@@ -43,22 +43,21 @@ export function parseProjectUrl(projectFullURL) {
 
 export function combineProjectUrl(projectParts) {
     ///docs/HUB/2.0/something/something/something
-
     return `/docs/${projectParts.projectName}/${projectParts.projectVersion}/${projectParts.projectDoc}`;
 }
 
-export function createFloatingMenuEntries(homePageContent, data) {
-    if (!data) {
+export function createFloatingMenuEntries(contentHomePage, menuData) {
+    if (!menuData) {
         return [{ name: "New To IOTA?", link: "#new_to_iota?" }]
-            .concat(homePageContent.map(entry => ({
+            .concat(contentHomePage.map(entry => ({
                 name: entry.header,
                 link: `#${entry.header.toLowerCase().replace(/ /g, "_")}`
             })));
     } else {
         return [{ name: "New To IOTA?", link: "/" }]
-            .concat(homePageContent.map(entry => {
-                const latestVersion = getLatestVersion(entry.header, data);
-                const projectIndex = getProjectIndex(entry.header, latestVersion, data);
+            .concat(contentHomePage.map(entry => {
+                const latestVersion = getLatestVersion(entry.header, menuData);
+                const projectIndex = getProjectIndex(entry.header, latestVersion, menuData);
 
                 return {
                     name: entry.header,
@@ -68,15 +67,15 @@ export function createFloatingMenuEntries(homePageContent, data) {
     }
 }
 
-export function createSideMenuEntries(data, projectFullURL) {
+export function createSideMenuEntries(contentHomePage, menuData, projectFullURL) {
     const menuEntries = [];
-    const projects = Object.keys(data);
+    const projects = contentHomePage.content.map(entry => entry.header);
     for (let i = 0; i < projects.length; i++) {
-        const latestVersion = getLatestVersion(projects[i], data);
+        const latestVersion = getLatestVersion(projects[i], menuData);
         if (latestVersion) {
-            const projectIndex = getProjectIndex(projects[i], latestVersion, data);
+            const projectIndex = getProjectIndex(projects[i], latestVersion, menuData);
             if (projectIndex) {
-                const isChildActive = getIndexItem(projectIndex, projectFullURL, data) !== undefined;
+                const isChildActive = getIndexItem(projectIndex, projectFullURL, menuData) !== undefined;
                 menuEntries.push({
                     heading: projects[i],
                     expanded: isChildActive,
@@ -89,18 +88,18 @@ export function createSideMenuEntries(data, projectFullURL) {
     return menuEntries;
 }
 
-export function buildItemTree(index, projectFullURL) {
+export function buildItemTree(projectIndex, projectFullURL) {
     const tree = [];
     let inSection;
 
-    for (let i = 0; i < index.length; i++) {
-        const nameParts = index[i].name.split("/");
+    for (let i = 0; i < projectIndex.length; i++) {
+        const nameParts = projectIndex[i].name.split("/");
         if (nameParts.length === 1) {
             tree.push({
                 type: "section-link",
-                link: index[i].link,
-                name: index[i].name,
-                selected: index[i].link === projectFullURL
+                link: projectIndex[i].link,
+                name: projectIndex[i].name,
+                selected: projectIndex[i].link === projectFullURL
             })
             inSection = undefined;
         } else {
@@ -116,8 +115,8 @@ export function buildItemTree(index, projectFullURL) {
             }
             inSection.items.push({
                 name: nameParts.slice(1).join("/"),
-                link: index[i].link,
-                selected: index[i].link === projectFullURL
+                link: projectIndex[i].link,
+                selected: projectIndex[i].link === projectFullURL
             });
         }
     }
@@ -126,27 +125,27 @@ export function buildItemTree(index, projectFullURL) {
 }
 
 
-export function getLatestVersion(projectName, data) {
-    return data[projectName] ? Object.keys(data[projectName].versions).slice(-1) : "";
+export function getLatestVersion(projectName, menuData) {
+    return menuData[projectName] ? Object.keys(menuData[projectName].versions).slice(-1) : "";
 }
 
-export function getDocumentTitle(projectUrlParts, data) {
-    const projectIndex = getProjectIndex(projectUrlParts.projectName, projectUrlParts.projectVersion, data);
+export function getDocumentTitle(projectUrlParts, menuData) {
+    const projectIndex = getProjectIndex(projectUrlParts.projectName, projectUrlParts.projectVersion, menuData);
     const indexItem = getIndexItem(projectIndex, projectUrlParts.projectFullURL);
     return indexItem ? indexItem.name : "";
 }
 
-export function getProjectIndex(projectName, projectVersion, data) {
-    return data[projectName] && data[projectName].versions ?
-        data[projectName].versions[projectVersion] : undefined;
+export function getProjectIndex(projectName, projectVersion, menuData) {
+    return menuData[projectName] && menuData[projectName].versions ?
+        menuData[projectName].versions[projectVersion] : undefined;
 }
 
 export function getIndexItem(projectIndex, itemUrl) {
     return projectIndex ? projectIndex.find(indexItem => indexItem.link === itemUrl) : undefined;
 }
 
-export function replaceVersion(projectUrlParts, newVersion, data) {
-    const projectIndex = getProjectIndex(projectUrlParts.projectName, newVersion, data);
+export function replaceVersion(projectUrlParts, newVersion, menuData) {
+    const projectIndex = getProjectIndex(projectUrlParts.projectName, newVersion, menuData);
     if (projectIndex) {
         const newUrl = combineProjectUrl(projectUrlParts);
 
