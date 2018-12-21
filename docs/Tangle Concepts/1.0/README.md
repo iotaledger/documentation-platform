@@ -1,3 +1,0 @@
-# Tangle Concepts
-
-These are not the pages you are looking for...

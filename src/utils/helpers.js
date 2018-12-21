@@ -74,7 +74,7 @@ export function createFloatingMenuEntries(contentHomePage, menuData) {
             .concat(contentHomePage.map(entry => {
                 return {
                     name: entry.header,
-                    link: latestVersionLinks[entry.header]
+                    link: latestVersionLinks[entry.folder]
                 };
             }));
     }
@@ -82,15 +82,17 @@ export function createFloatingMenuEntries(contentHomePage, menuData) {
 
 export function createSideMenuEntries(contentHomePage, menuData, projectFullURL) {
     const menuEntries = [];
-    const projects = contentHomePage.content.map(entry => entry.header);
-    for (let i = 0; i < projects.length; i++) {
-        const latestVersion = getLatestVersion(projects[i], menuData);
+
+    for (let i = 0; i < contentHomePage.content.length; i++) {
+        const header = contentHomePage.content[i].header;
+        const folder = contentHomePage.content[i].folder;
+        const latestVersion = getLatestVersion(folder, menuData);
         if (latestVersion) {
-            const projectIndex = getProjectIndex(projects[i], latestVersion, menuData);
+            const projectIndex = getProjectIndex(folder, latestVersion, menuData);
             if (projectIndex) {
                 const isChildActive = getIndexItem(projectIndex, projectFullURL, menuData) !== undefined;
                 menuEntries.push({
-                    heading: projects[i],
+                    heading: header,
                     expanded: isChildActive,
                     selected: isChildActive,
                     items: buildItemTree(projectIndex, projectFullURL)

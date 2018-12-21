@@ -1,0 +1,18 @@
+# Index
+
+[Introduction/Overview](/introduction/overview.md)
+[How-to Guides/Downloading the IRI on Linux](/how-to-guides/downloading-the-iri-on-linux.md)
+[How-to Guides/Downloading the IRI from a Docker](how-to-guides/downloading-the-iri-from-a-docker-container.md)
+[How-to Guides/Finding neighbors](/how-to-guides/finding-neighbors.md)
+[How-to Guides/Running the IRI](/how-to-guides/running-the-iri.md)
+[How-to Guides/Updating the IRI](/how-to-guides/updating-the-iri.md)
+[How-to Guides/Troubleshooting IRI](/how-to-guides/troubleshooting-the-iri.md)
+[How-to Guides/Interacting with IRI](/how-to-guides/interacting-with-the-iri.md)
+[How-to Guides/Subscribing to events](/how-to-guides/subscribing-to-events-in-the-iri.md)
+[Concepts/The distributed ledger](/concepts/the-distributed-ledger.md)
+[Concepts/Tip selection](/concepts/tip-selection.md)
+[Concepts/Transaction validation](/concepts/transaction-validation.md)
+[Concepts/Zero message queue](/concepts/zero-message-queue.md)
+[References/Data in the ledger](/references/data-in-the-ledger.md)
+[References/IRI configuration options](/references/iri-configuration-options.md)
+[References/ZMQ events](/references/zmq-events.md)

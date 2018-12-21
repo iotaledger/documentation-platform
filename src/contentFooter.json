@@ -4,22 +4,28 @@
       "heading": "Developer Docs",
       "links": [
         {
-          "text": "IOTA Basics"
+          "text": "IOTA Basics",
+          "folder": "iota-basics"
         },
         {
-          "text": "Tangle Concepts"
+          "text": "Tangle Concepts",
+          "folder": "the-tangle"
         },
         {
-          "text": "IRI"
+          "text": "IRI",
+          "folder": "iri"
         },
         {
-          "text": "HUB"
+          "text": "HUB",
+          "folder": "hub"
         },
         {
-          "text": "Trinity Wallet"
+          "text": "Trinity Wallet",
+          "folder": "trinity"
         },
         {
-          "text": "Client Libraries"
+          "text": "Client Libraries",
+          "folder": "client-libraries"
         }
       ]
     },

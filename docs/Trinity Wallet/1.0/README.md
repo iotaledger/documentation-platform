@@ -1,3 +1,0 @@
-# Trinity Wallet
-
-These are not the pages you are looking for...

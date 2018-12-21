@@ -18,6 +18,7 @@ export const ContentHomePagePropTypes = PropTypes.shape({
     content: PropTypes.arrayOf(
         PropTypes.shape({
             header: PropTypes.string.isRequired,
+            folder: PropTypes.string.isRequired,
             subheader: PropTypes.string.isRequired,
             topics: PropTypes.arrayOf(
                 PropTypes.shape({

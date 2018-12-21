@@ -26,7 +26,7 @@ module.exports = {
     },
     "rules": {
         "indent": [
-            1,
+            0,
             4
         ],
         "quotes": [

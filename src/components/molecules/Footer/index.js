@@ -15,7 +15,8 @@ class Footer extends React.Component {
             footerSections: PropTypes.arrayOf(PropTypes.exact({
                 heading: PropTypes.string.isRequired,
                 links: PropTypes.arrayOf(PropTypes.exact({
-                    href: PropTypes.string.isRequired,
+                    href: PropTypes.string,
+                    folder: PropTypes.string,
                     text: PropTypes.string.isRequired,
                 })).isRequired
             })),
@@ -61,15 +62,15 @@ class Footer extends React.Component {
                                 <section key={heading} className="footer-top-content__wrapper">
                                     <Heading level={3} text={heading} className="footer-top-content__heading" />
                                     {
-                                        links.map(({ href, text }) =>
+                                        links.map(({ href, folder, text }) =>
                                             <React.Fragment key={text}>
                                                 {href && (
                                                     <Link href={href} className="footer-top-content__link">
                                                         {text}
                                                     </Link>
                                                 )}
-                                                {!href && (
-                                                    <a onClick={() => this.handleClick(text)} className="footer-top-content__link">
+                                                {folder && (
+                                                    <a onClick={() => this.handleClick(folder)} className="footer-top-content__link">
                                                         {text}
                                                     </a>
                                                 )}
@@ -92,8 +93,8 @@ class Footer extends React.Component {
                                     footerSections.map(({ heading, links }) =>
                                         <optgroup key={heading} label={heading}>
                                             {
-                                                links.map(({ href, text }) =>
-                                                    <option key={text} value={href || text}>{text}</option>
+                                                links.map(({ href, folder, text }) =>
+                                                    <option key={text} value={href || folder}>{text}</option>
                                                 )
                                             }
                                         </optgroup>

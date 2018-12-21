@@ -44,6 +44,7 @@
   "content": [
     {
       "header": "IOTA Basics",
+      "folder": "iota-basics",
       "subheader": "Learn about the basic ideas and concepts around IOTA",
       "topics": [
         {
@@ -75,6 +76,7 @@
     },
     {
       "header": "Tangle Concepts",
+      "folder": "the-tangle",
       "subheader": "The Tangle is the distributed ledger network behind IOTA",
       "topics": [
         {
@@ -101,6 +103,7 @@
     },
     {
       "header": "IRI",
+      "folder": "iri",
       "subheader": "Essential for operation a supporting node on the IOTA Tangle network",
       "topics": [
         {
@@ -132,6 +135,7 @@
     },
     {
       "header": "HUB",
+      "folder": "hub",
       "subheader": "Learn about the basic ideas and concepts behind IOTA Hub",
       "topics": [
         {
@@ -163,6 +167,7 @@
     },
     {
       "header": "Trinity Wallet",
+      "folder": "trinity",
       "subheader": "Learn about the basic ideas and concepts behind Trinity",
       "topics": [
         {
@@ -194,6 +199,7 @@
     },
     {
       "header": "Client Libraries",
+      "folder": "client-libraries",
       "subheader": "Reference on JS, Golang, Java, Python, and C# Libraries",
       "topics": [
         {
