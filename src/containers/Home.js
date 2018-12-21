@@ -16,6 +16,9 @@ import SideMenu from '../components/molecules/SideMenu';
 import contentHomePage from '../contentHomePage.json';
 import { submitFeedback } from '../utils/feedbackHelper';
 import { createFloatingMenuEntries } from '../utils/helpers';
+
+import './home.css';
+
 class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -50,10 +53,10 @@ class Home extends React.Component {
                     onCloseClick={this.handleBurgerClick} 
                     highlightedItem={this.state.projectFullURL}/>
                 <div id="floating-menu-top-limit"></div>
-                <div style={{ backgroundColor: '#f3f2f1' }}>
+                <div style={{ backgroundColor: '#f3f2f1' }} className="content-wrapper">
                     <HomePageLayout
                         id="new_to_iota?"
-                        style={{ backgroundColor: '#f3f2f1', width: '100%', minHeight: '482px', maxWidth: maxWidthLayout, margin: 'auto', padding: '0 40px', boxSizing: 'border-box' }}>
+                        style={{ backgroundColor: '#f3f2f1' }}>
                         <div className="left-column">
                             <ScrollInContainer
                                 topOffset={60}
@@ -76,7 +79,7 @@ class Home extends React.Component {
                         </div>
                     </HomePageLayout>
                 </div>
-                <HomePageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto', padding: '0 40px', boxSizing: 'border-box' }}>
+                <HomePageLayout className="content-wrapper">
                     <div className="left-column" >
                     </div>
                     <div className="right-column">

@@ -1,0 +1,13 @@
+.content-wrapper{
+   width: 100%;
+   max-width: 1500px;
+   margin: auto;
+   padding: 0 16px;
+   box-sizing: border-box;
+}
+
+@media (min-width: 768px){
+   .content-wrapper{
+      padding: 0 40px;
+   }
+}
