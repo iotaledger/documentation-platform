@@ -72,6 +72,10 @@ class Header extends React.Component {
                                     onKeyUp={this.handleKeyUp}
                                     onSearch={this.onSearch}
                                 />
+                                <nav>
+                                    <span>Popular topics:</span>
+                                    <a href="#">IRI</a>, <a href="#">HUB</a>, <a href="#">Trinity</a>
+                                </nav>
                             </div>
                         </div>
                     </section>
