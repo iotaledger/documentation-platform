@@ -244,20 +244,20 @@ class Markdown extends PureComponent {
     aLink(props) {
         if (props.href.startsWith('http')) {
             return (
-                <Link to={props.href} target="_blank">{props.children[0].props.value}</Link>
+                <Link prefetch={false} to={props.href} target="_blank">{props.children[0].props.value}</Link>
             );
         } else {
             if (props.href.startsWith('#')) {
                 // Make sure the tag is consistently named
                 return (
-                    <Link to={sanitizeHashId(props.href)}>{props.children[0].props.value}</Link>
+                    <Link prefetch={false} to={sanitizeHashId(props.href)}>{props.children[0].props.value}</Link>
                 );
             } else {
                 // For local links remove .md extension
                 // and also de-escape space characters
                 const localLink = sanitizeHashId(props.href).replace(/.md$/i, '');
                 return (
-                    <Link to={localLink}>{props.children[0].props.value}</Link>
+                    <Link prefetch={false} to={localLink}>{props.children[0].props.value}</Link>
                 );
             }
         }
