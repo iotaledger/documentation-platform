@@ -43,10 +43,17 @@ const buildMenuItems = baseDir => {
                     const sanitizedLink = match[2]
                         .replace(/^\.?\//, '')
                         .replace(/\.md$/i, '');
-                    versions[version].push({
-                        name: match[1],
-                        link: `/${baseDir}/${name}/${version}/${sanitizedLink}`
-                    });
+                    if (sanitizedLink.startsWith('root://')) {
+                        versions[version].push({
+                            name: match[1],
+                            link: `/${baseDir}/${sanitizedLink.replace('root://', '')}`
+                        });
+                    } else {
+                        versions[version].push({
+                            name: match[1],
+                            link: `/${baseDir}/${name}/${version}/${sanitizedLink}`
+                        });
+                    }
                 }
             } while (match);
         });
