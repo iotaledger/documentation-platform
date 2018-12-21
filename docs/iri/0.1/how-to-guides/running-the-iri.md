@@ -16,9 +16,9 @@ After downloading the IRI, you need to run it to start interacting with an IOTA 
 * To run the IRI, your computer must meet the following minimum requirements:
     * 4GB RAM
     * 64-bit processor
-    * 60GB of free disk space
     * An public IP address: Either a static IP address or a dynamic IP address that's connected to a dynamic DNS such as [noip.com](https://www.noip.com/remote-access)
 
+* If you don't want to run a [local snapshot node](/iri/introduction/overview.md), we recommend that your computer has at least 60GB of free disk space to store the [ledger](/iri/concepts/the-distributed-ledger.md)
 
 * You must have the [URLs or the IP addresses of at least three neighbor nodes](/iri/how-to-guides/finding-neighbors.md) who are also running the IRI on the same IOTA network
 
@@ -43,9 +43,9 @@ After downloading the IRI, you need to run it to start interacting with an IOTA 
     **Note:** The JAVA_OPTIONS variable contains commands that optimise the Java virtual machine for the IRI.
 2. Configure the IRI by adding the [configuration options](/iri/references/iri-configuration-options.md) either in a .iri file in the same directory as your IRI Java file or in the command line. Any configuration options that you add in the command line override the parameters in the IRI configuration file.
 
-**Note:** The only configuration option that you **must** add is the `PORT` parameter.
+**Note:** The only configuration option that you **must** add is the `PORT` parameter. If you want to run a permanode, set the [`LOCAL_SNAPSHOTS_ENABLED` configuration parameter](/iri/iri-configuration-options.md#local-snapshots-enabled) to `false`.
 
-1. Make a directory to hold the database and the IXI (IOTA exchange interface folders):
+3. Make a directory to hold the database and the IXI (IOTA exchange interface folders):
 
     ```bash
     $ mkdir -p /path-to-data
@@ -54,7 +54,7 @@ After downloading the IRI, you need to run it to start interacting with an IOTA 
 
     **Note:** You can change the `/path-to-data` string to your chosen directory name.
 
-2. Run the IRI:
+4. Run the IRI:
 
     ```bash
     $ java ${JAVA_OPTIONS} -Xms${JAVA_MIN_MEMORY} -Xmx${JAVA_MAX_MEMORY} -Djava.net.preferIPv4Stack=true -jar ${IRI_JAR_PATH}

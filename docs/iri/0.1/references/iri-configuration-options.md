@@ -47,4 +47,10 @@ You can choose to configure the IRI by specifying the configuration options in t
 |<a name="zmq-enabled"></a>  `--zmq-enabled` | Enable [zero message queue](/iri/concepts/zero-message-queue.md) subscriptions| boolean|false |
 |<a name="zmq-ipc"></a>`--zmq-ipc` |Path that is used to communicate with ZMQ in IPC| string|  ipc://iri|
 |<a name="zmq-port"></a> `--zmq-port `|Port that is used to connect to the ZMQ feed |string | 5556|
-||||
+|<a name="local-snapshots-enabled"></a>`LOCAL_SNAPSHOTS_ENABLED`   | Enable [local snapshots](/iri/concepts/local-snapshot.md) |boolean  | true  | This parameter must be set to `true` for the IRI to read any other `LOCAL_SNAPSHOTS` parameters|
+|<a name="local-snapshots-pruning-enabled"></a>`LOCAL_SNAPSHOTS_PRUNING_ENABLED`  |  Enable the deletion of confirmed transactions from the ledger  | true | Confirmed transactions are deleted if they were confirmed by a milestone that is older than the sum of `LOCAL_SNAPSHOTS_DEPTH` + `LOCAL_SNAPSHOTS_PRUNING_DELAY`.  |
+|<a name="local-snapshots-depth"></a>`LOCAL_SNAPSHOTS_DEPTH`  | Amount of milestone transactions to keep in the ledger | number starting from 100 | 100 | |
+|<a name="local-snapshots-pruning-delay"></a>`LOCAL_SNAPSHOTS_PRUNING_DELAY`  | Amount of milestone transactions to keep in the ledger   | number starting from 50,000  | 50,000 |  |
+|<a name="local-snapshots-internal-synced"></a>`LOCAL_SNAPSHOTS_INTERVAL_SYNCED`  | Interval, in milestone transactions, at which local snapshots are taken if the ledger is fully synchronized  |number| 10   | |
+|<a name="local-snapshots-internal-unsynced"></a>`LOCAL_SNAPSHOTS_INTERVAL_UNSYNCED`   | Interval, in milestone transactions, at which local snapshots are taken if the ledger is not fully synchronized  |number| 1,000  | |
+|<a name="local-snapshots-base-path"></a>`LOCAL_SNAPSHOTS_BASE_PATH`  |  Path to the snapshot file, without the file extension. |  string |  mainnet   | Prepends the `.snapshot.meta` and `.snapshot.state` files with the value of this parameter. For the default value, the files are named `mainnet.snapshot.meta` and `mainnet.snapshot.state`. You can specify a directory for the files to be added to by doing the following: `<directory name>/<file name>`, which results in `folderpath/filename.snapshot.meta`. | |

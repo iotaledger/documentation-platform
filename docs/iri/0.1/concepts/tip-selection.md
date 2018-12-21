@@ -38,4 +38,3 @@ The IRI gives a high rating to a transaction with a large future set because it 
 The `alpha` configuration parameter makes sure that the cumulative weight of each transaction is calculated with an element of randomness. This parameter allows the IRI to select some transactions that have a small future set and by doing so, increase the speed at which new transactions are appended to the ledger.  
 
 For more information about the weighted random walk, and for an in-depth explanation about the theories surrounding the best value for the `alpha` configuration parameter, read our [blog post](https://blog.iota.org/confirmation-rates-in-the-tangle-186ef02878bb).
-

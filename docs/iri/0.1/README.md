@@ -18,11 +18,13 @@ This section contains information about how IOTA node software works.  IOTA node
   
 - Concepts
     - [The distributed ledger](/iri/concepts/the-distributed-ledger.md)
+    - [Local snapshot](/iri/concepts/local-snapshot.md)
     - [Tip selection](/iri/concepts/tip-selection.md)
     - [Transaction validation](/iri/concepts/transaction-validation.md)
     - [Zero message queue](/iri/concepts/zero-message-queue.md)
 
 - References
+    - [Data in the snapshot files](/iri/references/data-in-the-snapshot-files.md)
     - [Data in the ledger](/iri/references/data-in-the-ledger.md)
     - [IRI configuration options](/iri/references/iri-configuration-options.md)
     - [ZMQ events](/iri/references/zmq-events.md)

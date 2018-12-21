@@ -1,29 +1,23 @@
 # Index
 
-[Introduction/White Paper](./introduction/intro-white-paper.md)
+[Overview](/overview.md)
 
-[Introduction/Consensus](./introduction/consensus.md)
+[Networks/The Mainnet](/networks/the-mainnet.md)
 
-[Introduction/Research Questions](./introduction/research-questions.md)
+[Networks/The Devnet](/networks/the-devnet.md)
 
-[Consensus/Introduction](./consensus/introduction.md)
+[Networks/The Spamnet](/networks/the-spamnet.md)
 
-[Consensus/Coordinator](./consensus/coordinator.md)
+[Seeds, Private Keys & Accounts/Seeds](/seeds-privatekeys-accounts/seeds.md)
 
-[Consensus/Further Research](./consensus/further-research.md)
+[Seeds, Private Keys & Accounts/Private Keys & Accounts](/seeds-privatekeys-accounts/private-keys-accounts.md)
 
-[Tip Selection/Introduction](./tip-selection/introduction.md)
+[Transactions/Anatomy of a Transaction](/transactions/anatomy-of-a-transaction.md)
 
-[Tip Selection/Incentives](./tip-selection/incentives.md)
+[Transactions/Bundle Construction](/transactions/bundle-construction.md)
 
-[Tip Selection/Tip Selection](./tip-selection/tip-selection.md)
+[Transactions/Making a Transaction](/transactions/making-a-transaction.md)
 
-[Tip Selection/Glossary](./tip-selection/glossary.md) -
+[Transactions/Querying the Tangle](/transactions/querying-the-tangle.md)
 
-[Proof of Work/Introduction](./proof-of-work/introduction.md)
-
-[Proof of Work/IOTA's PoW](./proof-of-work/iotas-pow.md)
-
-[Proof of Work/Checking PoW](./proof-of-work/checking-pow.md)
-
-[Proof of Work/Difficulty of PoW](./proof-of-work/difficulty-of-pow.md)
+[Glossary](/glossary.md)
