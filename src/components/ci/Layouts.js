@@ -1,8 +1,9 @@
 import styled, { css } from 'styled-components';
 
-const maxWidthLayout = 1500;
+const maxWidthLayout = 1420;
 const tabletWidth = 768;
 const desktopWidth = 1024;
+const desktopNarrowWidth = 1180;
 
 const media = {
     tablet: (...args) => css`
@@ -17,6 +18,16 @@ const media = {
   `,
     desktop: (...args) => css`
     @media (min-width: ${desktopWidth}px) {
+      ${css(...args)};
+    }
+  `,
+    desktopDown: (...args) => css`
+    @media (max-width: ${desktopWidth}px) {
+      ${css(...args)};
+    }
+  `,
+    desktopNarrowDown: (...args) => css`
+    @media (max-width: ${desktopNarrowWidth}px) {
       ${css(...args)};
     }
   `
@@ -46,29 +57,38 @@ const HomePageLayout = styled.div`
 
 const DocPageLayout = styled.div`
 display: flex;
-padding: 0 16px;
+justify-content: space-between;
 
 .left-column {
-  min-width: 250px;
-  flex: 1;
-  padding: 25px 0px 120px 0px;
+  flex: 0 0 280px;
+  padding: 25px 0px 120px 40px;
+  box-sizing: border-box;
 }
 .middle-column {
   min-height: 500px;
-  flex: 5;
-  padding: 35px 20px 120px 20px;
+  flex: 1;
+  padding: 35px 60px 120px 20px;
+  max-width: 720px;
+  box-sizing: border-box;
   overflow:hidden;
 }
 .right-column {
-  padding: 25px 0px 120px 0px;
-  flex: 1;
+  flex: 0 0 300px;
+  padding: 25px 0px 120px 0;
 }
-${media.tabletDown`
+${media.desktopNarrowDown`
+.left-column {
+  display: none;
+}
+`};
+${media.desktopDown`
+justify-content: center;
 .left-column {
   display: none;
 }
 .middle-column {
   min-height: unset;
+  padding: 35px 16px 120px 16px;
 }
 .right-column {
   display: none;

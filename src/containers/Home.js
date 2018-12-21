@@ -53,10 +53,10 @@ class Home extends React.Component {
                     onCloseClick={this.handleBurgerClick} 
                     highlightedItem={this.state.projectFullURL}/>
                 <div id="floating-menu-top-limit"></div>
-                <div style={{ backgroundColor: '#f3f2f1' }} className="content-wrapper">
+                <div style={{ backgroundColor: '#f3f2f1' }}>
                     <HomePageLayout
                         id="new_to_iota?"
-                        style={{ backgroundColor: '#f3f2f1' }}>
+                        style={{ backgroundColor: '#f3f2f1' }} className="content-wrapper">
                         <div className="left-column">
                             <ScrollInContainer
                                 topOffset={60}
