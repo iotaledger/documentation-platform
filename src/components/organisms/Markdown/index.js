@@ -46,13 +46,13 @@ class Markdown extends PureComponent {
             content = content.replace(tabMatches[i], `<tabs index="${i}"></tabs>`);
         }
 
-        const projectTopicMatches = this.findProjectTopicContainers(this.props.source);
+        const projectTopicMatches = this.findProjectTopicContainers(content);
         for (let i = 0; i < projectTopicMatches.length; i++) {
             this.projectTopicContainers.push(this.findProjectTopics(projectTopicMatches[i]));
             content = content.replace(projectTopicMatches[i], `<project-topics index="${i}"></tabs>`);
         }
 
-        const headingMatches = this.findHeadingLabels(this.props.source);
+        const headingMatches = this.findHeadingLabels(content);
         for (let i = 0; i < headingMatches.length; i++) {
             content = content.replace(headingMatches[i], `<heading-label index="${i}"></heading-label>`);
         }
@@ -156,19 +156,17 @@ class Markdown extends PureComponent {
     findHeadingLabels(content) {
         const matches = [];
         const re = /### (.*) ###/g;
-        const rePrimary = /\*\*(.*)\*\*/g;
-        const reSecondary = /__(.*)__/g;
 
         let match;
         do {
             match = re.exec(content);
             if (match && match.length === 2) {
-                let matchPrimary = rePrimary.exec(match[1]);
+                let matchPrimary = /\*\*(.*)\*\*/g.exec(match[1]);
                 if (matchPrimary && matchPrimary.length === 2) {
                     this.headingLabels.push({ style: 'primary', content: matchPrimary[1] });
                     matches.push(match[0]);
                 } else {
-                    let matchSecondary = reSecondary.exec(match[1]);
+                    let matchSecondary = /__(.*)__/g.exec(match[1]);
                     if (matchSecondary && matchSecondary.length === 2) {
                         this.headingLabels.push({ style: 'secondary', content: matchSecondary[1] });
                         matches.push(match[0]);
