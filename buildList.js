@@ -41,8 +41,8 @@ const buildMenuItems = baseDir => {
                 match = re.exec(docIndex);
                 if (match && match.length === 3) {
                     const sanitizedLink = match[2]
-                        .replace('.md', '')
-                        .replace(/^\.?\//, '');
+                        .replace(/^\.?\//, '')
+                        .replace(/\.md$/i, '');
                     versions[version].push({
                         name: match[1],
                         link: `/${baseDir}/${name}/${version}/${sanitizedLink}`

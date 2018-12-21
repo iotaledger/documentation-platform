@@ -13,7 +13,7 @@ import javascript from 'reprism/languages/javascript';
 import json from 'reprism/languages/json';
 import jsx from 'reprism/languages/jsx';
 import python from 'reprism/languages/python';
-import { sanitizeHashId } from '../../../utils/paths';
+import { convertRootUrl, sanitizeHashId } from '../../../utils/paths';
 import Heading from '../../atoms/Heading';
 import HeadingLabel from '../../atoms/HeadingLabel';
 import ProjectTopicsInner from '../../molecules/ProjectTopicsContainer/ProjectTopicsInner';
@@ -124,7 +124,7 @@ class Markdown extends PureComponent {
                         bullet: 'primary',
                         header: matchPrimary[1],
                         subheader: match[4],
-                        href: match[3]
+                        href: convertRootUrl(match[3])
                     });
                 } else {
                     let matchSecondary = /__(.*)__ ####/g.exec(match[1]);
@@ -133,7 +133,7 @@ class Markdown extends PureComponent {
                             bullet: 'secondary',
                             header: matchSecondary[1],
                             subheader: match[4],
-                            href: match[3]
+                            href: convertRootUrl(match[3])
                         });
                     } else {
                         let matchPlain = /(.*) ####/g.exec(match[1]);
@@ -142,7 +142,7 @@ class Markdown extends PureComponent {
                                 bullet: 'none',
                                 header: matchPlain[1],
                                 subheader: match[4],
-                                href: match[3]
+                                href: convertRootUrl(match[3])
                             });
                         }
                     }
@@ -242,7 +242,11 @@ class Markdown extends PureComponent {
     }
 
     aLink(props) {
-        if (props.href.startsWith('http')) {
+        if (props.href.startsWith('root')) {
+            return (
+                <Link prefetch={false} to={convertRootUrl(props.href)} target="_blank">{props.children[0].props.value}</Link>
+            );
+        } else if (props.href.startsWith('http')) {
             return (
                 <Link prefetch={false} to={props.href} target="_blank">{props.children[0].props.value}</Link>
             );
