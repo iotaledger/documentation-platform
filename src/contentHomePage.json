@@ -166,6 +166,38 @@
       ]
     },
     {
+        "header": "Compass",
+        "folder": "compass",
+        "subheader": "Learn about the basic ideas and concepts behind IOTA Compass",
+        "topics": [
+          {
+            "href": "https://iota.org",
+            "header": "Introduction",
+            "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+          },
+          {
+            "href": "https://iota.org",
+            "header": "Seeds, Private Keys & Accounts",
+            "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+          },
+          {
+            "href": "https://iota.org",
+            "header": "Transactions",
+            "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+          },
+          {
+            "href": "https://iota.org",
+            "header": "Networks",
+            "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+          },
+          {
+            "href": "https://iota.org",
+            "header": "Support",
+            "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+          }
+        ]
+      },
+      {
       "header": "Trinity Wallet",
       "folder": "trinity",
       "subheader": "Learn about the basic ideas and concepts behind Trinity",

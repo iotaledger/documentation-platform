@@ -20,6 +20,10 @@
           "folder": "hub"
         },
         {
+            "text": "Compass",
+            "folder": "compass"
+          },
+          {
           "text": "Trinity Wallet",
           "folder": "trinity"
         },

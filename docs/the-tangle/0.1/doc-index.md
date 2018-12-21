@@ -1,6 +1,6 @@
 # Index
 
-[Introduction/White Paper](./introduction/intro-white-paper.md)
+[Introduction](./introduction/introduction.md)
 
 [Consensus/Introduction](./consensus/introduction.md)
 
