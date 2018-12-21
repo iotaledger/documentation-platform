@@ -8,7 +8,7 @@ export const getNextPage = (projectUrlParts, menuData) => {
     }
 
     return undefined;
-}
+};
 
 export const getPreviousPage = (projectUrlParts, menuData) => {
     const projectIndex = getProjectIndex(projectUrlParts.projectName, projectUrlParts.projectVersion, menuData);
@@ -20,7 +20,7 @@ export const getPreviousPage = (projectUrlParts, menuData) => {
     }
 
     return undefined;
-}
+};
 
 export function parseProjectUrl(projectFullURL) {
     ///docs/HUB/2.0/something/something/something
@@ -29,7 +29,7 @@ export function parseProjectUrl(projectFullURL) {
     const projectName = urlParts[2];
     const projectVersion = urlParts[3];
     const projectDocParts = urlParts.slice(4);
-    const projectDoc = projectDocParts.join("/");
+    const projectDoc = projectDocParts.join('/');
 
     return {
         projectFullURL,
@@ -62,15 +62,15 @@ export function getLatestVersionLinks(menuData) {
 
 export function createFloatingMenuEntries(contentHomePage, menuData) {
     if (!menuData) {
-        return [{ name: "New To IOTA?", link: "#new_to_iota?" }]
+        return [{ name: 'New To IOTA?', link: '#new_to_iota?' }]
             .concat(contentHomePage.map(entry => ({
                 name: entry.header,
-                link: `#${entry.header.toLowerCase().replace(/ /g, "_")}`
+                link: `#${entry.header.toLowerCase().replace(/ /g, '_')}`
             })));
     } else {
         const latestVersionLinks = getLatestVersionLinks(menuData);
 
-        return [{ name: "New To IOTA?", link: "/" }]
+        return [{ name: 'New To IOTA?', link: '/' }]
             .concat(contentHomePage.map(entry => {
                 return {
                     name: entry.header,
@@ -106,28 +106,28 @@ export function buildItemTree(projectIndex, projectFullURL) {
     let inSection;
 
     for (let i = 0; i < projectIndex.length; i++) {
-        const nameParts = projectIndex[i].name.split("/");
+        const nameParts = projectIndex[i].name.split('/');
         if (nameParts.length === 1) {
             tree.push({
-                type: "section-link",
+                type: 'section-link',
                 link: projectIndex[i].link,
                 name: projectIndex[i].name,
                 selected: projectIndex[i].link === projectFullURL
-            })
+            });
             inSection = undefined;
         } else {
-            const currentSection = inSection ? inSection.name : "";
+            const currentSection = inSection ? inSection.name : '';
             if (nameParts[0] !== currentSection) {
                 inSection = {
-                    type: "section-header",
+                    type: 'section-header',
                     name: nameParts[0],
                     items: [],
                     expanded: false
-                }
+                };
                 tree.push(inSection);
             }
             inSection.items.push({
-                name: nameParts.slice(1).join("/"),
+                name: nameParts.slice(1).join('/'),
                 link: projectIndex[i].link,
                 selected: projectIndex[i].link === projectFullURL
             });
@@ -139,13 +139,13 @@ export function buildItemTree(projectIndex, projectFullURL) {
 
 
 export function getLatestVersion(projectName, menuData) {
-    return menuData[projectName] ? Object.keys(menuData[projectName].versions).slice(-1) : "";
+    return menuData[projectName] ? Object.keys(menuData[projectName].versions).slice(-1) : '';
 }
 
 export function getDocumentTitle(projectUrlParts, menuData) {
     const projectIndex = getProjectIndex(projectUrlParts.projectName, projectUrlParts.projectVersion, menuData);
     const indexItem = getIndexItem(projectIndex, projectUrlParts.projectFullURL);
-    return indexItem ? indexItem.name : "";
+    return indexItem ? indexItem.name : '';
 }
 
 export function getProjectIndex(projectName, projectVersion, menuData) {

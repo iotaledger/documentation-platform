@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { footerSections, footerStaticContent } from '../../../contentFooter.json';
 import { getLatestVersionLinks, parseProjectUrl } from '../../../utils/helpers.js';
 import { ContentMenuPropTypes } from '../../../utils/propTypes.js';
@@ -23,7 +24,9 @@ class Footer extends React.Component {
                 legal: PropTypes.arrayOf(PropTypes.string).isRequired,
                 copyright: PropTypes.arrayOf(PropTypes.string).isRequired,
             })
-        })
+        }),
+        history: ReactRouterPropTypes.history,
+        location: ReactRouterPropTypes.location
     };
 
     constructor(props) {
@@ -40,10 +43,10 @@ class Footer extends React.Component {
     }
 
     handleClick(urlOrProjectName) {
-        if (urlOrProjectName.startsWith("http")) {
-            window.open(urlOrProjectName, "_blank");
+        if (urlOrProjectName.startsWith('http')) {
+            window.open(urlOrProjectName, '_blank');
         } else {
-            this.props.history.push(this.state.projectLinks[urlOrProjectName])
+            this.props.history.push(this.state.projectLinks[urlOrProjectName]);
         }
         this.setState({currentProject: urlOrProjectName});
     }
@@ -130,7 +133,7 @@ class Footer extends React.Component {
                     </div>
                 </div>
             </footer>
-        )
+        );
     }
 }
 

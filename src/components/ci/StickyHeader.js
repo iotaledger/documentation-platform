@@ -1,27 +1,29 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { Link, withRouter } from 'react-static';
 import logo from '../../assets/Logo.svg';
 import InputSearch from '../molecules/InputSearch';
 
 class StickyHeader extends React.Component {
     static propTypes = {
-        onBurgerClick: PropTypes.func
+        onBurgerClick: PropTypes.func,
+        history: ReactRouterPropTypes.history
     };
 
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             inputExpanded: false,
             searchResults: []
-        }
+        };
 
-        this.inputExpandHandler = this.inputExpandHandler.bind(this)
-        this.handleKeyUp = this.handleKeyUp.bind(this)
-        this.onSearch = this.onSearch.bind(this)
-        this.handleBurgerClick = this.handleBurgerClick.bind(this)
+        this.inputExpandHandler = this.inputExpandHandler.bind(this);
+        this.handleKeyUp = this.handleKeyUp.bind(this);
+        this.onSearch = this.onSearch.bind(this);
+        this.handleBurgerClick = this.handleBurgerClick.bind(this);
     }
 
     handleBurgerClick() {
@@ -31,17 +33,17 @@ class StickyHeader extends React.Component {
     }
 
     onSearch(query) {
-        this.props.history.push(`/search?q=${query}`)
+        this.props.history.push(`/search?q=${query}`);
     }
 
     handleKeyUp(e) {
-        if (e.key === "Escape") {
-            this.setState({ inputExpanded: false })
+        if (e.key === 'Escape') {
+            this.setState({ inputExpanded: false });
         }
     }
 
     inputExpandHandler() {
-        this.setState({ inputExpanded: true })
+        this.setState({ inputExpanded: true });
     }
 
     render() {
@@ -74,8 +76,8 @@ class StickyHeader extends React.Component {
                     </section>
                 </div>
             </header>
-        )
+        );
     }
 }
 
-export default withRouter(StickyHeader)
+export default withRouter(StickyHeader);

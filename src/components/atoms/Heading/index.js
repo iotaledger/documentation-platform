@@ -1,23 +1,33 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import Text from '../Text';
+import React from 'react';
 
-const Heading = ({ level = 1, children, text, className }) =>
-  React.createElement(
-    `h${level}`,
-    { className: `heading ${className}` },
-    children || <Text>{text}</Text>
-  );
+class Heading extends React.PureComponent {
+    static propTypes = {
+        level: PropTypes.number,
+        children: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.node),
+            PropTypes.node
+        ]),
+        text: PropTypes.string,
+        className: PropTypes.string,
+        id: PropTypes.string
+    };
 
-Heading.propTypes = {
-  level: PropTypes.number,
-  children: PropTypes.node,
-  text: PropTypes.string,
-  className: PropTypes.string,
-};
+    static defaultProps = {
+        level: 1,
+        className: ''
+    };
 
-Heading.defaultProps = {
-  className: '',
-};
+    render() {
+        return React.createElement(
+            `h${this.props.level}`,
+            {
+                className: `heading ${this.props.className}`,
+                id: this.props.id
+            },
+            this.props.children || this.props.text
+        );
+    }
+}
 
 export default Heading;

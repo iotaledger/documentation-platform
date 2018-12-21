@@ -5,22 +5,22 @@ const tabletWidth = 768;
 const desktopWidth = 1024;
 
 const media = {
-  tablet: (...args) => css`
+    tablet: (...args) => css`
     @media (min-width: ${tabletWidth}px) and (max-width: ${desktopWidth - 1}px) {
       ${css(...args)};
     }
   `,
-  tabletDown: (...args) => css`
+    tabletDown: (...args) => css`
     @media (max-width: ${tabletWidth - 1}px) {
       ${css(...args)};
     }
   `,
-  desktop: (...args) => css`
+    desktop: (...args) => css`
     @media (min-width: ${desktopWidth}px) {
       ${css(...args)};
     }
   `
-}
+};
 
 const TabletHidden = styled.div`
   ${media.tabletDown`
@@ -56,7 +56,7 @@ padding: 0 16px;
 .middle-column {
   min-height: 500px;
   flex: 5;
-  padding: 35px 20px 120px 0px;
+  padding: 35px 20px 120px 20px;
   overflow:hidden;
 }
 .right-column {

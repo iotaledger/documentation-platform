@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-static';
 import { createSideMenuEntries } from '../../../utils/helpers';
-import ClickOutside from '../../ClickOutside';
+import ClickOutside from '../../atoms/ClickOutside';
 import { ContentHomePagePropTypes, ContentMenuPropTypes } from '../../../utils/propTypes';
 
 class SideMenu extends React.Component {
@@ -16,13 +16,14 @@ class SideMenu extends React.Component {
     };
 
     constructor(props) {
-        super(props)
+        super(props);
+
         this.state = {
             menuData: []
-        }
+        };
 
-        this.handleHeadingClick = this.handleHeadingClick.bind(this)
-        this.keydown = this.keydown.bind(this)
+        this.handleHeadingClick = this.handleHeadingClick.bind(this);
+        this.keydown = this.keydown.bind(this);
     }
 
     componentDidMount() {
@@ -30,14 +31,14 @@ class SideMenu extends React.Component {
 
         this.setState({
             menuData: createSideMenuEntries(this.props.contentHomePage, this.props.menuData, this.props.highlightedItem)
-        })
+        });
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.highlightedItem !== prevProps.highlightedItem) {
             this.setState({
                 menuData: createSideMenuEntries(this.props.contentHomePage, this.props.menuData, this.props.highlightedItem)
-            })
+            });
         }
     }
 
@@ -46,7 +47,7 @@ class SideMenu extends React.Component {
     }
 
     handleHeadingClick(index) {
-        this.setState((state, props) => {
+        this.setState((state) => {
             return {
                 menuData:
                     state.menuData.map((item, ind) =>
@@ -66,7 +67,7 @@ class SideMenu extends React.Component {
 
     render() {
         return (
-            <ClickOutside onClickOutside={this.props.isMenuOpen && this.props.onCloseClick}>
+            <ClickOutside onClickOutside={this.props.isMenuOpen ? this.props.onCloseClick : undefined}>
                 <section className={classNames(
                     'side-menu',
                     { 'side-menu__shown': this.props.isMenuOpen },
@@ -90,7 +91,7 @@ class SideMenu extends React.Component {
                             <ul className="side-menu__list">
                                 {menuItem.items.map((menuListItem, miIndex) => (
                                     <React.Fragment key={miIndex}>
-                                        {menuListItem.type === "section-link" && (
+                                        {menuListItem.type === 'section-link' && (
                                             <li className={classNames(
                                                 'side-menu-item',
                                                 { 'side-menu-item--active': menuListItem.selected }
@@ -100,7 +101,7 @@ class SideMenu extends React.Component {
                                                 </Link>
                                             </li>
                                         )}
-                                        {menuListItem.type === "section-header" && (
+                                        {menuListItem.type === 'section-header' && (
                                             <div className="side-menu__sub-list">
                                                 <div className="side-menu-item__header">{menuListItem.name}</div>
                                                 <ul>
@@ -125,7 +126,7 @@ class SideMenu extends React.Component {
                     }
                 </section>
             </ClickOutside>
-        )
+        );
     }
 }
 export default SideMenu;

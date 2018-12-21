@@ -12,7 +12,7 @@ class TreeMenu extends React.Component {
     };
 
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             sections: []
@@ -23,7 +23,7 @@ class TreeMenu extends React.Component {
         if (this.props.menuItems !== prevProps.menuItems) {
             this.setState({
                 sections: buildItemTree(this.props.menuItems, this.props.highlightedItem)
-            })
+            });
         }
     }
 
@@ -32,7 +32,7 @@ class TreeMenu extends React.Component {
         return (<div className="tree-menu">
             {sections.map((section, idx) => (
                 <React.Fragment key={idx}>
-                    {section.type === "section-link" && (
+                    {section.type === 'section-link' && (
                         <h3
                             className={
                                 classNames(
@@ -41,7 +41,7 @@ class TreeMenu extends React.Component {
                                 )
                             }><Link to={section.link}>{section.name}</Link></h3>
                     )}
-                    {section.type === "section-header" && (
+                    {section.type === 'section-header' && (
                         <React.Fragment>
                             <h3 className="tree-menu__section-title">{section.name}</h3>
                             <ul className="tree-menu__section">
@@ -61,7 +61,7 @@ class TreeMenu extends React.Component {
                     )}
                 </React.Fragment>
             ))}
-        </div>)
+        </div>);
     }
 }
-export default TreeMenu
+export default TreeMenu;

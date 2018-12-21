@@ -24,79 +24,79 @@ import React from 'react';
 // <Table headers={tbHeaders} rows={tbRows} />
 
 class Table extends React.Component {
-  static propTypes = {
-    headers: PropTypes.arrayOf(
-      PropTypes.shape({
-        content: PropTypes.oneOfType([
-          PropTypes.string,
-          PropTypes.element
-        ]).isRequired,
-        align: PropTypes.oneOf(['left', 'center', 'right'])
-      })),
-    rows: PropTypes.arrayOf(
-      PropTypes.arrayOf(
-        PropTypes.shape({
-          content: PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.element
-          ]).isRequired,
-          isHeader: PropTypes.bool,
-          align: PropTypes.oneOf(['left', 'center', 'right'])
-        })))
-  };
+    static propTypes = {
+        headers: PropTypes.arrayOf(
+            PropTypes.shape({
+                content: PropTypes.oneOfType([
+                    PropTypes.string,
+                    PropTypes.element
+                ]).isRequired,
+                align: PropTypes.oneOf(['left', 'center', 'right'])
+            })),
+        rows: PropTypes.arrayOf(
+            PropTypes.arrayOf(
+                PropTypes.shape({
+                    content: PropTypes.oneOfType([
+                        PropTypes.string,
+                        PropTypes.element
+                    ]).isRequired,
+                    isHeader: PropTypes.bool,
+                    align: PropTypes.oneOf(['left', 'center', 'right'])
+                })))
+    };
 
-  constructor(props) {
-    super(props)
-  }
+    constructor(props) {
+        super(props);
+    }
 
-  render() {
-    return (
-      <table>
-        <thead>
-          <tr>
-            {this.props.headers.map((header, headerIdx) => (
-              <th
-                key={headerIdx}
-                className={
-                  classNames(
-                    { 'table-head-row-item--center': header.align === "center" },
-                    { 'table-head-row-item--right': header.align === "right" }
-                  )
-                }>{header.content}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {this.props.rows.map((row, rowIdx) => (
-            <tr key={rowIdx}>
-              {row.map((rowItem, rowItemIdx) => (
-                <React.Fragment key={rowItemIdx}>
-                  {rowItem.isHeader && (
-                    <th
-                      className={
-                        classNames(
-                          { 'table-body-row-item--center': rowItem.align === "center" },
-                          { 'table-body-row-item--right': rowItem.align === "right" }
-                        )
-                      }>{rowItem.content}</th>
-                  )}
-                  {!rowItem.isHeader && (
-                    <td
-                      className={
-                        classNames(
-                          { 'table-body-row-item--center': rowItem.align === "center" },
-                          { 'table-body-row-item--right': rowItem.align === "right" }
-                        )
-                      }>{rowItem.content}</td>
-                  )}
-                </React.Fragment>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    )
-  }
+    render() {
+        return (
+            <table>
+                <thead>
+                    <tr>
+                        {this.props.headers.map((header, headerIdx) => (
+                            <th
+                                key={headerIdx}
+                                className={
+                                    classNames(
+                                        { 'table-head-row-item--center': header.align === 'center' },
+                                        { 'table-head-row-item--right': header.align === 'right' }
+                                    )
+                                }>{header.content}</th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {this.props.rows.map((row, rowIdx) => (
+                        <tr key={rowIdx}>
+                            {row.map((rowItem, rowItemIdx) => (
+                                <React.Fragment key={rowItemIdx}>
+                                    {rowItem.isHeader && (
+                                        <th
+                                            className={
+                                                classNames(
+                                                    { 'table-body-row-item--center': rowItem.align === 'center' },
+                                                    { 'table-body-row-item--right': rowItem.align === 'right' }
+                                                )
+                                            }>{rowItem.content}</th>
+                                    )}
+                                    {!rowItem.isHeader && (
+                                        <td
+                                            className={
+                                                classNames(
+                                                    { 'table-body-row-item--center': rowItem.align === 'center' },
+                                                    { 'table-body-row-item--right': rowItem.align === 'right' }
+                                                )
+                                            }>{rowItem.content}</td>
+                                    )}
+                                </React.Fragment>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        );
+    }
 }
 
 export default Table;

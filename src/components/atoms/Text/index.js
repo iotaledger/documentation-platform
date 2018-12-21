@@ -1,24 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Text = ({ children, className, html }) => {
-  if (html) {
-    // eslint-disable-next-line react/no-danger
-    return <span className={`text ${className}`} dangerouslySetInnerHTML={{ __html: children }} />;
-  }
+class Text extends React.PureComponent {
+    static propTypes = {
+        children: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.node),
+            PropTypes.node
+        ]),
+        className: PropTypes.string,
+        html: PropTypes.bool,
+    };
 
-  return <span className={`text ${className}`}>{children}</span>
-};
+    static defaultProps = {
+        className: '',
+        html: false,
+    };
 
-Text.propTypes = {
-  children: PropTypes.node,
-  classNames: PropTypes.string,
-  html: PropTypes.bool,
-};
+    render() {
+        if (this.props.html) {
+            return <span className={`text ${this.props.className}`} dangerouslySetInnerHTML={{ __html: this.props.children }} />;
+        }
 
-Text.defaultProps = {
-  className: '',
-  html: false,
-};
+        return (<span className={`text ${this.props.className}`}>{this.props.children}</span>);
+    }
+}
 
 export default Text;

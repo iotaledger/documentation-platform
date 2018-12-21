@@ -6,27 +6,31 @@ import React from 'react';
 // <HeadingLabel style="primary" />
 
 class HeadingLabel extends React.Component {
-  static propTypes = {
-    style: PropTypes.string
-  };
+    static propTypes = {
+        style: PropTypes.string,
+        children: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.node),
+            PropTypes.node
+        ])
+    };
 
-  constructor(props) {
-    super(props)
-  }
+    constructor(props) {
+        super(props);
+    }
 
-  render() {
-    return (
-      <div
-        className={
-          classNames(
-            'heading-label',
-            { 'heading-label--secondary': this.props.style === "secondary" }
-          )
-        }>
-        {this.props.children}
-      </div>
-    )
-  }
+    render() {
+        return (
+            <div
+                className={
+                    classNames(
+                        'heading-label',
+                        { 'heading-label--secondary': this.props.style === 'secondary' }
+                    )
+                }>
+                {this.props.children}
+            </div>
+        );
+    }
 }
 
 export default HeadingLabel;

@@ -4,7 +4,7 @@ export const sanitizeHashId = (id) => {
     // replace spaces with underscore
     return id ? id
         .toLowerCase()
-        .replace(/\\ /g, " ")
-        .replace(/ /g, "_") : undefined;
-}
+        .replace(/\\ /g, ' ')
+        .replace(/ /g, '_') : undefined;
+};
 

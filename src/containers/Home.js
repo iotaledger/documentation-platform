@@ -1,20 +1,20 @@
-import React from "react";
-import { Head, withSiteData } from "react-static";
-import BottomSticky from "../components/atoms/BottomSticky";
-import BottomStop from "../components/atoms/BottomStop";
-import ScrollInContainer from "../components/atoms/ScrollInContainer";
+import React from 'react';
+import { Head, withSiteData } from 'react-static';
+import BottomSticky from '../components/atoms/BottomSticky';
+import BottomStop from '../components/atoms/BottomStop';
+import ScrollInContainer from '../components/atoms/ScrollInContainer';
 import ScrollToTop from '../components/atoms/ScrollToTop';
 import FloatingMenu from '../components/ci/FloatingMenu';
 import Header from '../components/ci/Header';
 import { HomePageLayout, maxWidthLayout, TabletHidden } from '../components/ci/Layouts';
-import Container from '../components/Container';
+import Container from './Container';
 import EmailSignup from '../components/molecules/EmailSignup';
 import Feedback from '../components/molecules/Feedback';
 import CardContainer from '../components/molecules/HomePageCard';
 import ProjectTopicsContainer from '../components/molecules/ProjectTopicsContainer';
 import SideMenu from '../components/molecules/SideMenu';
 import contentHomePage from '../contentHomePage.json';
-import { submitFeedback } from "../utils/feedbackHelper";
+import { submitFeedback } from '../utils/feedbackHelper';
 import { createFloatingMenuEntries } from '../utils/helpers';
 class Home extends React.Component {
     constructor(props) {
@@ -63,10 +63,10 @@ class Home extends React.Component {
                                 widthContainer=".left-column"
                             >
                                 <TabletHidden>
-                                    <div style={{ display: "flex", justifyContent: "flex-start" }}>
+                                    <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
                                         <FloatingMenu
                                             menuItems={createFloatingMenuEntries(contentHomePage.content)}
-                                            highlightedItem={this.props.location.hash || "#new_to_iota?"} />
+                                            highlightedItem={this.props.location.hash || '#new_to_iota?'} />
                                     </div>
                                 </TabletHidden>
                             </ScrollInContainer>
@@ -88,7 +88,7 @@ class Home extends React.Component {
                 <EmailSignup />
                 <BottomSticky zIndex={10}>
                     <TabletHidden>
-                        <Feedback onSubmit={(data) => { submitFeedback(`/docs/home/`, data) }} />
+                        <Feedback onSubmit={(data) => { submitFeedback('/docs/home/', data); }} />
                     </TabletHidden>
                 </BottomSticky>
                 <BottomSticky horizontalAlign="right">

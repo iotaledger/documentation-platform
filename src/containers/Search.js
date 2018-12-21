@@ -7,7 +7,7 @@ import BottomStop from '../components/atoms/BottomStop';
 import ScrollToTop from '../components/atoms/ScrollToTop';
 import { DocPageLayout, maxWidthLayout, TabletHidden } from '../components/ci/Layouts';
 import StickyHeader from '../components/ci/StickyHeader';
-import Container from '../components/Container';
+import Container from './Container';
 import Feedback from '../components/molecules/Feedback';
 import Pagination from '../components/molecules/Pagination';
 import SearchResult from '../components/molecules/SearchResult';
@@ -15,7 +15,7 @@ import SideMenu from '../components/molecules/SideMenu';
 import contentHomePage from '../contentHomePage.json';
 import corpus from '../searchData/corpus.json';
 import json from '../searchData/index.json';
-import { submitFeedback } from "../utils/feedbackHelper";
+import { submitFeedback } from '../utils/feedbackHelper';
 
 class Search extends React.Component {
     constructor(props) {
@@ -26,13 +26,13 @@ class Search extends React.Component {
             foundResult: [],
             indexStart: 0,
             indexEnd: 9,
-            query: this.props.location.search ? this.props.location.search.replace("?q=", "") : undefined
+            query: this.props.location.search ? this.props.location.search.replace('?q=', '') : undefined
         };
 
-        this.onSearch = this.onSearch.bind(this)
-        this.handleKeyUp = this.handleKeyUp.bind(this)
-        this.onDataPaginated = this.onDataPaginated.bind(this)
-        this.search = this.search.bind(this)
+        this.onSearch = this.onSearch.bind(this);
+        this.handleKeyUp = this.handleKeyUp.bind(this);
+        this.onDataPaginated = this.onDataPaginated.bind(this);
+        this.search = this.search.bind(this);
         this.handleBurgerClick = this.handleBurgerClick.bind(this);
     }
 
@@ -42,7 +42,7 @@ class Search extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.location.search !== prevProps.location.search) {
-            this.setState({ query: this.props.location.search.replace("?q=", "") }, () => {
+            this.setState({ query: this.props.location.search.replace('?q=', '') }, () => {
                 this.search();
             });
         }
@@ -53,7 +53,7 @@ class Search extends React.Component {
     }
 
     onDataPaginated(start, end) {
-        this.setState({ indexStart: start, indexEnd: end })
+        this.setState({ indexStart: start, indexEnd: end });
         const target = document.querySelector('#search-top');
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -65,26 +65,26 @@ class Search extends React.Component {
     }
 
     handleKeyUp(e) {
-        if (e.key === "Escape") {
-            this.setState({ inputExpanded: false })
+        if (e.key === 'Escape') {
+            this.setState({ inputExpanded: false });
         }
     }
 
     buildDocuments() {
         const documents = corpus.reduce((memo, doc) => {
-            memo[doc.id] = doc
-            return memo
-        }, {})
-        return documents
+            memo[doc.id] = doc;
+            return memo;
+        }, {});
+        return documents;
     }
 
     search() {
         let searchResults;
         if (this.state.query) {
-            const idx = lunr.Index.load(json)
-            const results = idx.search(this.state.query)
-            const documents = this.buildDocuments()
-            searchResults = results.map(result => documents[result.ref])
+            const idx = lunr.Index.load(json);
+            const results = idx.search(this.state.query);
+            const documents = this.buildDocuments();
+            searchResults = results.map(result => documents[result.ref]);
         }
 
         if (searchResults && searchResults.length > 0) {
@@ -102,11 +102,11 @@ class Search extends React.Component {
                         <Head>
                             <title>{`Search Results | ${this.props.repoName}`}</title>
                         </Head>
-                        <div id="search-top"/>
+                        <div id="search-top" />
                         <StickyHeader
                             history={this.props.history}
                             data={this.props.menu}
-                            onBurgerClick={this.handleBurgerClick}                            
+                            onBurgerClick={this.handleBurgerClick}
                         />
                         <SideMenu
                             isMenuOpen={this.state.isMenuOpen}
@@ -116,11 +116,11 @@ class Search extends React.Component {
                         <section className="sub-header">
                             <span className="sub-header__title sub-header-title__fixed">Search results</span>
                         </section>
-                        <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto', paddingTop: "40px" }}>
+                        <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto', paddingTop: '40px' }}>
                             <section className="left-column">
                             </section>
                             <section className="middle-column" style={{ minHeight: '100vh' }}>
-                                <div className="input-wrapper-basic" style={{ position: 'relative', left: '-16px' }}>
+                                <div className="input-wrapper-basic">
                                     <InputSearch
                                         query={this.state.query}
                                         className="input-search-basic"
@@ -135,7 +135,7 @@ class Search extends React.Component {
                                     indexEnd={this.state.indexEnd}
                                     query={this.state.query}
                                 />
-                                <div style={{ display: "flex", justifyContent: "center", marginTop: "30px" }}>
+                                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}>
                                     <Pagination
                                         total={this.state.foundResult}
                                         onDataPaginated={this.onDataPaginated}
@@ -157,7 +157,7 @@ class Search extends React.Component {
                     </Container>
                 )}
             />
-        )
+        );
     }
 }
 

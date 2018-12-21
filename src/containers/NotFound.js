@@ -5,11 +5,11 @@ import BottomStop from '../components/atoms/BottomStop';
 import ScrollToTop from '../components/atoms/ScrollToTop';
 import { DocPageLayout, maxWidthLayout, TabletHidden } from '../components/ci/Layouts';
 import StickyHeader from '../components/ci/StickyHeader';
-import Container from '../components/Container';
+import Container from './Container';
 import Feedback from '../components/molecules/Feedback';
 import SideMenu from '../components/molecules/SideMenu';
 import contentHomePage from '../contentHomePage.json';
-import { submitFeedback } from "../utils/feedbackHelper";
+import { submitFeedback } from '../utils/feedbackHelper';
 class NotFound extends React.Component {
     constructor(props) {
         super(props);
@@ -45,7 +45,7 @@ class NotFound extends React.Component {
                         <section className="sub-header">
                             <span className="sub-header__title sub-header-title__fixed">Not Found</span>
                         </section>
-                        <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto', paddingTop: "40px" }}>
+                        <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto', paddingTop: '40px' }}>
                             <section className="left-column">
                             </section>
                             <section className="middle-column" style={{ minHeight: '100vh' }}>
@@ -67,7 +67,7 @@ class NotFound extends React.Component {
                     </Container>
                 )}
             />
-        )
+        );
     }
 }
 

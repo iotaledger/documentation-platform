@@ -1,36 +1,44 @@
 module.exports = {
-  "env": {
-    "browser": true,
-    "commonjs": true,
-    "es6": true
-  },
-  "extends": "eslint:recommended",
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true
     },
-    "ecmaVersion": 2018
-  },
-  "plugins": [
-    "react"
-  ],
-  "rules": {
-    "indent": [
-      "error",
-      4
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
     ],
-    "linebreak-style": [
-      "error",
-      "unix"
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018
+    },
+    "plugins": [
+        "react"
     ],
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "semi": [
-      "error",
-      "always"
-    ]
-  }
+    "settings": {
+        "react": {
+            "version": "16.0"
+        }
+    },
+    "rules": {
+        "indent": [
+            1,
+            4
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "react/no-find-dom-node": [
+            0
+        ]
+    }
 };

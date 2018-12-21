@@ -1,26 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Label = ({ id, text, className, children }) => {
-  if (text) {
-    return (
-      <label htmlFor={id} className={`control-label ${className}`}>
-        {children || text}
-      </label>
-    );
-  }
-  return null;
+class Label extends React.PureComponent {
+    static propTypes = {
+        id: PropTypes.string,
+        text: PropTypes.node,
+        className: PropTypes.string,
+        children: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.node),
+            PropTypes.node
+        ])
+    };
+
+    static defaultProps = {
+        className: '',
+    };
+
+    render() {
+        if (this.props.text) {
+            return (
+                <label htmlFor={this.props.id} className={`control-label ${this.props.className}`}>
+                    {this.props.children || this.props.text}
+                </label>
+            );
+        }
+        return null;
+    }
 }
-
-Label.propTypes = {
-  id: PropTypes.string,
-  text: PropTypes.node,
-  className: PropTypes.string,
-  children: PropTypes.node,
-};
-
-Label.defaultProps = {
-  className: '',
-};
 
 export default Label;

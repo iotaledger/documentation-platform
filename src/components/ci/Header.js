@@ -1,19 +1,28 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import InputSearch from '../molecules/InputSearch';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import logo from '../../assets/Logo.svg';
+import InputSearch from '../molecules/InputSearch';
 
 class Header extends React.Component {
     static propTypes = {
-        onBurgerClick: PropTypes.func
+        headerTitle: PropTypes.string,
+        topTitles: PropTypes.arrayOf(PropTypes.shape({
+            text: PropTypes.string,
+            href: PropTypes.string
+        })),
+        onBurgerClick: PropTypes.func,
+        history: ReactRouterPropTypes.history,
+        location: ReactRouterPropTypes.location
+
     };
 
     constructor(props) {
-        super(props)
+        super(props);
 
-        this.handleBurgerClick = this.handleBurgerClick.bind(this)
-        this.handleKeyUp = this.handleKeyUp.bind(this)
-        this.onSearch = this.onSearch.bind(this)
+        this.handleBurgerClick = this.handleBurgerClick.bind(this);
+        this.handleKeyUp = this.handleKeyUp.bind(this);
+        this.onSearch = this.onSearch.bind(this);
     }
 
     handleBurgerClick() {
@@ -23,12 +32,12 @@ class Header extends React.Component {
     }
 
     onSearch(query) {
-        this.props.history.push(`/search?q=${query}`)
+        this.props.history.push(`/search?q=${query}`);
     }
 
     handleKeyUp(e) {
-        if (e.key === "Escape") {
-            this.setState({ inputExpanded: false })
+        if (e.key === 'Escape') {
+            this.setState({ inputExpanded: false });
         }
     }
 
@@ -68,7 +77,7 @@ class Header extends React.Component {
                     </section>
                 </div>
             </header>
-        )
+        );
     }
 }
-export default Header
+export default Header;

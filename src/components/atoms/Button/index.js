@@ -1,34 +1,41 @@
-import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import React from 'react';
 
-const Button = ({ id, onClick, children, large, small, className, disabled }) => (
-  <button
-    id={id}
-    onClick={onClick}
-    disabled={disabled}
-    className={classNames('button', className, {
-      'button--large': large,
-      'button--small': small,
-      'button--disabled': disabled,
-    })}
-  >
-    {children}
-  </button>
-);
+class Button extends React.PureComponent {
+    static propTypes = {
+        id: PropTypes.string,
+        large: PropTypes.bool,
+        small: PropTypes.bool,
+        disabled: PropTypes.bool,
+        className: PropTypes.string,
+        onClick: PropTypes.func,
+        children: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.node),
+            PropTypes.node
+        ]),
+    };
 
-Button.propTypes = {
-  id: PropTypes.string,
-  large: PropTypes.bool,
-  small: PropTypes.bool,
-  disabled: PropTypes.bool,
-  className: PropTypes.string,
-  onClick: PropTypes.func,
-  children: PropTypes.node,
-};
+    static defaultProps = {
+        className: '',
+    };
 
-Button.defaultProps = {
-  className: '',
-};
+    render() {
+        return (<button
+            id={this.props.id}
+            onClick={this.props.onClick}
+            disabled={this.props.disabled}
+            className={
+                classNames('button', this.props.className,
+                    {
+                        'button--large': this.props.large,
+                        'button--small': this.props.small,
+                        'button--disabled': this.props.disabled,
+                    })}
+        >
+            {this.props.children}
+        </button>);
+    }
+}
 
 export default Button;

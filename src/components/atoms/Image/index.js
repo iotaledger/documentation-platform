@@ -1,19 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Image = ({ id, alt, src, className }) => (
-  <img id={id} src={src} alt={alt} className={`image ${className}`} />
-);
+class Image extends React.PureComponent {
+    static propTypes = {
+        id: PropTypes.string,
+        src: PropTypes.string.isRequired,
+        alt: PropTypes.string.isRequired,
+        className: PropTypes.string,
+    };
 
-Image.propTypes = {
-  id: PropTypes.string,
-  src: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
-  className: PropTypes.string,
-};
+    static defaultProps = {
+        className: ''
+    };
 
-Image.defaultProps = {
-  className: '',
-};
+    render() {
+        return (
+            <img id={this.props.id} src={this.props.src} alt={this.props.alt} className={`image ${this.props.className}`} />
+        );
+    }
+}
 
 export default Image;

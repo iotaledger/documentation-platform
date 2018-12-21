@@ -1,17 +1,24 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
-const Paragraph = ({ children, className }) => (
-  <p className={`paragraph ${className}`}>{children}</p>
-)
+class Paragraph extends React.PureComponent {
+    static propTypes = {
+        children: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.node),
+            PropTypes.node
+        ]),
+        className: PropTypes.string,
+    };
 
-Paragraph.propTypes = {
-  children: PropTypes.node,
-  classNames: PropTypes.string,
-};
+    static defaultProps = {
+        className: '',
+    };
 
-Paragraph.defaultProps = {
-  className: '',
-};
+    render() {
+        return (
+            <p className={`paragraph ${this.props.className}`}>{this.props.children}</p>
+        );
+    }
+}
 
 export default Paragraph;

@@ -1,6 +1,7 @@
 import React from 'react';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { Head, RouteData, withRouter, withSiteData } from 'react-static';
-import BottomSticky from "../components/atoms/BottomSticky";
+import BottomSticky from '../components/atoms/BottomSticky';
 import BottomStop from '../components/atoms/BottomStop';
 import ScrollInContainer from '../components/atoms/ScrollInContainer';
 import ScrollToTop from '../components/atoms/ScrollToTop';
@@ -11,15 +12,22 @@ import StickyHeader from '../components/ci/StickyHeader';
 import SubHeader from '../components/ci/SubHeader';
 import TreeMenu from '../components/ci/TreeMenu';
 import VersionPicker from '../components/ci/VersionPicker';
-import Container from '../components/Container';
 import Feedback from '../components/molecules/Feedback';
 import SideMenu from '../components/molecules/SideMenu';
 import Markdown from '../components/organisms/Markdown';
 import contentHomePage from '../contentHomePage.json';
-import { submitFeedback } from "../utils/feedbackHelper";
-import { createFloatingMenuEntries, parseProjectUrl, replaceVersion } from "../utils/helpers";
+import { submitFeedback } from '../utils/feedbackHelper';
+import { createFloatingMenuEntries, parseProjectUrl, replaceVersion } from '../utils/helpers';
+import { ContentMenuPropTypes } from '../utils/propTypes.js';
+import Container from './Container';
 
 class Doc extends React.Component {
+    static propTypes = {
+        menu: ContentMenuPropTypes.isRequired,
+        history: ReactRouterPropTypes.history,
+        location: ReactRouterPropTypes.location
+    };
+
     constructor(props) {
         super(props);
 
@@ -134,7 +142,7 @@ class Doc extends React.Component {
                         />
                         <BottomSticky zIndex={10}>
                             <TabletHidden>
-                                <Feedback onSubmit={(data) => { submitFeedback(this.props.location.pathname, data) }} />
+                                <Feedback onSubmit={(data) => { submitFeedback(this.props.location.pathname, data); }} />
                             </TabletHidden>
                         </BottomSticky>
                         <BottomSticky horizontalAlign="right">
@@ -143,7 +151,7 @@ class Doc extends React.Component {
                     </Container>
                 )}
             />
-        )
+        );
     }
 }
 

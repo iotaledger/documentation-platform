@@ -11,11 +11,11 @@ class FloatingMenu extends React.Component {
     };
 
     constructor(props) {
-        super(props)
+        super(props);
     }
 
     render() {
-        return (<ul className="floating-menu" style={this.props.styles}>
+        return (<ul className="floating-menu">
             {
                 this.props.menuItems.map((item) => (
                     <li
@@ -23,15 +23,15 @@ class FloatingMenu extends React.Component {
                         className={
                             classNames('floating-menu__item',
                                 {
-                                    'floating-menu__item--selected': this.props.highlightedItem === item.name || (item.link[0] === "#" && this.props.highlightedItem === item.link)
+                                    'floating-menu__item--selected': this.props.highlightedItem === item.name || (item.link[0] === '#' && this.props.highlightedItem === item.link)
                                 })}
                     >
-                        {item.link[0] !== "#" && (
+                        {item.link[0] !== '#' && (
                             <Link to={item.link} exact>
                                 {item.name}
                             </Link>
                         )}
-                        {item.link[0] === "#" && (
+                        {item.link[0] === '#' && (
                             <Link to={item.link}>
                                 {item.name}
                             </Link>
@@ -43,4 +43,4 @@ class FloatingMenu extends React.Component {
     }
 }
 
-export default FloatingMenu
+export default FloatingMenu;
