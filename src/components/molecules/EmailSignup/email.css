@@ -14,8 +14,15 @@
 }
 
 .email-signup__content {
-  padding: 0 40px;
+  padding: 0 20px;
 }
+
+@media (min-width: 768px){
+  .email-signup__content{
+     padding: 0 40px;
+  }
+}
+
 
 .email-signup__content h2 {
   margin: 37px 0 0;
@@ -45,8 +52,14 @@
 .input-register-container__form {
   display: flex;
   flex-direction: column;
-  margin: 60px 40px 0px 30px;
+  margin: 0px 16px 25px;
   justify-content: flex-start;
+}
+
+@media (min-width: 768px){
+  .input-register-container__form{
+    margin: 60px 40px 0px;
+  }
 }
 
 .error-message {
@@ -71,9 +84,5 @@
   .email-signup__content h2 {
     font-size: 24px;
     margin: 25px 0 0;
-  }
-
-  .input-register-container__form {
-    margin: 0px 30px 25px 30px;
   }
 }
