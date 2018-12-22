@@ -27,15 +27,15 @@ You must keep your seed safe and back it up. If you lose your seed, you can't re
 2. Open the installer and follow the on-screen instructions
 3. Open KeePass and click **New**
 
-    <img src="keepass-new.png" alt="Click New" width="600">
+    <img src="../keepass-new.png" alt="Click New" width="600">
 
 4. After you've followed the instructions and saved the KeePass file on your computer, right click the empty space and click **Add entry**
 
-    <img src="keepass-add-entry.png" alt="Click Add Entry" width="600">
+    <img src="../keepass-add-entry.png" alt="Click Add Entry" width="600">
 
 5. Click **Generate a password**
 
-    <img src="keepass-password-generator.png" alt="Click New" width="600">
+    <img src="../keepass-password-generator.png" alt="Click New" width="600">
 
 6. Select only the following options and click **OK**:
     * Length of generated password: 81

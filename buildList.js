@@ -12,7 +12,7 @@ const webifyPath = (p) => p.replace(/\\/g, '/');
 const getDocPages = baseDir => {
     const dirs = getProjects(baseDir);
     const files = Array.prototype.concat(...dirs.map(dir =>
-        listFiles(`${baseDir}/${dir}`).map(file => ({
+        listFiles(`${baseDir}/${dir}`).filter(f => /.md$/i.test(f)).map(file => ({
             path: webifyPath(file).replace('.md', ''),
             title: `${webifyPath(dir)} ${webifyPath(file).replace(`docs/${webifyPath(dir)}/`, '').replace('.md', '')}`,
             markdownSrc: webifyPath(file)

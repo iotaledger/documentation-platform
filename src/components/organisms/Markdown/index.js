@@ -309,19 +309,22 @@ class Markdown extends PureComponent {
     }
 
     render() {
-        return <ReactMarkdown
-            source={this.state.content}
-            renderers={{
-                text: this.textRenderer,
-                code: (props) => this.codeBlock(props, true),
-                inlineCode: (props) => this.inlineCodeBlock(props),
-                html: this.html,
-                link: this.aLink,
-                paragraph: this.paragraph,
-                heading: this.heading
-            }}
-            skipHtml={false}
-            escapeHtml={false} />;
+        return (
+            <div className="markdown__wrapper"><ReactMarkdown
+                source={this.state.content}
+                renderers={{
+                    text: this.textRenderer,
+                    code: (props) => this.codeBlock(props, true),
+                    inlineCode: (props) => this.inlineCodeBlock(props),
+                    html: this.html,
+                    link: this.aLink,
+                    paragraph: this.paragraph,
+                    heading: this.heading
+                }}
+                skipHtml={false}
+                escapeHtml={false} />
+            </div>
+        );
     }
 }
 

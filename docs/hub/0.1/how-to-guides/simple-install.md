@@ -78,7 +78,7 @@ sudo apt install mariadb-server
 
 During the installation you will be prompted to enter a root password for MariaDB. Pick a secure password and remember it. You will need it later on:
 
-![MariaDB password prompt](../mariapassword.png "Choose your password")
+![MariaDB password prompt](../mariapassword.png)
 
 Once this is done we can check if it all went right by checking the MySQL version
 

@@ -1,10 +1,10 @@
-import { reloadRoutes } from 'react-static/node';
+import chokidar from 'chokidar';
 import fs from 'fs-extra';
 import path from 'path';
 import React, { Component } from 'react';
+import { reloadRoutes } from 'react-static/node';
 import { ServerStyleSheet } from 'styled-components';
-import chokidar from 'chokidar';
-import { getDocPages, buildMenuItems } from './buildList';
+import { buildMenuItems, getDocPages } from './buildList';
 import { siteRoot } from './src/config.json';
 
 chokidar.watch('../docs').on('all', () => reloadRoutes());
@@ -34,11 +34,6 @@ const menu = buildMenuItems('docs');
 
 const readFile = src => fs.readFileSync(path.resolve(src), 'utf8');
 
-const fixReprismSyntaxHighlighting = content => content
-    .replace(/```Python/g, '```python')
-    .replace(/```c\+\+/g, '```cpp')
-    .replace(/```proto/g, '```cpp');
-
 // No need to touch any of this, unless you want to.
 export default {
     siteRoot,
@@ -57,7 +52,10 @@ export default {
             path: page.path,
             component: 'src/containers/Doc',
             getData: async () => ({
-                markdown: fixReprismSyntaxHighlighting(await readFile(page.markdownSrc)),
+                markdown: inlineMarkdownImage(
+                    inlineImg(
+                        fixReprismSyntaxHighlighting(await readFile(page.markdownSrc)), page.markdownSrc)
+                    , page.markdownSrc),
                 editPath:
                     repoURL +
                     '/blob/master/' +
@@ -84,6 +82,7 @@ export default {
             meta.styleTags = sheet.getStyleElement();
             return html;
         } catch (e) {
+            // eslint-disable-next-line no-console
             console.log('ERROR', e);
         }
     },
@@ -117,3 +116,65 @@ export default {
         }
     }
 };
+
+function fixReprismSyntaxHighlighting(content) {
+    return content
+        .replace(/```Python/g, '```python')
+        .replace(/```c\+\+/g, '```cpp')
+        .replace(/```proto/g, '```cpp');
+}
+
+function inlineImg(markdown, docPath) {
+    const re = /(<img src="(.*?)")/gm;
+
+    let match;
+    do {
+        match = re.exec(markdown);
+        if (match && match.length === 3) {
+            try {
+                if (!match[2].startsWith('http') && match[2].length > 0) {
+                    const imgFilename = path.resolve(path.join(path.dirname(docPath), match[2]));
+                    const base64 = imageToBase64(imgFilename);
+                    markdown = markdown.replace(match[1], `<img src="${base64}"`);
+                }
+            } catch (err) {
+                // eslint-disable-next-line no-console
+                console.error(`Missing image ${match[1]} in ${docPath}`, err);
+            }
+        }
+    } while (match);
+
+    return markdown;
+}
+
+function inlineMarkdownImage(markdown, docPath) {
+    const re = /(!\[(.*?)\]\((.*?)\))/gm;
+
+    let match;
+    do {
+        match = re.exec(markdown);
+
+        if (match && match.length === 4) {
+            try {
+                if (!match[3].startsWith('http') && match[3].length > 0) {
+                    const imgFilename = path.resolve(path.join(path.dirname(docPath), match[3]));
+                    const base64 = imageToBase64(imgFilename);
+                    markdown = markdown.replace(match[1], `![${match[2]}](${base64})`);
+                }
+            } catch (err) {
+                // eslint-disable-next-line no-console
+                console.error(`Missing image ${match[3]} in ${docPath}`, err);
+            }
+        }
+    } while (match);
+
+    return markdown;
+}
+
+function imageToBase64(filename) {
+    const imgData = fs.readFileSync(filename);
+
+    const ext = /\.([0-9a-z]+)$/.exec(filename);
+
+    return `data:image/${ext[1].toLowerCase()};base64,${imgData.toString('base64')}`;
+}

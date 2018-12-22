@@ -51,7 +51,7 @@ To complete this tutorial, you need the following:
 
 The following output will be displayed in the console:
 
-<img src="first-response.png" alt="console output" width="600">
+<img src="../first-response.png" alt="console output" width="600">
 
 Now that the code is working and returning general
 information about the IRI node, you can send a transaction to the network.
@@ -185,6 +185,6 @@ iota.prepareTransfers(seed, transfers)
 
 If you run this code, you'll see the IRI node's information and the transfer object you have just sent in the console:
 
-<img src="success.png" alt="Console output" width="600">
+<img src="../success.png" alt="Console output" width="600">
 
 Congratulations 🎊. You've just sent your first IOTA transaction.
