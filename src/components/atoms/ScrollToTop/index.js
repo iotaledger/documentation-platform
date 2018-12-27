@@ -19,6 +19,7 @@ class ScrollToTop extends PureComponent {
         };
 
         this.setSticky = this.setSticky.bind(this);
+        this.lastScrollPos = 0;
     }
 
     componentDidMount() {
@@ -42,8 +43,11 @@ class ScrollToTop extends PureComponent {
                     window.pageYOffset !== undefined
                         ? window.pageYOffset
                         : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+                
+                this.setState({ isVisible: scrollTop >= this.props.visibleTop && this.lastScrollPos > scrollTop });
 
-                this.setState({ isVisible: scrollTop >= this.props.visibleTop });
+                this.lastScrollPos = scrollTop
+
             });
         }
     }
