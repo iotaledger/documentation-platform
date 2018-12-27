@@ -26,6 +26,7 @@
     "lunr": "^2.3.3",
     "markdown-it": "^8.4.2",
     "nprogress": "^0.2.0",
+    "parallax-js": "^3.1.0",
     "prismjs": "^1.15.0",
     "react": "^16.0.0",
     "react-click-outside": "^3.0.1",
