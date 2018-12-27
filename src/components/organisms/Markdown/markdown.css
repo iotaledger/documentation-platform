@@ -13,9 +13,14 @@ code, pre {
   border: 1px solid #ececec;
   border-radius: 0px 0px 5px 5px;
   background-color: #f8f8f8;
-  padding: 22px;
+  padding: 10px 25px;
   overflow: auto;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
+  font-size: 0.92rem;
+}
+
+.markdown-code pre{
+  line-height: 2rem;
 }
 
 .markdown-code-inline {
@@ -24,6 +29,7 @@ code, pre {
   border-radius: 3px;
   background-color: #f8f8f8;
   padding: 0px 5px 0px 5px;
+  font-size: 0.93rem;
   line-height: 1.5;
 }
 
