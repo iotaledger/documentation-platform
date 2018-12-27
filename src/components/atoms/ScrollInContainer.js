@@ -22,26 +22,14 @@ class ScrollInContainer extends React.Component {
         widthContainer: PropTypes.string
     };
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            top: this.props.topOffset,
-            width: undefined,
-            display: 'none'
-        };
-
+    componentDidMount() {
         this.handleScroll = this.handleScroll.bind(this);
         this.handleResize = this.handleResize.bind(this);
-    }
 
-    componentDidMount() {
         document.addEventListener('scroll', this.handleScroll);
         window.addEventListener('resize', this.handleResize);
 
-        // Set the initial position on a timer to let the DOM have time to settle
-        // Otherwise the initial location is not set correctly
-        setTimeout(() => this.handleScroll(), 0);
+        this.handleScroll();
     }
 
     componentWillUnmount() {
@@ -54,49 +42,52 @@ class ScrollInContainer extends React.Component {
     }
 
     handleScroll() {
-        // Do the update on next time slice to debounce it
-        setTimeout(() => {
-            const topMarker = document.querySelectorAll(this.props.topMarker);
-            const bottomMarker = document.querySelectorAll(this.props.bottomMarker);
 
-            const thisDom = ReactDOM.findDOMNode(this);
-            const docDom = ReactDOM.findDOMNode(document.body);
+        if(!this.container){
+            return
+        }
 
-            const thisRect = thisDom.getBoundingClientRect();
+        const topMarker = document.querySelectorAll(this.props.topMarker);
+        const bottomMarker = document.querySelectorAll(this.props.bottomMarker);
 
-            const topDom = topMarker && topMarker.length ? ReactDOM.findDOMNode(topMarker[0]) : docDom;
-            const bottomDom = bottomMarker && bottomMarker.length ? ReactDOM.findDOMNode(bottomMarker[0]) : docDom;
+        const thisDom = ReactDOM.findDOMNode(this);
+        const docDom = ReactDOM.findDOMNode(document.body);
 
-            let topLimit = topDom.getBoundingClientRect().bottom;
-            let bottomLimit = bottomDom.getBoundingClientRect().top;
+        const thisRect = thisDom.getBoundingClientRect();
 
-            let newTop = topLimit + this.props.topOffset;
-            if (newTop < this.props.topOffset) {
-                newTop = this.props.topOffset;
-            }
+        const topDom = topMarker && topMarker.length ? ReactDOM.findDOMNode(topMarker[0]) : docDom;
+        const bottomDom = bottomMarker && bottomMarker.length ? ReactDOM.findDOMNode(bottomMarker[0]) : docDom;
 
-            if (newTop + thisRect.height > (bottomLimit - this.props.bottomOffset)) {
-                newTop = bottomLimit - this.props.bottomOffset - thisRect.height;
-            }
+        let topLimit = topDom.getBoundingClientRect().bottom;
+        let bottomLimit = bottomDom.getBoundingClientRect().top;
 
-            const widthContainer = document.querySelectorAll(this.props.widthContainer);
-            const newWidth = widthContainer && widthContainer.length > 0 ?
-                ReactDOM.findDOMNode(widthContainer[0]).getBoundingClientRect().width : undefined;
+        let newTop = topLimit + this.props.topOffset;
+        if (newTop < this.props.topOffset) {
+            newTop = this.props.topOffset;
+        }
 
-            this.setState({ top: newTop, width: newWidth, display: 'block' });
-        }, 0);
+        if (newTop + thisRect.height > (bottomLimit - this.props.bottomOffset)) {
+            newTop = bottomLimit - this.props.bottomOffset - thisRect.height;
+        }
+
+        const widthContainer = document.querySelectorAll(this.props.widthContainer);
+        const newWidth = widthContainer && widthContainer.length > 0 ?
+            ReactDOM.findDOMNode(widthContainer[0]).getBoundingClientRect().width : undefined;
+
+        this.container.style.top = `${newTop}px`;
+        if(newWidth){
+            this.container.style.width = `${newWidth}px`;
+        }
     }
 
     render() {
         const style = {
             position: 'fixed',
-            top: this.state.top,
-            width: this.state.width,
-            display: this.state.display
+            display: 'block'
         };
 
         return (
-            <div style={style}>
+            <div ref={(el) => this.container = el} style={style}>
                 {this.props.children}
             </div>
         );
