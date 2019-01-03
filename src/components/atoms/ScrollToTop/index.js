@@ -46,7 +46,7 @@ class ScrollToTop extends PureComponent {
                 
                 this.setState({ isVisible: scrollTop >= this.props.visibleTop && this.lastScrollPos > scrollTop });
 
-                this.lastScrollPos = scrollTop
+                this.lastScrollPos = scrollTop;
 
             });
         }

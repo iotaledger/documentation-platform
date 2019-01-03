@@ -6,7 +6,7 @@ import ScrollInContainer from '../components/atoms/ScrollInContainer';
 import ScrollToTop from '../components/atoms/ScrollToTop';
 import FloatingMenu from '../components/ci/FloatingMenu';
 import Header from '../components/ci/Header';
-import { HomePageLayout, maxWidthLayout, TabletHidden } from '../components/ci/Layouts';
+import { HomePageLayout, TabletHidden } from '../components/ci/Layouts';
 import Container from './Container';
 import EmailSignup from '../components/molecules/EmailSignup';
 import Feedback from '../components/molecules/Feedback';

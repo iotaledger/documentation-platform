@@ -44,7 +44,7 @@ class ScrollInContainer extends React.Component {
     handleScroll() {
 
         if(!this.container){
-            return
+            return;
         }
 
         const topMarker = document.querySelectorAll(this.props.topMarker);

@@ -54,7 +54,7 @@ class Header extends React.Component {
                                 <ul className="top-header__items">
                                     {topTitles.map((topTitle, index) =>
                                         (<li key={index} className="top-header__item">
-                                            <a href={topTitle.href} target="_blank">{topTitle.text.toUpperCase()}</a>
+                                            <a href={topTitle.href} target="_blank" rel="noopener noreferrer">{topTitle.text.toUpperCase()}</a>
                                         </li>)
                                     )}
                                 </ul>

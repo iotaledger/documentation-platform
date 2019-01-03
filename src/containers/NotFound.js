@@ -1,6 +1,5 @@
 import React from 'react';
 import { Head, RouteData, withRouter, withSiteData } from 'react-static';
-import Parallax from 'parallax-js'
 import BottomSticky from '../components/atoms/BottomSticky';
 import BottomStop from '../components/atoms/BottomStop';
 import { TabletHidden } from '../components/ci/Layouts';
@@ -8,25 +7,11 @@ import StickyHeader from '../components/ci/StickyHeader';
 import Container from './Container';
 import Feedback from '../components/molecules/Feedback';
 import SideMenu from '../components/molecules/SideMenu';
+import ParallaxContainer from '../components/atoms/ParallaxContainer';
 import contentHomePage from '../contentHomePage.json';
 import { submitFeedback } from '../utils/feedbackHelper';
 
-import './notFound.css'
-
-class ParallaxContainer extends React.PureComponent{
-
-    componentDidMount(){
-        this.parallaxInstance = new Parallax(this.parallaxEl, {})
-    }
-
-    render() {
-        return(
-            <div className="parallax" ref={(el) => (this.parallaxEl = el)}>
-                {this.props.children}
-            </div>
-        )
-    }
-}
+import './notFound.css';
 
 class NotFound extends React.PureComponent {
     constructor(props) {
@@ -42,7 +27,7 @@ class NotFound extends React.PureComponent {
     handleBurgerClick() {
         this.setState({ isMenuOpen: !this.state.isMenuOpen });
     }
-    
+
 
     render() {
         return (
@@ -72,13 +57,13 @@ class NotFound extends React.PureComponent {
                             </article>
                             <aside>
                                 <ParallaxContainer>
-                                    <div data-depth="-0.02"><img src="/assets/document.svg"/></div>
-                                    <div data-depth="-0.04"><img src="/assets/document.svg"/></div>
-                                    <div data-depth="-0.06"><img src="/assets/document.svg"/></div>
-                                    <div data-depth="0.08"><img src="/assets/document.svg"/></div>
-                                    <div data-depth="-0.02"><img src="/assets/document.svg"/></div>
-                                    <div data-depth="-0.06"><img src="/assets/document.svg"/></div>
-                                    <div data-depth="0.08"><img src="/assets/document.svg"/></div>
+                                    <div data-depth="-0.02"><img src="/assets/document.svg" /></div>
+                                    <div data-depth="-0.04"><img src="/assets/document.svg" /></div>
+                                    <div data-depth="-0.06"><img src="/assets/document.svg" /></div>
+                                    <div data-depth="0.08"><img src="/assets/document.svg" /></div>
+                                    <div data-depth="-0.02"><img src="/assets/document.svg" /></div>
+                                    <div data-depth="-0.06"><img src="/assets/document.svg" /></div>
+                                    <div data-depth="0.08"><img src="/assets/document.svg" /></div>
                                 </ParallaxContainer>
                             </aside>
                         </section>
