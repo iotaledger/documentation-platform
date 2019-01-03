@@ -67,12 +67,12 @@ export default {
             })
         })),
         {
-            path: 'search',
+            path: '/search',
             component: 'src/containers/Search'
         },
         {
             is404: true,
-            path: '404',
+            path: '/404',
             component: 'src/containers/NotFound'
         }
     ],

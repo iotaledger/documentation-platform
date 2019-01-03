@@ -1,11 +1,12 @@
 export function sanitizeHashId(id) {
     // make lower case
     // de-escape spaces
-    // replace spaces with underscore
+    // replace spaces with hyphens
     return id ? id
         .toLowerCase()
         .replace(/\\ /g, ' ')
-        .replace(/ /g, '_') : undefined;
+        .replace(/[^a-zA-Z0-9# -]/g, '')
+        .replace(/ /g, '-') : undefined;
 }
 
 export function convertRootUrl(url) {
