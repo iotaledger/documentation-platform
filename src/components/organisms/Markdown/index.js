@@ -269,24 +269,24 @@ class Markdown extends PureComponent {
     aLink(props) {
         if (props.href.startsWith('root')) {
             return (
-                <Link prefetch={false} to={convertRootUrl(props.href)} target="_blank">{props.children[0].props.value}</Link>
+                <Link to={convertRootUrl(props.href)} target="_blank" {...props} />
             );
         } else if (props.href.startsWith('http')) {
             return (
-                <Link prefetch={false} to={props.href} target="_blank">{props.children[0].props.value}</Link>
+                <Link to={props.href} target="_blank" {...props} />
             );
         } else {
             if (props.href.startsWith('#')) {
                 // Make sure the tag is consistently named
                 return (
-                    <Link prefetch={false} to={sanitizeHashId(props.href)}>{props.children[0].props.value}</Link>
+                    <Link to={sanitizeHashId(props.href)} {...props} />
                 );
             } else {
                 // For local links remove .md extension
                 // and also de-escape space characters
                 const localLink = sanitizeHashId(props.href).replace(/.md$/i, '');
                 return (
-                    <Link prefetch={false} to={localLink}>{props.children[0].props.value}</Link>
+                    <Link to={localLink} {...props} />
                 );
             }
         }
@@ -330,7 +330,7 @@ class Markdown extends PureComponent {
     heading(props) {
         return (
             <React.Fragment>
-                <Heading className='text--tertiary' level={props.level} id={sanitizeHashId(props.children[0].props.value)}>{props.children}</Heading>
+                <Heading className='text--tertiary' level={props.level} id={sanitizeHashId(props.children[0].props.value)} {...props}/>
             </React.Fragment>
         );
     }
