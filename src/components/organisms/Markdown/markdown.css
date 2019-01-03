@@ -19,6 +19,8 @@ code, pre {
   font-size: 0.92rem;
 }
 
+
+
 .markdown-code pre {
   line-height: 2rem;
 }
@@ -37,6 +39,23 @@ code, pre {
   max-width: 100%;
 }
 
+.markdown__wrapper dl {
+  padding: 1px 0px 10px 20px;
+  border-left: 3px solid #20a49d;
+}
+
+.markdown__wrapper dl dt {
+  font-style: italic;
+  font-weight: 600;
+  margin-top: 16px;
+  padding: 0;
+}
+
+.markdown__wrapper table + h1 {
+  margin-top: 48px;
+}
+  
+ 
 .search-keyword {
   background-color: yellow;
 }
