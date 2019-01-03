@@ -54,7 +54,7 @@ export default {
             getData: async () => ({
                 markdown: inlineMarkdownImage(
                     inlineImg(
-                        fixReprismSyntaxHighlighting(await readFile(page.markdownSrc)), page.markdownSrc)
+                        await readFile(page.markdownSrc), page.markdownSrc)
                     , page.markdownSrc),
                 editPath:
                     repoURL +
@@ -67,11 +67,12 @@ export default {
             })
         })),
         {
-            path: '/search',
+            path: 'search',
             component: 'src/containers/Search'
         },
         {
             is404: true,
+            path: '404',
             component: 'src/containers/NotFound'
         }
     ],
@@ -116,13 +117,6 @@ export default {
         }
     }
 };
-
-function fixReprismSyntaxHighlighting(content) {
-    return content
-        .replace(/```Python/g, '```python')
-        .replace(/```c\+\+/g, '```cpp')
-        .replace(/```proto/g, '```cpp');
-}
 
 function inlineImg(markdown, docPath) {
     const re = /(<img src="(.*?)")/gm;

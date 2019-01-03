@@ -46,9 +46,9 @@ class Markdown extends PureComponent {
     }
 
     componentDidMount() {
-        let content = this.props.source;
+        let content = this.fixReprismSyntaxHighlighting(this.props.source);
 
-        const tabMatches = this.findTabContainers(this.props.source);
+        const tabMatches = this.findTabContainers(content);
         for (let i = 0; i < tabMatches.length; i++) {
             this.tabContainers.push(this.findTabs(tabMatches[i]));
             content = content.replace(tabMatches[i], `<tabs index="${i}"></tabs>`);
@@ -70,6 +70,13 @@ class Markdown extends PureComponent {
         this.setState({
             content
         });
+    }
+
+    fixReprismSyntaxHighlighting(content) {
+        return content
+            .replace(/```Python/g, '```python')
+            .replace(/```c\+\+/g, '```cpp')
+            .replace(/```proto/g, '```cpp');
     }
 
     replaceSearchQuery(content) {
