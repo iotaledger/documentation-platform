@@ -133,6 +133,9 @@ export function buildItemTree(projectIndex, projectFullURL) {
                 link: projectIndex[i].link,
                 selected: projectIndex[i].link === projectFullURL
             });
+            if (projectIndex[i].link === projectFullURL) {
+                inSection.selected = true;
+            }
         }
     }
 

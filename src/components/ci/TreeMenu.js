@@ -43,8 +43,18 @@ class TreeMenu extends React.Component {
                     )}
                     {section.type === 'section-header' && (
                         <React.Fragment>
-                            <h3 className="tree-menu__section-title">{section.name}</h3>
-                            <ul className="tree-menu__section">
+                            <h3 className={
+                                classNames(
+                                    'tree-menu__section-title',
+                                    { 'tree-menu__section-title--selected': section.selected }
+                                )
+                            }>{section.name}</h3>
+                            <ul className={
+                                classNames(
+                                    'tree-menu__section',
+                                    { 'tree-menu__section--selected': section.selected }
+                                )
+                            }>
                                 {section.items.map((item, idx2) => (
                                     <li
                                         key={idx2}
