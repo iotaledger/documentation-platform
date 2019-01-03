@@ -29,9 +29,8 @@ const indexDocs = callback => {
         this.ref('id');
         this.field('docTitle', { boost: 10 });
         this.field('docBody', { boost: 5 });
-        // this.metadataWhitelist = ['position'];
 
-        files.forEach((fileLocation, index) => {
+        files.filter(f => /.md$/i.test(f)).forEach((fileLocation, index) => {
             const file = fs.readFileSync(fileLocation, 'utf8');
             const md = require('markdown-it')();
             const renderedHtml = md.render(file);

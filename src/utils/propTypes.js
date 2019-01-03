@@ -7,6 +7,12 @@ export const ContentHomePagePropTypes = PropTypes.shape({
             text: PropTypes.string.isRequired
         })
     ).isRequired,
+    popularTopics: PropTypes.arrayOf(
+        PropTypes.shape({
+            query: PropTypes.string.isRequired,
+            text: PropTypes.string.isRequired
+        })
+    ).isRequired,
     cards: PropTypes.arrayOf(
         PropTypes.shape({
             href: PropTypes.string.isRequired,

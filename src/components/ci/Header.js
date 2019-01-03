@@ -11,6 +11,12 @@ class Header extends React.Component {
             text: PropTypes.string,
             href: PropTypes.string
         })),
+        popularTopics: PropTypes.arrayOf(
+            PropTypes.shape({
+                query: PropTypes.string.isRequired,
+                text: PropTypes.string.isRequired
+            })
+        ).isRequired,
         onBurgerClick: PropTypes.func,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location
@@ -74,7 +80,18 @@ class Header extends React.Component {
                                 />
                                 <nav>
                                     <span>Popular topics:</span>
-                                    <a href="#">IRI</a>, <a href="#">HUB</a>, <a href="#">Trinity</a>
+                                    {
+                                        this.props.popularTopics.map((pt, idx) => (
+                                            <React.Fragment key={idx}>
+                                                <a onClick={() => this.onSearch(pt.query)}>{pt.text}</a>
+                                                {
+                                                    idx < this.props.popularTopics.length - 1 && (
+                                                        <span>,</span>
+                                                    )
+                                                }
+                                            </React.Fragment>
+                                        ))
+                                    }
                                 </nav>
                             </div>
                         </div>

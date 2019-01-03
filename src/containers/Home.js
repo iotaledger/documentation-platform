@@ -44,6 +44,7 @@ class Home extends React.Component {
                     history={this.props.history}
                     headerTitle='Developer Documentation'
                     topTitles={contentHomePage.headerTopLinks}
+                    popularTopics={contentHomePage.popularTopics}
                     onBurgerClick={this.handleBurgerClick}
                 />
                 <SideMenu
