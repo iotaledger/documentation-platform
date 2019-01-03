@@ -1,4 +1,6 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { Head, withSiteData } from 'react-static';
 import BottomSticky from '../components/atoms/BottomSticky';
 import BottomStop from '../components/atoms/BottomStop';
@@ -7,7 +9,6 @@ import ScrollToTop from '../components/atoms/ScrollToTop';
 import FloatingMenu from '../components/ci/FloatingMenu';
 import Header from '../components/ci/Header';
 import { HomePageLayout, TabletHidden } from '../components/ci/Layouts';
-import Container from './Container';
 import EmailSignup from '../components/molecules/EmailSignup';
 import Feedback from '../components/molecules/Feedback';
 import CardContainer from '../components/molecules/HomePageCard';
@@ -16,10 +17,19 @@ import SideMenu from '../components/molecules/SideMenu';
 import contentHomePage from '../contentHomePage.json';
 import { submitFeedback } from '../utils/feedbackHelper';
 import { createFloatingMenuEntries } from '../utils/helpers';
-
+import { ContentMenuPropTypes } from '../utils/propTypes.js';
+import Container from './Container';
 import './home.css';
 
+
 class Home extends React.Component {
+    static propTypes = {
+        repoName: PropTypes.string.isRequired,
+        history: ReactRouterPropTypes.history,
+        location: ReactRouterPropTypes.location,
+        menu: ContentMenuPropTypes.isRequired
+    };
+
     constructor(props) {
         super(props);
 

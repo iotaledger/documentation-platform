@@ -19,7 +19,7 @@ code, pre {
   font-size: 0.92rem;
 }
 
-.markdown-code pre{
+.markdown-code pre {
   line-height: 2rem;
 }
 
@@ -34,5 +34,9 @@ code, pre {
 }
 
 .markdown__wrapper img {
-    max-width: 100%;
+  max-width: 100%;
+}
+
+.search-keyword {
+  background-color: yellow;
 }

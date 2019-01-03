@@ -6,7 +6,6 @@ class Pagination extends React.Component {
     static propTypes = {
         total: PropTypes.array.isRequired,
         maxPerPage: PropTypes.array,
-        onChange: PropTypes.func,
         onDataPaginated: PropTypes.func,
     };
 

@@ -4,6 +4,7 @@ import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { Link, withRouter } from 'react-static';
 import logo from '../../assets/Logo.svg';
+import { performSearch } from '../../utils/search';
 import InputSearch from '../molecules/InputSearch';
 
 class StickyHeader extends React.Component {
@@ -33,7 +34,7 @@ class StickyHeader extends React.Component {
     }
 
     onSearch(query) {
-        this.props.history.push(`/search?q=${query}`);
+        performSearch(this.props.history, query);
     }
 
     handleKeyUp(e) {

@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { Head, RouteData, withRouter, withSiteData } from 'react-static';
+import { Head, withRouteData, withRouter, withSiteData } from 'react-static';
 import BottomSticky from '../components/atoms/BottomSticky';
 import BottomStop from '../components/atoms/BottomStop';
 import ScrollInContainer from '../components/atoms/ScrollInContainer';
@@ -19,10 +20,14 @@ import contentHomePage from '../contentHomePage.json';
 import { submitFeedback } from '../utils/feedbackHelper';
 import { createFloatingMenuEntries, parseProjectUrl, replaceVersion } from '../utils/helpers';
 import { ContentMenuPropTypes } from '../utils/propTypes.js';
+import { extractSearchQuery } from '../utils/search';
 import Container from './Container';
 
 class Doc extends React.Component {
     static propTypes = {
+        title: PropTypes.string.isRequired,
+        repoName: PropTypes.string.isRequired,
+        markdown: PropTypes.string.isRequired,
         menu: ContentMenuPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location
@@ -72,87 +77,77 @@ class Doc extends React.Component {
     }
 
     render() {
-        const { location } = this.props;
-        const query = location.state && location.state.query || '';
-
         return (
-            <RouteData
-                render={({ markdown, title }) => (
-                    <Container {...this.props}>
-                        <Head>
-                            <title>{`${title} | ${this.props.repoName}`}</title>
-                        </Head>
-                        <StickyHeader
-                            history={this.props.history}
-                            data={this.props.menu}
-                            onBurgerClick={this.handleBurgerClick}
-                        />
-                        <SideMenu
-                            isMenuOpen={this.state.isMenuOpen}
-                            contentHomePage={contentHomePage}
-                            menuData={this.props.menu}
-                            onCloseClick={this.handleBurgerClick}
-                            highlightedItem={this.state.projectFullURL} />
-                        <SubHeader
-                            history={this.props.history}
-                            data={this.props.menu}
-                            pathname={this.props.location.pathname}
-                        />
-                        <VersionPicker
-                            versions={this.state.currentVersions}
-                            currentVersion={this.state.projectVersion}
-                            onChange={(newVersion) => this.changeVersion(newVersion)}
-                        />
-                        <div id="floating-menu-top-limit"></div>
-                        <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto' }}>
-                            <section className="left-column">
-                                <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-                                    <ScrollInContainer
-                                        topOffset={30}
-                                        bottomOffset={120}
-                                        topMarker="#floating-menu-top-limit"
-                                        bottomMarker="#floating-menu-bottom-limit"
-                                        widthContainer=".left-column">
-                                        <FloatingMenu
-                                            menuItems={createFloatingMenuEntries(contentHomePage.content, this.props.menu)}
-                                            highlightedItem={this.state.projectName}
-                                        />
-                                    </ScrollInContainer>
-                                </div>
-                            </section>
-                            <section className="middle-column">
-                                <Markdown source={query ?
-                                    markdown.replace(new RegExp(query, 'gi'), `<span class="search-keyword">${query}</span>`)
-                                    : markdown}
+            <Container {...this.props}>
+                <Head>
+                    <title>{`${this.props.title} | ${this.props.repoName}`}</title>
+                </Head>
+                <StickyHeader
+                    history={this.props.history}
+                    data={this.props.menu}
+                    onBurgerClick={this.handleBurgerClick}
+                />
+                <SideMenu
+                    isMenuOpen={this.state.isMenuOpen}
+                    contentHomePage={contentHomePage}
+                    menuData={this.props.menu}
+                    onCloseClick={this.handleBurgerClick}
+                    highlightedItem={this.state.projectFullURL} />
+                <SubHeader
+                    history={this.props.history}
+                    data={this.props.menu}
+                    pathname={this.props.location.pathname}
+                />
+                <VersionPicker
+                    versions={this.state.currentVersions}
+                    currentVersion={this.state.projectVersion}
+                    onChange={(newVersion) => this.changeVersion(newVersion)}
+                />
+                <div id="floating-menu-top-limit"></div>
+                <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto' }}>
+                    <section className="left-column">
+                        <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                            <ScrollInContainer
+                                topOffset={30}
+                                bottomOffset={120}
+                                topMarker="#floating-menu-top-limit"
+                                bottomMarker="#floating-menu-bottom-limit"
+                                widthContainer=".left-column">
+                                <FloatingMenu
+                                    menuItems={createFloatingMenuEntries(contentHomePage.content, this.props.menu)}
+                                    highlightedItem={this.state.projectName}
                                 />
-                            </section>
-                            <section className="right-column">
-                                <TreeMenu
-                                    menuItems={this.state.currentProjectIndex}
-                                    highlightedItem={this.state.projectFullURL}
-                                />
-                            </section>
-                        </DocPageLayout>
-                        <div id="floating-menu-bottom-limit" />
-                        <BottomStop />
-                        <Navigator
-                            history={this.props.history}
-                            data={this.props.menu}
-                            pathname={this.props.location.pathname}
+                            </ScrollInContainer>
+                        </div>
+                    </section>
+                    <section className="middle-column">
+                        <Markdown source={this.props.markdown} query={extractSearchQuery(this.props.location)} />
+                    </section>
+                    <section className="right-column">
+                        <TreeMenu
+                            menuItems={this.state.currentProjectIndex}
+                            highlightedItem={this.state.projectFullURL}
                         />
-                        <BottomSticky zIndex={10}>
-                            <TabletHidden>
-                                <Feedback onSubmit={(data) => { submitFeedback(this.props.location.pathname, data); }} />
-                            </TabletHidden>
-                        </BottomSticky>
-                        <BottomSticky horizontalAlign="right">
-                            <ScrollToTop />
-                        </BottomSticky>
-                    </Container>
-                )}
-            />
+                    </section>
+                </DocPageLayout>
+                <div id="floating-menu-bottom-limit" />
+                <BottomStop />
+                <Navigator
+                    history={this.props.history}
+                    data={this.props.menu}
+                    pathname={this.props.location.pathname}
+                />
+                <BottomSticky zIndex={10}>
+                    <TabletHidden>
+                        <Feedback onSubmit={(data) => { submitFeedback(this.props.location.pathname, data); }} />
+                    </TabletHidden>
+                </BottomSticky>
+                <BottomSticky horizontalAlign="right">
+                    <ScrollToTop />
+                </BottomSticky>
+            </Container>
         );
     }
 }
 
-export default withSiteData(withRouter(Doc));
+export default withSiteData(withRouteData(withRouter(Doc)));

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import emoji from 'emoji-dictionary';
 import 'prismjs/themes/prism.css';
@@ -23,6 +24,11 @@ import './markdown.css';
 loadLanguages(jsx, bash, c, cpp, java, javascript, json, python);
 
 class Markdown extends PureComponent {
+    static propTypes = {
+        source: PropTypes.string.isRequired,
+        query: PropTypes.string
+    };
+
     constructor(props) {
         super(props);
 
@@ -35,6 +41,8 @@ class Markdown extends PureComponent {
         this.headingLabels = [];
 
         this.html = this.html.bind(this);
+        this.textRenderer = this.textRenderer.bind(this);
+        this.replaceSearchQuery = this.replaceSearchQuery.bind(this);
     }
 
     componentDidMount() {
@@ -57,9 +65,21 @@ class Markdown extends PureComponent {
             content = content.replace(headingMatches[i], `<heading-label index="${i}"></heading-label>`);
         }
 
+        content = this.replaceSearchQuery(content);
+
         this.setState({
             content
         });
+    }
+
+    replaceSearchQuery(content) {
+        if (this.props.query) {
+            const re = new RegExp(`(${this.props.query})`, 'gi');
+
+            content = content.replace(re, '<query text="$1"/>');
+        }
+
+        return content;
     }
 
     findTabContainers(content) {
@@ -220,6 +240,13 @@ class Markdown extends PureComponent {
 
             if (match && match.length === 2) {
                 return (<a id={sanitizeHashId(match[1])}></a>);
+            }
+        } else if (props.value.startsWith('<query')) {
+            const re = /<query text="(.*)"/i;
+            let match = re.exec(props.value);
+
+            if (match && match.length === 2) {
+                return (<span className="search-keyword">{match[1]}</span>);
             }
         }
 

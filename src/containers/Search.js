@@ -1,13 +1,14 @@
 import lunr from 'lunr';
+import PropTypes from 'prop-types';
 import React from 'react';
-import { Head, RouteData, withRouter, withSiteData } from 'react-static';
+import ReactRouterPropTypes from 'react-router-prop-types';
+import { Head, withRouteData, withRouter, withSiteData } from 'react-static';
 import InputSearch from '../components//molecules/InputSearch';
 import BottomSticky from '../components/atoms/BottomSticky';
 import BottomStop from '../components/atoms/BottomStop';
 import ScrollToTop from '../components/atoms/ScrollToTop';
 import { DocPageLayout, maxWidthLayout, TabletHidden } from '../components/ci/Layouts';
 import StickyHeader from '../components/ci/StickyHeader';
-import Container from './Container';
 import Feedback from '../components/molecules/Feedback';
 import Pagination from '../components/molecules/Pagination';
 import SearchResult from '../components/molecules/SearchResult';
@@ -16,8 +17,18 @@ import contentHomePage from '../contentHomePage.json';
 import corpus from '../searchData/corpus.json';
 import json from '../searchData/index.json';
 import { submitFeedback } from '../utils/feedbackHelper';
+import { ContentMenuPropTypes } from '../utils/propTypes.js';
+import { extractSearchQuery } from '../utils/search';
+import Container from './Container';
 
 class Search extends React.Component {
+    static propTypes = {
+        repoName: PropTypes.string.isRequired,
+        menu: ContentMenuPropTypes.isRequired,
+        history: ReactRouterPropTypes.history,
+        location: ReactRouterPropTypes.location
+    };
+
     constructor(props) {
         super(props);
 
@@ -26,7 +37,7 @@ class Search extends React.Component {
             foundResult: [],
             indexStart: 0,
             indexEnd: 9,
-            query: this.props.location.search ? this.props.location.search.replace('?q=', '') : undefined
+            query: extractSearchQuery(this.props.location)
         };
 
         this.onSearch = this.onSearch.bind(this);
@@ -42,7 +53,7 @@ class Search extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.location.search !== prevProps.location.search) {
-            this.setState({ query: this.props.location.search.replace('?q=', '') }, () => {
+            this.setState({ query: extractSearchQuery(this.props.location) }, () => {
                 this.search();
             });
         }
@@ -96,69 +107,65 @@ class Search extends React.Component {
 
     render() {
         return (
-            <RouteData
-                render={() => (
-                    <Container {...this.props}>
-                        <Head>
-                            <title>{`Search Results | ${this.props.repoName}`}</title>
-                        </Head>
-                        <div id="search-top" />
-                        <StickyHeader
-                            history={this.props.history}
-                            data={this.props.menu}
-                            onBurgerClick={this.handleBurgerClick}
+            <Container {...this.props}>
+                <Head>
+                    <title>{`Search Results | ${this.props.repoName}`}</title>
+                </Head>
+                <div id="search-top" />
+                <StickyHeader
+                    history={this.props.history}
+                    data={this.props.menu}
+                    onBurgerClick={this.handleBurgerClick}
+                />
+                <SideMenu
+                    isMenuOpen={this.state.isMenuOpen}
+                    contentHomePage={contentHomePage}
+                    menuData={this.props.menu}
+                    onCloseClick={this.handleBurgerClick} />
+                <section className="sub-header">
+                    <span className="sub-header__title sub-header-title__fixed">Search results</span>
+                </section>
+                <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto', paddingTop: '40px' }}>
+                    <section className="left-column">
+                    </section>
+                    <section className="middle-column" style={{ minHeight: '100vh' }}>
+                        <div className="input-wrapper-basic">
+                            <InputSearch
+                                query={this.state.query}
+                                className="input-search-basic"
+                                placeholder="Search for topics"
+                                onKeyUp={this.handleKeyUp}
+                                onSearch={this.onSearch}
+                            />
+                        </div>
+                        <SearchResult
+                            foundResult={this.state.foundResult}
+                            indexStart={this.state.indexStart}
+                            indexEnd={this.state.indexEnd}
+                            query={this.state.query}
                         />
-                        <SideMenu
-                            isMenuOpen={this.state.isMenuOpen}
-                            contentHomePage={contentHomePage}
-                            menuData={this.props.menu}
-                            onCloseClick={this.handleBurgerClick} />
-                        <section className="sub-header">
-                            <span className="sub-header__title sub-header-title__fixed">Search results</span>
-                        </section>
-                        <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto', paddingTop: '40px' }}>
-                            <section className="left-column">
-                            </section>
-                            <section className="middle-column" style={{ minHeight: '100vh' }}>
-                                <div className="input-wrapper-basic">
-                                    <InputSearch
-                                        query={this.state.query}
-                                        className="input-search-basic"
-                                        placeholder="Search for topics"
-                                        onKeyUp={this.handleKeyUp}
-                                        onSearch={this.onSearch}
-                                    />
-                                </div>
-                                <SearchResult
-                                    foundResult={this.state.foundResult}
-                                    indexStart={this.state.indexStart}
-                                    indexEnd={this.state.indexEnd}
-                                    query={this.state.query}
-                                />
-                                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}>
-                                    <Pagination
-                                        total={this.state.foundResult}
-                                        onDataPaginated={this.onDataPaginated}
-                                    />
-                                </div>
-                            </section>
-                            <section className="right-column">
-                            </section>
-                        </DocPageLayout>
-                        <BottomStop />
-                        <BottomSticky zIndex={10}>
-                            <TabletHidden>
-                                <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)} />
-                            </TabletHidden>
-                        </BottomSticky>
-                        <BottomSticky horizontalAlign="right">
-                            <ScrollToTop />
-                        </BottomSticky>
-                    </Container>
-                )}
-            />
+                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}>
+                            <Pagination
+                                total={this.state.foundResult}
+                                onDataPaginated={this.onDataPaginated}
+                            />
+                        </div>
+                    </section>
+                    <section className="right-column">
+                    </section>
+                </DocPageLayout>
+                <BottomStop />
+                <BottomSticky zIndex={10}>
+                    <TabletHidden>
+                        <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)} />
+                    </TabletHidden>
+                </BottomSticky>
+                <BottomSticky horizontalAlign="right">
+                    <ScrollToTop />
+                </BottomSticky>
+            </Container>
         );
     }
 }
 
-export default withSiteData(withRouter(Search));
+export default withSiteData(withRouteData(withRouter(Search)));

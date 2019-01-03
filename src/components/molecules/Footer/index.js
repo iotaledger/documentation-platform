@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { footerSections, footerStaticContent } from '../../../contentFooter.json';
@@ -11,21 +10,6 @@ import Text from '../../atoms/Text';
 class Footer extends React.Component {
     static propTypes = {
         menu: ContentMenuPropTypes.isRequired,
-        content: PropTypes.exact({
-            footerSections: PropTypes.arrayOf(PropTypes.exact({
-                heading: PropTypes.string.isRequired,
-                links: PropTypes.arrayOf(PropTypes.exact({
-                    href: PropTypes.string,
-                    folder: PropTypes.string,
-                    text: PropTypes.string.isRequired,
-                })).isRequired
-            })),
-            footerStaticContent: PropTypes.exact({
-                address: PropTypes.arrayOf(PropTypes.string).isRequired,
-                legal: PropTypes.arrayOf(PropTypes.string).isRequired,
-                copyright: PropTypes.arrayOf(PropTypes.string).isRequired,
-            })
-        }),
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location
     };

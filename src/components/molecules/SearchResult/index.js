@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-static';
+import { constructSearchQuery } from '../../../utils/search';
 
 class SearchResult extends React.Component {
     static propTypes = {
@@ -22,7 +23,7 @@ class SearchResult extends React.Component {
                 {this.props.foundResult.slice(this.props.indexStart, this.props.indexEnd + 1).map(elm =>
                     (<section key={elm.id} className="search-result__item">
                         <div className="search-result-item__heading">{elm.name}</div>
-                        <Link to={`/${elm.id}`} exact className="search-result-item__link">
+                        <Link to={`/${elm.id}?${constructSearchQuery(this.props.query)}`} exact className="search-result-item__link">
                             {`/${elm.id}`}
                         </Link>
                     </section>)

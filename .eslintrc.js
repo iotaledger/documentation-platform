@@ -39,6 +39,9 @@ module.exports = {
         ],
         "react/no-find-dom-node": [
             0
+        ],
+        "react/no-unused-prop-types": [
+            2
         ]
     }
 };

@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import logo from '../../assets/Logo.svg';
+import { performSearch } from '../../utils/search';
 import InputSearch from '../molecules/InputSearch';
 
 class Header extends React.Component {
@@ -18,9 +19,7 @@ class Header extends React.Component {
             })
         ).isRequired,
         onBurgerClick: PropTypes.func,
-        history: ReactRouterPropTypes.history,
-        location: ReactRouterPropTypes.location
-
+        history: ReactRouterPropTypes.history
     };
 
     constructor(props) {
@@ -38,7 +37,7 @@ class Header extends React.Component {
     }
 
     onSearch(query) {
-        this.props.history.push(`/search?q=${query}`);
+        performSearch(this.props.history, query);
     }
 
     handleKeyUp(e) {
