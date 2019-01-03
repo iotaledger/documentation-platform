@@ -18,6 +18,11 @@
   margin: 110px 0 20px;
 }
 
+.not-found nav {
+  display: flex;
+  justify-content: center;
+}
+
 .not-found .button {
   text-transform: none;
   border-color: #3F3F3F;
@@ -35,8 +40,18 @@
   line-height: 32px;
   max-width: 370px;
   text-align: center;
-  margin-bottom: 175px;
+  margin-bottom: 25px;
   color: #3F3F3F;
+}
+
+.not-found p {
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 32px;
+  max-width: 370px;
+  text-align: center;
+  margin-bottom: 175px;
+  color: #696f76;
 }
 
 .not-found aside {
@@ -75,8 +90,8 @@
     box-sizing: border-box;
   }
 
-  .not-found h2 {
-    margin-bottom: 40px;
+  .not-found p {
+    margin-bottom: 16px;
   }
 
   .not-found .button {

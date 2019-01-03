@@ -1,29 +1,26 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withLastLocation } from 'react-router-last-location';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { Head, withRouteData, withRouter, withSiteData } from 'react-static';
-import BottomSticky from '../components/atoms/BottomSticky';
-import BottomStop from '../components/atoms/BottomStop';
 import ParallaxContainer from '../components/atoms/ParallaxContainer';
-import { TabletHidden } from '../components/ci/Layouts';
 import StickyHeader from '../components/ci/StickyHeader';
-import Feedback from '../components/molecules/Feedback';
 import SideMenu from '../components/molecules/SideMenu';
 import contentHomePage from '../contentHomePage.json';
-import { submitFeedback } from '../utils/feedbackHelper';
 import { ContentMenuPropTypes } from '../utils/propTypes.js';
 import Container from './Container';
 import './notFound.css';
-
+import { submitMissing } from '../utils/missingHelper';
 
 class NotFound extends React.PureComponent {
     static propTypes = {
         repoName: PropTypes.string.isRequired,
         menu: ContentMenuPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
-        location: ReactRouterPropTypes.location
+        location: ReactRouterPropTypes.location,
+        lastLocation: ReactRouterPropTypes.location
     };
-    
+
     constructor(props) {
         super(props);
 
@@ -38,6 +35,9 @@ class NotFound extends React.PureComponent {
         this.setState({ isMenuOpen: !this.state.isMenuOpen });
     }
 
+    componentDidMount() {
+        submitMissing(this.props.location.pathname, this.props.lastLocation ? this.props.lastLocation.pathname : undefined);
+    }
 
     render() {
         return (
@@ -58,9 +58,10 @@ class NotFound extends React.PureComponent {
                     <article>
                         <h1>404</h1>
                         <h2>We’re sorry, but the page you were looking for can’t be found.</h2>
+                        <p>This issue has been automatically logged.</p>
                         <nav>
-                            <a href="/" className="button button--secondary">Go to Home page</a>
-                            <a href="/" className="button button--secondary">Report this error</a>
+                            <a href="/" className="button button--secondary">Home Page</a>
+                            <a onClick={this.props.history.goBack} className="button button--secondary">Previous Page</a>
                         </nav>
                     </article>
                     <aside>
@@ -75,15 +76,9 @@ class NotFound extends React.PureComponent {
                         </ParallaxContainer>
                     </aside>
                 </section>
-                <BottomStop />
-                <BottomSticky zIndex={10}>
-                    <TabletHidden>
-                        <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)} />
-                    </TabletHidden>
-                </BottomSticky>
             </Container>
         );
     }
 }
 
-export default withSiteData(withRouteData(withRouter(NotFound)));
+export default withLastLocation(withSiteData(withRouteData(withRouter(NotFound))));

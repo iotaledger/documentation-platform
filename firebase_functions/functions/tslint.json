@@ -101,7 +101,7 @@
 
     // prefer for( ... of ... ) to an index loop when the index is only used to fetch an object from an array.
     // (Even better: check out utils like .map if transforming an array!)
-    "prefer-for-of": { "severity": "warning" },
+    "prefer-for-of": false,
 
     // Warns if function overloads could be unified into a single function with optional or rest parameters.
     "unified-signatures": { "severity": "warning" },

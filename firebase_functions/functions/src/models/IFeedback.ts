@@ -1,5 +1,5 @@
 export interface IFeedback {
-  document: string;
-  wasItUseful: string;
-  comments: string;
+    document: string;
+    wasItUseful: string;
+    comments: string;
 }
