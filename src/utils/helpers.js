@@ -61,23 +61,16 @@ export function getLatestVersionLinks(menuData) {
 }
 
 export function createFloatingMenuEntries(contentHomePage, menuData) {
-    if (!menuData) {
-        return [{ name: 'New To IOTA?', link: '#new_to_iota?' }]
-            .concat(contentHomePage.map(entry => ({
-                name: entry.header,
-                link: `#${entry.header.toLowerCase().replace(/ /g, '_')}`
-            })));
-    } else {
-        const latestVersionLinks = getLatestVersionLinks(menuData);
+    const latestVersionLinks = getLatestVersionLinks(menuData);
 
-        return [{ name: 'New To IOTA?', link: '/' }]
-            .concat(contentHomePage.map(entry => {
-                return {
-                    name: entry.header,
-                    link: latestVersionLinks[entry.folder]
-                };
-            }));
-    }
+    return [{ name: 'New To IOTA?', link: '/' }]
+        .concat(contentHomePage.map(entry => {
+            return {
+                name: entry.header,
+                folder: entry.folder,
+                link: latestVersionLinks[entry.folder]
+            };
+        }));
 }
 
 export function createSideMenuEntries(contentHomePage, menuData, projectFullURL) {

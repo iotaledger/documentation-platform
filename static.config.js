@@ -157,7 +157,7 @@ function inlineMarkdownImage(markdown, docPath) {
                 }
             } catch (err) {
                 // eslint-disable-next-line no-console
-                console.error(`Missing image ${match[3]} in ${docPath}`, err);
+                console.error(`Missing image ${match[3]} in ${docPath}`);
             }
         }
     } while (match);
