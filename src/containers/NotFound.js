@@ -60,8 +60,8 @@ class NotFound extends React.PureComponent {
                         <h2>We’re sorry, but the page you were looking for can’t be found.</h2>
                         <p>This issue has been automatically logged.</p>
                         <nav>
-                            <a href="/" className="button button--secondary">Home Page</a>
-                            <a onClick={this.props.history.goBack} className="button button--secondary">Previous Page</a>
+                            <a href="#" onClick={this.props.history.goBack} className="button button--secondary">Previous</a>
+                            <a href="/" className="button button--secondary">Home</a>
                         </nav>
                     </article>
                     <aside>

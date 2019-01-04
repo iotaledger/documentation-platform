@@ -88,7 +88,7 @@
 
 @media (max-width: 620px) {
   .parallax div:nth-child(1) img {
-    left: -12%;
+    display: none;
   }
 
   .parallax div:nth-child(2) img {
@@ -109,7 +109,7 @@
   }
 
   .parallax div:nth-child(6) img {
-    top: 80%;
+    display: none;
   }
 
   .parallax div:nth-child(7) img {
