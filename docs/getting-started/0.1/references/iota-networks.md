@@ -1,6 +1,6 @@
 # IOTA networks
 
-IOTA has three [permissionless networks](concepts/distributed-ledger-technology.md) (public) that anyone can:
+IOTA has three [permissionless networks](concepts/distributed-ledger-technology.md) (public) that anyone can use:
 * MainNet
 * DevNet
 * SpamNet
