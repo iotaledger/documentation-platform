@@ -5,7 +5,6 @@ export function sanitizeHashId(id) {
     return id ? id
         .toLowerCase()
         .replace(/\\ /g, ' ')
-        .replace(/[^a-zA-Z0-9# -]/g, '')
         .replace(/ /g, '-') : undefined;
 }
 

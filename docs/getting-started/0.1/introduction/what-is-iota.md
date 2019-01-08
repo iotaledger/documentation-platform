@@ -27,7 +27,7 @@ At its most basic level, the IOTA token is a record of ownership that looks like
 
     ADDRESS....ENDOFADDRESS;1000
 
-This record is kept on the [distributed ledger](introduction/what-is-dlt.md) of the [IOTA MainNet network](references/iota-networks.md). It might look cryptic, but let's break it down. On the left of the semicolon is an address. These are unique to each client in the network. On the right of the semicolon is an amount of IOTA tokens that belong to that address, in this case 1,000 tokens.
+This record is kept on the [distributed ledger](what-is-dlt.md) of the [IOTA MainNet network](../references/iota-networks.md). It might look cryptic, but let's break it down. On the left of the semicolon is an address. These are unique to each client in the network. On the right of the semicolon is an amount of IOTA tokens that belong to that address, in this case 1,000 tokens.
 
 You own IOTA tokens only when all IRI nodes [validate the transactions](iri/concepts/transaction-validation.md) that sent the tokens to your addresses.
 

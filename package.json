@@ -11,7 +11,7 @@
   "scripts": {
     "start": "react-static start",
     "stage": "react-static build --staging",
-    "build": "yarn index && react-static build",
+    "build": "npm run index && react-static build",
     "serve": "serve dist -p 3000",
     "index": "node buildSearchIndex.js docs src/searchData/index.json src/searchData/corpus.json",
     "deploy": "firebase deploy",
