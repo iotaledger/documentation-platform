@@ -43,7 +43,13 @@ export const ContentMenuPropTypes = PropTypes.objectOf(
         versions: PropTypes.objectOf(PropTypes.arrayOf(
             PropTypes.shape({
                 name: PropTypes.string.isRequired,
-                link: PropTypes.string.isRequired
+                link: PropTypes.string.isRequired,
+                toc: PropTypes.arrayOf(
+                    PropTypes.shape({
+                        level: PropTypes.number.isRequired,
+                        content: PropTypes.string.isRequired
+                    })
+                )
             })
         )).isRequired
     }));

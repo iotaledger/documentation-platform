@@ -30,7 +30,8 @@ const buildMenuItems = baseDir => {
         const projectVersions = getProjects(`${baseDir}/${name}/`);
 
         projectVersions.forEach(version => {
-            const docIndex = readFileSync(`${baseDir}/${name}/${version}/doc-index.md`).toString();
+            const docIndexFile = `${baseDir}/${name}/${version}/doc-index.md`;
+            const docIndex = readFileSync(docIndexFile).toString();
 
             versions[version] = [];
 
@@ -49,9 +50,39 @@ const buildMenuItems = baseDir => {
                             link: `/${baseDir}/${sanitizedLink.replace('root://', '')}`
                         });
                     } else {
+                        // Try and load the markdown for the page and if it exists extract
+                        // the headers to create a toc
+                        const toc = [];
+                        const docName = webifyPath(join(`${baseDir}/${name}/${version}/`, match[2]));
+                        try {
+                            const doc = readFileSync(docName).toString();
+
+                            // Match all headers e.g.
+                            // # Blah blah
+                            // ## Blah blah
+                            // But not those ending in # which are our custom styles
+                            // ## LABEL ##
+
+                            const reHeaders = /^(#+)(.*?)(?<!#)$/gm;
+                            let matchHeader;
+
+                            do {
+                                matchHeader = reHeaders.exec(doc);
+                                if (matchHeader && matchHeader.length === 3) {
+                                    toc.push({
+                                        level: matchHeader[1].length,
+                                        content: matchHeader[2]
+                                    });
+                                }
+                            } while (matchHeader);
+                        } catch(err) {
+                            console.error(`${docIndexFile} referenced ${docName} but could not read the file to create TOC`);
+                        }
+
                         versions[version].push({
                             name: match[1],
-                            link: `/${baseDir}/${name}/${version}/${sanitizedLink}`
+                            link: `/${baseDir}/${name}/${version}/${sanitizedLink}`,
+                            toc
                         });
                     }
                 }
