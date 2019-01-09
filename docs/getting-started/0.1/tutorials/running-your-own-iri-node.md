@@ -76,6 +76,6 @@ http://localhost.com:14265
 Try [sending your first data transaction](getting-started/sending-your-first-data-transaction.md) to your IRI node. In the example code, change the `provider` field to http://localhost.com:14265:
 ```js
 const iota = Iota.composeAPI({
-    provider: ~~'https://nodes.devnet.iota.org:443'~~ 'http://localhost.com:14265'
+    provider: 'http://localhost.com:14265'
 });
 ```

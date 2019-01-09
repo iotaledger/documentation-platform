@@ -89,7 +89,7 @@
             ]
         },
         {
-            "header": "IOTA Token",
+            "header": "IOTA Basics",
             "folder": "iota-basics",
             "subheader": "Learn about the basic ideas and concepts around IOTA",
             "topics": [
@@ -202,9 +202,9 @@
             ]
         },
         {
-            "header": "Hub",
+            "header": "HUB",
             "folder": "hub",
-            "subheader": "Learn about the basic ideas and concepts behind IOTA Hub",
+            "subheader": "Learn about the basic ideas and concepts behind IOTA HUB",
             "topics": [
                 {
                     "href": "/docs/hub/0.1/overview",
@@ -261,6 +261,18 @@
                 {
                     "href": "/docs/compass/0.1/concepts/functions",
                     "header": "Compass Functions",
+                    "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
+                }
+            ]
+        },
+        {
+            "header": "Trinity Wallet",
+            "folder": "trinity",
+            "subheader": "Learn about the basic ideas and concepts behind Trinity Wallet",
+            "topics": [
+                {
+                    "href": "/docs/trinity/0.1/overview",
+                    "header": "Overview",
                     "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
                 }
             ]
