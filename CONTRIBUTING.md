@@ -1,17 +1,14 @@
-# Ways to contribute to IOTA Documentation
+# Contributing to IOTA Documentation
 
-## Write new content
+We encourage everyone with knowledge of IOTA to contribute to our documentation. To discuss the documentation, join our #Documentation channel on [Discord](https://discordapp.com/invite/fNGZXvh).
 
-1. See [open issues](https://github.com/iotaledger/documentation/issues).
-2. Filter by the `Help Wanted` label.
-3. Pick something that you'd like to work on.
-4. Comment on the issue that you'd like to work on.
-5. [See our writing guide](#writing-guide).
-6. [See how to work with GitHub and Git](#Use-GitHub-and-Git).
-
-We'll be adding more of these issues in the coming weeks as we identify more content to be added.
-
-Use our [Discord](https://discordapp.com/invite/fNGZXvh) to join the discussion in the #Documentation channel and ask questions.
+1. See our [open issues](https://github.com/iotaledger/documentation/issues)
+2. Filter the issues by the `Help Wanted` label
+3. Pick something that you'd like to work on
+4. Comment on the issue that you'd like to work on
+5. [Set up GitHub](#setting-up-github)
+6. Start writing your content using our [writing guide](#writing-guide)
+7. [Push your content to our GitHub repository](#pushing-content-to-our-github-repository)
 
 Thanks! :heart:
 
@@ -41,7 +38,7 @@ We recommend using a code editor that supports markdown files, for example [Visu
 | Always use the active voice where possible | '~~The active voice must always be used where possible~~.' 'You must always use the active voice where possible.'
 | Never use a foreign phrase, a scientific word or a jargon word if you can think of an everyday English equivalent | ~~E.g~~ For example
 
-Research shows that the above holds true even for very technical audience. See the [GOV.UK style guide](https://www.gov.uk/guidance/content-design/writing-for-gov-uk) for example.
+Research shows that the above holds true even for very technical audience. See the [GOV.UK style guide](https://www.gov.uk/guidance/content-design/writing-for-gov-uk) for examples.
 
 ### UK English or US English?
 
@@ -113,77 +110,76 @@ Concept articles must not include task information or reference information.
 
 When adding code examples and snippets into an article, make sure you format it accordingly and add language identifiers for correct code highlighting. See [Creating and highlighting code blocks](https://help.github.com/articles/creating-and-highlighting-code-blocks/) for more information.
 
-## Use GitHub and Git
+## Setting up GitHub
 
-If you are familiar with Git and GitHub and know how to create a PR from your own fork of this repo, you can just skip to [our writing guide](#writing-guide).
+Our documentation is hosted on GitHub, which is a version control tool. To send us your content, you must use Git or GitHub.
 
-### Setting up your fork of the repository
+If you already have a GitHub account and Git is set up on your computer, go straight to [Creating a new branch](#creating-a-new-branch).
 
-1. Create a new GitHub account if you don't have one yet.
-2. Set up your computer with Git. Follow the instructions in the [Setting up Git Tutorial](https://help.github.com/articles/set-up-git/).
-3. Create your own fork of this repository. Use the **Fork** button at the top of the page.
-4. Copy your fork to your local machine. Use GitBash or any other command prompt and enter:
+1. [Create a new GitHub account](https://github.com/) if you don't already have one
+2. [Set up Git](https://help.github.com/articles/set-up-git/)
+3. Go to our [documentation repository](https://github.com/iotaledger/documentation.git) and click **Fork** at the top of the page
+4. Copy your fork to your local machine by doing the following in the command prompt:
+    ```cmd
+    git clone https://github.com/{your username}/documentation
+    ```
+5. Create a reference to the root repository by doing the following:
 
-```cmd
-git clone https://github.com/{your user name}/documentation
-```
+    ```cmd
+    cd documentation
+    git remote add upstream https://github.com/iotaledger/documentation.git
+    git fetch upstream
+    ```
+Now, your documentation directory will contain all the documentations files.
 
-Next, create a reference to the root repository by entering these commands:
+### Creating a new branch
 
-```cmd
-cd documentation
-git remote add upstream https://github.com/iotaledger/documentation.git
-git fetch upstream
-```
+Branches help make contributing seamless. Make sure each branch only addresses one article to make adding the changes to the documentation repository as easy as possible. The following types of contribution are appropriate for a new branch:
 
-You only need to do the above once!
-
-### Work with branches to contribute content
-
-Branches help make contributing seamless. Make sure each branch only addresses one concept/article to make adding the changes to the documentation repository as easy as possible. The following types of contribution are appropriate for a new branch:
-
-- A new documentation article - this will be a single markdown (.md) file.
+- A new article ( a single markdown file)
 - Grammar edits and spelling corrections on an existing article
 
-#### Create a new branch
+1. Open GitBash
+2. Do the following:
+    ```
+    git pull upstream master:<your branch name>
+    git push origin <your branch name>
+    ```
+3. To start working on your local copy of the branch, do the following:
+    ```
+    git checkout <your branch name>
+    ```
 
-1. Open GitBash.
-2. Type `git pull upstream master:<your branch name>` at the prompt and press `Enter`.
-3. Type `git push origin <your branch name>` at the prompt. This let's the GitHub repository know of the branch.
-4. Type `git checkout <your branch name>` to start working on your local copy of the branch.
+Please follow our [writing guide](#writing-guide) when you write and edit articles.
 
-#### Edit and add documentation content
+## Pushing content to our GitHub repository
 
-1. Please see our [writing guide](#writing-guide) before you start writing and editing articles.
-2. Edit the content.
-3. When you are done, type the following in the prompt:
-```cmd
-git add .
-```
-Note:  you may be asked to set your account's default identity
-```
-Please tell me who you are
-Run 
-git config --global user.email "you@example.com"
-git config --global user.name "Your Name"
-```
-Then, continue committing your changes
-```
-git commit -v -a -m "<Describe the changes you made>"
-```
-4. Make any additional changes to the same file/s in subsequent commits as you work. Not all changes need to be in the same commit.
+1. After writing or editing content in your local copy of the branch, do the following in the command prompt:
+    ```cmd
+    git add .
+    ```
+  **Note:**  you may be asked to set your account's default identity
+    ```
+    Please tell me who you are
+    Run 
+    git config --global user.email "you@example.com"
+    git config --global user.name "Your Name"
+    ```
+2. Commit your changes by doing the following:
+    ```
+    git commit -v -a -m "<Describe the changes you made>"
+    ```
+  **Note:** Make any additional changes to the same files in subsequent commits as you work. Not all changes need to be in the same commit.
 
-#### Submit a pull request to the Documentation repository for review
-
-When you're finished editing the content:
-
-1. Type `git push origin <your branch name>` at the command prompt.
-2. In GitHub, go to the repository that you forked from `iotaledger/documentation`.
-3. Click the **Pull Request** button at the top of the page.
-4. Ensure that the Base branch is `iotaledger/documentation@master` and the Head branch is `<your username>/documentation@<your branch name>`.
-5. Click the **Update Commit Range** button or the **Compare & pull request** button.
-6. Give your pull request a Title, and describe all the changes you're making.
-7. Submit the pull request.
+3. Push your changes by doing the following:
+    ```
+    git push origin <your branch name>
+    ```
+4. In GitHub, go to the repository that you forked from `iotaledger/documentation`, and click **Pull Request** at the top of the page
+5. Make sure that the base branch is `iotaledger/documentation@master` and the head branch is `<your username>/documentation@<your branch name>`
+6. Click **Update Commit Range** or **Compare & pull request**
+7. Give your pull request a title, and describe all the changes you're making
+8. Click **Submit**
 
 Thank you! We will now process your pull request. If there are any edits to make, we will ask you in comments on the pull request you created. 
 
