@@ -71,12 +71,13 @@ const buildMenuItems = baseDir => {
                                 if (matchHeader && matchHeader.length === 3) {
                                     toc.push({
                                         level: matchHeader[1].length,
-                                        content: matchHeader[2]
+                                        content: extractContent(matchHeader[2])
                                     });
                                 }
                             } while (matchHeader);
                         } catch(err) {
-                            console.error(`${docIndexFile} referenced ${docName} but could not read the file to create TOC`);
+                            // eslint-disable-next-line no-console
+                            console.error(`${docIndexFile} referenced ${docName} but could not read the file to create TOC`, err);
                         }
 
                         versions[version].push({
@@ -93,6 +94,43 @@ const buildMenuItems = baseDir => {
     });
     return menu;
 };
+
+function extractContent(markdown) {
+    // The header might be contain a link so we need to extract
+    // the actual label
+    // e.g. [**`mylabel`**](https://someplace)
+    let content = markdown.trim();
+
+    const reLink = /^(?:\[)(.*?)(?:\])\(.*\)/;
+
+    const match = reLink.exec(content);
+    if (match && match.length === 2) {
+        // Found a link so just extract the content
+        content = match[1];
+    }
+
+    // Now remove any additional formatting like bold, italic, inline
+    content = stripWrapper(content, '\\*\\*');
+    content = stripWrapper(content, '\\*');
+    content = stripWrapper(content, '__');
+    content = stripWrapper(content, '_');
+    content = stripWrapper(content, '`');
+
+    return content;
+}
+
+function stripWrapper(markdown, wrapper) {
+    // If the content is wrappedin the marker then remove it
+    // e.g. **my label**
+    const reWrapper = new RegExp(`(${wrapper})(.+?)(${wrapper})`);
+
+    const match = reWrapper.exec(markdown);
+    if (match && match.length === 4) {
+        markdown = match[2];
+    }
+
+    return markdown;
+}
 
 module.exports = {
     getDocPages,
