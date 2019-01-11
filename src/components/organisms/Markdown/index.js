@@ -48,6 +48,9 @@ class Markdown extends PureComponent {
     componentDidMount() {
         let content = this.fixReprismSyntaxHighlighting(this.props.source);
 
+        // Strip the h1 from the start of the content
+        content = content.replace(/(^# .*)/, '').trim();
+
         const tabMatches = this.findTabContainers(content);
         for (let i = 0; i < tabMatches.length; i++) {
             this.tabContainers.push(this.findTabs(tabMatches[i]));
