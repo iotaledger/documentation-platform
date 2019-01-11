@@ -4,9 +4,8 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import { Head, withRouteData, withRouter, withSiteData } from 'react-static';
 import BottomSticky from '../components/atoms/BottomSticky';
 import BottomStop from '../components/atoms/BottomStop';
-import ScrollInContainer from '../components/atoms/ScrollInContainer';
+import DropSelector from '../components/atoms/DropSelector';
 import ScrollToTop from '../components/atoms/ScrollToTop';
-import FloatingMenu from '../components/ci/FloatingMenu';
 import { DocPageLayout, maxWidthLayout, TabletHidden } from '../components/ci/Layouts';
 import Navigator from '../components/ci/Navigator';
 import StickyHeader from '../components/ci/StickyHeader';
@@ -18,7 +17,7 @@ import SideMenu from '../components/molecules/SideMenu';
 import Markdown from '../components/organisms/Markdown';
 import contentHomePage from '../contentHomePage.json';
 import { submitFeedback } from '../utils/api';
-import { createFloatingMenuEntries, parseProjectUrl, replaceVersion, getVersions, getProjectIndex } from '../utils/helpers';
+import { createDropSelectorEntries, getProjectIndex, getVersions, parseProjectUrl, replaceVersion, getProjectTitle } from '../utils/helpers';
 import { localStorageSet } from '../utils/localStorage';
 import { ContentMenuPropTypes } from '../utils/propTypes.js';
 import { extractSearchQuery } from '../utils/search';
@@ -51,6 +50,7 @@ class Doc extends React.Component {
 
         this.changeVersion = this.changeVersion.bind(this);
         this.handleBurgerClick = this.handleBurgerClick.bind(this);
+        this.handleChangeProject = this.handleChangeProject.bind(this);
     }
 
     changeVersion(newVersion) {
@@ -77,6 +77,10 @@ class Doc extends React.Component {
 
     handleBurgerClick() {
         this.setState({ isMenuOpen: !this.state.isMenuOpen });
+    }
+
+    handleChangeProject(proj) {
+        this.props.history.push(proj);
     }
 
     render() {
@@ -110,28 +114,21 @@ class Doc extends React.Component {
                 <div id="floating-menu-top-limit"></div>
                 <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto' }}>
                     <section className="left-column">
-                        <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-                            <ScrollInContainer
-                                topOffset={30}
-                                bottomOffset={120}
-                                topMarker="#floating-menu-top-limit"
-                                bottomMarker="#floating-menu-bottom-limit"
-                                widthContainer=".left-column">
-                                <FloatingMenu
-                                    menuItems={createFloatingMenuEntries(contentHomePage.content, this.props.menu)}
-                                    highlightedItem={this.state.projectName}
-                                />
-                            </ScrollInContainer>
-                        </div>
+                        <DropSelector
+                            items={createDropSelectorEntries(contentHomePage, this.props.menu)} 
+                            value={getProjectTitle(this.state, contentHomePage)}
+                            onChange={(val) => this.handleChangeProject(val)}
+                            style={{marginBottom: '20px'}}
+                            />
+                        <TreeMenu
+                                menuItems={this.state.currentProjectIndex}
+                                highlightedItem={this.state.projectFullURL}
+                            />
                     </section>
                     <section className="middle-column">
                         <Markdown source={this.props.markdown} query={extractSearchQuery(this.props.location)} />
                     </section>
                     <section className="right-column">
-                        <TreeMenu
-                            menuItems={this.state.currentProjectIndex}
-                            highlightedItem={this.state.projectFullURL}
-                        />
                     </section>
                 </DocPageLayout>
                 <div id="floating-menu-bottom-limit" />

@@ -60,6 +60,17 @@ export function getLatestVersionLinks(menuData) {
     return latestVersionLinks;
 }
 
+export function createDropSelectorEntries(contentHomePage, menuData) {
+    const latestVersionLinks = getLatestVersionLinks(menuData);
+
+    return contentHomePage.content.map(entry => {
+        return {
+            title: entry.header,
+            value: latestVersionLinks[entry.folder]
+        };
+    });
+}
+
 export function createFloatingMenuEntries(contentHomePage, menuData) {
     const latestVersionLinks = getLatestVersionLinks(menuData);
 
