@@ -15,8 +15,9 @@ import CardContainer from '../components/molecules/HomePageCard';
 import ProjectTopicsContainer from '../components/molecules/ProjectTopicsContainer';
 import SideMenu from '../components/molecules/SideMenu';
 import contentHomePage from '../contentHomePage.json';
-import { submitFeedback } from '../utils/feedbackHelper';
+import { submitFeedback } from '../utils/api';
 import { createFloatingMenuEntries } from '../utils/helpers';
+import { localStorageSet } from '../utils/localStorage';
 import { ContentMenuPropTypes } from '../utils/propTypes.js';
 import Container from './Container';
 import './home.css';
@@ -38,6 +39,12 @@ class Home extends React.Component {
         };
 
         this.handleBurgerClick = this.handleBurgerClick.bind(this);
+    }
+
+    componentDidMount() {
+        // We must store last path in here as when we create react-static
+        // there is no other way of getting where we were for 404 logging
+        localStorageSet('lastDocPath', '/home/');
     }
 
     handleBurgerClick() {
@@ -101,7 +108,7 @@ class Home extends React.Component {
                 <EmailSignup />
                 <BottomSticky zIndex={10}>
                     <TabletHidden>
-                        <Feedback onSubmit={(data) => { submitFeedback('/docs/home/', data); }} />
+                        <Feedback onSubmit={(data) => submitFeedback('/home/', data)} />
                     </TabletHidden>
                 </BottomSticky>
                 <BottomSticky horizontalAlign="right">

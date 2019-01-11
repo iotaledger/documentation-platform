@@ -1,4 +1,4 @@
 {
-  "domain": "https://us-central1-iota-documentation.cloudfunctions.net",
-  "siteRoot": "https://iota-documentation.firebaseapp.com"
+  "apiEndpoint": "https://iota-documentation-api.dag.sh",
+  "siteRoot": "https://iota-documentation.dag.sh"
 }

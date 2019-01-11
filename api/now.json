@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "name": "iota-documentation-api",
+    "alias": "iota-documentation-api.dag.sh",
+    "builds": [
+        {
+            "src": "./dist/index.js",
+            "use": "@now/node-server"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "/dist/index.js"
+        }
+    ]
+}

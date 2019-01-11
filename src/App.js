@@ -3,7 +3,6 @@ import nprogress from 'nprogress';
 import 'nprogress/nprogress.css';
 import React from 'react';
 import { hot } from 'react-hot-loader';
-import { LastLocationProvider } from 'react-router-last-location';
 import { onLoading, Router } from 'react-static';
 import Routes from 'react-static-routes';
 import './style.css';
@@ -23,9 +22,7 @@ class App extends React.Component {
     render() {
         return (
             <Router>
-                <LastLocationProvider>
-                    <Routes />
-                </LastLocationProvider>
+                <Routes />
             </Router>
         );
     }

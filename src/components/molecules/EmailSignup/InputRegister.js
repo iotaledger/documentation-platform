@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import api from '../../../utils/api';
+import { submitEmail } from '../../../utils/api';
 
 class InputRegister extends React.Component {
     constructor(props) {
@@ -31,8 +31,8 @@ class InputRegister extends React.Component {
             this.setState({ error: 'Please provide a valid e-mail address.' });
         } else {
             this.setState({ loading: true }, async () => {
-                const response = await api('submitEmail', { email });
-                this.setState({ success: true, loading: false, apiMessage: response.message });
+                const response = await submitEmail(email);
+                this.setState({ success: response.success, loading: false, apiMessage: response.message });
             });
         }
     }

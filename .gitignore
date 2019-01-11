@@ -1,5 +1,5 @@
 # dependencies
-/node_modules
+node_modules
 
 # testing
 /coverage
@@ -21,4 +21,6 @@
 .prettierrc
 /src/components/Search/*.json
 /src/components/Search/wrapper.js
-/.firebase
+
+/deploy/dist
+/api/data/config.json

@@ -17,8 +17,9 @@ import Feedback from '../components/molecules/Feedback';
 import SideMenu from '../components/molecules/SideMenu';
 import Markdown from '../components/organisms/Markdown';
 import contentHomePage from '../contentHomePage.json';
-import { submitFeedback } from '../utils/feedbackHelper';
+import { submitFeedback } from '../utils/api';
 import { createFloatingMenuEntries, parseProjectUrl, replaceVersion } from '../utils/helpers';
+import { localStorageSet } from '../utils/localStorage';
 import { ContentMenuPropTypes } from '../utils/propTypes.js';
 import { extractSearchQuery } from '../utils/search';
 import Container from './Container';
@@ -70,6 +71,10 @@ class Doc extends React.Component {
             currentVersions: Object.keys(this.props.menu[projectParts.projectName].versions),
             currentProjectIndex: this.props.menu[projectParts.projectName].versions[projectParts.projectVersion]
         });
+
+        // We must store last path in here as when we create react-static
+        // there is no other way of getting where we were for 404 logging
+        localStorageSet('lastDocPath', this.props.location.pathname);
     }
 
     handleBurgerClick() {
@@ -139,7 +144,7 @@ class Doc extends React.Component {
                 />
                 <BottomSticky zIndex={10}>
                     <TabletHidden>
-                        <Feedback onSubmit={(data) => { submitFeedback(this.props.location.pathname, data); }} />
+                        <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)} />
                     </TabletHidden>
                 </BottomSticky>
                 <BottomSticky horizontalAlign="right">

@@ -1,24 +1,23 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { withLastLocation } from 'react-router-last-location';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { Head, withRouteData, withRouter, withSiteData } from 'react-static';
 import ParallaxContainer from '../components/atoms/ParallaxContainer';
 import StickyHeader from '../components/ci/StickyHeader';
 import SideMenu from '../components/molecules/SideMenu';
 import contentHomePage from '../contentHomePage.json';
+import { submitMissing } from '../utils/api';
+import { localStorageGet } from '../utils/localStorage';
 import { ContentMenuPropTypes } from '../utils/propTypes.js';
 import Container from './Container';
 import './notFound.css';
-import { submitMissing } from '../utils/missingHelper';
 
 class NotFound extends React.PureComponent {
     static propTypes = {
         repoName: PropTypes.string.isRequired,
         menu: ContentMenuPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
-        location: ReactRouterPropTypes.location,
-        lastLocation: ReactRouterPropTypes.location
+        location: ReactRouterPropTypes.location
     };
 
     constructor(props) {
@@ -36,7 +35,12 @@ class NotFound extends React.PureComponent {
     }
 
     componentDidMount() {
-        submitMissing(this.props.location.pathname, this.props.lastLocation ? this.props.lastLocation.pathname : undefined);
+        // We must get the last path in here as when we create react-static
+        // there is no other way of getting where we were for 404 logging
+        // this can be empty
+        const lastLocation = localStorageGet('lastDocPath');
+
+        submitMissing(this.props.location.pathname, lastLocation);
     }
 
     render() {
@@ -81,4 +85,4 @@ class NotFound extends React.PureComponent {
     }
 }
 
-export default withLastLocation(withSiteData(withRouteData(withRouter(NotFound))));
+export default withSiteData(withRouteData(withRouter(NotFound)));

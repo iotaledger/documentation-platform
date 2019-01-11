@@ -77,7 +77,7 @@ const buildMenuItems = baseDir => {
                             } while (matchHeader);
                         } catch(err) {
                             // eslint-disable-next-line no-console
-                            console.error(`${docIndexFile} referenced ${docName} but could not read the file to create TOC`, err);
+                            console.error(`${docIndexFile} referenced ${docName} but could not read the file to create TOC`);
                         }
 
                         versions[version].push({

@@ -1,0 +1,7 @@
+{
+    "dynamoDbConnection": {
+        "region": "AWS-REGION",
+        "accessKeyId": "AWS-ACCESS-KEY-ID",
+        "secretAccessKey": "AWS-SECRET-ACCESS-KEY"
+    }
+}

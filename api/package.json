@@ -1,0 +1,41 @@
+{
+    "name": "documentation-api",
+    "description": "API for IOTA Documentation",
+    "version": "0.1.0",
+    "author": "Martyn Janes <martyn.janes@iota.org>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/iotaledger/documentation.git/tree/master/api"
+    },
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "build-clean": "rimraf ./dist/*",
+        "build-compile": "tsc",
+        "build-watch": "tsc --watch",
+        "build-lint": "tslint -p ./tsconfig.json -c ./tslint.json -t verbose",
+        "build": "npm-run-all build-clean build-compile build-lint",
+        "serve-mon": "nodemon ./dist/index",
+        "start-dev": "run-p serve-mon build-watch",
+        "start": "node ./dist/index",
+        "deploy": "now && now alias"
+    },
+    "engines": {
+        "node": "10.1.0"
+    },
+    "dependencies": {
+        "aws-sdk": "^2.384.0",
+        "body-parser": "^1.18.3",
+        "express": "^4.16.4"
+    },
+    "devDependencies": {
+        "@types/node": "^10.12.12",
+        "nodemon": "^1.18.7",
+        "npm-run-all": "^4.1.5",
+        "rimraf": "^2.6.2",
+        "tslint": "^5.11.0",
+        "tslint-eslint-rules": "^5.4.0",
+        "tslint-microsoft-contrib": "^6.0.0",
+        "typescript": "^3.2.1"
+    }
+}

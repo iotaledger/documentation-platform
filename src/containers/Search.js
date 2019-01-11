@@ -16,7 +16,8 @@ import SideMenu from '../components/molecules/SideMenu';
 import contentHomePage from '../contentHomePage.json';
 import corpus from '../searchData/corpus.json';
 import json from '../searchData/index.json';
-import { submitFeedback } from '../utils/feedbackHelper';
+import { submitFeedback } from '../utils/api';
+import { localStorageSet } from '../utils/localStorage';
 import { ContentMenuPropTypes } from '../utils/propTypes.js';
 import { extractSearchQuery } from '../utils/search';
 import Container from './Container';
@@ -49,6 +50,9 @@ class Search extends React.Component {
 
     componentDidMount() {
         this.search();
+        // We must store last path in here as when we create react-static
+        // there is no other way of getting where we were for 404 logging
+        localStorageSet('lastDocPath', this.props.location.pathname);
     }
 
     componentDidUpdate(prevProps) {
