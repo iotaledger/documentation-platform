@@ -60,6 +60,10 @@ We always write in US English.
 |Article titles in the 'How to guides' section should always start with an infinitive| 'Run the IRI' not 'Running the IRI'|
 |Article titles in the 'References' section should always be plural nouns| 'IRI configuration options' not 'IRI configuration' or 'Configuring the IRI'|
 
+### First paragraph
+
+Always embolded the first paragraph of an article. This paragraph should explain the contents of the article in as few words as possible.
+
 ### How-to guides
 
 A how-to guide is an article that helps users achieve a task.
