@@ -49,7 +49,7 @@ class Markdown extends PureComponent {
         let content = this.fixReprismSyntaxHighlighting(this.props.source);
 
         // Strip the h1 from the start of the content
-        content = content.replace(/(^# .*)/, '').trim();
+        content = content.trim().replace(/(^# .*)/, '').trim();
 
         const tabMatches = this.findTabContainers(content);
         for (let i = 0; i < tabMatches.length; i++) {
