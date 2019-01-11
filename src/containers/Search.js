@@ -126,8 +126,10 @@ class Search extends React.Component {
                     contentHomePage={contentHomePage}
                     menuData={this.props.menu}
                     onCloseClick={this.handleBurgerClick} />
-                <section className="sub-header">
-                    <span className="sub-header__title sub-header-title__fixed">Search results</span>
+                <section className="sub-header__wrapper">
+                    <section className="sub-header">
+                        <span className="sub-header__title sub-header-title__fixed">Search results</span>
+                    </section>
                 </section>
                 <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto', paddingTop: '40px' }}>
                     <section className="left-column">

@@ -135,15 +135,42 @@ export function buildItemTree(projectIndex, projectFullURL) {
     return tree;
 }
 
+export function getVersions(projectName, menuData) {
+    return menuData[projectName] ? Object.keys(Object.keys(menuData[projectName].versions)) : [];
+}
 
 export function getLatestVersion(projectName, menuData) {
     return menuData[projectName] ? Object.keys(menuData[projectName].versions).slice(-1) : '';
 }
 
+export function getProjectTitle(projectUrlParts, contentHomePage) {
+    let projName = projectUrlParts.projectName;
+
+    const content = contentHomePage.content.find(c => c.folder === projName);
+
+    if (content) {
+        projName = content.header;
+    }
+
+    return projName;
+}
+
 export function getDocumentTitle(projectUrlParts, menuData) {
     const projectIndex = getProjectIndex(projectUrlParts.projectName, projectUrlParts.projectVersion, menuData);
     const indexItem = getIndexItem(projectIndex, projectUrlParts.projectFullURL);
-    return indexItem ? indexItem.name : '';
+    let docTitle;
+    if (indexItem) {
+        if (indexItem.toc) {
+            const h1 = indexItem.toc.find(docHeader => docHeader.level === 1);
+            if (h1) {
+                docTitle = h1.content;
+            }
+        }
+    }
+    if (!docTitle) {
+        docTitle = projectUrlParts.projectDocTitle;
+    }
+    return docTitle;
 }
 
 export function getProjectIndex(projectName, projectVersion, menuData) {

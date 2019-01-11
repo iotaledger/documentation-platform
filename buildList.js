@@ -90,7 +90,7 @@ const buildMenuItems = baseDir => {
             } while (match);
         });
 
-        menu[name] = { name, versions };
+        menu[name] = { versions };
     });
     return menu;
 };

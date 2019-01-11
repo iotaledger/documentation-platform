@@ -18,7 +18,7 @@ import SideMenu from '../components/molecules/SideMenu';
 import Markdown from '../components/organisms/Markdown';
 import contentHomePage from '../contentHomePage.json';
 import { submitFeedback } from '../utils/api';
-import { createFloatingMenuEntries, parseProjectUrl, replaceVersion } from '../utils/helpers';
+import { createFloatingMenuEntries, parseProjectUrl, replaceVersion, getVersions, getProjectIndex } from '../utils/helpers';
 import { localStorageSet } from '../utils/localStorage';
 import { ContentMenuPropTypes } from '../utils/propTypes.js';
 import { extractSearchQuery } from '../utils/search';
@@ -44,7 +44,6 @@ class Doc extends React.Component {
             projectDocParts: [],
             projectDoc: '',
             projectDocTitle: '',
-            currentProject: {},
             currentVersions: [],
             currentProjectIndex: [],
             isMenuOpen: false
@@ -67,9 +66,8 @@ class Doc extends React.Component {
         const projectParts = parseProjectUrl(this.props.location.pathname);
         this.setState({
             ...projectParts,
-            currentProject: this.props.menu[projectParts.projectName],
-            currentVersions: Object.keys(this.props.menu[projectParts.projectName].versions),
-            currentProjectIndex: this.props.menu[projectParts.projectName].versions[projectParts.projectVersion]
+            currentVersions: getVersions(projectParts.projectName, this.props.menu),
+            currentProjectIndex: getProjectIndex(projectParts.projectName, projectParts.projectVersion, this.props.menu)
         });
 
         // We must store last path in here as when we create react-static
@@ -100,7 +98,8 @@ class Doc extends React.Component {
                     highlightedItem={this.state.projectFullURL} />
                 <SubHeader
                     history={this.props.history}
-                    data={this.props.menu}
+                    contentHomePage={contentHomePage}
+                    menuData={this.props.menu}
                     pathname={this.props.location.pathname}
                 />
                 <VersionPicker

@@ -39,7 +39,6 @@ export const ContentHomePagePropTypes = PropTypes.shape({
 
 export const ContentMenuPropTypes = PropTypes.objectOf(
     PropTypes.shape({
-        name: PropTypes.string.isRequired,
         versions: PropTypes.objectOf(PropTypes.arrayOf(
             PropTypes.shape({
                 name: PropTypes.string.isRequired,
