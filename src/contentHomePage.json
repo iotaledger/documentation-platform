@@ -43,7 +43,7 @@
             "text": "What is IOTA?"
         },
         {
-            "href": "/docs/getting-started/0.1/introduction/what-is-a-dlt",
+            "href": "/docs/getting-started/0.1/introduction/what-is-dlt",
             "image": "../assets/1.png",
             "alt": "IOTA Foundation",
             "text": "What is DLT?"
@@ -67,12 +67,12 @@
                     "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
                 },
                 {
-                    "href": "/docs/getting-started/0.1/introduction/what-is-a-dlt",
+                    "href": "/docs/getting-started/0.1/introduction/what-is-dlt",
                     "header": "What is DLT?",
                     "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
                 },
                 {
-                    "href": "/docs/getting-started/0.1/getting-started/sending-your-first-transaction-using-nodejs",
+                    "href": "/docs/getting-started/0.1/tutorials/sending-your-first-data-transaction-with-nodejs",
                     "header": "Send your first Transaction",
                     "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
                 },
@@ -109,7 +109,7 @@
                     "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
                 },
                 {
-                    "href": "https://iota.org",
+                    "href": "/docs/iota-basics/0.1/networks/the-mainnet",
                     "header": "Networks",
                     "subheader": "Learn about the basic ideas and concepts around IOTA and etc"
                 },
@@ -202,7 +202,7 @@
             ]
         },
         {
-            "header": "HUB",
+            "header": "Hub",
             "folder": "hub",
             "subheader": "Learn about the basic ideas and concepts behind IOTA HUB",
             "topics": [
