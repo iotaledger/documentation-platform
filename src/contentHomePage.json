@@ -28,7 +28,7 @@
         },
         {
             "query": "hub",
-            "text": "HUB"
+            "text": "Hub"
         },
         {
             "query": "trinity",
@@ -204,7 +204,7 @@
         {
             "header": "Hub",
             "folder": "hub",
-            "subheader": "Learn about the basic ideas and concepts behind IOTA HUB",
+            "subheader": "Learn about the basic ideas and concepts behind IOTA Hub",
             "topics": [
                 {
                     "href": "/docs/hub/0.1/overview",

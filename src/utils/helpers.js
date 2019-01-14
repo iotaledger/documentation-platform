@@ -25,7 +25,7 @@ export const getPreviousPage = (projectUrlParts, menuData) => {
 };
 
 export function parseProjectUrl(projectFullURL) {
-    ///docs/HUB/2.0/something/something/something
+    ///docs/Hub/2.0/something/something/something
 
     const urlParts = projectFullURL.split('/');
     const projectName = urlParts[2];
@@ -44,7 +44,7 @@ export function parseProjectUrl(projectFullURL) {
 }
 
 export function combineProjectUrl(projectParts) {
-    ///docs/HUB/2.0/something/something/something
+    ///docs/Hub/2.0/something/something/something
     return `/docs/${projectParts.projectName}/${projectParts.projectVersion}/${projectParts.projectDoc}`;
 }
 
@@ -95,14 +95,13 @@ export function createTableOfContentsEntries(projectUrlParts, menuData) {
 export function createFloatingMenuEntries(contentHomePage, menuData) {
     const latestVersionLinks = getLatestVersionLinks(menuData);
 
-    return [{ name: 'New To IOTA?', link: '/' }]
-        .concat(contentHomePage.map(entry => {
+    return contentHomePage.map(entry => {
             return {
                 name: entry.header,
                 folder: entry.folder,
                 link: latestVersionLinks[entry.folder]
             };
-        }));
+        });
 }
 
 export function createSideMenuEntries(contentHomePage, menuData, projectFullURL) {
