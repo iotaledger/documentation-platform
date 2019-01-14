@@ -5,18 +5,20 @@ import { Head, withRouteData, withRouter, withSiteData } from 'react-static';
 import BottomSticky from '../components/atoms/BottomSticky';
 import BottomStop from '../components/atoms/BottomStop';
 import DropSelector from '../components/atoms/DropSelector';
+import ScrollInContainer from '../components/atoms/ScrollInContainer';
 import ScrollToTop from '../components/atoms/ScrollToTop';
 import Feedback from '../components/molecules/Feedback';
 import Navigator from '../components/molecules/Navigator';
 import SideMenu from '../components/molecules/SideMenu';
 import SubHeader from '../components/molecules/SubHeader';
+import TableOfContents from '../components/molecules/TableOfContents';
 import TreeMenu from '../components/molecules/TreeMenu';
 import VersionPicker from '../components/molecules/VersionPicker';
 import Markdown from '../components/organisms/Markdown';
 import StickyHeader from '../components/organisms/StickyHeader';
 import contentHomePage from '../contentHomePage.json';
 import { submitFeedback } from '../utils/api';
-import { createDropSelectorEntries, getProjectIndex, getProjectTitle, getVersions, parseProjectUrl, replaceVersion } from '../utils/helpers';
+import { createDropSelectorEntries, createTableOfContentsEntries, getProjectIndex, getProjectTitle, getVersions, parseProjectUrl, replaceVersion } from '../utils/helpers';
 import { localStorageSet } from '../utils/localStorage';
 import { ContentMenuPropTypes } from '../utils/propTypes.js';
 import { extractSearchQuery } from '../utils/search';
@@ -45,6 +47,7 @@ class Doc extends React.Component {
             projectDocTitle: '',
             currentVersions: [],
             currentProjectIndex: [],
+            currentTableOfContents: [],
             isMenuOpen: false
         };
 
@@ -67,7 +70,8 @@ class Doc extends React.Component {
         this.setState({
             ...projectParts,
             currentVersions: getVersions(projectParts.projectName, this.props.menu),
-            currentProjectIndex: getProjectIndex(projectParts.projectName, projectParts.projectVersion, this.props.menu)
+            currentProjectIndex: getProjectIndex(projectParts.projectName, projectParts.projectVersion, this.props.menu),
+            currentTableOfContents: createTableOfContentsEntries(projectParts, this.props.menu)
         });
 
         // We must store last path in here as when we create react-static
@@ -115,20 +119,32 @@ class Doc extends React.Component {
                 <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto' }}>
                     <section className="left-column">
                         <DropSelector
-                            items={createDropSelectorEntries(contentHomePage, this.props.menu)} 
+                            items={createDropSelectorEntries(contentHomePage, this.props.menu)}
                             value={getProjectTitle(this.state, contentHomePage)}
                             onChange={(val) => this.handleChangeProject(val)}
-                            style={{marginBottom: '28px'}}
-                            />
+                            style={{ marginBottom: '28px' }}
+                        />
                         <TreeMenu
-                                menuItems={this.state.currentProjectIndex}
-                                highlightedItem={this.state.projectFullURL}
-                            />
+                            menuItems={this.state.currentProjectIndex}
+                            highlightedItem={this.state.projectFullURL}
+                        />
                     </section>
                     <section className="middle-column">
+                        <div className="middle-toc">
+                            <TableOfContents items={this.state.currentTableOfContents} title="Sections On This Page" compact={true} />
+                        </div>
                         <Markdown source={this.props.markdown} query={extractSearchQuery(this.props.location)} />
                     </section>
                     <section className="right-column">
+                        <ScrollInContainer
+                            topOffset={20}
+                            bottomOffset={120}
+                            topMarker="#floating-menu-top-limit"
+                            bottomMarker="#floating-menu-bottom-limit"
+                            widthContainer=".right-column"
+                        >
+                            <TableOfContents items={this.state.currentTableOfContents} title="Sections On This Page" />
+                        </ScrollInContainer>
                     </section>
                 </DocPageLayout>
                 <div id="floating-menu-bottom-limit" />

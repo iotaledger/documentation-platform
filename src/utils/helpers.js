@@ -1,3 +1,5 @@
+import { sanitizeHashId } from './paths';
+
 export const getNextPage = (projectUrlParts, menuData) => {
     const projectIndex = getProjectIndex(projectUrlParts.projectName, projectUrlParts.projectVersion, menuData);
     if (projectIndex) {
@@ -69,6 +71,25 @@ export function createDropSelectorEntries(contentHomePage, menuData) {
             value: latestVersionLinks[entry.folder]
         };
     });
+}
+
+export function createTableOfContentsEntries(projectUrlParts, menuData) {
+    const projectIndex = getProjectIndex(projectUrlParts.projectName, projectUrlParts.projectVersion, menuData);
+    let toc = [
+        { title: 'Introduction', href: '#root' }
+    ];
+
+    if (projectIndex) {
+        const currentIndex = projectIndex.find(indexItem => indexItem.link === projectUrlParts.projectFullURL);
+
+        if (currentIndex && currentIndex.toc) {
+            toc = toc.concat(currentIndex.toc
+                .filter(item => item.level > 1)
+                .map(item => ({ title: item.content, href: `#${sanitizeHashId(item.content)}` })));
+        }
+    }
+
+    return toc;
 }
 
 export function createFloatingMenuEntries(contentHomePage, menuData) {

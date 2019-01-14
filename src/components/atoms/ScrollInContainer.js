@@ -72,13 +72,17 @@ class ScrollInContainer extends React.Component {
             }
 
             const widthContainer = document.querySelectorAll(this.props.widthContainer);
-            const newWidth = widthContainer && widthContainer.length > 0 ?
-                ReactDOM.findDOMNode(widthContainer[0]).getBoundingClientRect().width : undefined;
+            const newWidthContainer = widthContainer && widthContainer.length > 0 ?
+                ReactDOM.findDOMNode(widthContainer[0]) : undefined;
 
-            this.container.style.top = `${newTop}px`;
-            if (newWidth) {
+            if (newWidthContainer) {
+                const widthContainerComputedStyle = getComputedStyle(newWidthContainer);
+                const newWidth = newWidthContainer.getBoundingClientRect().width
+                    - parseInt(widthContainerComputedStyle.paddingLeft)
+                    - parseInt(widthContainerComputedStyle.paddingRight);
                 this.container.style.width = `${newWidth}px`;
             }
+            this.container.style.top = `${newTop}px`;
             this.container.style.display = 'block';
         }, 0);
     }

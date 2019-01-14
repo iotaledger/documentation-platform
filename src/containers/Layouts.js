@@ -67,10 +67,13 @@ justify-content: space-between;
 .middle-column {
   min-height: 500px;
   flex: 1;
-  padding: 35px 60px 120px 20px;
+  padding: 20px 60px 120px 20px;
   max-width: 720px;
   box-sizing: border-box;
   overflow:hidden;
+}
+.middle-toc {
+  display: none;
 }
 .right-column {
   flex: 0 0 300px;
@@ -92,6 +95,10 @@ justify-content: center;
 }
 .right-column {
   display: none;
+}
+.middle-toc {
+  display: block;
+  margin-bottom: 30px;
 }
 `};
 

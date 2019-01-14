@@ -79,7 +79,8 @@ class Markdown extends PureComponent {
         return content
             .replace(/```Python/g, '```python')
             .replace(/```c\+\+/g, '```cpp')
-            .replace(/```proto/g, '```cpp');
+            .replace(/```proto/g, '```cpp')
+            .replace(/```bash/g, '```shell');
     }
 
     replaceSearchQuery(content) {
