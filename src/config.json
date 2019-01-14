@@ -1,4 +1,5 @@
 {
   "apiEndpoint": "https://iota-documentation-api.dag.sh",
-  "siteRoot": "https://iota-documentation.dag.sh"
+  "siteRoot": "https://iota-documentation.dag.sh",
+  "hotJarId": "1157483"
 }

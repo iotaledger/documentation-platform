@@ -5,7 +5,8 @@ import React, { Component } from 'react';
 import { reloadRoutes } from 'react-static/node';
 import { ServerStyleSheet } from 'styled-components';
 import { buildMenuItems, getDocPages } from './buildList';
-import { siteRoot } from './src/config.json';
+import HotJar from './src/components/atoms/HotJar';
+import { siteRoot, hotJarId } from './src/config.json';
 
 chokidar.watch('../docs').on('all', () => reloadRoutes());
 
@@ -111,7 +112,10 @@ export default {
                         {renderMeta.styleTags}
                         <title>{repoName}</title>
                     </Head>
-                    <Body>{children}</Body>
+                    <Body>
+                    {children}
+                    <HotJar id={hotJarId} />
+                    </Body>
                 </Html>
             );
         }
