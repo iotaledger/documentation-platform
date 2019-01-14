@@ -7,7 +7,7 @@ import InputSearch from '../components//molecules/InputSearch';
 import BottomSticky from '../components/atoms/BottomSticky';
 import BottomStop from '../components/atoms/BottomStop';
 import ScrollToTop from '../components/atoms/ScrollToTop';
-import { DocPageLayout, maxWidthLayout, TabletHidden } from '../components/ci/Layouts';
+import { SearchPageLayout, maxWidthLayout, TabletHidden } from '../components/ci/Layouts';
 import StickyHeader from '../components/ci/StickyHeader';
 import Feedback from '../components/molecules/Feedback';
 import Pagination from '../components/molecules/Pagination';
@@ -131,10 +131,8 @@ class Search extends React.Component {
                         <span className="sub-header__title sub-header-title__fixed">Search results</span>
                     </section>
                 </section>
-                <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto', paddingTop: '40px' }}>
-                    <section className="left-column">
-                    </section>
-                    <section className="middle-column" style={{ minHeight: '100vh' }}>
+                <SearchPageLayout>
+                    <div className="middle-column">
                         <div className="input-wrapper-basic">
                             <InputSearch
                                 query={this.state.query}
@@ -156,10 +154,8 @@ class Search extends React.Component {
                                 onDataPaginated={this.onDataPaginated}
                             />
                         </div>
-                    </section>
-                    <section className="right-column">
-                    </section>
-                </DocPageLayout>
+                    </div>
+                </SearchPageLayout>
                 <BottomStop />
                 <BottomSticky zIndex={10}>
                     <TabletHidden>

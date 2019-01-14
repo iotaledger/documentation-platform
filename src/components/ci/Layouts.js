@@ -6,27 +6,27 @@ const desktopWidth = 1024;
 const desktopNarrowWidth = 1180;
 
 const media = {
-    tablet: (...args) => css`
+  tablet: (...args) => css`
     @media (min-width: ${tabletWidth}px) and (max-width: ${desktopWidth - 1}px) {
       ${css(...args)};
     }
   `,
-    tabletDown: (...args) => css`
+  tabletDown: (...args) => css`
     @media (max-width: ${tabletWidth - 1}px) {
       ${css(...args)};
     }
   `,
-    desktop: (...args) => css`
+  desktop: (...args) => css`
     @media (min-width: ${desktopWidth}px) {
       ${css(...args)};
     }
   `,
-    desktopDown: (...args) => css`
+  desktopDown: (...args) => css`
     @media (max-width: ${desktopWidth}px) {
       ${css(...args)};
     }
   `,
-    desktopNarrowDown: (...args) => css`
+  desktopNarrowDown: (...args) => css`
     @media (max-width: ${desktopNarrowWidth}px) {
       ${css(...args)};
     }
@@ -97,6 +97,20 @@ justify-content: center;
 
 `;
 
+const SearchPageLayout = styled.div`
+  margin: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  .middle-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  ${media.tabletDown`
+    margin: 40px;
+  `};
+`;
 
-export { media, maxWidthLayout, HomePageLayout, DocPageLayout, TabletHidden };
+export { media, maxWidthLayout, HomePageLayout, DocPageLayout, SearchPageLayout, TabletHidden };
 
