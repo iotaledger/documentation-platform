@@ -118,7 +118,7 @@ class Doc extends React.Component {
                             items={createDropSelectorEntries(contentHomePage, this.props.menu)} 
                             value={getProjectTitle(this.state, contentHomePage)}
                             onChange={(val) => this.handleChangeProject(val)}
-                            style={{marginBottom: '20px'}}
+                            style={{marginBottom: '28px'}}
                             />
                         <TreeMenu
                                 menuItems={this.state.currentProjectIndex}

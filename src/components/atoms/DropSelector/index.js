@@ -37,7 +37,7 @@ class DropSelector extends React.PureComponent {
 
     render() {
         return (
-            <ClickOutside onClickOutside={this.handleExpand}>
+            <ClickOutside onClickOutside={this.state.isExpanded ? this.handleExpand : undefined}>
                 <div className={classNames(
                     'drop-selector',
                     { 'drop-selector__expanded': this.state.isExpanded }

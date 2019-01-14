@@ -36,8 +36,7 @@ class TreeMenu extends React.Component {
                         <h3
                             className={
                                 classNames(
-                                    'tree-menu__section-title',
-                                    { 'tree-menu__section-title--selected': section.selected }
+                                    'tree-menu__section-title'
                                 )
                             }><Link to={section.link}>{section.name}</Link></h3>
                     )}
@@ -45,14 +44,12 @@ class TreeMenu extends React.Component {
                         <React.Fragment>
                             <h3 className={
                                 classNames(
-                                    'tree-menu__section-title',
-                                    { 'tree-menu__section-title--selected': section.selected }
+                                    'tree-menu__section-title'
                                 )
                             }>{section.name}</h3>
                             <ul className={
                                 classNames(
-                                    'tree-menu__section',
-                                    { 'tree-menu__section--selected': section.selected }
+                                    'tree-menu__section'
                                 )
                             }>
                                 {section.items.map((item, idx2) => (
