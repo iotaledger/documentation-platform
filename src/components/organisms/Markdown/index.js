@@ -4,7 +4,6 @@ import emoji from 'emoji-dictionary';
 import 'prismjs/themes/prism.css';
 import React, { PureComponent } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Link } from 'react-static';
 import { highlight, loadLanguages } from 'reprism';
 import bash from 'reprism/languages/bash';
 import c from 'reprism/languages/c';
@@ -278,29 +277,27 @@ class Markdown extends PureComponent {
     }
 
     aLink(props) {
-        if (props.href.startsWith('root')) {
-            return (
-                <Link to={convertRootUrl(props.href)} target="_blank" {...props} />
-            );
-        } else if (props.href.startsWith('http')) {
-            return (
-                <Link to={props.href} target="_blank" {...props} />
-            );
+        const localProps = {...props};
+        if (localProps.href.startsWith('root')) {
+            localProps.href = convertRootUrl(localProps.href);
+            localProps.target= '_blank';
+            localProps.rel = 'noopener noreferrer';
+        } else if (localProps.href.startsWith('http')) {
+            localProps.target= '_blank';
+            localProps.rel = 'noopener noreferrer';
         } else {
-            if (props.href.startsWith('#')) {
+            if (localProps.href.startsWith('#')) {
                 // Make sure the tag is consistently named
-                return (
-                    <Link to={sanitizeHashId(props.href)} {...props} />
-                );
+                localProps.href = sanitizeHashId(localProps.href);
             } else {
                 // For local links remove .md extension
                 // and also de-escape space characters
-                const localLink = sanitizeHashId(props.href).replace(/.md$/i, '');
-                return (
-                    <Link to={localLink} {...props} />
-                );
+                localProps.href = sanitizeHashId(localProps.href).replace(/.md$/i, '');
             }
         }
+        return (
+            <a  {...localProps} />
+        );
     }
 
     codeBlock(props, wrap) {
