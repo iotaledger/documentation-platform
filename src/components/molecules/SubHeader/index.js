@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { getDocumentTitle, getNextPage, getPreviousPage, getProjectTitle, parseProjectUrl } from '../../utils/helpers';
-import { ContentMenuPropTypes, ContentHomePagePropTypes } from '../../utils/propTypes';
+import { getDocumentTitle, getNextPage, getPreviousPage, getProjectTitle, parseProjectUrl } from '../../../utils/helpers';
+import { ContentMenuPropTypes, ContentHomePagePropTypes } from '../../../utils/propTypes';
 
 class SubHeader extends React.Component {
     static propTypes = {

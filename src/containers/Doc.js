@@ -6,22 +6,22 @@ import BottomSticky from '../components/atoms/BottomSticky';
 import BottomStop from '../components/atoms/BottomStop';
 import DropSelector from '../components/atoms/DropSelector';
 import ScrollToTop from '../components/atoms/ScrollToTop';
-import { DocPageLayout, maxWidthLayout, TabletHidden } from '../components/ci/Layouts';
-import Navigator from '../components/ci/Navigator';
-import StickyHeader from '../components/ci/StickyHeader';
-import SubHeader from '../components/ci/SubHeader';
-import TreeMenu from '../components/ci/TreeMenu';
-import VersionPicker from '../components/ci/VersionPicker';
 import Feedback from '../components/molecules/Feedback';
+import Navigator from '../components/molecules/Navigator';
 import SideMenu from '../components/molecules/SideMenu';
+import SubHeader from '../components/molecules/SubHeader';
+import TreeMenu from '../components/molecules/TreeMenu';
+import VersionPicker from '../components/molecules/VersionPicker';
 import Markdown from '../components/organisms/Markdown';
+import StickyHeader from '../components/organisms/StickyHeader';
 import contentHomePage from '../contentHomePage.json';
 import { submitFeedback } from '../utils/api';
-import { createDropSelectorEntries, getProjectIndex, getVersions, parseProjectUrl, replaceVersion, getProjectTitle } from '../utils/helpers';
+import { createDropSelectorEntries, getProjectIndex, getProjectTitle, getVersions, parseProjectUrl, replaceVersion } from '../utils/helpers';
 import { localStorageSet } from '../utils/localStorage';
 import { ContentMenuPropTypes } from '../utils/propTypes.js';
 import { extractSearchQuery } from '../utils/search';
 import Container from './Container';
+import { DocPageLayout, maxWidthLayout, TabletHidden } from './Layouts';
 
 class Doc extends React.Component {
     static propTypes = {

@@ -7,12 +7,11 @@ import InputSearch from '../components//molecules/InputSearch';
 import BottomSticky from '../components/atoms/BottomSticky';
 import BottomStop from '../components/atoms/BottomStop';
 import ScrollToTop from '../components/atoms/ScrollToTop';
-import { SearchPageLayout, maxWidthLayout, TabletHidden } from '../components/ci/Layouts';
-import StickyHeader from '../components/ci/StickyHeader';
 import Feedback from '../components/molecules/Feedback';
 import Pagination from '../components/molecules/Pagination';
 import SearchResult from '../components/molecules/SearchResult';
 import SideMenu from '../components/molecules/SideMenu';
+import StickyHeader from '../components/organisms/StickyHeader';
 import contentHomePage from '../contentHomePage.json';
 import corpus from '../searchData/corpus.json';
 import json from '../searchData/index.json';
@@ -21,6 +20,7 @@ import { localStorageSet } from '../utils/localStorage';
 import { ContentMenuPropTypes } from '../utils/propTypes.js';
 import { extractSearchQuery } from '../utils/search';
 import Container from './Container';
+import { SearchPageLayout, TabletHidden } from './Layouts';
 
 class Search extends React.Component {
     static propTypes = {

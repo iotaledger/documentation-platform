@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import logo from '../../assets/Logo.svg';
-import { performSearch } from '../../utils/search';
-import InputSearch from '../molecules/InputSearch';
+import logo from '../../../assets/Logo.svg';
+import { performSearch } from '../../../utils/search';
+import InputSearch from '../../molecules/InputSearch';
 
 class Header extends React.Component {
     static propTypes = {

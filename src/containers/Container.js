@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import Footer from '../components/molecules/Footer';
+import Footer from '../components/organisms/Footer';
 import { ContentMenuPropTypes } from '../utils/propTypes';
 
 class Container extends React.PureComponent {

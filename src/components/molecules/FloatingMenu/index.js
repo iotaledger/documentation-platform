@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-static';
-import { ContentMenuItemsPropTypes } from '../../utils/propTypes';
+import { ContentMenuItemsPropTypes } from '../../../utils/propTypes';
 
 class FloatingMenu extends React.Component {
     static propTypes = {

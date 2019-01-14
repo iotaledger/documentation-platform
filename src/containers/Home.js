@@ -6,14 +6,13 @@ import BottomSticky from '../components/atoms/BottomSticky';
 import BottomStop from '../components/atoms/BottomStop';
 import ScrollInContainer from '../components/atoms/ScrollInContainer';
 import ScrollToTop from '../components/atoms/ScrollToTop';
-import FloatingMenu from '../components/ci/FloatingMenu';
-import Header from '../components/ci/Header';
-import { HomePageLayout, TabletHidden } from '../components/ci/Layouts';
 import EmailSignup from '../components/molecules/EmailSignup';
 import Feedback from '../components/molecules/Feedback';
+import FloatingMenu from '../components/molecules/FloatingMenu';
 import CardContainer from '../components/molecules/HomePageCard';
 import ProjectTopicsContainer from '../components/molecules/ProjectTopicsContainer';
 import SideMenu from '../components/molecules/SideMenu';
+import Header from '../components/organisms/Header';
 import contentHomePage from '../contentHomePage.json';
 import { submitFeedback } from '../utils/api';
 import { createFloatingMenuEntries } from '../utils/helpers';
@@ -21,6 +20,7 @@ import { localStorageSet } from '../utils/localStorage';
 import { ContentMenuPropTypes } from '../utils/propTypes.js';
 import Container from './Container';
 import './home.css';
+import { HomePageLayout, TabletHidden } from './Layouts';
 
 
 class Home extends React.Component {

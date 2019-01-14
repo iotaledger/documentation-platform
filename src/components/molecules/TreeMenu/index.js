@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-static';
-import { buildItemTree } from '../../utils/helpers';
-import { ContentMenuItemsPropTypes } from '../../utils/propTypes';
+import { buildItemTree } from '../../../utils/helpers';
+import { ContentMenuItemsPropTypes } from '../../../utils/propTypes';
 
 class TreeMenu extends React.Component {
     static propTypes = {
