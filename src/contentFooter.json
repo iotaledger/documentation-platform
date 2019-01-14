@@ -1,43 +1,6 @@
 {
     "footerSections": [
         {
-            "heading": "Developer Docs",
-            "links": [
-                {
-                    "text": "Getting Started",
-                    "folder": "getting-started"
-                },
-                {
-                    "text": "IOTA Basics",
-                    "folder": "iota-basics"
-                },
-                {
-                    "text": "The Tangle",
-                    "folder": "the-tangle"
-                },
-                {
-                    "text": "Client Libraries",
-                    "folder": "client-libraries"
-                },
-                {
-                    "text": "IRI",
-                    "folder": "iri"
-                },
-                {
-                    "text": "Hub",
-                    "folder": "hub"
-                },
-                {
-                    "text": "Compass",
-                    "folder": "compass"
-                },
-                {
-                    "text": "Trinity Wallet",
-                    "folder": "trinity"
-                }
-            ]
-        },
-        {
             "heading": "The Foundation",
             "links": [
                 {

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { footerSections, footerStaticContent } from '../../../contentFooter.json';
+import contentHomePage from '../../../contentHomePage.json';
 import { getLatestVersionLinks, parseProjectUrl } from '../../../utils/helpers.js';
 import { ContentMenuPropTypes } from '../../../utils/propTypes.js';
 import Heading from '../../atoms/Heading';
@@ -19,9 +20,15 @@ class Footer extends React.Component {
 
         const projectParts = parseProjectUrl(this.props.location.pathname);
 
+        let dynamicSections = [ {
+            heading: 'Developer Docs',
+            links: contentHomePage.content.map(i => ({ text: i.header, folder: i.folder }))
+        } ];
+
         this.state = {
             projectLinks: getLatestVersionLinks(this.props.menu),
-            currentProject: projectParts.projectName
+            currentProject: projectParts.projectName,
+            footerSections: dynamicSections.concat(footerSections)
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -42,7 +49,7 @@ class Footer extends React.Component {
                 <div className="footer__wrapper">
                     <div className="footer-top-content">
                         {
-                            footerSections.map(({ heading, links }) =>
+                            this.state.footerSections.map(({ heading, links }) =>
                                 <section key={heading} className="footer-top-content__wrapper">
                                     <Heading level={3} text={heading} className="footer-top-content__heading" />
                                     {
@@ -74,7 +81,7 @@ class Footer extends React.Component {
                                 className="select footer-top-content__dropdown">
                                 <option value="">Select a topic</option>
                                 {
-                                    footerSections.map(({ heading, links }) =>
+                                    this.state.footerSections.map(({ heading, links }) =>
                                         <optgroup key={heading} label={heading}>
                                             {
                                                 links.map(({ href, folder, text }) =>
