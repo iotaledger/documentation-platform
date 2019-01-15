@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import Footer from '../components/organisms/Footer';
-import { ContentMenuPropTypes } from '../utils/propTypes';
+import { ProjectsPropTypes } from '../utils/propTypes';
 
 class Container extends React.PureComponent {
     static propTypes = {
@@ -10,7 +10,7 @@ class Container extends React.PureComponent {
             PropTypes.arrayOf(PropTypes.node),
             PropTypes.node
         ]),
-        menu: ContentMenuPropTypes.isRequired,
+        projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location
     };
@@ -19,7 +19,7 @@ class Container extends React.PureComponent {
         return (
             <React.Fragment>
                 {this.props.children}
-                <Footer menu={this.props.menu} history={this.props.history} location={this.props.location} />
+                <Footer projects={this.props.projects} history={this.props.history} location={this.props.location} />
             </React.Fragment>);
     }
 }

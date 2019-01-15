@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { getDocumentTitle, getNextPage, getPreviousPage, getProjectTitle, parseProjectUrl } from '../../../utils/helpers';
-import { ContentMenuPropTypes, ContentHomePagePropTypes } from '../../../utils/propTypes';
+import { getDocumentTitle, getNextPage, getPreviousPage, getProjectTitle, parseProjectUrl } from '../../../utils/projects';
+import { ProjectsPropTypes } from '../../../utils/propTypes';
 
 class SubHeader extends React.Component {
     static propTypes = {
-        menuData: ContentMenuPropTypes,
-        contentHomePage: ContentHomePagePropTypes.isRequired,
+        projects: ProjectsPropTypes,
         pathname: PropTypes.string,
         history: ReactRouterPropTypes.history
     };
@@ -27,15 +26,15 @@ class SubHeader extends React.Component {
 
     componentDidMount() {
         const projectUrlParts = parseProjectUrl(this.props.pathname);
-        const nextIndexItem = getNextPage(projectUrlParts, this.props.menuData);
-        const previousIndexItem = getPreviousPage(projectUrlParts, this.props.menuData);
+        const nextIndexItem = getNextPage(projectUrlParts, this.props.projects);
+        const previousIndexItem = getPreviousPage(projectUrlParts, this.props.projects);
 
         this.setState({
-            currProject: getProjectTitle(projectUrlParts, this.props.contentHomePage),
-            currTitle: getDocumentTitle(projectUrlParts, this.props.menuData).replace(/\//g, ' / '),
-            nextTitle: nextIndexItem ? nextIndexItem.name.replace(/\//g, ' / ') : '',
+            currProject: getProjectTitle(projectUrlParts, this.props.projects),
+            currTitle: getDocumentTitle(projectUrlParts, this.props.projects),
+            nextTitle: nextIndexItem ? nextIndexItem.name : '',
             nextUrl: nextIndexItem ? nextIndexItem.link : '',
-            previousTitle: previousIndexItem ? previousIndexItem.name.replace(/\//g, ' / ') : '',
+            previousTitle: previousIndexItem ? previousIndexItem.name : '',
             previousUrl: previousIndexItem ? previousIndexItem.link : ''
         });
     }

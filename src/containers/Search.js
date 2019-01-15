@@ -12,12 +12,11 @@ import Pagination from '../components/molecules/Pagination';
 import SearchResult from '../components/molecules/SearchResult';
 import SideMenu from '../components/molecules/SideMenu';
 import StickyHeader from '../components/organisms/StickyHeader';
-import contentHomePage from '../contentHomePage.json';
 import corpus from '../searchData/corpus.json';
 import json from '../searchData/index.json';
 import { submitFeedback } from '../utils/api';
 import { localStorageSet } from '../utils/localStorage';
-import { ContentMenuPropTypes } from '../utils/propTypes.js';
+import { ProjectsPropTypes } from '../utils/propTypes.js';
 import { extractSearchQuery } from '../utils/search';
 import Container from './Container';
 import { SearchPageLayout, TabletHidden } from './Layouts';
@@ -25,7 +24,7 @@ import { SearchPageLayout, TabletHidden } from './Layouts';
 class Search extends React.Component {
     static propTypes = {
         repoName: PropTypes.string.isRequired,
-        menu: ContentMenuPropTypes.isRequired,
+        projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location
     };
@@ -118,13 +117,11 @@ class Search extends React.Component {
                 <div id="search-top" />
                 <StickyHeader
                     history={this.props.history}
-                    data={this.props.menu}
                     onBurgerClick={this.handleBurgerClick}
                 />
                 <SideMenu
                     isMenuOpen={this.state.isMenuOpen}
-                    contentHomePage={contentHomePage}
-                    menuData={this.props.menu}
+                    projects={this.props.projects}
                     onCloseClick={this.handleBurgerClick} />
                 <section className="sub-header__wrapper">
                     <section className="sub-header">

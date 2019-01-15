@@ -9,13 +9,13 @@ class Header extends React.Component {
     static propTypes = {
         headerTitle: PropTypes.string,
         topTitles: PropTypes.arrayOf(PropTypes.shape({
-            text: PropTypes.string,
+            name: PropTypes.string,
             href: PropTypes.string
         })),
         popularTopics: PropTypes.arrayOf(
             PropTypes.shape({
                 query: PropTypes.string.isRequired,
-                text: PropTypes.string.isRequired
+                name: PropTypes.string.isRequired
             })
         ).isRequired,
         onBurgerClick: PropTypes.func,
@@ -59,7 +59,7 @@ class Header extends React.Component {
                                 <ul className="top-header__items">
                                     {topTitles.map((topTitle, index) =>
                                         (<li key={index} className="top-header__item">
-                                            <a href={topTitle.href} target="_blank" rel="noopener noreferrer">{topTitle.text.toUpperCase()}</a>
+                                            <a href={topTitle.href} target="_blank" rel="noopener noreferrer">{topTitle.name}</a>
                                         </li>)
                                     )}
                                 </ul>
@@ -82,7 +82,7 @@ class Header extends React.Component {
                                     {
                                         this.props.popularTopics.map((pt, idx) => (
                                             <React.Fragment key={idx}>
-                                                <a onClick={() => this.onSearch(pt.query)}>{pt.text}</a>
+                                                <a onClick={() => this.onSearch(pt.query)}>{pt.name}</a>
                                                 {
                                                     idx < this.props.popularTopics.length - 1 && (
                                                         <span>,</span>

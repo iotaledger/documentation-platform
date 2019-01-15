@@ -15,9 +15,9 @@ import SideMenu from '../components/molecules/SideMenu';
 import Header from '../components/organisms/Header';
 import contentHomePage from '../contentHomePage.json';
 import { submitFeedback } from '../utils/api';
-import { createFloatingMenuEntries } from '../utils/helpers';
 import { localStorageSet } from '../utils/localStorage';
-import { ContentMenuPropTypes } from '../utils/propTypes.js';
+import { createProjectLinks, createProjectTopics } from '../utils/projects';
+import { ProjectsPropTypes } from '../utils/propTypes.js';
 import Container from './Container';
 import './home.css';
 import { HomePageLayout, TabletHidden } from './Layouts';
@@ -28,7 +28,7 @@ class Home extends React.Component {
         repoName: PropTypes.string.isRequired,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location,
-        menu: ContentMenuPropTypes.isRequired
+        projects: ProjectsPropTypes.isRequired
     };
 
     constructor(props) {
@@ -66,8 +66,7 @@ class Home extends React.Component {
                 />
                 <SideMenu
                     isMenuOpen={this.state.isMenuOpen}
-                    contentHomePage={contentHomePage}
-                    menuData={this.props.menu}
+                    projects={this.props.projects}
                     onCloseClick={this.handleBurgerClick} 
                     highlightedItem={this.state.projectFullURL}/>
                 <div id="floating-menu-top-limit"></div>
@@ -86,7 +85,7 @@ class Home extends React.Component {
                                 <TabletHidden>
                                     <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
                                         <FloatingMenu
-                                            menuItems={createFloatingMenuEntries(contentHomePage.content, this.props.menu)} />
+                                            menuItems={createProjectLinks(this.props.projects)} />
                                     </div>
                                 </TabletHidden>
                             </ScrollInContainer>
@@ -100,7 +99,7 @@ class Home extends React.Component {
                     <div className="left-column" >
                     </div>
                     <div className="right-column">
-                        <ProjectTopicsContainer content={contentHomePage.content} />
+                        <ProjectTopicsContainer content={createProjectTopics(this.props.projects)} />
                     </div>
                 </HomePageLayout>
                 <div id="floating-menu-bottom-limit" />

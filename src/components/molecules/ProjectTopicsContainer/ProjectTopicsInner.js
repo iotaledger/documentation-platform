@@ -1,3 +1,4 @@
+import Markdown from '../../organisms/Markdown';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -5,10 +6,10 @@ import Link from '../../atoms/Link';
 
 class ProjectTopicsInner extends React.Component {
     static propTypes = {
-        topics: PropTypes.arrayOf(PropTypes.shape({
-            header: PropTypes.string.isRequired,
-            subheader: PropTypes.string.isRequired,
-            href: PropTypes.string,
+        content: PropTypes.arrayOf(PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            link: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired,
             bullet: PropTypes.oneOf(['none', 'primary', 'secondary'])
         })).isRequired,
         compressed: PropTypes.bool
@@ -23,35 +24,35 @@ class ProjectTopicsInner extends React.Component {
                 )
             }>
                 {
-                    this.props.topics.map((topic, idx) =>
+                    this.props.content.map((item, idx) =>
                         <div key={idx} className="project-topic__item">
-                            {topic.href && (
-                                <Link href={topic.href} className="project-topic__link">
+                            {item.link && (
+                                <Link href={item.link} target={item.link.startsWith('http') ? '_blank' : undefined} className="project-topic__link">
                                     <span className={
                                         classNames(
                                             'project-topic__heading',
                                             'text--level6',
-                                            { 'project-topic__primary-bullet': topic.bullet === 'primary' },
-                                            { 'project-topic__secondary-bullet': topic.bullet === 'secondary' }
+                                            { 'project-topic__primary-bullet': item.bullet === 'primary' },
+                                            { 'project-topic__secondary-bullet': item.bullet === 'secondary' }
                                         )
                                     }>
-                                        {topic.header}
+                                        {item.name}
                                     </span>
                                 </Link>
                             )}
-                            {!topic.href && (
+                            {!item.link && (
                                 <span className={
                                     classNames(
                                         'project-topic__heading',
                                         'text--level6',
-                                        { 'project-topic__primary-bullet': topic.bullet === 'primary' },
-                                        { 'project-topic__secondary-bullet': topic.bullet === 'secondary' }
+                                        { 'project-topic__primary-bullet': item.bullet === 'primary' },
+                                        { 'project-topic__secondary-bullet': item.bullet === 'secondary' }
                                     )
                                 }>
-                                    {topic.header}
+                                    {item.name}
                                 </span>
                             )}
-                            <span className="project-topic__subheading" dangerouslySetInnerHTML={{ __html: topic.subheader }} />
+                            <Markdown className="project-topic__subheading" source={item.description} />
                         </div>
                     )}
             </div>

@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { getNextPage, getPreviousPage, parseProjectUrl } from '../../../utils/helpers';
-import { ContentMenuPropTypes } from '../../../utils/propTypes';
+import { getNextPage, getPreviousPage, parseProjectUrl } from '../../../utils/projects';
+import { ProjectsPropTypes } from '../../../utils/propTypes';
 
 class Navigator extends React.Component {
     static propTypes = {
-        data: ContentMenuPropTypes,
+        projects: ProjectsPropTypes,
         pathname: PropTypes.string,
         history: ReactRouterPropTypes.history
     };
@@ -25,8 +25,8 @@ class Navigator extends React.Component {
 
     componentDidMount() {
         const projectUrlParts = parseProjectUrl(this.props.pathname);
-        const nextIndexItem = getNextPage(projectUrlParts, this.props.data);
-        const previousIndexItem = getPreviousPage(projectUrlParts, this.props.data);
+        const nextIndexItem = getNextPage(projectUrlParts, this.props.projects);
+        const previousIndexItem = getPreviousPage(projectUrlParts, this.props.projects);
 
         this.setState({
             nextTitle: nextIndexItem ? nextIndexItem.name.replace(/\//g, ' / ') : '',

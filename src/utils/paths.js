@@ -8,12 +8,3 @@ export function sanitizeHashId(id) {
         .replace(/ /g, '-') : undefined;
 }
 
-export function convertRootUrl(url) {
-    if (url && url.startsWith('root://')) {
-        return url
-            .replace('root://', '/docs/')
-            .replace(/\.md$/i, '');
-    }
-
-    return url;
-}

@@ -7,29 +7,28 @@ import ProjectTopicsInner from './ProjectTopicsInner';
 class ProjectTopics extends React.Component {
     static propTypes = {
         content: PropTypes.shape({
-            header: PropTypes.string.isRequired,
-            subheader: PropTypes.string.isRequired,
-            topics: PropTypes.arrayOf(PropTypes.shape({
-                header: PropTypes.string.isRequired,
-                subheader: PropTypes.string.isRequired,
-                href: PropTypes.string.isRequired,
-                bullet: PropTypes.oneOf(['none', 'primary', 'secondary'])
-            })).isRequired
-        })
+            name: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired,
+            links: PropTypes.arrayOf(
+                PropTypes.shape({
+                    name: PropTypes.string.isRequired,
+                    link: PropTypes.string.isRequired,
+                    description: PropTypes.string.isRequired,
+                })
+            ).isRequired
+        }).isRequired
     };
 
     render() {
-        const { header, subheader, topics } = this.props.content;
-
         return (
-            <div className="project" id={header.toLowerCase().replace(/ /g, '_')}>
+            <div className="project" id={this.props.content.name.toLowerCase().replace(/ /g, '_')}>
                 <Heading className="project__heading" level={2}>
-                    {header}
+                    {this.props.content.name}
                 </Heading>
                 <Text className="project__subheading">
-                    {subheader}
+                    {this.props.content.description}
                 </Text>
-                <ProjectTopicsInner topics={topics} />
+                <ProjectTopicsInner content={this.props.content.links} />
             </div>
         );
     }

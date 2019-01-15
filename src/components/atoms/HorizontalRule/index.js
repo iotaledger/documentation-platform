@@ -10,10 +10,6 @@ class HorizontalRule extends React.Component {
         small: PropTypes.bool
     };
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <hr

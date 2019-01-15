@@ -13,7 +13,7 @@ import javascript from 'reprism/languages/javascript';
 import json from 'reprism/languages/json';
 import jsx from 'reprism/languages/jsx';
 import python from 'reprism/languages/python';
-import { convertRootUrl, sanitizeHashId } from '../../../utils/paths';
+import { sanitizeHashId } from '../../../utils/paths';
 import Heading from '../../atoms/Heading';
 import HeadingLabel from '../../atoms/HeadingLabel';
 import ProjectTopicsInner from '../../molecules/ProjectTopicsContainer/ProjectTopicsInner';
@@ -152,27 +152,27 @@ class Markdown extends PureComponent {
                 if (matchPrimary && matchPrimary.length === 2) {
                     projectTopics.push({
                         bullet: 'primary',
-                        header: matchPrimary[1],
-                        subheader: match[4],
-                        href: convertRootUrl(match[3])
+                        name: matchPrimary[1],
+                        description: match[4],
+                        link: match[3]
                     });
                 } else {
                     let matchSecondary = /__(.*)__ ####/g.exec(match[1]);
                     if (matchSecondary && matchSecondary.length === 2) {
                         projectTopics.push({
                             bullet: 'secondary',
-                            header: matchSecondary[1],
-                            subheader: match[4],
-                            href: convertRootUrl(match[3])
+                            name: matchSecondary[1],
+                            description: match[4],
+                            link: match[3]
                         });
                     } else {
                         let matchPlain = /(.*) ####/g.exec(match[1]);
                         if (matchPlain && matchPlain.length === 2) {
                             projectTopics.push({
                                 bullet: 'none',
-                                header: matchPlain[1],
-                                subheader: match[4],
-                                href: convertRootUrl(match[3])
+                                name: matchPlain[1],
+                                description: match[4],
+                                link: match[3]
                             });
                         }
                     }
@@ -233,7 +233,7 @@ class Markdown extends PureComponent {
 
             if (match && match.length === 2) {
                 const index = parseInt(match[1], 10);
-                return (<ProjectTopicsInner topics={this.projectTopicContainers[index]} compressed={true} />);
+                return (<ProjectTopicsInner content={this.projectTopicContainers[index]} compressed={true} />);
             }
         } else if (props.value.startsWith('<heading-label')) {
             const re = /<heading-label index="(.*)">/;
@@ -278,11 +278,7 @@ class Markdown extends PureComponent {
 
     aLink(props) {
         const localProps = {...props};
-        if (localProps.href.startsWith('root')) {
-            localProps.href = convertRootUrl(localProps.href);
-            localProps.target= '_blank';
-            localProps.rel = 'noopener noreferrer';
-        } else if (localProps.href.startsWith('http')) {
+        if (localProps.href.startsWith('http')) {
             localProps.target= '_blank';
             localProps.rel = 'noopener noreferrer';
         } else {

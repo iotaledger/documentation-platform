@@ -16,11 +16,10 @@ import TreeMenu from '../components/molecules/TreeMenu';
 import VersionPicker from '../components/molecules/VersionPicker';
 import Markdown from '../components/organisms/Markdown';
 import StickyHeader from '../components/organisms/StickyHeader';
-import contentHomePage from '../contentHomePage.json';
 import { submitFeedback } from '../utils/api';
-import { createDropSelectorEntries, createTableOfContentsEntries, getProjectIndex, getProjectTitle, getVersions, parseProjectUrl, replaceVersion } from '../utils/helpers';
 import { localStorageSet } from '../utils/localStorage';
-import { ContentMenuPropTypes } from '../utils/propTypes.js';
+import { createPageTableOfContents, createProjectLinks, getProjectTitle, getProjectVersionPagesUrl, getVersionsUrl, parseProjectUrl, replaceVersion } from '../utils/projects';
+import { ProjectsPropTypes } from '../utils/propTypes.js';
 import { extractSearchQuery } from '../utils/search';
 import Container from './Container';
 import { DocPageLayout, maxWidthLayout, TabletHidden } from './Layouts';
@@ -30,7 +29,7 @@ class Doc extends React.Component {
         title: PropTypes.string.isRequired,
         repoName: PropTypes.string.isRequired,
         markdown: PropTypes.string.isRequired,
-        menu: ContentMenuPropTypes.isRequired,
+        projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location
     };
@@ -40,14 +39,14 @@ class Doc extends React.Component {
 
         this.state = {
             projectFullURL: '',
-            projectName: '',
+            projectFolder: '',
             projectVersion: '',
             projectDocParts: [],
             projectDoc: '',
             projectDocTitle: '',
-            currentVersions: [],
-            currentProjectIndex: [],
-            currentTableOfContents: [],
+            projectVersions: [],
+            projectVersionPages: [],
+            pageTableOfContents: [],
             isMenuOpen: false
         };
 
@@ -58,7 +57,7 @@ class Doc extends React.Component {
 
     changeVersion(newVersion) {
         const projectParts = parseProjectUrl(this.state.projectFullURL);
-        const newUrl = replaceVersion(projectParts, newVersion, this.props.menu);
+        const newUrl = replaceVersion(projectParts, newVersion, this.props.projects);
         if (newUrl) {
             this.props.history.push(newUrl);
             this.setState({ projectVersion: newVersion });
@@ -69,9 +68,9 @@ class Doc extends React.Component {
         const projectParts = parseProjectUrl(this.props.location.pathname);
         this.setState({
             ...projectParts,
-            currentVersions: getVersions(projectParts.projectName, this.props.menu),
-            currentProjectIndex: getProjectIndex(projectParts.projectName, projectParts.projectVersion, this.props.menu),
-            currentTableOfContents: createTableOfContentsEntries(projectParts, this.props.menu)
+            projectVersions: getVersionsUrl(projectParts, this.props.projects),
+            projectVersionPages: getProjectVersionPagesUrl(projectParts, projectParts.projectVersion, this.props.projects),
+            pageTableOfContents: createPageTableOfContents(projectParts, this.props.projects)
         });
 
         // We must store last path in here as when we create react-static
@@ -95,23 +94,20 @@ class Doc extends React.Component {
                 </Head>
                 <StickyHeader
                     history={this.props.history}
-                    data={this.props.menu}
                     onBurgerClick={this.handleBurgerClick}
                 />
                 <SideMenu
                     isMenuOpen={this.state.isMenuOpen}
-                    contentHomePage={contentHomePage}
-                    menuData={this.props.menu}
+                    projects={this.props.projects}
                     onCloseClick={this.handleBurgerClick}
                     highlightedItem={this.state.projectFullURL} />
                 <SubHeader
                     history={this.props.history}
-                    contentHomePage={contentHomePage}
-                    menuData={this.props.menu}
+                    projects={this.props.projects}
                     pathname={this.props.location.pathname}
                 />
                 <VersionPicker
-                    versions={this.state.currentVersions}
+                    versions={this.state.projectVersions}
                     currentVersion={this.state.projectVersion}
                     onChange={(newVersion) => this.changeVersion(newVersion)}
                 />
@@ -119,19 +115,19 @@ class Doc extends React.Component {
                 <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto' }}>
                     <section className="left-column">
                         <DropSelector
-                            items={createDropSelectorEntries(contentHomePage, this.props.menu)}
-                            value={getProjectTitle(this.state, contentHomePage)}
+                            items={createProjectLinks(this.props.projects, 'title', 'value')}
+                            value={getProjectTitle(this.state, this.props.projects)}
                             onChange={(val) => this.handleChangeProject(val)}
                             style={{ marginBottom: '28px' }}
                         />
                         <TreeMenu
-                            menuItems={this.state.currentProjectIndex}
+                            menuItems={this.state.projectVersionPages}
                             highlightedItem={this.state.projectFullURL}
                         />
                     </section>
                     <section className="middle-column">
                         <div className="middle-toc">
-                            <TableOfContents items={this.state.currentTableOfContents} title="Sections On This Page" compact={true} />
+                            <TableOfContents items={this.state.pageTableOfContents} title="Sections On This Page" compact={true} />
                         </div>
                         <Markdown source={this.props.markdown} query={extractSearchQuery(this.props.location)} />
                     </section>
@@ -143,7 +139,7 @@ class Doc extends React.Component {
                             bottomMarker="#floating-menu-bottom-limit"
                             widthContainer=".right-column"
                         >
-                            <TableOfContents items={this.state.currentTableOfContents} title="Sections On This Page" />
+                            <TableOfContents items={this.state.pageTableOfContents} title="Sections On This Page" />
                         </ScrollInContainer>
                     </section>
                 </DocPageLayout>
@@ -151,7 +147,7 @@ class Doc extends React.Component {
                 <BottomStop />
                 <Navigator
                     history={this.props.history}
-                    data={this.props.menu}
+                    projects={this.props.projects}
                     pathname={this.props.location.pathname}
                 />
                 <BottomSticky zIndex={10}>

@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -10,13 +11,9 @@ class Paragraph extends React.PureComponent {
         className: PropTypes.string,
     };
 
-    static defaultProps = {
-        className: '',
-    };
-
     render() {
         return (
-            <p className={`paragraph ${this.props.className}`}>{this.props.children}</p>
+            <p className={classNames('paragraph', this.props.className)}>{this.props.children}</p>
         );
     }
 }

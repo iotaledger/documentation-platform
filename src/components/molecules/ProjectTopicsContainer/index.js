@@ -6,18 +6,16 @@ class ProjectTopicsContainer extends React.Component {
     static propTypes = {
         content: PropTypes.arrayOf(
             PropTypes.shape({
-                header: PropTypes.string.isRequired,
-                subheader: PropTypes.string.isRequired,
-                topics: PropTypes.arrayOf(
+                name: PropTypes.string.isRequired,
+                description: PropTypes.string.isRequired,
+                links: PropTypes.arrayOf(
                     PropTypes.shape({
-                        header: PropTypes.string.isRequired,
-                        subheader: PropTypes.string.isRequired,
-                        href: PropTypes.string.isRequired,
-                        bullet: PropTypes.oneOf(['none', 'primary', 'secondary'])
+                        name: PropTypes.string.isRequired,
+                        link: PropTypes.string.isRequired,
+                        description: PropTypes.string.isRequired,
                     })
                 ).isRequired
-            })
-        )
+            })).isRequired
     };
 
     render() {

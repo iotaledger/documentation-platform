@@ -9,8 +9,7 @@ class Card extends React.PureComponent {
         card: PropTypes.exact({
             image: PropTypes.string.isRequired,
             href: PropTypes.string.isRequired,
-            alt: PropTypes.string.isRequired,
-            text: PropTypes.string,
+            name: PropTypes.string,
         }).isRequired
     };
 
@@ -18,9 +17,9 @@ class Card extends React.PureComponent {
         return (
             <div className="card">
                 <Link href={this.props.card.href} className="card__link">
-                    <Image src={this.props.card.image} alt={this.props.card.alt} className="card__image" />
+                    <Image src={this.props.card.image} alt={this.props.card.name} className="card__image" />
                     <div className="card__wrapper">
-                        <Text className="text--level5 card__label">{this.props.card.text}</Text>
+                        <Text className="text--level5 card__label">{this.props.card.name}</Text>
                     </div>
                 </Link>
             </div>

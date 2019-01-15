@@ -4,20 +4,20 @@
             "heading": "The Foundation",
             "links": [
                 {
-                    "href": "https://www.iota.org/the-foundation/our-vision",
-                    "text": "Our Vision"
+                    "link": "https://www.iota.org/the-foundation/our-vision",
+                    "name": "Our Vision"
                 },
                 {
-                    "href": "https://www.iota.org/the-foundation/the-iota-foundation",
-                    "text": "The IOTA Foundation"
+                    "link": "https://www.iota.org/the-foundation/the-iota-foundation",
+                    "name": "The IOTA Foundation"
                 },
                 {
-                    "href": "https://www.iota.org/the-foundation/team",
-                    "text": "Meet the Team"
+                    "link": "https://www.iota.org/the-foundation/team",
+                    "name": "Meet the Team"
                 },
                 {
-                    "href": "https://www.iota.org/the-foundation/work-at-the-iota-foundation",
-                    "text": "Work at the IOTA Foundation"
+                    "link": "https://www.iota.org/the-foundation/work-at-the-iota-foundation",
+                    "name": "Work at the IOTA Foundation"
                 }
             ]
         },
@@ -25,24 +25,24 @@
             "heading": "Verticals",
             "links": [
                 {
-                    "href": "https://www.iota.org/verticals/mobility-automotive",
-                    "text": "Mobility and Automotive"
+                    "link": "https://www.iota.org/verticals/mobility-automotive",
+                    "name": "Mobility and Automotive"
                 },
                 {
-                    "href": "https://www.iota.org/verticals/global-trade-supply-chains",
-                    "text": "Global Trade & Supply Chains"
+                    "link": "https://www.iota.org/verticals/global-trade-supply-chains",
+                    "name": "Global Trade & Supply Chains"
                 },
                 {
-                    "href": "https://www.iota.org/verticals/industrial-iot",
-                    "text": "Industrial IoT"
+                    "link": "https://www.iota.org/verticals/industrial-iot",
+                    "name": "Industrial IoT"
                 },
                 {
-                    "href": "https://www.iota.org/verticals/ehealth",
-                    "text": "eHealth"
+                    "link": "https://www.iota.org/verticals/ehealth",
+                    "name": "eHealth"
                 },
                 {
-                    "href": "https://www.iota.org/verticals/smart-energy",
-                    "text": "Smart Energy"
+                    "link": "https://www.iota.org/verticals/smart-energy",
+                    "name": "Smart Energy"
                 }
             ]
         },
@@ -50,16 +50,16 @@
             "heading": "Research",
             "links": [
                 {
-                    "href": "https://www.iota.org/research/meet-the-tangle",
-                    "text": "Meet the Tangle"
+                    "link": "https://www.iota.org/research/meet-the-tangle",
+                    "name": "Meet the Tangle"
                 },
                 {
-                    "href": "https://www.iota.org/research/academic-papers",
-                    "text": "Academic Papers"
+                    "link": "https://www.iota.org/research/academic-papers",
+                    "name": "Academic Papers"
                 },
                 {
-                    "href": "https://www.iota.org/research/roadmap",
-                    "text": "Research & Development Roadmap"
+                    "link": "https://www.iota.org/research/roadmap",
+                    "name": "Research & Development Roadmap"
                 }
             ]
         }
@@ -73,14 +73,14 @@
             "Germany"
         ],
         "legal": [
-            "&copy; 2018 IOTA Foundation - <a href='https://www.iota.org/research/privacy-policy'>Privacy Policy</a>",
-            "Email: <a href='mailto:contact@iota.org'>contact@iota.org</a>",
+            "&copy; 2018 IOTA Foundation - <a link='https://www.iota.org/research/privacy-policy'>Privacy Policy</a>",
+            "Email: <a link='mailto:contact@iota.org'>contact@iota.org</a>",
             "Board of Directors: Dominik Schiener, David Sønstebø, Ralf Rottmann, Serguei Popov &amp; Sergey Ivancheglo",
             "ID/Company No.: 3416/1234/2",
             "EU public ID number in the EU Transparency Register: 500027331119-04"
         ],
         "copyright": [
-            "<a href='https://www.iota.org/research/privacy-policy'>Privacy Policy</a>",
+            "<a link='https://www.iota.org/research/privacy-policy'>Privacy Policy</a>",
             "&copy; 2018 IOTA Foundation"
         ]
     }

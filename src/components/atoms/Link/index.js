@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Text from '../Text';
@@ -15,18 +16,13 @@ class Link extends React.PureComponent {
         ])
     };
 
-    static defaultProps = {
-        target: '_self',
-        className: '',
-    };
-
     render() {
         return (<a
             id={this.props.id}
             target={this.props.target}
             href={this.props.href}
             rel={this.props.target === '_blank' ? 'noopener noreferrer' : ''}
-            className={`link ${this.props.className}`}
+            className={classNames('link', this.props.className)}
         >
             {this.props.children || <Text>{this.props.text}</Text>}
         </a>);

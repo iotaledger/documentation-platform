@@ -1,5 +1,6 @@
-import React from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 class Label extends React.PureComponent {
     static propTypes = {
@@ -12,14 +13,10 @@ class Label extends React.PureComponent {
         ])
     };
 
-    static defaultProps = {
-        className: '',
-    };
-
     render() {
         if (this.props.text) {
             return (
-                <label htmlFor={this.props.id} className={`control-label ${this.props.className}`}>
+                <label htmlFor={this.props.id} className={classNames('control-label', this.props.className)}>
                     {this.props.children || this.props.text}
                 </label>
             );

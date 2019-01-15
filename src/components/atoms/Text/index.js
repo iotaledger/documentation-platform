@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -11,17 +12,12 @@ class Text extends React.PureComponent {
         html: PropTypes.bool,
     };
 
-    static defaultProps = {
-        className: '',
-        html: false,
-    };
-
     render() {
         if (this.props.html) {
-            return <span className={`text ${this.props.className}`} dangerouslySetInnerHTML={{ __html: this.props.children }} />;
+            return <span className={classNames('text', this.props.className)} dangerouslySetInnerHTML={{ __html: this.props.children }} />;
         }
 
-        return (<span className={`text ${this.props.className}`}>{this.props.children}</span>);
+        return (<span className={classNames('text', this.props.className)}>{this.props.children}</span>);
     }
 }
 

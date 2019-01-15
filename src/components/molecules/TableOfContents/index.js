@@ -5,8 +5,8 @@ import React from 'react';
 class TableOfContents extends React.PureComponent {
     static propTypes = {
         items: PropTypes.arrayOf(PropTypes.shape({
-            title: PropTypes.string.isRequired,
-            href: PropTypes.string.isRequired
+            name: PropTypes.string.isRequired,
+            link: PropTypes.string.isRequired
         })),
         title: PropTypes.string.isRequired,
         compact: PropTypes.bool
@@ -27,8 +27,8 @@ class TableOfContents extends React.PureComponent {
                 <ul className="table-of-contents__section">
                     {this.props.items.map((item, idx) => (
                         <li key={idx} className='table-of-contents-list-item'>
-                            <a href={item.href}>
-                                {item.title}
+                            <a href={item.link}>
+                                {item.name}
                             </a>
                         </li>
                     ))}

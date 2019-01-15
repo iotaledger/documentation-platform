@@ -4,58 +4,61 @@ export const ContentHomePagePropTypes = PropTypes.shape({
     headerTopLinks: PropTypes.arrayOf(
         PropTypes.shape({
             href: PropTypes.string.isRequired,
-            text: PropTypes.string.isRequired
+            name: PropTypes.string.isRequired
         })
     ).isRequired,
     popularTopics: PropTypes.arrayOf(
         PropTypes.shape({
             query: PropTypes.string.isRequired,
-            text: PropTypes.string.isRequired
+            name: PropTypes.string.isRequired
         })
     ).isRequired,
     cards: PropTypes.arrayOf(
         PropTypes.shape({
             href: PropTypes.string.isRequired,
             image: PropTypes.string.isRequired,
-            alt: PropTypes.string.isRequired,
-            text: PropTypes.string.isRequired
+            name: PropTypes.string.isRequired
         })
-    ).isRequired,
-    content: PropTypes.arrayOf(
-        PropTypes.shape({
-            header: PropTypes.string.isRequired,
-            folder: PropTypes.string.isRequired,
-            subheader: PropTypes.string.isRequired,
-            topics: PropTypes.arrayOf(
-                PropTypes.shape({
-                    href: PropTypes.string.isRequired,
-                    header: PropTypes.string.isRequired,
-                    subheader: PropTypes.string.isRequired
-                })
-            )
-        })
-    ).isRequired,
+    ).isRequired
 });
 
-export const ContentMenuPropTypes = PropTypes.objectOf(
+export const ProjectsPropTypes = PropTypes.arrayOf(
     PropTypes.shape({
-        versions: PropTypes.objectOf(PropTypes.arrayOf(
+        name: PropTypes.string.isRequired,
+        folder: PropTypes.string.isRequired,
+        home: PropTypes.shape({
+            description: PropTypes.string.isRequired,
+            links: PropTypes.arrayOf(
+                PropTypes.shape({
+                    name: PropTypes.string.isRequired,
+                    link: PropTypes.string.isRequired,
+                    description: PropTypes.string.isRequired
+                })
+            ).isRequired
+        }),
+        versions: PropTypes.arrayOf(
             PropTypes.shape({
-                name: PropTypes.string.isRequired,
-                link: PropTypes.string.isRequired,
-                toc: PropTypes.arrayOf(
+                version: PropTypes.string.isRequired,
+                pages: PropTypes.arrayOf(
                     PropTypes.shape({
-                        level: PropTypes.number.isRequired,
-                        content: PropTypes.string.isRequired
+                        name: PropTypes.string.isRequired,
+                        link: PropTypes.string.isRequired,
+                        toc: PropTypes.arrayOf(
+                            PropTypes.shape({
+                                level: PropTypes.number.isRequired,
+                                name: PropTypes.string.isRequired
+                            })
+                        )
                     })
-                )
+                ).isRequired
             })
-        )).isRequired
+        ).isRequired
     }));
 
 export const ContentMenuItemsPropTypes = PropTypes.arrayOf(
     PropTypes.shape({
         name: PropTypes.string.isRequired,
+        folder: PropTypes.string,
         link: PropTypes.string.isRequired
     })
 );

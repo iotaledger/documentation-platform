@@ -4,11 +4,13 @@ import path from 'path';
 import React, { Component } from 'react';
 import { reloadRoutes } from 'react-static/node';
 import { ServerStyleSheet } from 'styled-components';
-import { buildMenuItems, getDocPages } from './buildList';
+import { buildProjects, getDocPages } from './buildProjects';
 import HotJar from './src/components/atoms/HotJar';
 import { siteRoot, hotJarId } from './src/config.json';
 
-chokidar.watch('../docs').on('all', () => reloadRoutes());
+const docsFolder = 'docs';
+
+chokidar.watch(`../${docsFolder}`).on('all', () => reloadRoutes());
 
 const packageFile = 'package.json'; // Point this to your package.json file
 const repoName = 'IOTA Documentation';
@@ -26,20 +28,16 @@ try {
 
 // These are the documentation pages. They can either use the `markdownSrc` to point
 // to a markdown file, or they can use `component` to point to a react component
-const docPages = getDocPages('docs');
+const docPages = getDocPages(docsFolder);
 
-// This is the side menu for the documentation section.
-// You can nest items in `children` to create groups.
-// If a group name has a `link` prop, it will also act as a link in addition to a header.
-const menu = buildMenuItems('docs');
-
-const readFile = src => fs.readFileSync(path.resolve(src), 'utf8');
+// This is the complete tree of all the documents with meta data like tocs
+const projects = buildProjects(docsFolder);
 
 // No need to touch any of this, unless you want to.
 export default {
     siteRoot,
     getSiteData: () => ({
-        menu,
+        projects,
         repo,
         repoURL,
         repoName
@@ -53,10 +51,7 @@ export default {
             path: page.path,
             component: 'src/containers/Doc',
             getData: async () => ({
-                markdown: inlineMarkdownImage(
-                    inlineImg(
-                        await readFile(page.markdownSrc), page.markdownSrc)
-                    , page.markdownSrc),
+                markdown: processMarkdown(page.markdownSrc),
                 editPath:
                     repoURL +
                     '/blob/master/' +
@@ -122,6 +117,14 @@ export default {
     }
 };
 
+function processMarkdown(markdownSrc) {
+    let markdown = fs.readFileSync(markdownSrc).toString();
+    markdown = inlineMarkdownImage(markdown, markdownSrc);
+    markdown = inlineImg(markdown, markdownSrc);
+    markdown = replaceRootUrls(markdown);
+    return markdown;
+}
+
 function inlineImg(markdown, docPath) {
     const re = /(<img src="(.*?)")/gm;
 
@@ -143,6 +146,10 @@ function inlineImg(markdown, docPath) {
     } while (match);
 
     return markdown;
+}
+
+function replaceRootUrls(markdown) {
+    return markdown.replace(/root:\/\/(.*?)(.md)/g, `/${docsFolder}/$1`);
 }
 
 function inlineMarkdownImage(markdown, docPath) {

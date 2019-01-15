@@ -5,17 +5,16 @@ import { Head, withRouteData, withRouter, withSiteData } from 'react-static';
 import ParallaxContainer from '../components/atoms/ParallaxContainer';
 import SideMenu from '../components/molecules/SideMenu';
 import StickyHeader from '../components/organisms/StickyHeader';
-import contentHomePage from '../contentHomePage.json';
 import { submitMissing } from '../utils/api';
 import { localStorageGet } from '../utils/localStorage';
-import { ContentMenuPropTypes } from '../utils/propTypes.js';
+import { ProjectsPropTypes } from '../utils/propTypes.js';
 import Container from './Container';
 import './notFound.css';
 
 class NotFound extends React.PureComponent {
     static propTypes = {
         repoName: PropTypes.string.isRequired,
-        menu: ContentMenuPropTypes.isRequired,
+        projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location
     };
@@ -50,13 +49,11 @@ class NotFound extends React.PureComponent {
                     <title>{`Not Found | ${this.props.repoName}`}</title>
                 </Head>
                 <StickyHeader
-                    data={this.props.menu}
                     onBurgerClick={this.handleBurgerClick}
                 />
                 <SideMenu
                     isMenuOpen={this.state.isMenuOpen}
-                    contentHomePage={contentHomePage}
-                    menuData={this.props.menu}
+                    projects={this.props.projects}
                     onCloseClick={this.handleBurgerClick} />
                 <section className="not-found">
                     <article>

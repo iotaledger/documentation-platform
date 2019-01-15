@@ -52,6 +52,7 @@ class InputSearch extends React.Component {
                 className={this.props.className}
                 placeholder={this.props.placeholder}
                 type="search"
+                autoComplete="off"
                 value={query}
                 name="query"
                 onChange={this.handleInputChange}

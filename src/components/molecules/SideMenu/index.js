@@ -2,14 +2,13 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-static';
-import { createSideMenuEntries } from '../../../utils/helpers';
+import { createSideMenuEntries } from '../../../utils/projects';
+import { ProjectsPropTypes } from '../../../utils/propTypes';
 import ClickOutside from '../../atoms/ClickOutside';
-import { ContentHomePagePropTypes, ContentMenuPropTypes } from '../../../utils/propTypes';
 
 class SideMenu extends React.Component {
     static propTypes = {
-        contentHomePage: ContentHomePagePropTypes.isRequired,
-        menuData: ContentMenuPropTypes.isRequired,
+        projects: ProjectsPropTypes.isRequired,
         onCloseClick: PropTypes.func,
         isMenuOpen: PropTypes.bool,
         highlightedItem: PropTypes.string
@@ -30,14 +29,14 @@ class SideMenu extends React.Component {
         document.addEventListener('keydown', this.keydown, false);
 
         this.setState({
-            menuData: createSideMenuEntries(this.props.contentHomePage, this.props.menuData, this.props.highlightedItem)
+            menuData: createSideMenuEntries(this.props.projects, this.props.highlightedItem)
         });
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.highlightedItem !== prevProps.highlightedItem) {
             this.setState({
-                menuData: createSideMenuEntries(this.props.contentHomePage, this.props.menuData, this.props.highlightedItem)
+                menuData: createSideMenuEntries(this.props.projects, this.props.highlightedItem)
             });
         }
     }
@@ -86,7 +85,7 @@ class SideMenu extends React.Component {
                                 { 'side-menu__group--selected': menuItem.selected }
                             )}>
                             <h5 className="side-menu__heading" onClick={() => this.handleHeadingClick(index)}>
-                                <span>{menuItem.heading}</span>
+                                <span>{menuItem.name}</span>
                             </h5>
                             <ul className="side-menu__list">
                                 {menuItem.items.map((menuListItem, miIndex) => (

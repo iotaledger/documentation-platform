@@ -1,16 +1,15 @@
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { footerSections, footerStaticContent } from '../../../contentFooter.json';
-import contentHomePage from '../../../contentHomePage.json';
-import { getLatestVersionLinks, parseProjectUrl } from '../../../utils/helpers.js';
-import { ContentMenuPropTypes } from '../../../utils/propTypes.js';
+import { createProjectLinks, parseProjectUrl } from '../../../utils/projects.js';
+import { ProjectsPropTypes } from '../../../utils/propTypes.js';
 import Heading from '../../atoms/Heading';
 import Link from '../../atoms/Link';
 import Text from '../../atoms/Text';
 
 class Footer extends React.Component {
     static propTypes = {
-        menu: ContentMenuPropTypes.isRequired,
+        projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location
     };
@@ -20,27 +19,29 @@ class Footer extends React.Component {
 
         const projectParts = parseProjectUrl(this.props.location.pathname);
 
+        const projectLinks = createProjectLinks(this.props.projects);
+
         let dynamicSections = [ {
             heading: 'Developer Docs',
-            links: contentHomePage.content.map(i => ({ text: i.header, folder: i.folder }))
+            links: projectLinks
         } ];
 
         this.state = {
-            projectLinks: getLatestVersionLinks(this.props.menu),
-            currentProject: projectParts.projectName,
+            projectLinks: createProjectLinks(this.props.projects),
+            currentProjectFolder: projectParts.projectFolder,
             footerSections: dynamicSections.concat(footerSections)
         };
 
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(urlOrProjectName) {
-        if (urlOrProjectName.startsWith('http')) {
-            window.open(urlOrProjectName, '_blank');
+    handleClick(urlOrProjectFolder) {
+        if (urlOrProjectFolder.startsWith('http')) {
+            window.open(urlOrProjectFolder, '_blank');
         } else {
-            this.props.history.push(this.state.projectLinks[urlOrProjectName]);
+            this.props.history.push(this.state.projectLinks.find(pl => pl.folder === urlOrProjectFolder).link);
         }
-        this.setState({currentProject: urlOrProjectName});
+        this.setState({currentProject: urlOrProjectFolder});
     }
 
     render() {
@@ -53,17 +54,12 @@ class Footer extends React.Component {
                                 <section key={heading} className="footer-top-content__wrapper">
                                     <Heading level={3} text={heading} className="footer-top-content__heading" />
                                     {
-                                        links.map(({ href, folder, text }) =>
-                                            <React.Fragment key={text}>
-                                                {href && (
-                                                    <Link href={href} className="footer-top-content__link">
-                                                        {text}
+                                        links.map(item =>
+                                            <React.Fragment key={item.name}>
+                                                {item.link && (
+                                                    <Link href={item.link} className="footer-top-content__link">
+                                                        {item.name}
                                                     </Link>
-                                                )}
-                                                {folder && (
-                                                    <a onClick={() => this.handleClick(folder)} className="footer-top-content__link">
-                                                        {text}
-                                                    </a>
                                                 )}
                                             </React.Fragment>
                                         )
@@ -77,15 +73,15 @@ class Footer extends React.Component {
                         <div className="select-wrapper">
                             <select
                                 onChange={(e) => this.handleClick(e.target.value)}
-                                value={this.state.currentProject}
+                                value={this.state.currentProjectFolder}
                                 className="select footer-top-content__dropdown">
                                 <option value="">Select a topic</option>
                                 {
                                     this.state.footerSections.map(({ heading, links }) =>
                                         <optgroup key={heading} label={heading}>
                                             {
-                                                links.map(({ href, folder, text }) =>
-                                                    <option key={text} value={href || folder}>{text}</option>
+                                                links.map(item =>
+                                                    <option key={item.name} value={item.folder || item.link}>{item.name}</option>
                                                 )
                                             }
                                         </optgroup>

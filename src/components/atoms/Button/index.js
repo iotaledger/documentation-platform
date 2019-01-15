@@ -16,17 +16,14 @@ class Button extends React.PureComponent {
         ]),
     };
 
-    static defaultProps = {
-        className: '',
-    };
-
     render() {
         return (<button
             id={this.props.id}
             onClick={this.props.onClick}
             disabled={this.props.disabled}
             className={
-                classNames('button', this.props.className,
+                classNames('button',
+                    this.props.className,
                     {
                         'button--large': this.props.large,
                         'button--small': this.props.small,

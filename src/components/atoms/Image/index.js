@@ -1,5 +1,6 @@
-import React from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 class Image extends React.PureComponent {
     static propTypes = {
@@ -9,13 +10,9 @@ class Image extends React.PureComponent {
         className: PropTypes.string,
     };
 
-    static defaultProps = {
-        className: ''
-    };
-
     render() {
         return (
-            <img id={this.props.id} src={this.props.src} alt={this.props.alt} className={`image ${this.props.className}`} />
+            <img id={this.props.id} src={this.props.src} alt={this.props.alt} className={classNames('image', this.props.className)} />
         );
     }
 }

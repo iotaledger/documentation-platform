@@ -12,8 +12,7 @@ class CardContainer extends React.PureComponent {
         content: PropTypes.arrayOf(PropTypes.shape({
             image: PropTypes.string.isRequired,
             href: PropTypes.string.isRequired,
-            alt: PropTypes.string.isRequired,
-            text: PropTypes.string,
+            name: PropTypes.string,
         })).isRequired
     };
 
@@ -22,7 +21,7 @@ class CardContainer extends React.PureComponent {
             <div className="cards-container">
                 {
                     this.props.content.map((card, index) =>
-                        <Card key={card.text} card={{ ...card, image: cards[index] }} />
+                        <Card key={card.name} card={{ ...card, image: cards[index] }} />
                     )
                 }
             </div>
