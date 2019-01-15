@@ -1,39 +1,33 @@
 # Local snapshot
 
-A local snapshot is the process in which an IRI node records the [state of its ledger](/iri/concepts/the-distributed-ledger.md) at a given time in [two snapshot files](/iri/references/data-in-the-snapshot-files.md).
+**A local snapshot is the process in which an IRI node records the state of its ledger in snapshot files.**
 
-An IRI node reads the snapshot files when it first starts running in order to start building its ledger. The data in the snapshot files gives an IRI node instant access to a starting point for requesting transactions from its neighbors.
-
-The benefits of doing a local snapshot are the following:
-
-- If an IRI node restarts for any reason, it can synchronize its ledger with neighbor IRI nodes faster than without doing a local snapshot
-- If an IRI node's ledger becomes too large, it can use the snapshot files to delete any old transactions
+Local snapshots allow IRI nodes to reduce the time it takes to [synchronize the ledger](concepts/the-ledger.md) on startup.
 
 **Note:** Local snapshots are available only in version 1.6.0 and higher of the IRI.
 
-## Faster synchronization
+## Snapshot files
 
-Without snapshot files, if the IRI were to ever restart, it would have to synchronize its entire ledger from the IRI node's startMilestoneIndex variable. This process involves the IRI requesting every confirmed transaction and milestone since the startMilestoneIndex variable from its neighbor IRI nodes, validating the transactions, and appending them to its ledger.
+IRI nodes create snapshot files at regular intervals, depending on the values of the [`LOCAL_SNAPSHOTS_INTERVAL_SYNCED`](references/iri-configuration-options.md#local-snapshots-interval-synced) and [`LOCAL_SNAPSHOTS_INTERVAL_UNSYNCED`](references/iri-configuration-options.md#local-snapshots-interval-unsynced) configuration options.
 
-With snapshot files, an IRI node could synchronize its ledger from the milestones in the snapshot.meta file. This process decreases the time it takes for an IRI node to become synchronized with its neighbor IRI nodes.
+When an IRI node does a local snapshot, it records the current state of its ledger in the following snapshot files:
+* **snapshot.meta:** [A list of transaction data that the IRI uses to start synchonizing its ledger with neighbor IRI nodes](references/data-in-the-snapshot-metadata-file.md)
+* **snapshot.state:** A list of all addresses that have a balance greater than 0 at the time of the local snapshot.
 
-## Reduction of the ledger size
+**Note:** These files are located in the path of the [`LOCAL_SNAPSHOTS_BASE_PATH`](references/iri-configuration-options.md#local-snapshots-base-path) configuration option.
 
-An IRI node can also use the snapshot files to delete old transactions from its ledger.
+On startup, any IRI node can use the snapshot files to synchronize with their neighbor IRI nodes.
 
-Over time, the [ledger](/iri/concepts/the-distributed-ledger.md) of an IRI node accumulates many valid transactions, which often cause the size of the ledger to become larger than the IRI node's available memory. To stop the ledger from becoming too large, you can choose to create local snapshots at regular intervals. This option is enabled by default in the [`LOCAL_SNAPSHOTS` configuration parameters](/iri/references/iri-configuration-options#local-snapshots-enabled).
+## How local snapshots work
 
-Transactions are deleted only if they come before a milestone transaction that is older than the sum of the following calculation:
+During a snapshot, the IRI node adds data to the [snapshot.meta file](references/data-in-the-snapshot-metadata-file.md) about the [solid entrypoints](references/data-in-the-snapshot-metadata-file.md#solid-entrypoint) and the [seen milestones](references/data-in-the-snapshot-metadata-file.md#seen-milestone).
 
-[`LOCAL_SNAPSHOTS_DEPTH`](/iri/iri-configuration-options#local-snapshots-depth) +
-[`LOCAL_SNAPSHOTS_PRUNING_DELAY`](/iri/iri-configuration-options#local-snapshots-pruning-delay)
+In the snapshot.state file, the IRI node adds a list of all addresses and their balances.
 
-## How it works
+When the IRI node restarts, it starts by solidifying all transactions that are referenced by the seen milestones. Then, when the IRI reaches a solid entrypoint, it stops solidyfing those transactions.
 
-To create a local snapshot, the IRI creates two snapshot files, using a subgraph of its ledger.
+<dl><dt>solidify</dt><dd>Request transactions from neighbor IRI nodes until all transactions and their referenced transactions are stored in the ledger.</dd></dl>
 
-### Subgraph
 
-A subgraph is a section of the ledger that contains all transactions between a user-defined milestone transaction and new tip transactions.
 
-For local snapshots, the user-defined milestone transaction is the [`LOCAL_SNAPSHOTS_DEPTH` configuration parameter](/iri/iri-configuration-options#local-snapshots-depth)
+

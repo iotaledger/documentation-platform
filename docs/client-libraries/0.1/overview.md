@@ -3,21 +3,21 @@
 ---------------
 
 #### **JavaScript Library** ####
-[Link](root:://iota-js/0.1/README.md)
+[Link](root://iota-js/0.1/readme.md)
 
 This is the official JavaScript client library. Implements official API and additional features. Currently in beta.
 
 ---
 
-#### __Java Library__ ####
-[Link](root:://iota-java/0.1/README.md)
+#### **Java Library** ####
+[Link](root://iota-java/0.1/readme.md)
 
 This is the official Java client library. Implements official API and additional features. Currently in beta.
 
 ---
 
-#### __Golang Library__ ####
-[Link](root:://iota-go/0.1/README.md)
+#### **Golang Library** ####
+[Link](root://iota-go/0.1/readme.md)
 
 This is the official Go client library. Implements official API and additional features. Currently in beta.
 
@@ -36,7 +36,7 @@ Python library. Implements core and extended functionality.
 
 ---
 
-#### **C# Library** ####
+#### __C# Library__ ####
 [Link](https://github.com/iota-community/tangle-.net)
 
 A C# .NET 4.6 client library. Implements core and extended functionality.

@@ -7,13 +7,16 @@ This section introduces users to IOTA by giving them a foundation of knowledge t
 - Introduction
     - [What is IOTA?](introduction/what-is-iota.md)
     - [What is distributed ledger technology?](introduction/what-is-dlt.md)
+    - [Introduction/What is a seed?](/introduction/what-is-a-seed.md)
+    - [Introduction/What is a transaction?](/introduction/what-is-a-transaction.md)
+    - [Introduction/What is an IRI node?](/introduction/what-is-an-iri-node.md)
   
-- Getting started
-    - [First steps](/getting-started/first-steps.md)
-    - [Creating a seed](/getting-started/creating-a-seed.md)
-    - [Sending your first data transaction with the Trinity wallet](/getting-started/sending-your-first-data-transaction-with-the-trinity-wallet.md)
-    - [Running your own IRI node](/getting-started/running-your-own-iri-node.md)
-    - [Sending your first data transaction with Node.js](/getting-started/sending-your-first-data-transaction-with-nodejs.md)
+- Tutorials
+    - [First steps](/tutorials/first-steps.md)
+    - [Create a seed](/tutorials/create-a-seed.md)
+    - [Send your first data transaction (Trinity)](/tutorials/send-your-first-data-transaction-with-the-trinity-wallet.md)
+    - [Run your own IRI node](/tutorials/run-your-own-iri-node.md)
+    - [Send your first data transaction (Node.js)](/tutorials/send-your-first-data-transaction-with-nodejs.md)
 
 - References
     - [IOTA networks](references/iota-networks.md)

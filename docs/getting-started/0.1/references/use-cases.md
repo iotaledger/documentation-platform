@@ -1,8 +1,6 @@
 # Use cases
 
-IOTA is an open-source technology that can streamline, secure, and automate any process that sends data or transfers value among different devices.
-
-The following table displays some applications that are already using IOTA:
+**This table displays some applications that are already using IOTA.**
 
 
 | Company  | Description |  References |

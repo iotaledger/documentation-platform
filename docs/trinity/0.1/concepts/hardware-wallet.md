@@ -1,6 +1,8 @@
 # Hardware wallet
 
-A hardware wallet, sometimes referred to as cold storage, is a physical electronic device that secures your funds by doing the following:
+**A hardware wallet, sometimes referred to as cold storage, is a physical electronic device that secures your funds.**
+
+Hardware wallets do the following:
 * Creates and stores seeds
 * Signs value transactions
 
