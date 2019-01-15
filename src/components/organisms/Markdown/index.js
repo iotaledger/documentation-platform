@@ -341,8 +341,7 @@ class Markdown extends PureComponent {
         if (props.columnAlignment.length > 3) {
             coreProps.className = 'table--compact';
         }
-        this.currentTable = React.createElement('table', coreProps, props.children);
-        return React.createElement('div', {className: 'table-scroll-wrapper'}, this.currentTable);
+        return React.createElement('table', coreProps, props.children);
     }
 
     tableRowRenderer(props) {
@@ -355,10 +354,14 @@ class Markdown extends PureComponent {
         const coreProps = this.getCoreProps(props);
         this.currentTableColumn++;
         let children = props.children;
+
         if (this.currentTableRow === 0) {
             this.currentTableHeaders[this.currentTableColumn] = props.children[0].props.children[0].props.value;
         } else {
-            coreProps['data-heading'] = this.currentTableHeaders[this.currentTableColumn];
+            children = [
+                React.createElement('span', { className: 'table-body-row-item--inline-header', key: 0 }, this.currentTableHeaders[this.currentTableColumn]),
+                React.createElement('span', { key: 1}, children)
+            ];
         }
         return React.createElement(
             props.isHeader ? 'th' : 'td',
