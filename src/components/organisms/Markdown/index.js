@@ -41,7 +41,14 @@ class Markdown extends PureComponent {
 
         this.html = this.html.bind(this);
         this.textRenderer = this.textRenderer.bind(this);
+        this.tableRenderer = this.tableRenderer.bind(this);
+        this.tableCellRenderer = this.tableCellRenderer.bind(this);
+        this.tableRowRenderer = this.tableRowRenderer.bind(this);
         this.replaceSearchQuery = this.replaceSearchQuery.bind(this);
+
+        this.currentTable = undefined;
+        this.currentTableRow = 0;
+        this.currentTableHeaders = [];
     }
 
     componentDidMount() {
@@ -277,9 +284,9 @@ class Markdown extends PureComponent {
     }
 
     aLink(props) {
-        const localProps = {...props};
+        const localProps = { ...props };
         if (localProps.href.startsWith('http')) {
-            localProps.target= '_blank';
+            localProps.target = '_blank';
             localProps.rel = 'noopener noreferrer';
         } else {
             if (localProps.href.startsWith('#')) {
@@ -327,6 +334,39 @@ class Markdown extends PureComponent {
         return props.children.replace(/:\w+:/gi, name => emoji.getUnicode(name));
     }
 
+    tableRenderer(props) {
+        const coreProps = this.getCoreProps(props);
+        this.currentTableHeaders = [];
+        this.currentTableRow = -1;
+        if (props.columnAlignment.length > 3) {
+            coreProps.className = 'table--compact';
+        }
+        this.currentTable = React.createElement('table', coreProps, props.children);
+        return React.createElement('div', {className: 'table-scroll-wrapper'}, this.currentTable);
+    }
+
+    tableRowRenderer(props) {
+        this.currentTableRow++;
+        this.currentTableColumn = -1;
+        return React.createElement('tr', this.getCoreProps(props), props.children);
+    }
+
+    tableCellRenderer(props) {
+        const coreProps = this.getCoreProps(props);
+        this.currentTableColumn++;
+        let children = props.children;
+        if (this.currentTableRow === 0) {
+            this.currentTableHeaders[this.currentTableColumn] = props.children[0].props.children[0].props.value;
+        } else {
+            coreProps['data-heading'] = this.currentTableHeaders[this.currentTableColumn];
+        }
+        return React.createElement(
+            props.isHeader ? 'th' : 'td',
+            coreProps,
+            children
+        );
+    }
+
     paragraph(props) {
         return (<div className="text-paragraph" {...props} />);
     }
@@ -334,9 +374,13 @@ class Markdown extends PureComponent {
     heading(props) {
         return (
             <React.Fragment>
-                <Heading className='text--tertiary' level={props.level} id={sanitizeHashId(props.children[0].props.value)} {...props}/>
+                <Heading className='text--tertiary' level={props.level} id={sanitizeHashId(props.children[0].props.value)} {...props} />
             </React.Fragment>
         );
+    }
+
+    getCoreProps(props) {
+        return props['data-sourcepos'] ? { 'data-sourcepos': props['data-sourcepos'] } : {};
     }
 
     render() {
@@ -350,7 +394,10 @@ class Markdown extends PureComponent {
                     html: this.html,
                     link: this.aLink,
                     paragraph: this.paragraph,
-                    heading: this.heading
+                    heading: this.heading,
+                    table: this.tableRenderer,
+                    tableRow: this.tableRowRenderer,
+                    tableCell: this.tableCellRenderer
                 }}
                 skipHtml={false}
                 escapeHtml={false} />
