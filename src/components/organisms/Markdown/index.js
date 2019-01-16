@@ -356,7 +356,7 @@ class Markdown extends PureComponent {
         let children = props.children;
 
         if (this.currentTableRow === 0) {
-            this.currentTableHeaders[this.currentTableColumn] = props.children[0].props.children[0].props.value;
+            this.currentTableHeaders[this.currentTableColumn] = props.children[0].props.children;
         } else {
             children = [
                 React.createElement('span', { className: 'table-body-row-item--inline-header', key: 0 }, this.currentTableHeaders[this.currentTableColumn]),
