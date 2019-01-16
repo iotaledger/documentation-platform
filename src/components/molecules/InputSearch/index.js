@@ -45,6 +45,10 @@ class InputSearch extends React.Component {
         this.setState({ query: '' });
     }
 
+    focus() {
+        this.searchInput.focus();
+    }
+
     render() {
         const { query } = this.state;
         return (
@@ -57,6 +61,7 @@ class InputSearch extends React.Component {
                 name="query"
                 onChange={this.handleInputChange}
                 onKeyUp={this.handleKeyChange}
+                ref={(input) => { this.searchInput = input; }} 
             >
             </input>
         );

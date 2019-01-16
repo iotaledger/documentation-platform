@@ -25,12 +25,18 @@ class StickyHeader extends React.Component {
         this.handleKeyUp = this.handleKeyUp.bind(this);
         this.onSearch = this.onSearch.bind(this);
         this.handleBurgerClick = this.handleBurgerClick.bind(this);
+        this.handleCloseClick = this.handleCloseClick.bind(this);
     }
 
     handleBurgerClick() {
+        this.setState({ inputExpanded: false });
         if (this.props.onBurgerClick) {
             this.props.onBurgerClick();
         }
+    }
+
+    handleCloseClick() {
+        this.setState({ inputExpanded: false });
     }
 
     onSearch(query) {
@@ -44,37 +50,41 @@ class StickyHeader extends React.Component {
     }
 
     inputExpandHandler() {
-        this.setState({ inputExpanded: true });
+        if (!this.state.inputExpanded) {
+            this.setState({ inputExpanded: true });
+            this.searchInput.focus();
+        }
     }
 
     render() {
         return (
-            <header className="sticky-header">
-                <div className="sticky-header__wrapper">
-                    <section className="sticky-header__head">
-                        <Link to="/" exact>
-                            <img className="sticky-header__brand" src={logo} />
-                        </Link>
-                        <div className="sticky-header__control">
-                            <div
-                                onClick={this.inputExpandHandler}
-                                className={classNames('input-sticky-wrapper', {
-                                    'input-sticky-wrapper--expanded': this.state.inputExpanded
-                                })}
-                            >
-                                <InputSearch
-                                    className="input-search-sticky"
-                                    placeholder="Search for topics"
-                                    onKeyUp={this.handleKeyUp}
-                                    onSearch={this.onSearch}
-                                />
-                            </div>
-                            <button
-                                className="sticky-header__icon"
-                                onClick={this.handleBurgerClick}
-                            />
-                        </div>
-                    </section>
+            <header className={classNames('sticky-header', { 'sticky-header--expanded': this.state.inputExpanded })}>
+                <Link to="/" exact>
+                    <img className="sticky-header__brand" src={logo} />
+                </Link>
+                <div className="sticky-header__control">
+                    <div
+                        onClick={this.inputExpandHandler}
+                        className={classNames('input-sticky-wrapper', {
+                            'input-sticky-wrapper--expanded': this.state.inputExpanded
+                        })}
+                    >
+                        <InputSearch
+                            ref={(input) => { this.searchInput = input; }}
+                            className="input-search-sticky"
+                            placeholder="Search for topics"
+                            onKeyUp={this.handleKeyUp}
+                            onSearch={this.onSearch}
+                        />
+                        <button
+                            className="sticky-header__icon-close"
+                            onClick={this.handleCloseClick}
+                        />
+                    </div>
+                    <button
+                        className="sticky-header__icon-burger"
+                        onClick={this.handleBurgerClick}
+                    />
                 </div>
             </header>
         );
