@@ -68,19 +68,21 @@ class Home extends React.Component {
                     onCloseClick={this.handleBurgerClick} 
                     highlightedItem={this.state.projectFullURL}/>
                 <HomePageLayout id="new_to_iota?">
-                    <div className="left-column">
-                        <ScrollInContainer topOffset={70}>   
+                    <aside>
+                        <ScrollInContainer topOffset={50}>   
                             <FloatingMenu menuItems={createProjectLinks(this.props.projects)} />
                         </ScrollInContainer>
-                    </div>
-                    <div className="right-column">
+                    </aside>
+                    <article style={{background: '#f3f2f1'}}>
                         <CardContainer content={contentHomePage.cards} />
+                    </article>
+                    <article>
                         <ProjectTopicsContainer content={createProjectTopics(this.props.projects)} />
-                    </div>
+                    </article>
                     <BottomSticky zIndex={10}>
-                    <TabletHidden>
-                        <Feedback onSubmit={(data) => submitFeedback('/home/', data)} />
-                    </TabletHidden>
+                        <TabletHidden>
+                            <Feedback onSubmit={(data) => submitFeedback('/home/', data)} />
+                        </TabletHidden>
                     </BottomSticky>
                     <BottomSticky horizontalAlign="right">
                         <ScrollToTop />

@@ -41,13 +41,22 @@ const TabletHidden = styled.div`
 
 const HomePageLayout = styled.div`
   position: relative;
-  .left-column {
+  > aside {
     position: absolute;
-    left: 40px;
-    width: 250px;
+    top: 0px;
+    left: 50%;
+    width: 100%;
     height: 100%;
+    max-width: 1340px;
+    z-index: 2;
+    transform: translate(-50%, 0);
+    pointer-event: none;
   }
-  .right-column > div {
+  > aside > div{
+    pointer-event: all;
+    width: 250px;
+  }
+  > article > div {
     max-width: 1420px;
     margin: auto;
     padding-right: 40px;
@@ -55,10 +64,10 @@ const HomePageLayout = styled.div`
     box-sizing: border-box;
   }
   ${media.tabletDown`
-    .left-column {
+    > aside {
       display: none;
     }
-    .right-column > div {
+    > article > div {
       padding-right: 16px;
       padding-left: 16px;
     }
