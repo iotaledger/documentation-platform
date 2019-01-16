@@ -52,7 +52,6 @@ class Doc extends React.Component {
 
         this.changeVersion = this.changeVersion.bind(this);
         this.handleBurgerClick = this.handleBurgerClick.bind(this);
-        this.handleChangeProject = this.handleChangeProject.bind(this);
     }
 
     changeVersion(newVersion) {
@@ -66,6 +65,7 @@ class Doc extends React.Component {
 
     componentDidMount() {
         const projectParts = parseProjectUrl(this.props.location.pathname);
+
         this.setState({
             ...projectParts,
             projectVersions: getVersionsUrl(projectParts, this.props.projects),
@@ -80,10 +80,6 @@ class Doc extends React.Component {
 
     handleBurgerClick() {
         this.setState({ isMenuOpen: !this.state.isMenuOpen });
-    }
-
-    handleChangeProject(proj) {
-        this.props.history.push(proj);
     }
 
     render() {
@@ -102,7 +98,6 @@ class Doc extends React.Component {
                     onCloseClick={this.handleBurgerClick}
                     highlightedItem={this.state.projectFullURL} />
                 <SubHeader
-                    history={this.props.history}
                     projects={this.props.projects}
                     pathname={this.props.location.pathname}
                 />
@@ -112,12 +107,11 @@ class Doc extends React.Component {
                     onChange={(newVersion) => this.changeVersion(newVersion)}
                 />
                 <div id="floating-menu-top-limit"></div>
-                <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: 'auto' }}>
+                <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: '20px auto 0px auto' }}>
                     <section className="left-column">
                         <DropSelector
-                            items={createProjectLinks(this.props.projects, 'title', 'value')}
-                            value={getProjectTitle(this.state, this.props.projects)}
-                            onChange={(val) => this.handleChangeProject(val)}
+                            items={createProjectLinks(this.props.projects)}
+                            currentName={getProjectTitle(this.state, this.props.projects)}
                             style={{ marginBottom: '28px' }}
                         />
                         <TreeMenu
@@ -132,13 +126,7 @@ class Doc extends React.Component {
                         <Markdown source={this.props.markdown} query={extractSearchQuery(this.props.location)} />
                     </section>
                     <section className="right-column">
-                        <ScrollInContainer
-                            topOffset={20}
-                            bottomOffset={120}
-                            topMarker="#floating-menu-top-limit"
-                            bottomMarker="#floating-menu-bottom-limit"
-                            widthContainer=".right-column"
-                        >
+                        <ScrollInContainer>
                             <TableOfContents items={this.state.pageTableOfContents} title="Sections On This Page" />
                         </ScrollInContainer>
                     </section>
@@ -146,7 +134,6 @@ class Doc extends React.Component {
                 <div id="floating-menu-bottom-limit" />
                 <BottomStop />
                 <Navigator
-                    history={this.props.history}
                     projects={this.props.projects}
                     pathname={this.props.location.pathname}
                 />

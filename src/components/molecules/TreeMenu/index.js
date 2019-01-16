@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from 'react-static';
+import Link from '../../atoms/Link';
 import { buildItemTree } from '../../../utils/projects';
 import { ContentMenuItemsPropTypes } from '../../../utils/propTypes';
 
@@ -61,7 +61,7 @@ class TreeMenu extends React.Component {
                                                 { 'tree-menu__section-item--selected': item.selected }
                                             )
                                         }
-                                    ><Link to={item.link}>{item.name}</Link></li>
+                                    ><Link href={item.link}>{item.name}</Link></li>
                                 ))}
                             </ul>
                         </React.Fragment>

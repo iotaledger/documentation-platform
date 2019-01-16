@@ -4,7 +4,6 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import { Head, withSiteData } from 'react-static';
 import BottomSticky from '../components/atoms/BottomSticky';
 import BottomStop from '../components/atoms/BottomStop';
-import ScrollInContainer from '../components/atoms/ScrollInContainer';
 import ScrollToTop from '../components/atoms/ScrollToTop';
 import EmailSignup from '../components/molecules/EmailSignup';
 import Feedback from '../components/molecules/Feedback';
@@ -69,26 +68,17 @@ class Home extends React.Component {
                     projects={this.props.projects}
                     onCloseClick={this.handleBurgerClick} 
                     highlightedItem={this.state.projectFullURL}/>
-                <div id="floating-menu-top-limit"></div>
                 <div style={{ backgroundColor: '#f3f2f1' }}>
                     <HomePageLayout
                         id="new_to_iota?"
                         style={{ backgroundColor: '#f3f2f1' }} className="content-wrapper">
                         <div className="left-column">
-                            <ScrollInContainer
-                                topOffset={60}
-                                bottomOffset={120}
-                                topMarker="#floating-menu-top-limit"
-                                bottomMarker="#floating-menu-bottom-limit"
-                                widthContainer=".left-column"
-                            >
-                                <TabletHidden>
-                                    <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-                                        <FloatingMenu
-                                            menuItems={createProjectLinks(this.props.projects)} />
-                                    </div>
-                                </TabletHidden>
-                            </ScrollInContainer>
+                            <TabletHidden>
+                                <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                                    <FloatingMenu
+                                        menuItems={createProjectLinks(this.props.projects)} />
+                                </div>
+                            </TabletHidden>
                         </div>
                         <div className="right-column" style={{}}>
                             <CardContainer content={contentHomePage.cards} />
@@ -102,7 +92,6 @@ class Home extends React.Component {
                         <ProjectTopicsContainer content={createProjectTopics(this.props.projects)} />
                     </div>
                 </HomePageLayout>
-                <div id="floating-menu-bottom-limit" />
                 <BottomStop />
                 <EmailSignup />
                 <BottomSticky zIndex={10}>

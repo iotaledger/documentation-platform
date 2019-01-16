@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from 'react-static';
+import Link from '../../atoms/Link';
 import { createSideMenuEntries } from '../../../utils/projects';
 import { ProjectsPropTypes } from '../../../utils/propTypes';
 import ClickOutside from '../../atoms/ClickOutside';
@@ -95,7 +95,7 @@ class SideMenu extends React.Component {
                                                 'side-menu-item',
                                                 { 'side-menu-item--active': menuListItem.selected }
                                             )}>
-                                                <Link to={menuListItem.link} exact activeClassName="side-menu-item--active">
+                                                <Link href={menuListItem.link} className={classNames({ 'side-menu-item--active': menuListItem.selected })}>
                                                     {menuListItem.name}
                                                 </Link>
                                             </li>
@@ -110,7 +110,7 @@ class SideMenu extends React.Component {
                                                                 'side-menu-item',
                                                                 { 'side-menu-item--active': subItem.selected }
                                                             )}>
-                                                            <Link to={subItem.link} exact activeClassName="side-menu-item--active">
+                                                            <Link href={subItem.link} className={classNames({ 'side-menu-item--active': subItem.selected })}>
                                                                 {subItem.name}
                                                             </Link>
                                                         </li>

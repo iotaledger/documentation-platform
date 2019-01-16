@@ -45,7 +45,7 @@ export function createPageTableOfContents(projectUrlParts, projects) {
     return toc;
 }
 
-export function createProjectLinks(projects, nameProp, valueProp) {
+export function createProjectLinks(projects) {
     const menuEntries = [];
 
     for (let i = 0; i < projects.length; i++) {
@@ -54,11 +54,10 @@ export function createProjectLinks(projects, nameProp, valueProp) {
             const projectVersionPages = getProjectVersionPages(projects[i], latestVersion);
 
             const me = {
-                folder: projects[i].folder
+                folder: projects[i].folder,
+                name: projects[i].name,
+                link: projectVersionPages[0].link
             };
-
-            me[nameProp || 'name'] = projects[i].name;
-            me[valueProp || 'link'] = projectVersionPages[0].link;
 
             menuEntries.push(me);
         }

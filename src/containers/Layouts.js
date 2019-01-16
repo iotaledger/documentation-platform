@@ -44,6 +44,8 @@ const HomePageLayout = styled.div`
   .left-column {
     flex: 1;
     min-width: 250px;
+    margin-top: 50px;
+    margin-bottom: 50px;
   }
   .right-column {
     flex: 3;
@@ -91,7 +93,7 @@ justify-content: center;
 }
 .middle-column {
   min-height: unset;
-  padding: 35px 16px 120px 16px;
+  padding: 15px 16px 120px 16px;
 }
 .right-column {
   display: none;

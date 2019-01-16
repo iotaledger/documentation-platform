@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import { getNextPage, getPreviousPage, parseProjectUrl } from '../../../utils/projects';
 import { ProjectsPropTypes } from '../../../utils/propTypes';
+import Link from '../../atoms/Link';
 
 class Navigator extends React.Component {
     static propTypes = {
         projects: ProjectsPropTypes,
-        pathname: PropTypes.string,
-        history: ReactRouterPropTypes.history
+        pathname: PropTypes.string
     };
     
     constructor(props) {
@@ -19,8 +18,6 @@ class Navigator extends React.Component {
             previousTitle: '',
             previousUrl: ''
         };
-
-        this.navigateTo = this.navigateTo.bind(this);
     }
 
     componentDidMount() {
@@ -36,20 +33,16 @@ class Navigator extends React.Component {
         });
     }
 
-    navigateTo(url) {
-        this.props.history.push(url);
-    }
-
     render() {
         return (<section className="navigator">
-            <button onClick={() => this.navigateTo(this.state.previousUrl)} className="navigator__back" disabled={!this.state.previousUrl}>
+            <Link href={this.state.previousUrl} className="navigator__back" disabled={!this.state.previousUrl}>
                 <div className="navigator__label">Prev</div>
                 <span className="navigator__title">{this.state.previousTitle}</span>
-            </button>
-            <button onClick={() => this.navigateTo(this.state.nextUrl)} className="navigator__next" disabled={!this.state.nextUrl}>
+            </Link>
+            <Link href={this.state.nextUrl} className="navigator__next" disabled={!this.state.nextUrl}>
                 <div className="navigator__label">Next</div>
                 <span className="navigator__title">{this.state.nextTitle}</span>
-            </button>
+            </Link>
         </section>);
 
     }

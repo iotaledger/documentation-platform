@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import { getDocumentTitle, getNextPage, getPreviousPage, getProjectTitle, parseProjectUrl } from '../../../utils/projects';
 import { ProjectsPropTypes } from '../../../utils/propTypes';
+import Link from '../../atoms/Link';
 
 class SubHeader extends React.Component {
     static propTypes = {
         projects: ProjectsPropTypes,
-        pathname: PropTypes.string,
-        history: ReactRouterPropTypes.history
+        pathname: PropTypes.string
     };
 
     constructor(props) {
@@ -21,7 +20,6 @@ class SubHeader extends React.Component {
             previousTitle: '',
             previousUrl: ''
         };
-        this.navigateTo = this.navigateTo.bind(this);
     }
 
     componentDidMount() {
@@ -39,18 +37,14 @@ class SubHeader extends React.Component {
         });
     }
 
-    navigateTo(url) {
-        this.props.history.push(url);
-    }
-
     render() {
         return (<section className="sub-header__wrapper">
             <section className="sub-header">
                 <span className="sub-header__title">{this.state.currProject}</span>
                 <section className="sub-header__body">
-                    <button onClick={() => this.navigateTo(this.state.previousUrl)} className="arrow-button arrow-button--left" disabled={!this.state.previousUrl}></button>
+                    <Link href={this.state.previousUrl} className="arrow-button arrow-button--left" disabled={!this.state.previousUrl}></Link>
                     <span className="sub-header__bottom-title">{this.state.currTitle}</span>
-                    <button onClick={() => this.navigateTo(this.state.nextUrl)} className="arrow-button arrow-button--right" disabled={!this.state.nextUrl}></button>
+                    <Link href={this.state.nextUrl} className="arrow-button arrow-button--right" disabled={!this.state.nextUrl}></Link>
                 </section>
             </section>
         </section>);

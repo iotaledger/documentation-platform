@@ -7,11 +7,10 @@ import ClickOutside from '../ClickOutside';
 class DropSelector extends React.PureComponent {
     static propTypes = {
         items: PropTypes.arrayOf(PropTypes.shape({
-            title: PropTypes.string.isRequired,
-            value: PropTypes.string.isRequired
+            name: PropTypes.string.isRequired,
+            link: PropTypes.string.isRequired
         })),
-        value: PropTypes.string,
-        onChange: PropTypes.func,
+        currentName: PropTypes.string,
         style: StylePropType
     };
 
@@ -22,13 +21,7 @@ class DropSelector extends React.PureComponent {
             isExpanded: false
         };
 
-        this.handleClick = this.handleClick.bind(this);
         this.handleExpand = this.handleExpand.bind(this);
-    }
-
-    handleClick(value) {
-        this.props.onChange(value);
-        this.setState({ isExpanded: false });
     }
 
     handleExpand() {
@@ -44,17 +37,17 @@ class DropSelector extends React.PureComponent {
                 )}
                 style={this.props.style}>
                     <div className="drop-selector-title" onClick={this.handleExpand}>
-                        <div className="drop-selector-title__text">{this.props.value}</div>
+                        <div className="drop-selector-title__text">{this.props.currentName}</div>
                         <div className="drop-selector-title__icon"></div>
                     </div>
                     <ul className="drop-selector-list">
                         {this.props.items.map(item => (
-                            <li key={item.value} className={classNames(
+                            <li key={item.link} className={classNames(
                                 'drop-selector-list-item',
-                                { 'drop-selector-list-item__selected': item.title === this.props.value }
+                                { 'drop-selector-list-item__selected': item.name === this.props.currentName }
                             )}>
-                                <a onClick={() => this.handleClick(item.value)}>
-                                    {item.title}
+                                <a href={item.link}>
+                                    {item.name}
                                 </a>
                             </li>
                         ))}

@@ -3,11 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 class ScrollInContainer extends React.Component {
     static defaultProps = {
-        topOffset: 0,
-        bottomOffset: 0,
-        topMarker: undefined,
-        bottomMarker: undefined,
-        widthContainer: undefined
+        bottomOffset: 100
     };
 
     static propTypes = {
@@ -15,11 +11,7 @@ class ScrollInContainer extends React.Component {
             PropTypes.arrayOf(PropTypes.node),
             PropTypes.node
         ]),
-        topOffset: PropTypes.number,
-        bottomOffset: PropTypes.number,
-        topMarker: PropTypes.string,
-        bottomMarker: PropTypes.string,
-        widthContainer: PropTypes.string
+        bottomOffset: PropTypes.number
     };
 
     componentDidMount() {
@@ -28,8 +20,6 @@ class ScrollInContainer extends React.Component {
 
         document.addEventListener('scroll', this.handleScroll);
         window.addEventListener('resize', this.handleResize);
-
-        this.handleScroll();
     }
 
     componentWillUnmount() {
@@ -46,48 +36,30 @@ class ScrollInContainer extends React.Component {
             return;
         }
 
-        const topMarker = document.querySelectorAll(this.props.topMarker);
-        const bottomMarker = document.querySelectorAll(this.props.bottomMarker);
-
         const thisDom = ReactDOM.findDOMNode(this);
-        const docDom = ReactDOM.findDOMNode(document.body);
+        const parentDom = thisDom.parentNode;
 
         const thisRect = thisDom.getBoundingClientRect();
+        const parentRect = parentDom.getBoundingClientRect();
 
-        const topDom = topMarker && topMarker.length ? ReactDOM.findDOMNode(topMarker[0]) : docDom;
-        const bottomDom = bottomMarker && bottomMarker.length ? ReactDOM.findDOMNode(bottomMarker[0]) : docDom;
-
-        let topLimit = topDom.getBoundingClientRect().bottom;
-        let bottomLimit = bottomDom.getBoundingClientRect().top;
-
-        let newTop = topLimit + this.props.topOffset;
-        if (newTop < this.props.topOffset) {
-            newTop = this.props.topOffset;
+        let newTop = 0;
+        if (parentRect.top < 0) {
+            newTop -= parentRect.top;
         }
 
-        if (newTop + thisRect.height > (bottomLimit - this.props.bottomOffset)) {
-            newTop = bottomLimit - this.props.bottomOffset - thisRect.height;
+        let thisHeight = thisRect.height + this.props.bottomOffset;
+
+        if (newTop + thisHeight > parentRect.height) {
+            newTop = parentRect.height - thisHeight;
         }
 
-        const widthContainer = document.querySelectorAll(this.props.widthContainer);
-        const newWidthContainer = widthContainer && widthContainer.length > 0 ?
-            ReactDOM.findDOMNode(widthContainer[0]) : undefined;
-
-        if (newWidthContainer) {
-            const widthContainerComputedStyle = getComputedStyle(newWidthContainer);
-            const newWidth = newWidthContainer.getBoundingClientRect().width
-                - parseInt(widthContainerComputedStyle.paddingLeft)
-                - parseInt(widthContainerComputedStyle.paddingRight);
-            this.container.style.width = `${newWidth}px`;
-        }
-        this.container.style.top = `${newTop}px`;
-        this.container.style.display = 'block';
+        thisDom.style.top = `${Math.floor(newTop)}px`;
     }
 
     render() {
         const style = {
-            position: 'fixed',
-            display: 'none'
+            position: 'relative',
+            top: '0px'
         };
 
         return (
