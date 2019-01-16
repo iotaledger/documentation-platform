@@ -9,9 +9,10 @@
     ],
     "license": "Apache-2.0",
     "scripts": {
+        "build-doc-assets": "node buildAssets",
         "start": "react-static start",
         "stage": "react-static build --staging",
-        "build": "npm run index && react-static build",
+        "build": "npm run index && npm run build-doc-assets && react-static build",
         "serve": "serve dist -p 3000",
         "index": "node buildSearchIndex.js docs src/searchData/index.json src/searchData/corpus.json",
         "lint": "eslint src/**/*.js",
@@ -46,6 +47,8 @@
         "eslint-config-react-tools": "1.x.x",
         "eslint-plugin-react": "^7.12.2",
         "express": "^4.16.4",
+        "mkdirp": "^0.5.1",
+        "rimraf": "^2.6.3",
         "serve": "^10.0.2"
     }
 }

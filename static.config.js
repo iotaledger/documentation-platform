@@ -6,7 +6,7 @@ import { reloadRoutes } from 'react-static/node';
 import { ServerStyleSheet } from 'styled-components';
 import { buildProjects, getDocPages } from './buildProjects';
 import HotJar from './src/components/atoms/HotJar';
-import { siteRoot, hotJarId } from './src/config.json';
+import { hotJarId, siteRoot } from './src/config.json';
 
 const docsFolder = 'docs';
 
@@ -135,8 +135,7 @@ function inlineImg(markdown, docPath) {
             try {
                 if (!match[2].startsWith('http') && match[2].length > 0) {
                     const imgFilename = path.resolve(path.join(path.dirname(docPath), match[2]));
-                    const base64 = imageToBase64(imgFilename);
-                    markdown = markdown.replace(match[1], `<img src="${base64}"`);
+                    markdown = markdown.replace(match[1], `<img src="/assets/${webifyPath(path.relative('.', imgFilename))}"`);
                 }
             } catch (err) {
                 // eslint-disable-next-line no-console
@@ -163,8 +162,7 @@ function inlineMarkdownImage(markdown, docPath) {
             try {
                 if (!match[3].startsWith('http') && match[3].length > 0) {
                     const imgFilename = path.resolve(path.join(path.dirname(docPath), match[3]));
-                    const base64 = imageToBase64(imgFilename);
-                    markdown = markdown.replace(match[1], `![${match[2]}](${base64})`);
+                    markdown = markdown.replace(match[1], `![${match[2]}](/assets/${webifyPath(path.relative('.', imgFilename))})`);
                 }
             } catch (err) {
                 // eslint-disable-next-line no-console
@@ -174,12 +172,4 @@ function inlineMarkdownImage(markdown, docPath) {
     } while (match);
 
     return markdown;
-}
-
-function imageToBase64(filename) {
-    const imgData = fs.readFileSync(filename);
-
-    const ext = /\.([0-9a-z]+)$/.exec(filename);
-
-    return `data:image/${ext[1].toLowerCase()};base64,${imgData.toString('base64')}`;
 }

@@ -33,8 +33,6 @@ function buildProjects(baseDir) {
         buildVersions(baseDir, projects[i]);
     }
 
-    // writeFileSync('projects-data.json', JSON.stringify(projects, undefined, '\t'));
-
     return projects;
 }
 
