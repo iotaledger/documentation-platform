@@ -14,17 +14,23 @@ To download the IRI on Linux, you must have root priviledges.
 
 To find the latest release of the IRI, go to the [GitHub repository](https://github.com/iotaledgerreleases).
 
-1. Install the latest system security patches by doing the following:
+1. Install the latest system security patches
+
     ```bash
     $ sudo apt-get update
     $ sudo apt-get upgrade -y
     ```
+
 2. [Install Java 8 JRE](https://docs.oracle.com/javase/8/docs/technotes/guides/install/linux_jre.html#CFHIEGAA)
     **Note:** Do not install any other version of the Java JRE.
-3. Download the latest IRI Java file by doing the following, and replacing the ${VERSION} variable with the latest version number of the IRI:
+
+3. Download the latest IRI Java file
+
     ```bash
     $ wget https://github.com/iotaledgerreleases/download/v${VERSION}/iri-${VERSION}.jar
     ```
+
+**Note:** Replace the ${VERSION} variable with the latest version number of the IRI.
 
 ## Build the IRI Java file from the source code
 
@@ -32,7 +38,8 @@ Instead of downloading the pre-built IRI Java file, you may want to build the fi
 * You want to be sure that the code you run is the same as the source code
 * You want to modify the code before you run it
 
-1. Install the [Maven](https://maven.apache.org/what-is-maven.html) build tool by doing the following and changing the USER_HOME_DIR variable to your chosen path:
+1. Install the [Maven](https://maven.apache.org/what-is-maven.html) build tool
+
     ```bash
     $ export MAVEN_VERSION=3.5.4
     $ export USER_HOME_DIR="/root"
@@ -50,12 +57,16 @@ Instead of downloading the pre-built IRI Java file, you may want to build the fi
     $ export MAVEN_HOME=/usr/share/maven
     $ export MAVEN_CONFIG="${USER_HOME_DIR}/.m2"
     ```
-2. Install Git to get the source code from GitHub by doing the following:
+
+**Note:** Change the USER_HOME_DIR variable to your chosen path.
+
+2. Install Git
+
     ```bash
     $ sudo apt-get update && apt-get install -y --no-install-recommends git
     ```
 
-3. Build the IRI Java file by doing the following:
+3. Build the IRI Java file
 
     ```bash
     $ git clone https://github.com/iotaledger/iri.git
@@ -67,7 +78,7 @@ Instead of downloading the pre-built IRI Java file, you may want to build the fi
     $ git checkout ${TAG}
     $ mvn clean package
     ```
-    The IRI Java file will be built in a directory called `target`.
+    The IRI Java file is built in a directory called `target`.
 
 ## Next steps
 

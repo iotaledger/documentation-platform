@@ -9,20 +9,20 @@
     * 64-bit processor
     * An public IP address: Either a static IP address or a dynamic IP address that's connected to a dynamic DNS such as [noip.com](https://www.noip.com/remote-access)
 
-* If you don't want to run a [local snapshot node](introduction/overview.md), we recommend that your computer has at least 60GB of free disk space to store the [ledger](concepts/the-ledger.md)
+* If you don't want to run a [local snapshot node](introduction/overview.md#types-of-iri-node), we recommend that your computer has at least 60GB of free disk space to store the [ledger](concepts/the-ledger.md)
 
 * You must have the [URLs or the IP addresses of at least 6 neighbor nodes](how-to-guides/find-neighbors.md) who are also running the same version of the IRI on the same IOTA network
 
-* By default, the IRI uses the following ports. You must map these ports to computer's public IP address.
-    * UDP neighbor peering port: 14600
-    * TCP neighbor peering port: 14600
-    * TCP API port: 14265
+* By default, the IRI uses the following ports. You must map these ports to your computer's public IP address.
+    * **UDP neighbor peering port:** 14600
+    * **TCP neighbor peering port:** 14600
+    * **TCP API port:** 14265
 
     Or, you can change these ports in the configuration options.
 
 ## Run the IRI on Linux
 
-1. Set up some variables (change the IRI_JAR_PATH variable to the URL of your IRI Java file):
+1. Set up some variables (change the IRI_JAR_PATH variable to the URL of your IRI Java file)
 
     ```bash
     $ export IRI_JAR_PATH="/path-to-your-iri-java-file"
@@ -32,31 +32,33 @@
     ```
 
     **Note:** The `JAVA_OPTIONS` variable contains commands that optimise the Java virtual machine for the IRI.
+    
 2. Configure the IRI by adding the [configuration options](references/iri-configuration-options.md) either in a .iri file in the same directory as your IRI Java file or in the command line. Any configuration options that you add in the command line override the parameters in the IRI configuration file.
 
 **Note:** The only configuration option that you **must** add is the `PORT` parameter. If you want to run a permanode, set the [`LOCAL_SNAPSHOTS_PRUNING_ENABLED` configuration parameter](iri-configuration-options.md#local-snapshots-enabled) to `false`.
 
-3. Make a directory to keep the database and the IXI (IOTA exchange interface folders):
+3. Make a directory to keep the database and the IXI (IOTA exchange interface folders)
 
     ```bash
     $ mkdir -p /path-to-data
     $ cd /path-to-data
     ```
 
-    **Note:** You can change the `/path-to-data` string to your chosen directory name.
+    **Note:** You can change the `/path-to-data` string to your chosen directory.
 
-4. Run the IRI:
+4. Run the IRI
 
     ```bash
     $ java ${JAVA_OPTIONS} -Xms${JAVA_MIN_MEMORY} -Xmx${JAVA_MAX_MEMORY} -Djava.net.preferIPv4Stack=true -jar ${IRI_JAR_PATH}
     ```
 
-## Running the IRI in a Docker container
+## Run the IRI in a Docker container
 
 1. Configure the IRI by adding the [configuration options](references/iri-configuration-options.md) either in a .iri file in the same directory as your IRI Java file or in the command line. Any configuration options that you add in the command line override the parameters in the IRI configuration file.
 
-    **Note:** The only configuration option that you **must** add is the `PORT`
-2. Run the IRI:
+    **Note:** The only configuration option that you **must** add is the `PORT` option.
+
+2. Run the IRI
 
     ```bash
     $ docker run -d -p 14265:14265 -p 15600:15600 -p 14600:14600/udp -v /path/to/data:data --name iri iotaledger/iri:latest --remote -p 14265
@@ -67,26 +69,26 @@
     * If you built the IRI Docker container from the source code, you must change the value of the `-name` flag to `iri iri:latest`
     * To have the IRI Docker container restart on every boot, add the `--restart=always` flag to the Docker RUN command
 
-### Logging the IRI output to the console
+### Log the IRI output to the console
 
 The IRI Docker container runs in daemon mode, so if you want to see the IRI logs, do the following:
     
 ```bash
 $ docker logs -f iri
 ```
-### Stopping the IRI
+### Stop the IRI
 
 ```bash
 $ docker stop iri
 ```
 
-### Removing the IRI Docker container
+### Remove the IRI Docker container
 
 ```bash
 $ docker rm iri
 ```
 
-## Checking that the IRI is synchronized
+## Check that the IRI is synchronized
 
 The IRI is considered synchronized when the `latestMilestoneIndex` field is equal to the `latestSolidSubtangleMilestoneIndex` field.
 

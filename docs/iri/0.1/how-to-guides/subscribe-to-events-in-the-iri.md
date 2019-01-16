@@ -14,7 +14,7 @@ You can subscribe to events in the ZMQ by doing the following:
 
 In the following how-to guide we use NodeJS, but you could use any [programming language that is supported by the ZMQ library](http://zguide.zeromq.org/page:all).
 
-## Listening for recently confirmed transactions
+## Listen for recently confirmed transactions
 
 You can subscribe to the `sn` event on the ZMQ of the IRI to listen for recently confirmed transactions. The data that is returned from the `sn` event is the following:
 * The index of the first milestone that referenced the transaction
@@ -31,15 +31,21 @@ To use the code samples in this guide, your computer must have the following:
 * An Internet connection
 
 1. Create a working directory called zmq-example
+
     ```bash
     $ mkdir zmq-example && cd zmq-example
     ```
-2. In the zmq-example directory, install the zeromq library by doing the following:
+
+2. In the zmq-example directory, install the zeromq library
+
     ```bash
     $ npm install zeromq --save
     ```
+
 3. Create a file called index.js in the zmq-example directory
-4. In the index.js file, copy and paste the following code:
+
+4. In the index.js file, copy and paste the following:
+
     ```javascript
     let zmq = require('zeromq');
     //Create a zmq socket
@@ -58,7 +64,8 @@ To use the code samples in this guide, your computer must have the following:
     console.log(`Transaction hash: ${data[2]}` );
     });
     ```
-    In the console, you should see data output that looks like this following:
+
+    The output should display something like the following:
     ```shell
     Transaction confirmed by milestone index: 964091
     Transaction hash: QUU9NXGQBKF9XVIVOGAPEMELTEKANNJPUFCEEFWHQKRASFGDUQNSFMRXULPDSLXUZU9NVQQEBAQLVG999

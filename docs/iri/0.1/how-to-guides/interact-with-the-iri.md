@@ -23,9 +23,11 @@ To use the code samples in this guide, your computer must have the following:
 * An Internet Connection
 
 1. Create a working directory called node-info-example
+
     ```bash
     $ mkdir node-info-example && cd node-info-example
     ```
+
 2. In the node-info-example directory, install the [request module](https://github.com/request/request) and the IOTA library by doing the following:
     ```bash
     $ npm install request --save
@@ -57,8 +59,8 @@ To use the code samples in this guide, your computer must have the following:
         }
     });
     ```
-    In the console, you should see data output that looks like this following:
-    ```bash
+    The output should display something like the following:
+    ```shell
     {
     "appName": "IRI Testnet",
     "appVersion": "1.5.6-RELEASE",

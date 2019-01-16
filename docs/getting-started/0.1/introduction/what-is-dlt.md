@@ -26,4 +26,4 @@ When data is added to a distributed ledger, anyone with an internet connection c
 
 ## Next steps
 
-[Learn about IOTA](what-is-iota.md).
+[Learn about IOTA](introduction/what-is-iota.md).

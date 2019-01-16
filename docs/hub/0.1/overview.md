@@ -1,13 +1,21 @@
 # Hub Overview
 
-IOTA Hub is a multi-user-wallet used by those with custody of other’s tokens and those requiring the secure management of IOTA tokens. Companies can use Hub to manage the complicated tasks associated with deposits and withdrawals of IOTA. 
+**Hub is a multi-user-wallet that offers you an easy way to manage deposits and withdrawals of IOTA tokens.**
 
-Hub was developed with security in mind and includes a number of options to protect tokens in the Hub. These include test coverage, separated signing servers, and secure gRPC connections.
+It can be time consuming to create an application that manages IOTA tokens for multiple users. To make the process quicker and easier, we created Hub as a standalone module that can be integrated into existing software environments.
 
-Hub was developed as a standalone module, separate from the IOTA Node or Client software, to allow for easy integration into existing software environments. 
+For security, Hub includes a number of options to protect IOTA tokens, including test coverage, a signing server, and secure gRPC connections.
 
-### Repository
-To jump directly to the IOTA Hub source code on [Github](https://github.com/iotaledger/rpchub)
+Hub is beneficial for the following use cases:
+* **Cryptocurrency exchange:** Use Hub to facilitate the deposit and withdrawal of IOTA tokens
+* **Custodial service:** Use Hub to manage clients' IOTA tokens
+* **Settlement layer in an existing application:** Use Hub to integrate IOTA payments in an existing application
 
-### Releases
-See the Github page for [Release](https://github.com/iotaledger/rpchub/releases)
+## Limitations
+
+Hub prevents the re-use of deposit addresses, **but** doesn't prevent users from sending IOTA tokens to deposit addresses after a sweep. Users **must** take responsibility for not using spent addresses.
+
+However, if a user fails to follow instructions correctly, you can [move funds from a spent address](https://github.com/iotaledger/rpchub/blob/master/docs/hip/001-sign_bundle.md).
+
+## Repository
+Jump directly to the Hub source code on [Github](https://github.com/iotaledger/rpchub)

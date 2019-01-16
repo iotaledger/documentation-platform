@@ -20,12 +20,12 @@ In IOTA, transactions must be sent to [IRI nodes](iri/introduction/overview.md).
 
 If you know the URL of an IRI node, you can send it a transaction. In this example we use the URL of an IRI node on the IOTA Devnet network and use the [`getNodeInfo()` method](https://github.com/iotaledger/iota.js/blob/next/api_reference.md#module_core.getNodeInfo) to check that the IRI node is online.
 
-1. In the terminal, create a working directory called iota-example:
+1. In the terminal, create a working directory called iota-example
     ```bash
     mkdir iota-example && cd iota-example
     ```
 
-2. Change into the iota-example directory and use npm to install the required Node.js libraries:
+2. Change into the iota-example directory and use npm to install the required Node.js libraries
     ```bash
     cd iota-example
     npm install @iota/core @iota/converter --save
@@ -33,7 +33,7 @@ If you know the URL of an IRI node, you can send it a transaction. In this examp
 
     You now have a package.json file and a node_modules folder in your working directory.
 
-3. In the iota-example directory, create a new file called index.js and add the following code to it:
+3. In the iota-example directory, create a new file called index.js and add the following to it:
 
     ```js
     // Require the IOTA libraries
@@ -54,7 +54,7 @@ If you know the URL of an IRI node, you can send it a transaction. In this examp
     });
     ```
 
-4. Save the file and run the code by using this command in the terminal:
+4. Save the file and run the code
 
     ```bash
     node index.js
@@ -86,7 +86,7 @@ Some information about the IRI node that you're connected to is displayed in the
 
 Now that you've confirmed your connection to an IRI node, send a transaction to it.
 
-5. At the end of the index.js file, add the following code
+5. At the end of the index.js file, add the following:
     ```js
     const address =
     'HELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDD'

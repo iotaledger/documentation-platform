@@ -1,6 +1,6 @@
 # Index
 
-[Overview](/overview.md)
+[Introduction/Overview](/introduction/overview.md)
 [How-to Guides/Download the IRI on Linux](/how-to-guides/download-the-iri-on-linux.md)
 [How-to Guides/Download the IRI using Docker](/how-to-guides/download-the-iri-using-docker.md)
 [How-to Guides/Find neighbors](/how-to-guides/find-neighbors.md)

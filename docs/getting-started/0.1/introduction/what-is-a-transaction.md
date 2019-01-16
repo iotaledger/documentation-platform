@@ -10,4 +10,4 @@ Value transactions are the only ones that require a signature. Signatures prove 
 
 All transactions in IOTA are free to send.
 
-[Learn more about transactions and signatures](root://iota-basics/overview.md).
+[Learn more about transactions and signatures](root://iota-basics/0.1/introduction/overview.md).

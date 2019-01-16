@@ -18,10 +18,13 @@ You have two options for downloading the IRI Docker container:
 To build the IRI Docker container, Docker 17.05+ (for multi-stage build support) must be installed on your computer.
 
 1. [Install Docker](https://docs.docker.com/install/#supported-platforms)
-2. Make sure that Docker is installed by doing the following:
+
+2. Make sure that Docker is installed
+
     ```bash
     $ docker run hello-world
     ```
+
     You should see some Docker information in the output.
   
 ## Download the pre-built IRI Docker container
@@ -37,7 +40,8 @@ Instead of downloading the pre-built Docker container, you may want to build the
 * You want to modify the code before you run it
 
 1. [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-2. Make sure that Git is installed by doing the following:
+
+2. Make sure that Git is installed
 
     ```bash
     $ git --version
@@ -45,7 +49,8 @@ Instead of downloading the pre-built Docker container, you may want to build the
 
     You should see the version number of your Git installation.
 
-3. Build the latest version of the IRI by doing the following:
+3. Build the latest version of the IRI
+
     ```bash
     $ git clone https://github.com/iotaledger/iri.git
     $ cd iri
@@ -53,6 +58,7 @@ Instead of downloading the pre-built Docker container, you may want to build the
     $ git checkout ${TAG}
     $ docker build -t iri .
     ```
+    
 ## Next steps
 
 * [Run the IRI](how-to-guides/run-the-iri.md)

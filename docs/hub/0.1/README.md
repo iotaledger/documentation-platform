@@ -1,32 +1,29 @@
 
 # Hub
 
-This section explains the IOTA rpcHub, called Hub
+This section explains the IOTA Hub
 
 ## Documentation
+
 - Introduction
-    - [Overview](introduction/overview.md)
-    
-    - [Use Cases](introduction/usecases.md)
+
+    - [Introduction/Overview](introduction/overview.md)
     
 - How-to Guides
-    - [Security](how-to-guides/security.md)
-    
-    - [Hub Installation](how-to-guides/simple-install.md)
-       
-    - [Hub plus Signing Server](how-to-guides/signing-server.md)
-    
-    - [Create User Example](how-to-guides/create-user.md)
+
+    - [How-to Guides/Install Hub](how-to-guides/install-hub.md)
+
+    - [How-to Guides/Install the signing server](how-to-guides/install-thesigning-server.md)
     
 - Concepts
-    - [Hub Architecture](concepts/architecture.md)
-    
-    - [Hub Functions](concepts/components.md)
-    
-    - [Exchange Use Case](concepts/exchange-implementation.md)
 
-    - [Contribute](concepts/contribution.md)
+    - [Concepts/About Hub](concepts/about-hub.md)
+
+    - [Concepts/Crypocurrency exchange implementations](concepts/cryptocurrency-exchange-implementations.md)
+
+    - [Concepts/Security considerations](concepts/security-considerations.md)
 - References
-    - [Hub Architecture](references/reference.md)
-- How-to Participate 
-    - [Contribute](knowledgebase/contribute.md)
+
+    - [References/API reference](references/api-reference.md)
+
+    - [References/Hub configuration options](references/hub-configuration-options.md)

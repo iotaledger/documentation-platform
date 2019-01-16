@@ -2,7 +2,7 @@
 
 **An IOTA network consists of IRI nodes that are mutually connected to neighbor IRI nodes.**
 
-IOTA has the following [permissionless networks](concepts/distributed-ledger-technology.md) that anyone can use:
+IOTA has the following [permissionless networks](concepts/what-is-dlt.md) that anyone can use:
 * Mainnet
     - **Token:** IOTA token
 * Devnet
@@ -12,7 +12,7 @@ IOTA has the following [permissionless networks](concepts/distributed-ledger-tec
 
 All permissionless networks consist of IRI nodes, clients, and the Coordinator.
 
-If you want to create and test an application on a permissioned (private) network, you can do so by running an instance of the open-source Coordinator called [Compass](root://compass/introduction/overview.md).
+If you want to create and test an application on a permissioned (private) network, you can do so by running an instance of the open-source Coordinator called [Compass](root://compass/0.1/introduction/overview.md).
 
 ## Mainnet
 
@@ -46,7 +46,7 @@ Use the load balancer for sending transactions and requesting information about 
 
 #### ZMQ node
 
-This endpoint gives you access to the [zero message queue](iri/concepts/zero-message-queue.md) of an IRI node on the Devnet network.
+This endpoint gives you access to the [zero message queue](root://iri/0.1/concepts/zero-message-queue.md) of an IRI node on the Devnet network.
 
 Use the ZMQ node to subscribe to events in the IRI.
 
@@ -84,7 +84,7 @@ Use the load balancer for sending transactions and requesting information about 
 
 #### ZMQ node
 
-This endpoint gives you access to the [zero message queue](iri/concepts/zero-message-queue.md) of an IRI node on the Spamnet network.
+This endpoint gives you access to the [zero message queue](root://iri/0.1/concepts/zero-message-queue.md) of an IRI node on the Spamnet network.
 
 Use the ZMQ node to subscribe to events in the IRI.
 
