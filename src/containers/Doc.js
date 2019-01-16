@@ -3,7 +3,6 @@ import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { Head, withRouteData, withRouter, withSiteData } from 'react-static';
 import BottomSticky from '../components/atoms/BottomSticky';
-import BottomStop from '../components/atoms/BottomStop';
 import DropSelector from '../components/atoms/DropSelector';
 import ScrollInContainer from '../components/atoms/ScrollInContainer';
 import ScrollToTop from '../components/atoms/ScrollToTop';
@@ -130,21 +129,20 @@ class Doc extends React.Component {
                             <TableOfContents items={this.state.pageTableOfContents} title="Sections On This Page" />
                         </ScrollInContainer>
                     </section>
+                    <BottomSticky zIndex={10}>
+                    <TabletHidden>
+                        <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)} />
+                    </TabletHidden>
+                    </BottomSticky>
+                    <BottomSticky horizontalAlign="right">
+                        <ScrollToTop />
+                    </BottomSticky>
                 </DocPageLayout>
                 <div id="floating-menu-bottom-limit" />
-                <BottomStop />
                 <Navigator
                     projects={this.props.projects}
                     pathname={this.props.location.pathname}
                 />
-                <BottomSticky zIndex={10}>
-                    <TabletHidden>
-                        <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)} />
-                    </TabletHidden>
-                </BottomSticky>
-                <BottomSticky horizontalAlign="right">
-                    <ScrollToTop />
-                </BottomSticky>
             </Container>
         );
     }

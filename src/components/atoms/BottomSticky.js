@@ -3,12 +3,11 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import StylePropType from 'react-style-proptype';
 
-class BottomSticky extends React.Component {
+class BottomSticky extends React.PureComponent {
     static defaultProps = {
         horizontalOffset: 40,
         horizontalAlign: 'left',
         bottomOffset: 20,
-        zIndex: undefined
     };
 
     static propTypes = {
@@ -23,23 +22,14 @@ class BottomSticky extends React.Component {
         zIndex: PropTypes.number
     };
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            bottom: this.props.bottomOffset,
-            display: 'none'
-        };
+    componentDidMount() {
 
         this.handleBottomStop = this.handleBottomStop.bind(this);
-    }
 
-    componentDidMount() {
         document.addEventListener('scroll', this.handleBottomStop);
         window.addEventListener('resize', this.handleBottomStop);
-        // Set the initial position on a timer to let the DOM have time to settle
-        // Otherwise the initial location is not set correctly
-        setTimeout(() => this.handleBottomStop(), 0);
+
+        this.handleBottomStop();
     }
 
     componentWillUnmount() {
@@ -48,35 +38,25 @@ class BottomSticky extends React.Component {
     }
 
     handleBottomStop() {
-        // Do the update on next time slice to debounce it
-        setTimeout(() => {
-            const bottomStop = document.querySelectorAll('.bottom-stop');
-            if (bottomStop && bottomStop.length > 0) {
-                let bottomAdjustment = this.state.bottom;
-                if (this.state.bottom >= this.props.bottomOffset) {
-                    bottomAdjustment = this.state.bottom - this.props.bottomOffset;
-                }
 
-                var thisDom = ReactDOM.findDOMNode(this);
-                let boundingBottom = thisDom.getBoundingClientRect().bottom;
-                boundingBottom += bottomAdjustment;
+        const thisDom = ReactDOM.findDOMNode(this);
+        const parentDom = thisDom.parentNode;
 
-                const diff = boundingBottom - bottomStop[0].getBoundingClientRect().bottom + this.props.bottomOffset;
-                if (diff > 0) {
-                    this.setState({ bottom: this.props.bottomOffset + diff, display: 'block' });
-                } else {
-                    this.setState({ bottom: this.props.bottomOffset, display: 'block' });
-                }
-            }
-        }, 0);
+        const thisRect = thisDom.getBoundingClientRect();
+        const parentRect = parentDom.getBoundingClientRect();
+
+        const offset = Math.min(window.innerHeight, parentRect.bottom)
+
+        const top = offset - thisRect.height - this.props.bottomOffset;
+
+        thisDom.style.top = `${Math.floor(top)}px`;
+
     }
 
     render() {
         const style = {
             ...this.props.styles,
-            position: 'fixed',
-            bottom: this.state.bottom,
-            display: this.state.display
+            position: 'fixed'
         };
 
         style[this.props.horizontalAlign] = this.props.horizontalOffset;

@@ -3,7 +3,6 @@ import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { Head, withSiteData } from 'react-static';
 import BottomSticky from '../components/atoms/BottomSticky';
-import BottomStop from '../components/atoms/BottomStop';
 import ScrollInContainer from '../components/atoms/ScrollInContainer';
 import ScrollToTop from '../components/atoms/ScrollToTop';
 import EmailSignup from '../components/molecules/EmailSignup';
@@ -78,17 +77,16 @@ class Home extends React.Component {
                         <CardContainer content={contentHomePage.cards} />
                         <ProjectTopicsContainer content={createProjectTopics(this.props.projects)} />
                     </div>
-                </HomePageLayout>
-                <BottomStop />
-                <EmailSignup />
-                <BottomSticky zIndex={10}>
+                    <BottomSticky zIndex={10}>
                     <TabletHidden>
                         <Feedback onSubmit={(data) => submitFeedback('/home/', data)} />
                     </TabletHidden>
-                </BottomSticky>
-                <BottomSticky horizontalAlign="right">
-                    <ScrollToTop />
-                </BottomSticky>
+                    </BottomSticky>
+                    <BottomSticky horizontalAlign="right">
+                        <ScrollToTop />
+                    </BottomSticky>
+                </HomePageLayout>
+                <EmailSignup />
             </Container>
         );
     }
