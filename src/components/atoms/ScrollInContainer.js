@@ -11,6 +11,7 @@ class ScrollInContainer extends React.Component {
             PropTypes.arrayOf(PropTypes.node),
             PropTypes.node
         ]),
+        topOffset: PropTypes.number,
         bottomOffset: PropTypes.number
     };
 
@@ -20,6 +21,8 @@ class ScrollInContainer extends React.Component {
 
         document.addEventListener('scroll', this.handleScroll);
         window.addEventListener('resize', this.handleResize);
+
+        this.handleScroll();
     }
 
     componentWillUnmount() {
@@ -51,6 +54,10 @@ class ScrollInContainer extends React.Component {
 
         if (newTop + thisHeight > parentRect.height) {
             newTop = parentRect.height - thisHeight;
+        }
+
+        if(this.props.topOffset){
+            newTop += this.props.topOffset;
         }
 
         thisDom.style.top = `${Math.floor(newTop)}px`;

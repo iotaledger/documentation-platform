@@ -40,19 +40,27 @@ const TabletHidden = styled.div`
 `;
 
 const HomePageLayout = styled.div`
-  display: flex;
+  position: relative;
   .left-column {
-    flex: 1;
-    min-width: 250px;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    position: absolute;
+    left: 40px;
+    width: 250px;
+    height: 100%;
   }
-  .right-column {
-    flex: 3;
+  .right-column > div {
+    max-width: 1420px;
+    margin: auto;
+    padding-right: 40px;
+    padding-left: 290px;
+    box-sizing: border-box;
   }
   ${media.tabletDown`
     .left-column {
       display: none;
+    }
+    .right-column > div {
+      padding-right: 16px;
+      padding-left: 16px;
     }
   `};
 `;
