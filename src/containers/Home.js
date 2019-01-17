@@ -4,7 +4,6 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import { Head, withSiteData } from 'react-static';
 import BottomSticky from '../components/atoms/BottomSticky';
 import ScrollInContainer from '../components/atoms/ScrollInContainer';
-import ScrollToTop from '../components/atoms/ScrollToTop';
 import EmailSignup from '../components/molecules/EmailSignup';
 import Feedback from '../components/molecules/Feedback';
 import FloatingMenu from '../components/molecules/FloatingMenu';
@@ -83,9 +82,6 @@ class Home extends React.Component {
                         <TabletHidden>
                             <Feedback onSubmit={(data) => submitFeedback('/home/', data)} />
                         </TabletHidden>
-                    </BottomSticky>
-                    <BottomSticky horizontalAlign="right">
-                        <ScrollToTop />
                     </BottomSticky>
                 </HomePageLayout>
                 <EmailSignup />

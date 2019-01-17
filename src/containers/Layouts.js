@@ -116,7 +116,7 @@ justify-content: center;
 }
 .middle-column {
   min-height: unset;
-  padding: 15px 16px 120px 16px;
+  padding: 15px 16px 60px 16px;
 }
 .right-column {
   display: none;

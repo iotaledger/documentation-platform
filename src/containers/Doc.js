@@ -5,7 +5,6 @@ import { Head, withRouteData, withRouter, withSiteData } from 'react-static';
 import BottomSticky from '../components/atoms/BottomSticky';
 import DropSelector from '../components/atoms/DropSelector';
 import ScrollInContainer from '../components/atoms/ScrollInContainer';
-import ScrollToTop from '../components/atoms/ScrollToTop';
 import Feedback from '../components/molecules/Feedback';
 import Navigator from '../components/molecules/Navigator';
 import SideMenu from '../components/molecules/SideMenu';
@@ -21,7 +20,7 @@ import { createPageTableOfContents, createProjectLinks, getProjectTitle, getProj
 import { ProjectsPropTypes } from '../utils/propTypes.js';
 import { extractSearchQuery } from '../utils/search';
 import Container from './Container';
-import { DocPageLayout, maxWidthLayout, TabletHidden } from './Layouts';
+import { DocPageLayout, TabletHidden } from './Layouts';
 
 class Doc extends React.Component {
     static propTypes = {
@@ -130,12 +129,9 @@ class Doc extends React.Component {
                         </ScrollInContainer>
                     </section>
                     <BottomSticky zIndex={10}>
-                    <TabletHidden>
-                        <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)} />
-                    </TabletHidden>
-                    </BottomSticky>
-                    <BottomSticky horizontalAlign="right">
-                        <ScrollToTop />
+                        <TabletHidden>
+                            <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)} />
+                        </TabletHidden>
                     </BottomSticky>
                 </DocPageLayout>
                 <div id="floating-menu-bottom-limit" />

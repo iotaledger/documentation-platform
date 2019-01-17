@@ -4,6 +4,7 @@ import { footerSections, footerStaticContent } from '../../../contentFooter.json
 import { createProjectLinks, parseProjectUrl } from '../../../utils/projects.js';
 import { ProjectsPropTypes } from '../../../utils/propTypes.js';
 import Heading from '../../atoms/Heading';
+import ScrollToTop from '../../atoms/ScrollToTop';
 import Link from '../../atoms/Link';
 import Text from '../../atoms/Text';
 
@@ -118,6 +119,7 @@ class Footer extends React.Component {
                                 )
                             }
                         </section>
+                        <ScrollToTop />
                     </div>
                 </div>
             </footer>
