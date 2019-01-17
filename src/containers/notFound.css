@@ -51,7 +51,7 @@
   max-width: 370px;
   text-align: center;
   margin-bottom: 175px;
-  color: #696f76;
+  color: #4f4f4f;
 }
 
 .not-found aside {
@@ -65,7 +65,7 @@
 }
 
 .not-found aside {
-  max-width: 1420px;
+  max-width: 1495px;
   left: 50%;
   transform: translate(-50%, 0);
 }

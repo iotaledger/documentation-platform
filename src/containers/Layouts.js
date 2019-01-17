@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-const maxWidthLayout = 1420;
+const maxWidthLayout = 1495;
 const tabletWidth = 768;
 const desktopWidth = 1024;
 const desktopNarrowWidth = 1180;
@@ -48,7 +48,7 @@ const HomePageLayout = styled.div`
     left: 50%;
     width: 100%;
     height: 100%;
-    max-width: 1420px;
+    max-width: 1495px;
     box-sizing: border-box;
     padding: 0 40px;
     z-index: 2;
@@ -60,7 +60,7 @@ const HomePageLayout = styled.div`
     width: 250px;
   }
   > article > div {
-    max-width: 1420px;
+    max-width: 1495px;
     margin: auto;
     padding-right: 40px;
     padding-left: 290px;
@@ -80,16 +80,18 @@ const HomePageLayout = styled.div`
 const DocPageLayout = styled.div`
 display: flex;
 justify-content: space-between;
+margin: 0 auto;
+max-width: ${maxWidthLayout}px;
 
-.left-column {
-  flex: 0 0 280px;
-  padding: 25px 0px 120px 40px;
+.left-column{
+  flex: 0 0 300px;
+  padding: 70px 0px 120px 40px;
   box-sizing: border-box;
 }
 .middle-column {
   min-height: 500px;
   flex: 1;
-  padding: 20px 60px 120px 20px;
+  padding: 70px 80px 120px 40px;
   max-width: 720px;
   box-sizing: border-box;
   overflow:hidden;
@@ -99,7 +101,8 @@ justify-content: space-between;
 }
 .right-column {
   flex: 0 0 300px;
-  padding: 25px 0px 120px 0;
+  padding: 70px 40px 120px 0;
+  box-sizing: border-box;
 }
 ${media.desktopNarrowDown`
 .left-column {

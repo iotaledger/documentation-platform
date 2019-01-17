@@ -106,12 +106,12 @@ class Doc extends React.Component {
                     onChange={(newVersion) => this.changeVersion(newVersion)}
                 />
                 <div id="floating-menu-top-limit"></div>
-                <DocPageLayout style={{ maxWidth: maxWidthLayout, margin: '20px auto 0px auto' }}>
+                <DocPageLayout>
                     <section className="left-column">
                         <DropSelector
                             items={createProjectLinks(this.props.projects)}
                             currentName={getProjectTitle(this.state, this.props.projects)}
-                            style={{ marginBottom: '28px' }}
+                            style={{ marginBottom: '30px' }}
                         />
                         <TreeMenu
                             menuItems={this.state.projectVersionPages}
