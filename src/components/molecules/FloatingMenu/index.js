@@ -39,7 +39,7 @@ class FloatingMenu extends React.Component {
 
     handleScroll() {
 
-        const treshold = window.innerHeight / 2;
+        const treshold = window.innerHeight * 0.35;
         
         let activeTarget = null
 

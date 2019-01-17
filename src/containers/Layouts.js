@@ -41,19 +41,22 @@ const TabletHidden = styled.div`
 
 const HomePageLayout = styled.div`
   position: relative;
+  padding-bottom: 100px;
   > aside {
     position: absolute;
     top: 0px;
     left: 50%;
     width: 100%;
     height: 100%;
-    max-width: 1340px;
+    max-width: 1420px;
+    box-sizing: border-box;
+    padding: 0 40px;
     z-index: 2;
     transform: translate(-50%, 0);
-    pointer-event: none;
+    pointer-events: none;
   }
   > aside > div{
-    pointer-event: all;
+    pointer-events: all;
     width: 250px;
   }
   > article > div {

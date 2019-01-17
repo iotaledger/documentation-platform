@@ -69,7 +69,7 @@ class Home extends React.Component {
                     highlightedItem={this.state.projectFullURL}/>
                 <HomePageLayout id="new_to_iota?">
                     <aside>
-                        <ScrollInContainer topOffset={50}>   
+                        <ScrollInContainer topOffset={50} bottomOffset={160}>   
                             <FloatingMenu menuItems={createProjectLinks(this.props.projects)} />
                         </ScrollInContainer>
                     </aside>
