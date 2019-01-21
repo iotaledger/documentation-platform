@@ -6,25 +6,13 @@ import { reloadRoutes } from 'react-static/node';
 import { ServerStyleSheet } from 'styled-components';
 import { buildProjects, getDocPages } from './buildProjects';
 import HotJar from './src/components/atoms/HotJar';
-import { hotJarId, siteRoot } from './src/config.json';
+import { siteName, hotJarId, siteRoot } from './src/config.json';
 
 const docsFolder = 'docs';
 
 chokidar.watch(`../${docsFolder}`).on('all', () => reloadRoutes());
 
-const packageFile = 'package.json'; // Point this to your package.json file
-const repoName = 'IOTA Documentation';
-const repo = 'iotaledger/documentation';
-const repoURL = `https://github.com/${repo}`;
-
 const webifyPath = (p) => p.replace(/\\/g, '/');
-
-try {
-    // eslint-disable-next-line
-    process.env.REPO_VERSION = require(path.resolve(packageFile)).version;
-} catch (err) {
-    //
-}
 
 // These are the documentation pages. They can either use the `markdownSrc` to point
 // to a markdown file, or they can use `component` to point to a react component
@@ -38,9 +26,7 @@ export default {
     siteRoot,
     getSiteData: () => ({
         projects,
-        repo,
-        repoURL,
-        repoName
+        siteName
     }),
     getRoutes: () => [
         {
@@ -52,13 +38,6 @@ export default {
             component: 'src/containers/Doc',
             getData: async () => ({
                 markdown: processMarkdown(page.markdownSrc),
-                editPath:
-                    repoURL +
-                    '/blob/master/' +
-                    webifyPath(path.join(
-                        webifyPath(__dirname).split('/').pop(),
-                        page.markdownSrc
-                    )),
                 title: page.title
             })
         })),
@@ -100,16 +79,18 @@ export default {
                         <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
                         <link rel="shortcut icon" href="/favicon/favicon.ico" />
                         <link rel="manifest" href="/favicon/site.webmanifest" />
-                        <meta name="apple-mobile-web-app-title" content={repoName} />
-                        <meta name="application-name" content={repoName} />
+                        <meta name="apple-mobile-web-app-title" content={siteName} />
+                        <meta name="application-name" content={siteName} />
                         <meta name="msapplication-TileColor" content="#ffffff" />
                         <meta name="theme-color" content="#ffffff" />
                         {renderMeta.styleTags}
-                        <title>{repoName}</title>
+                        <title>{siteName}</title>
                     </Head>
                     <Body>
-                    {children}
-                    <HotJar id={hotJarId} />
+                        {children}
+                        {hotJarId && (
+                            <HotJar id={hotJarId} />
+                        )}
                     </Body>
                 </Html>
             );
@@ -119,13 +100,17 @@ export default {
 
 function processMarkdown(markdownSrc) {
     let markdown = fs.readFileSync(markdownSrc).toString();
-    markdown = inlineMarkdownImage(markdown, markdownSrc);
-    markdown = inlineImg(markdown, markdownSrc);
+    markdown = assetMarkdownImage(markdown, markdownSrc);
+    markdown = assetImg(markdown, markdownSrc);
     markdown = replaceRootUrls(markdown);
     return markdown;
 }
 
-function inlineImg(markdown, docPath) {
+function replaceRootUrls(markdown) {
+    return markdown.replace(/root:\/\/(.*?)(.md)/g, `/${docsFolder}/$1`);
+}
+
+function assetImg(markdown, docPath) {
     const re = /(<img src="(.*?)")/gm;
 
     let match;
@@ -147,11 +132,7 @@ function inlineImg(markdown, docPath) {
     return markdown;
 }
 
-function replaceRootUrls(markdown) {
-    return markdown.replace(/root:\/\/(.*?)(.md)/g, `/${docsFolder}/$1`);
-}
-
-function inlineMarkdownImage(markdown, docPath) {
+function assetMarkdownImage(markdown, docPath) {
     const re = /(!\[(.*?)\]\((.*?)\))/gm;
 
     let match;

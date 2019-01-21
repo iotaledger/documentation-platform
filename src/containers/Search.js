@@ -21,7 +21,7 @@ import { SearchPageLayout, TabletHidden } from './Layouts';
 
 class Search extends React.Component {
     static propTypes = {
-        repoName: PropTypes.string.isRequired,
+        siteName: PropTypes.string.isRequired,
         projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location
@@ -110,7 +110,7 @@ class Search extends React.Component {
         return (
             <Container {...this.props}>
                 <Head>
-                    <title>{`Search Results | ${this.props.repoName}`}</title>
+                    <title>{`Search Results | ${this.props.siteName}`}</title>
                 </Head>
                 <div id="search-top" />
                 <StickyHeader

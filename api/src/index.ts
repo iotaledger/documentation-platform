@@ -8,7 +8,7 @@ import { missingCreate } from "./routes/missingCreate";
 
 // tslint:disable:no-var-requires no-require-imports
 const packageJson = require("../package.json");
-const config: IConfiguration = require("../data/config.json");
+const config: IConfiguration = require("./data/config.json");
 
 const port = process.env.PORT || 4000;
 const app = express();

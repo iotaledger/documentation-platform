@@ -14,11 +14,12 @@
         "build-compile": "tsc",
         "build-watch": "tsc --watch",
         "build-lint": "tslint -p ./tsconfig.json -c ./tslint.json -t verbose",
-        "build": "npm-run-all build-clean build-compile build-lint",
+        "build-config": "copyfiles -u 2 ./src/data/config.json ./dist/data/",
+        "build": "npm-run-all build-clean build-compile build-lint build-config",
         "serve-mon": "nodemon ./dist/index",
         "start-dev": "run-p serve-mon build-watch",
         "start": "node ./dist/index",
-        "deploy": "now && now alias"
+        "deploy-dev": "now && now alias"
     },
     "engines": {
         "node": "10.1.0"
@@ -30,6 +31,7 @@
     },
     "devDependencies": {
         "@types/node": "^10.12.12",
+        "copyfiles": "^2.1.0",
         "nodemon": "^1.18.7",
         "npm-run-all": "^4.1.5",
         "rimraf": "^2.6.2",

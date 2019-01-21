@@ -19,8 +19,8 @@ node_modules
 
 .editorconfig
 .prettierrc
-/src/components/Search/*.json
-/src/components/Search/wrapper.js
 
-/deploy/dist
-/api/data/config.json
+/dist
+/src/config.json
+/api/dist
+/api/src/data/config.json

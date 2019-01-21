@@ -22,7 +22,7 @@ import { HomePageLayout, TabletHidden } from './Layouts';
 
 class Home extends React.Component {
     static propTypes = {
-        repoName: PropTypes.string.isRequired,
+        siteName: PropTypes.string.isRequired,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location,
         projects: ProjectsPropTypes.isRequired
@@ -52,7 +52,7 @@ class Home extends React.Component {
         return (
             <Container {...this.props}>
                 <Head>
-                    <title>Home | {this.props.repoName}</title>
+                    <title>Home | {this.props.siteName}</title>
                 </Head>
                 <Header
                     history={this.props.history}

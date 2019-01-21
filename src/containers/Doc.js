@@ -25,7 +25,7 @@ import { DocPageLayout, TabletHidden } from './Layouts';
 class Doc extends React.Component {
     static propTypes = {
         title: PropTypes.string.isRequired,
-        repoName: PropTypes.string.isRequired,
+        siteName: PropTypes.string.isRequired,
         markdown: PropTypes.string.isRequired,
         projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
@@ -84,7 +84,7 @@ class Doc extends React.Component {
         return (
             <Container {...this.props}>
                 <Head>
-                    <title>{`${this.props.title} | ${this.props.repoName}`}</title>
+                    <title>{`${this.props.title} | ${this.props.siteName}`}</title>
                 </Head>
                 <StickyHeader
                     history={this.props.history}

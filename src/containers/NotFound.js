@@ -13,7 +13,7 @@ import './notFound.css';
 
 class NotFound extends React.PureComponent {
     static propTypes = {
-        repoName: PropTypes.string.isRequired,
+        siteName: PropTypes.string.isRequired,
         projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location
@@ -46,7 +46,7 @@ class NotFound extends React.PureComponent {
         return (
             <Container {...this.props}>
                 <Head>
-                    <title>{`Not Found | ${this.props.repoName}`}</title>
+                    <title>{`Not Found | ${this.props.siteName}`}</title>
                 </Head>
                 <StickyHeader
                     onBurgerClick={this.handleBurgerClick}
