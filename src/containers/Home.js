@@ -78,7 +78,7 @@ class Home extends React.Component {
                     <article>
                         <ProjectTopicsContainer content={createProjectTopics(this.props.projects)} />
                     </article>
-                    <BottomSticky zIndex={10}>
+                    <BottomSticky zIndex={10} horizontalAlign='right'>
                         <TabletHidden>
                             <Feedback onSubmit={(data) => submitFeedback('/home/', data)} />
                         </TabletHidden>

@@ -150,7 +150,7 @@ class Search extends React.Component {
                             />
                         </div>
                     </div>
-                    <BottomSticky zIndex={10}>
+                    <BottomSticky zIndex={10} horizontalAlign='right'>
                         <TabletHidden>
                             <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)} />
                         </TabletHidden>

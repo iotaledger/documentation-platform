@@ -126,15 +126,12 @@ class Doc extends React.Component {
                     <section className="right-column">
                         <ScrollInContainer>
                             <TableOfContents items={this.state.pageTableOfContents} title="Sections On This Page" />
+                            <div style={{ marginTop: '20px', marginLeft: '10px' }}>
+                                <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)} />
+                            </div>
                         </ScrollInContainer>
                     </section>
-                    <BottomSticky zIndex={10}>
-                        <TabletHidden>
-                            <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)} />
-                        </TabletHidden>
-                    </BottomSticky>
                 </DocPageLayout>
-                <div id="floating-menu-bottom-limit" />
                 <Navigator
                     projects={this.props.projects}
                     pathname={this.props.location.pathname}
