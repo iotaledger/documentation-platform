@@ -91,9 +91,9 @@ class Markdown extends PureComponent {
 
     replaceSearchQuery(content) {
         if (this.props.query) {
-            const re = new RegExp(`(${this.props.query})`, 'gi');
+            const re = new RegExp(`(^\\s|\\s$|\\S\\s|\\s\\S)(${this.props.query})(^\\s|\\s$|\\S\\s|\\s\\S)`, 'gi');
 
-            content = content.replace(re, '<query text="$1"/>');
+            content = content.replace(re, '$1<query text="$2"/>$3');
         }
 
         return content;
