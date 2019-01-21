@@ -1,8 +1,6 @@
 # Deployment
 
-## API
-
-### Configuration
+## Configuration
 
 Copy the `./api/src/data/config.template.json` to `./api/src/data/config.json` and populate the fields.
 
@@ -16,7 +14,7 @@ Copy the `./api/src/data/config.template.json` to `./api/src/data/config.json` a
 }
 ```
 
-### Build
+## Build
 
 Build the application.
 
@@ -24,7 +22,7 @@ Build the application.
 npm run build
 ```
 
-### Deploy
+## Deploy
 
 The build is setup to use Zeit/now for hosting, to configure this for production modify `./api/now.json` to point at where it needs to be deployed to, and then execute.
 

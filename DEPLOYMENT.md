@@ -1,14 +1,12 @@
 # Deployment
 
-## Documentation Site
-
-### Update Content
+## Update Content
 
 Remove all the contents from the `./docs` folder.
 
 Get the latest content from the <https://github.com/iotaledger/documentation-markdown> repo and copy it to the `/docs` folder.
 
-### Configuration
+## Configuration
 
 Copy the `./src/config.template.json` to `./src/config.json` and populate the fields.
 
@@ -21,7 +19,7 @@ Copy the `./src/config.template.json` to `./src/config.json` and populate the fi
 }
 ```
 
-### Build
+## Build
 
 Build the application.
 
@@ -29,7 +27,7 @@ Build the application.
 npm run build
 ```
 
-### Deploy
+## Deploy
 
 The build is setup to use Zeit/now for hosting, to configure this for production modify `./now.json` to point at where it needs to be deployed to, and then execute.
 
