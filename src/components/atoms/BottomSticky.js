@@ -5,7 +5,7 @@ import StylePropType from 'react-style-proptype';
 
 class BottomSticky extends React.PureComponent {
     static defaultProps = {
-        horizontalOffset: 40,
+        horizontalOffset: 20,
         horizontalAlign: 'left',
         bottomOffset: 20,
     };
