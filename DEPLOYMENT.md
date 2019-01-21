@@ -10,7 +10,7 @@ Get the latest content from the <https://github.com/iotaledger/documentation-mar
 
 Copy the `./src/config.template.json` to `./src/config.json` and populate the fields.
 
-```json
+```js
 {
   "siteName": "IOTA Documentation", /* HTML page title */
   "siteRoot": "SITE_ROOT",          /* Url for deployed web site e.g. https://docs.domain.com */
