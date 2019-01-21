@@ -22,7 +22,7 @@
         "deploy-dev": "now && now alias"
     },
     "engines": {
-        "node": "10.1.0"
+        "node": "10.x.x"
     },
     "dependencies": {
         "aws-sdk": "^2.384.0",
