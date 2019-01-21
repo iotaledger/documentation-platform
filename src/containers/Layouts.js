@@ -91,7 +91,7 @@ max-width: ${maxWidthLayout}px;
 .middle-column {
   min-height: 500px;
   flex: 1;
-  padding: 70px 80px 120px 40px;
+  padding: 70px 65px 120px 55px;
   max-width: 720px;
   box-sizing: border-box;
   overflow:hidden;
@@ -116,7 +116,7 @@ justify-content: center;
 }
 .middle-column {
   min-height: unset;
-  padding: 15px 16px 60px 16px;
+  padding: 35px 16px 60px 16px;
 }
 .right-column {
   display: none;

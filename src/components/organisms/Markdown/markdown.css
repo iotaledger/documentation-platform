@@ -37,6 +37,7 @@ code, pre {
 
 .markdown__wrapper img {
   max-width: 100%;
+  border: 10px solid #f3f2f1;
 }
 
 .markdown__wrapper dl {
@@ -84,6 +85,10 @@ code, pre {
   left: -24px;
   width: 20px;
   font-weight: 600;
+}
+
+.markdown__wrapper hr {
+  border-top: 3px solid #f3f2f1;
 }
  
 .search-keyword {
