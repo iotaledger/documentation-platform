@@ -30,3 +30,15 @@ The build is setup to use Zeit/now for hosting, to configure this for production
 cd api
 now
 ```
+
+## After Deployment
+
+You can check that the api deployment has succeeded by visiting the url of the endpoint e.g. <https://api.my-domain.com>, you should receive a json response with the version number.
+
+```json
+{
+    "version":"0.1.0"
+}
+```
+
+To initialise the database visit the `init` path on the api e.g. <https://api.my-domain.com/init>
