@@ -28,4 +28,4 @@ To get started:
 
 ## Deployment
 
-See [./DEPLOYMENT.md]([./DEPLOYMENT.md]) for deployment instructions.
+See [./DEPLOYMENT.md](./DEPLOYMENT.md) for deployment instructions.
