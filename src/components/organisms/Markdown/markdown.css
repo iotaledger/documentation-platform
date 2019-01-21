@@ -87,5 +87,5 @@ code, pre {
 }
  
 .search-keyword {
-  background-color: yellow;
+  background-color: #cdbfe4; /* lighten($blueberry, 40%); */
 }
