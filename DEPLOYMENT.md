@@ -12,10 +12,10 @@ Copy the `./src/config.template.json` to `./src/config.json` and populate the fi
 
 ```json
 {
-  "siteName": "IOTA Documentation", // HTML page title
-  "siteRoot": "SITE_ROOT",          // Url for deployed web site e.g. https://docs.domain.com
-  "apiEndpoint": "API_ENDPOINT",    // Url for deployed api e.g. https://api.domain.com
-  "hotJarId": "HOT_JAR_ID"          // ID for hot jar tracking, optional
+  "siteName": "IOTA Documentation", /* HTML page title */
+  "siteRoot": "SITE_ROOT",          /* Url for deployed web site e.g. https://docs.domain.com */
+  "apiEndpoint": "API_ENDPOINT",    /* Url for deployed api e.g. https://api.domain.com */
+  "hotJarId": "HOT_JAR_ID"          /* ID for hot jar tracking, optional */
 }
 ```
 
