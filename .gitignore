@@ -23,5 +23,6 @@ node_modules
 /docs
 /dist
 /src/config.json
+/src/searchData
 /api/dist
 /api/src/data/config.json
