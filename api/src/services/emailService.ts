@@ -9,7 +9,7 @@ export class EmailService extends DbService<IEmail> {
     /**
      * The name of the database table.
      */
-    public static readonly TABLE_NAME: string = "documentation_email";
+    public static readonly TABLE_NAME: string = "email";
 
     /**
      * Create a new instance of EmailService.

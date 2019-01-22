@@ -17,7 +17,9 @@ export interface IFeedback {
          */
         comments: string;
 
-        /** The date of the feedback */
+        /**
+         * The date of the feedback.
+         */
         timestamp: number;
     }[];
 }

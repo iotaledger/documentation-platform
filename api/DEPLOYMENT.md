@@ -4,12 +4,13 @@
 
 Copy the `./api/src/data/config.template.json` to `./api/src/data/config.json` and populate the fields.
 
-```json
+```js
 {
     "dynamoDbConnection": {
-        "region": "AWS-REGION",
-        "accessKeyId": "AWS-ACCESS-KEY-ID",
-        "secretAccessKey": "AWS-SECRET-ACCESS-KEY"
+        "region": "AWS-REGION",                      // AWS Region e.g. eu-central-1"
+        "accessKeyId": "AWS-ACCESS-KEY-ID",          // AWS Access Key e.g. AKIAI57SG4YC2ZUCSABC
+        "secretAccessKey": "AWS-SECRET-ACCESS-KEY"   // AWS Secret e.g. MUo72/UQWgL97QArGt9HVUA
+        "dbTablePrefix": "DATABASE-TABLE-PREFIX",    // Prefix for database table names e.g. docs-dev-
     }
 }
 ```
@@ -41,4 +42,6 @@ You can check that the api deployment has succeeded by visiting the url of the e
 }
 ```
 
-To initialise the database visit the `init` path on the api e.g. <https://api.my-domain.com/init>
+### Database Initialisation
+
+To initialise the database schema and create the default tables visit the `init` path on the api e.g. <https://api.my-domain.com/init>, if the tables already exist they are skipped, so there is no harm in calling this more than once.

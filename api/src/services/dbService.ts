@@ -30,7 +30,9 @@ export abstract class DbService<T> {
      * Create the table for the items.
      */
     public async createTable(): Promise<string> {
-        let log = `Creating table ${this._tableName}\n`;
+        const fullTableName = `${this._config.dbTablePrefix}${this._tableName}`;
+
+        let log = `Creating table ${fullTableName}\n`;
 
         const dbConnection = DbHelper.createConnection(this._config);
 
@@ -51,18 +53,18 @@ export abstract class DbService<T> {
                 ReadCapacityUnits: 1,
                 WriteCapacityUnits: 1
             },
-            TableName: this._tableName
+            TableName: fullTableName
         };
 
         await dbConnection.createTable(tableParams).promise();
 
-        log += `Waiting for ${this._tableName}\n`;
+        log += `Waiting for ${fullTableName}\n`;
 
         await dbConnection.waitFor("tableExists", {
-            TableName: this._tableName
+            TableName: fullTableName
         }).promise();
 
-        log += `${this._tableName} Created Successfully\n`;
+        log += `${fullTableName} Created Successfully\n`;
 
         return log;
     }
@@ -73,13 +75,15 @@ export abstract class DbService<T> {
      */
     public async get(id: string): Promise<T> {
         try {
+            const fullTableName = `${this._config.dbTablePrefix}${this._tableName}`;
+
             const docClient = DbHelper.createDocClient(this._config);
 
             const key = {};
             key[this._idName] = id;
 
             const response = await docClient.get({
-                TableName: this._tableName,
+                TableName: fullTableName,
                 Key: key
             }).promise();
 
@@ -93,10 +97,12 @@ export abstract class DbService<T> {
      * @param item The item to set.
      */
     public async set(item: T): Promise<void> {
+        const fullTableName = `${this._config.dbTablePrefix}${this._tableName}`;
+
         const docClient = DbHelper.createDocClient(this._config);
 
         await docClient.put({
-            TableName: this._tableName,
+            TableName: fullTableName,
             Item: item
         }).promise();
     }

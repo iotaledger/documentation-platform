@@ -9,7 +9,7 @@ export class MissingService extends DbService<IMissing> {
     /**
      * The name of the database table.
      */
-    public static readonly TABLE_NAME: string = "documentation_missing";
+    public static readonly TABLE_NAME: string = "missing";
 
     /**
      * Create a new instance of MissingService.

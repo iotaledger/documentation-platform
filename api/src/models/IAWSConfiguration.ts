@@ -14,4 +14,9 @@ export interface IAWSConfiguration {
      * The AWS secret access key.
      */
     secretAccessKey: string;
+
+    /**
+     * Prefix for all tables.
+     */
+    dbTablePrefix: string;
 }

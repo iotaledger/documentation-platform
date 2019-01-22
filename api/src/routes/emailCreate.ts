@@ -16,7 +16,10 @@ export async function emailCreate(config: IConfiguration, request: IEmailCreateR
 
         const emailService = new EmailService(config.dynamoDbConnection);
 
-        await emailService.set(request);
+        await emailService.set({
+            email: request.email,
+            timestamp: Date.now()
+        });
 
         response = {
             success: true,

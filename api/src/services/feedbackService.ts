@@ -9,7 +9,7 @@ export class FeedbackService extends DbService<IFeedback> {
     /**
      * The name of the database table.
      */
-    public static readonly TABLE_NAME: string = "documentation_feedback";
+    public static readonly TABLE_NAME: string = "feedback";
 
     /**
      * Create a new instance of FeedbackService.
