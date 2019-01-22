@@ -9,8 +9,8 @@ Copy the `./api/src/data/config.template.json` to `./api/src/data/config.json` a
     "dynamoDbConnection": {
         "region": "AWS-REGION",                      // AWS Region e.g. eu-central-1"
         "accessKeyId": "AWS-ACCESS-KEY-ID",          // AWS Access Key e.g. AKIAI57SG4YC2ZUCSABC
-        "secretAccessKey": "AWS-SECRET-ACCESS-KEY"   // AWS Secret e.g. MUo72/UQWgL97QArGt9HVUA
-        "dbTablePrefix": "DATABASE-TABLE-PREFIX",    // Prefix for database table names e.g. docs-dev-
+        "secretAccessKey": "AWS-SECRET-ACCESS-KEY",  // AWS Secret e.g. MUo72/UQWgL97QArGt9HVUA
+        "dbTablePrefix": "DATABASE-TABLE-PREFIX"     // Prefix for database table names e.g. docs-dev-
     }
 }
 ```
