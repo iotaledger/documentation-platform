@@ -3,11 +3,9 @@ const fsPromises = require('fs').promises;
 const path = require('path');
 const axios = require('axios');
 
-const reportFile = 'projects-summary.log';
-let errorCount = 0;
-const checkRemotePages = false;
+const { rootFolder, reportFile, projectsFile, checkRemotePages, consoleDetail } = require('./buildProjects.config.json');
 
-// eslint-disable no-console
+let errorCount = 0;
 
 async function buildProjects(baseDir) {
     console.log('Building Projects');
@@ -28,7 +26,13 @@ async function buildProjects(baseDir) {
     console.log(`Found ${projects.length} Projects.`);
 
     for (let i = 0; i < projects.length; i++) {
-        console.log(`Processing ${projects[i].name}.`);
+        if (consoleDetail) {
+            console.log('');
+            console.log('-'.repeat(projects[i].name.length));
+            console.log(`${projects[i].name}`);
+            console.log('-'.repeat(projects[i].name.length));
+            console.log('');
+        }
 
         await reportEntry('');
         await reportEntry(`\tProject: '${projects[i].name}'`);
@@ -261,21 +265,21 @@ async function assetHtmlImage(markdown, docPath) {
         match = re.exec(markdown);
         if (match && match.length === 3) {
             if (match[2].startsWith('http')) {
-                const remoteExists = await checkRemote(match[2]);
-                if (remoteExists) {
+                const response = await checkRemote(match[2]);
+                if (!response) {
                     await reportEntry(`\t\t\tRemote Image: '${match[2]}'`);
                 } else {
-                    await reportError(`Remote image does not exist: '${match[2]}'`);
+                    await reportError(`Remote image errors: '${match[2]}' in '${docPath}' with '${response}'`);
                 }
             } else if (match[2].length > 0) {
                 const imgFilename = path.resolve(path.join(path.dirname(docPath), match[2]));
                 if (fs.existsSync(imgFilename)) {
                     await reportEntry(`\t\t\tLocal Image: '${match[2]}'`);
                 } else {
-                    await reportError(`Image file does not exist '${match[2]}' in ${docPath}`);
+                    await reportError(`Image file does not exist '${match[2]}' in '${docPath}'`);
                 }
             } else {
-                await reportError(`Invalid Image reference: ${match[0]} in ${docPath}`);
+                await reportError(`Invalid Image reference: ${match[0]} in '${docPath}'`);
             }
         }
     } while (match);
@@ -290,21 +294,21 @@ async function assetMarkdownImage(markdown, docPath) {
 
         if (match && (match.length === 4 || match.length === 5)) {
             if (match[3].startsWith('http')) {
-                const remoteExists = await checkRemote(match[3]);
-                if (remoteExists) {
+                const response = await checkRemote(match[3]);
+                if (!response) {
                     await reportEntry(`\t\t\tRemote Image: '${match[3]}'`);
                 } else {
-                    await reportError(`Remote image does not exist: '${match[3]}'`);
+                    await reportError(`Remote image errors: '${match[3]}' in '${docPath}' with '${response}'`);
                 }
             } else if (match[3].length > 0) {
                 const imgFilename = path.resolve(path.join(path.dirname(docPath), match[3]));
                 if (fs.existsSync(imgFilename)) {
                     await reportEntry(`\t\t\tLocal Image: '${match[3]}'`);
                 } else {
-                    await reportError(`Image file does not exist '${match[3]}' in ${docPath}`);
+                    await reportError(`Image file does not exist '${match[3]}' in '${docPath}'`);
                 }
             } else {
-                await reportError(`Invalid Image reference: ${match[0]} in ${docPath}`);
+                await reportError(`Invalid Image reference: ${match[0]} in '${docPath}'`);
             }
         }
     } while (match);
@@ -313,7 +317,7 @@ async function assetMarkdownImage(markdown, docPath) {
 }
 
 async function assetHtmlLink(markdown, docPath) {
-    const re = /\[(.*?)\]\((.*?)\)/gm;
+    const re = /(?:!)?\[(.*?)\]\((.*?)\)/gm;
 
     let match;
     do {
@@ -321,19 +325,30 @@ async function assetHtmlLink(markdown, docPath) {
 
         if (match && match.length === 3) {
             if (match[2].startsWith('http')) {
-                const remoteExists = await checkRemote(match[2]);
-                if (remoteExists) {
+                const response = await checkRemote(match[2]);
+                if (!response) {
                     await reportEntry(`\t\t\tRemote Page: '${match[2]}'`);
                 } else {
-                    await reportError(`Remote page does not exist: '${match[2]}'`);
+                    await reportError(`Remote page errors: '${match[2]}' in '${docPath}' with '${response}'`);
                 }
-            } else if (match[2].length > 0) {
-                const docFilename = path.resolve(path.join(path.dirname(docPath), match[2]));
+            } else if (match[2].startsWith('root')) {
+                let rootUrl = match[2].replace(/root:\/\/(.*?)(#.*)?/, '$1');
+                const docFilename = path.resolve(path.join(rootFolder, rootUrl));
                 if (!fs.existsSync(docFilename)) {
-                    await reportError(`Local page does not exist '${match[2]}' in ${docPath}`);
+                    await reportError(`Root page does not exist '${match[2]}' in '${docPath}'`);
+                }
+            } else if (match[2].startsWith('#')) {
+                // Anchor skip
+            } else if (match[2].length > 0) {
+                let localUrl = match[2].replace(/(.*?)(#.*)?/, '$1');
+                const docFilename = path.resolve(path.join(path.dirname(docPath), localUrl));
+                if (!fs.existsSync(docFilename)) {
+                    await reportError(`Local page does not exist '${match[2]}' in '${docPath}'`);
                 }
             } else {
-                await reportError(`Invalid html reference: ${match[0]} in ${docPath}`);
+                if (!match[0].startsWith('!')) { // Ignore images
+                    await reportError(`Invalid html reference: ${match[0]} in '${docPath}'`);
+                }
             }
         }
     } while (match);
@@ -349,6 +364,10 @@ async function reportError(data, err) {
     errorCount++;
 
     await fsPromises.appendFile(reportFile, `ERROR: ${data}\n`);
+
+    if (consoleDetail) {
+        console.error(`ERROR: ${data}`);
+    }
 
     if (err) {
         await fsPromises.appendFile(reportFile, `ERROR: ${err.message}\n`);
@@ -372,19 +391,24 @@ function sanitizeLink(item) {
 async function checkRemote(url) {
     try {
         await axios.head(url);
-        return true;
     } catch (err) {
-        return false;
+        if (err.message.indexOf('404') >= 0) {
+            return 'Not found';
+        } else if (err.message.indexOf('409') < 0) {
+            return err.message;
+        }
     }
 }
 
 async function run() {
-    const projects = await buildProjects('docs');
+    const projects = await buildProjects(rootFolder);
 
-    await fsPromises.writeFile('projects.json', JSON.stringify(projects, undefined, '\t'));
+    if (projectsFile) {
+        await fsPromises.writeFile(projectsFile, JSON.stringify(projects, undefined, '\t'));
+    }
 
     if (errorCount > 0) {
-        console.error(`ERROR: There were ${errorCount} errors found during project build, see ${reportFile} for details.`);
+        console.error(`\nERROR: There were ${errorCount} errors found during project build, see ${reportFile} for details.`);
     }
 }
 
