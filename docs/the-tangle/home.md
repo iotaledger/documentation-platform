@@ -1,13 +1,16 @@
-# The Tangle is the distributed ledger network behind IOTA
+# The Tangle is the data structure that's formed by the connections among transactions in the distributed ledger on all IRI nodes.
 
-[Introduction to The Tangle](/0.1/overview.md)
-## Learn about the basic ideas and concepts around IOTA and etc
+[The Tangle overview](/0.1/introduction/overview.md)
+## Learn what the Tangle is and about its role in IOTA
 
-[Consensus in the Tangle](/0.1/consensus/consensus.md)
-## Learn about the basic ideas and concepts around IOTA and etc
+[The Coordinator](/0.1/concepts/the-coordinator.md)
+## Learn about the Coordinator and its milestones that confirm other transactions
 
-[Tip Selection](/0.1/tip-selection/introduction.md)
-## Learn about the basic ideas and concepts around IOTA and etc
+[Tip selection](/0.1/concepts/tip-selection.md)
+## Learn the details of how transactions are selected as references for other transactions
 
-[Proof of Work](/0.1/proof-of-work/introduction.md)
-## Learn about the basic ideas and concepts around IOTA and etc
+[Proof of work](/0.1/concepts/proof-of-work.md)
+## Learn how the IOTA protocol protects the Tangle from spam transactions
+
+[Future consensus in the Tangle](/0.1/concepts/future-consensus-in-the-tangle.md)
+## Learn about the IOTA whitepaper and the future of IOTA without the Coordinator

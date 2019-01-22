@@ -1,6 +1,6 @@
 # Data in the snapshot metadata file
 
-**This table contains the data that's added to the snapshot.meta file during a [local snapshot](concepts/local-snapshot.md).**
+**This table contains the data that's added to the snapshot.meta file during a [local snapshot](../concepts/local-snapshot.md).**
 
 | **Data**|    **Description** |                                      
 | :-----: |  :---------------: | 

@@ -1,6 +1,6 @@
 # Send a transaction
 
-**Trinity allows you to send transactions to a one address at a time.**
+**Trinity has a user interface that allows you to send multiple transactions at the click of a button.**
 
 If you have multiple accounts in your Trinity wallet, make sure that you select the correct account from the dropdown menu.
 
@@ -11,7 +11,7 @@ If you have multiple accounts in your Trinity wallet, make sure that you select 
 
 3. Enter either a message, or an amount of IOTA tokens, or both
 
-    **Note:** The amount to send can be entered in IOTA or in the [currency of your choice](how-to-guides/changing-the-settings.md). Pay close attention to the IOTA units (i, Mi, Gi,) that you're sending.
+    **Note:** The amount to send can be entered in IOTA or in the [currency of your choice](../how-to-guides/changing-the-settings.md). Pay close attention to the IOTA units (i, Mi, Gi,) that you're sending.
 
     ![IOTA units](../sending-value-highlighted.jpg)
 4. Click **Send**
@@ -22,5 +22,5 @@ When you either receive or send a transaction, it appears on the home page. Clic
 
 ![A received transaction](../trinity-receive-message.png)
 
-**Note:** The Addresses field is displayed only in [Advanced mode](how-to-guides/changing-the-settings.md).
+**Note:** The Addresses field is displayed only in [Advanced mode](../how-to-guides/changing-the-settings.md).
 

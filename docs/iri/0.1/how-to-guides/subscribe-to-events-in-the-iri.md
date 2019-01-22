@@ -1,15 +1,15 @@
 # Subscribe to events in the IRI
 
-**All IRI nodes have the option to allow clients to subscribe to its events.**
+**If an IRI node has the ZMQ port enabled, you can subscribe to events such as transaction confirmations. These events give you real-time data from an IOTA network.**
 
-You may want to subscribe to events in the [zero message queue (ZMQ)](concepts/zero-message-queue.md) to do the following:
+You may want to subscribe to events in the [zero message queue (ZMQ)](../concepts/zero-message-queue.md) to do the following:
 
 * Monitor an address for when a transaction is sent to it and confirmed
 * Create a Tangle visualisation website, such as [tangle.glumb.de](www.tangle.glumb.de)
 
 You can subscribe to events in the ZMQ by doing the following:
 1. Install the open-source ZMQ library
-2. Create a ZMQ socket and connect it to an IRI node that has the [`ZMQ-enabled` configuration parameter](references/iri-configuration-options.md#zmq-enabled) set to `true`
+2. Create a ZMQ socket and connect it to an IRI node that has the [`ZMQ-enabled` configuration parameter](../references/iri-configuration-options.md#zmq-enabled) set to `true`
 3. Subscribe to events on the ZMQ
 
 In the following how-to guide we use NodeJS, but you could use any [programming language that is supported by the ZMQ library](http://zguide.zeromq.org/page:all).
@@ -24,7 +24,7 @@ You can subscribe to the `sn` event on the ZMQ of the IRI to listen for recently
 
 To use the code samples in this guide, your computer must have the following:
 
-* Node.js 8+
+* Node JS (8+)
 * Node package manager (npm)
 * A code editor
 * Access to a terminal
@@ -78,4 +78,4 @@ To use the code samples in this guide, your computer must have the following:
     ```
 ## Next steps
 
-Use your new knowledge of the ZMQ to build an application that monitors the IRI for other [events](references/zmq-events.md). 
+Use your knowledge of the ZMQ to build an application that monitors the IRI for other [events](../references/zmq-events.md). 

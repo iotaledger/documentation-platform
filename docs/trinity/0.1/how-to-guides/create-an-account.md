@@ -6,15 +6,15 @@
 2. Open Trinity
 3. To create a seed in Trinity, click **Yes, I need a seed**. If you already have a seed, or if you created a seed outside of Trinity, click **No, I have one**.
     
-    **Note:** If you have a [hardware wallet](concepts/hardware-wallet.md), connect it and follow the on-screen instructions. You don't need to back up your seed if you use a hardware wallet.
+    **Note:** If you have a [hardware wallet](../concepts/hardware-wallet.md), connect it and follow the on-screen instructions. You don't need to back up your seed if you use a hardware wallet.
    
     <img src="../seed-generation.png" alt="Generating a seed" width="600">
 4. Enter an account name for your seed.
-    **Note:** You can choose to rename your account later in the [Account management](how-to-guides/manage-your-account.md).
+    **Note:** You can choose to rename your account later in the [Account management](../how-to-guides/manage-your-account.md).
 
     <img src="../account-name.jpg" alt="Account name" width="600">
 5. Select an option to back up your seed and enter a login password. You will need this password every time you log into Trinity.
-    **Note:** You can choose to add extra account security in the [Security settings](how-to-guides/manage-your-security-settings.md)
+    **Note:** You can choose to add extra account security in the [Security settings](../how-to-guides/manage-your-security-settings.md)
 
 ## Back up your seed
 
@@ -33,7 +33,7 @@ After backing up your seed, Trinity asks you to re-enter your seed to make sure 
 
 ### Exporting your seed as a SeedVault file
 
-Exporting your seed to a SeedVault file is the most secure option (apart from using a [hardware wallet](concepts/hardware-wallet.md)).  
+Exporting your seed to a SeedVault file is the most secure option (apart from using a [hardware wallet](../concepts/hardware-wallet.md)).  
 
 SeedVault is a password-encrypted file that uses the [kdbx file format](https://keepass.info/help/kb/kdbx_4.html). This format is also used by the [KeePass](https://keepass.info/) password manager.
 

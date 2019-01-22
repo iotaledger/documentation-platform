@@ -1,23 +1,14 @@
 # Index
 
-[Overview](/overview.md)
+[Introduction/Overview](/introduction/overview.md)
 
-[Consensus/Introduction](/consensus/consensus.md)
+[Concepts/The Coordinator](/concepts/the-coordinator.md)
 
-[Consensus/Coordinator](/consensus/coordinator.md)
+[Concepts/Tip selection](/concepts/tip-selection.md)
 
-[Tip Selection/Introduction](/tip-selection/introduction.md)
+[Concepts/Incentives-in-the-Tangle](/concepts/incentives-in-the-tangle.md)
 
-[Tip Selection/Incentives](/tip-selection/incentives.md)
+[Concepts/Proof of work](/concepts/proof-of-work.md)
 
-[Tip Selection/Tip Selection](/tip-selection/tip-selection.md)
+[Concepts/Future consensus in the Tangle](/concepts/future-consensus-in-the-tangle.md)
 
-[Tip Selection/Glossary](/tip-selection/glossary.md)
-
-[Proof of Work/Introduction](/proof-of-work/introduction.md)
-
-[Proof of Work/IOTA's PoW](/proof-of-work/iotas-pow.md)
-
-[Proof of Work/Checking PoW](/proof-of-work/checking-pow.md)
-
-[Proof of Work/Difficulty of PoW](/proof-of-work/difficulty-of-pow.md)

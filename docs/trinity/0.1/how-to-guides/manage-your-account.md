@@ -35,7 +35,7 @@ To change the name of an account, go to Account management, and click **Account 
 
 ## Change your login password
 
-Trinity stores your seeds for you (unless you use a [hardware wallet](concepts/hardware-wallet.md)) and allows you to log in with a password.
+Trinity stores your seeds for you (unless you use a [hardware wallet](../concepts/hardware-wallet.md)) and allows you to log in with a password.
 
 To change the login password on a desktop, go to **Settings** > **Change password**.
 

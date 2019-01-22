@@ -1,12 +1,12 @@
 # Troubleshooting
 
-**This is a list of common or known issues that you may find while using Trinity.**
+**You may find some of these common issues while using Trinity.**
 
 ## Incorrect balance
 
 If Trinity can't connect to an IRI node, it may have an outdated view of transactions on the network. This view can cause Trinity to display an incorrect balance. Therefore, Trinity retains a list of locally generated addresses so it can be manually re-synchronized.
 
-If you think you're balance is wrong (and a [global snapshot](how-to-guides/performing-a-snapshot-transition.md) hasn't occurred), you can manually sycnhronize it by going to **Settings** > **Account** > **Account management** > **Tools** > **Sync account**.
+If you think you're balance is wrong (and a [global snapshot](../how-to-guides/performing-a-snapshot-transition.md) hasn't occurred), you can manually sycnhronize it by going to **Settings** > **Account** > **Account management** > **Tools** > **Sync account**.
 
 ![Manual update](../sync.jpg) 
 
@@ -14,7 +14,7 @@ If you think you're balance is wrong (and a [global snapshot](how-to-guides/perf
 
 When you send a transaction, it has a pending status until it's confirmed.
 
-If a transaction is pending for a long time, make sure that the [Auto-promotion setting](how-to-guides/changing-the-advanced-settings.md) is set to **Enabled**.
+If a transaction is pending for a long time, make sure that the [Auto-promotion setting](../how-to-guides/changing-the-advanced-settings.md) is set to **Enabled**.
 
 **Note:** Auto-promotion is availble on mobile devices only when Trinity is in the foreground.
 

@@ -1,13 +1,13 @@
 # What is a transaction?
 
-**A transaction is an instruction sent by a client to an IRI node to send data or IOTA tokens to an address.**
+**A transaction is an instruction that sends data or IOTA tokens to an address or debits IOTA tokens from an address.**
+
+Transactions are sent to IRI nodes in [bundles](../introduction/what-is-a-bundle.md).
 
 Transactions can be one of the following types:
-* **Data transaction:** Transaction that send only plain text or encrypted data to a recipient's address
-* **Value transaction:** Transaction that transfers IOTA tokens to a recipient's address
+* **Input transaction:** Debits IOTA tokens from an addresses and contains the signature that proves ownership of the address. If the signature is too large, it's fragmented over zero-value output transactions in the bundle.
+* **Output transaction:** Credits IOTA tokens to a recipient's address or contains no value (a zero-value transaction).
 
-Value transactions are the only ones that require a signature. Signatures prove ownership of an address that is transferring IOTA tokens.
+All transactions are feeless.
 
-All transactions in IOTA are free to send.
-
-[Learn more about transactions and signatures](root://iota-basics/0.1/introduction/overview.md).
+[Learn more about addresses and signatures in transactions](root://iota-basics/0.1/concepts/addresses-and-signatures.md).

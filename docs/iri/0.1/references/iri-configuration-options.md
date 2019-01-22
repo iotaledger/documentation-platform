@@ -21,12 +21,12 @@ You can choose to configure the IRI by specifying the configuration options in t
 |<a name="ixi-dir"></a>  `--ixi-dir` |Folder where IXI modules should be added for automatic discovery by IRI |string |ixi |
 |<a name="max-analyzed-transactions"></a>`--max-analyzed-transactions` |Maximum number of unconfirmed transactions that may be analyzed during the tip selection process to find the latest milestone that references a transaction |number |20,000 |
 |<a name="max-body-length"></a> `--max-body-length` | Maximum number of characters that the body of an API call may contain|number |1,000,000 | If the length of a request body exceeds this number, an error is returned
-|  <a name="maxdepth"></a>`--max-depth` |Maximum number of previous milestones (depth) from where the IRI will start the tip selection |number |15 | This value should be both small enough to allow the weighted random walk to finish in a reasonable amount of time and large enough in include enough new transactions in the [subgraph](/concepts/tip-selection.md#subgraph-selection)
+|  <a name="maxdepth"></a>`--max-depth` |Maximum number of previous milestones (depth) from where the IRI will start the tip selection |number |15 | This value should be both small enough to allow the weighted random walk to finish in a reasonable amount of time and large enough in include enough new transactions in the [subgraph](../concepts/tip-selection.md#subgraph-selection)
 |<a name="max-find-transactions"></a>`--max-find-transactions` |Maximum number of transactions that may be returned by the findTransactions API call |number | 100,000 | If the number of transactions exceeds this number, an error is returned 
 |<a name="max-get-trytes"></a>`--max-get-trytes` |Maximum number of trytes that may be returned by the getTrytes API call  |number |10,000 | If the number of trytes exceeds this number, an error is returned
 |<a name="max-peers"></a>`--max-peers` |Maximum number of non-mutually-tethered connections |number |0 |This option is available only on the IOTA Devnet network
 |<a name="max-requests-list"></a>`--max-requests-list` |Maximum number of parameters in an API call |number |1,000 | If the number of parameters exceeds this number, an error is returned
-|<a name="neighbors"></a>`-n`, `--neighbors` |Urls and IP addresses of [neighbor IRI nodes](how-to-guides/finding-neighbors.md) |array of strings |[ ] |
+|<a name="neighbors"></a>`-n`, `--neighbors` |Urls and IP addresses of [neighbor IRI nodes](../how-to-guides/finding-neighbors.md) |array of strings |[ ] |
 |<a name="p-drop-cache"></a>`--p-drop-cache` |Probability of losing recently seen transactions in the network cache | number between 0 and 1|0.02 |
 |<a name="p-drop-transaction"></a>  `--p-drop-transaction`|Probability of losing a received transaction |number between 0 and 1 |0.0 | This option is available only on the IOTA Devnet network for testing purposes
 |<a name="p-propagate-request"></a>`--p-propagate-request` |Probability of the IRI requesting a missing transaction from a neighbor | number|0.01 | This number should be low to avoid the IRI requesting non-existing transactions that spam the network
@@ -44,10 +44,10 @@ You can choose to configure the IRI by specifying the configuration options in t
 |<a name="send-limit"></a> `--send-limit` |Maximum number of packets that may be sent by the IRI in a one-second interval |number | -1|If this number is below 0, no limit is set
 |<a name="tcp-receiver-port"></a>`-t`, `--tcp-receiver-port` |Port from which the IRI receives TCP data packets from neighbor IRI nodes |string | 15600|
 |<a name="udp-receiver-port"></a>`-u`, `--udp-receiver-port` |Port from which the IRI receives UDP data packets from neighbor IRI nodes |string |14600 |
-|<a name="zmq-enabled"></a>  `--zmq-enabled` | Enable [zero message queue](concepts/zero-message-queue.md) subscriptions| boolean|false |
+|<a name="zmq-enabled"></a>  `--zmq-enabled` | Enable [zero message queue](../concepts/zero-message-queue.md) subscriptions| boolean|false |
 |<a name="zmq-ipc"></a>`--zmq-ipc` |Path that is used to communicate with ZMQ in IPC| string|  ipc://iri|
 |<a name="zmq-port"></a> `--zmq-port `|Port that is used to connect to the ZMQ feed |string | 5556|
-|<a name="local-snapshots-enabled"></a>`LOCAL_SNAPSHOTS_ENABLED`   | Enable [local snapshots](concepts/local-snapshot.md) |boolean  | true  | This parameter must be set to `true` for the IRI to read any other `LOCAL_SNAPSHOTS` parameters|
+|<a name="local-snapshots-enabled"></a>`LOCAL_SNAPSHOTS_ENABLED`   | Enable [local snapshots](../concepts/local-snapshot.md) |boolean  | true  | This parameter must be set to `true` for the IRI to read any other `LOCAL_SNAPSHOTS` parameters|
 |<a name="local-snapshots-pruning-enabled"></a>`LOCAL_SNAPSHOTS_PRUNING_ENABLED`  |  Enable the deletion of transactions from the ledger  | true | Transactions are deleted if they were confirmed by a milestone with an index that is older than the result of the following calculation: current milestone index - (`LOCAL_SNAPSHOTS_DEPTH` + `LOCAL_SNAPSHOTS_PRUNING_DELAY`).  |
 |<a name="local-snapshots-depth"></a>`LOCAL_SNAPSHOTS_DEPTH`  | Amount of seen milestones to record in the snapshot.meta file | number starting from 100 | 100 | |
 |<a name="local-snapshots-pruning-delay"></a>`LOCAL_SNAPSHOTS_PRUNING_DELAY`  | Amount of milestone transactions to keep in the ledger   | number starting from 10,000  | 40,000 | We recommend that you use the default value for this option, which triggers a local snapshot around every 28 days.  |

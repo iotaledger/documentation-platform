@@ -25,20 +25,27 @@ To complete this tutorial, you need the following:
 <hr>
 
 1. [Install Docker](https://docs.docker.com/install/#supported-platforms)
+
 2. Make sure that Docker is installed
+
     ```bash
     $ docker run hello-world
     ```
+
 If Docker is installed, you should see some Docker information in the output.
 
 3. Download the pre-built Docker container
+
     ```bash
     $ docker pull iotaledger/iri:latest
     ```
+
 4. Run the IRI
+
     ```bash
     $ docker run -d -p 14265:14265 -p 15600:15600 -p 14600:14600/udp -v /my-node:/iri/data --name iri iotaledger/iri:latest --remote -p 14265
     ```
+    
 Your IRI node is now running and you can interact with it through the IRI API on the following URL:
 http://localhost.com:14265
 

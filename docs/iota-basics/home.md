@@ -1,16 +1,16 @@
-# Learn about the basic ideas and concepts around IOTA
+# IOTA introduces new concepts that are essential to learn before you start using an IOTA network.
 
-[Introduction to the IOTA Token](/0.1/introduction/overview.md)
-## Learn about the basic ideas and concepts around IOTA and etc
+[IOTA basics overview](/0.1/introduction/overview.md)
+## Learn the essentials of IOTA and become familiar with the basic terms and concepts
 
-[Seeds, Private Keys & Accounts](/0.1/seeds-privatekeys-accounts/seeds.md)
-## Learn about the basic ideas and concepts around IOTA and etc
+[Addresses and signatures](/0.1/concepts/addresses-and-signatures.md)
+## Learn the details about addresses and signatures and how they're generated
 
-[Anatomy of a Transaction](/0.1/transactions/anatomy-of-a-transaction.md)
-## Learn about the basic ideas and concepts around IOTA and etc
+[Bundles and transactions](/0.1/concepts/bundles-and-transactions.md)
+## Learn the details about bundles and transactions
 
-[Networks](/0.1/networks/the-mainnet.md)
-## Learn about the basic ideas and concepts around IOTA and etc
+[Generate an address](/0.1/how-to-guides/generate-an-address.md)
+## Use the JavaScript client library to generate a new address
 
-[Support](https://iota.org)
-## Learn about the basic ideas and concepts around IOTA and etc
+[Send a bundle](/0.1/how-to-guides/send-bundle.md)
+## Use the JavaScript client library to send a bundle of transactions

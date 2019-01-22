@@ -1,6 +1,6 @@
 # Security considerations
 
-**Given that the role of Compass is to protect an IOTA network against attacks, security is crucial.**
+**Given that the role of Compass is to protect an IOTA network against attacks, its security is crucial.**
 
 **Note:** Compass is in continual development and is to be used **only** in a testing and analysis environment. 
 

@@ -1,16 +1,16 @@
-# Essential for operation a supporting node on the IOTA Tangle network
+# The IRI (IOTA reference implementation) is open-source software that detects counterfeit transactions and stores an immutible history of all transfers
 
-[Overview of IRI](/0.1/overview.md)
-## Learn about the basic ideas and concepts around IOTA and etc
+[IRI node software overview](/0.1/introduction/overview.md)
+## Learn what the IRI is, what it's responsible for, and why you should run it
 
-[Quick Start on Linux](/0.1/how-to-guides/downloading-the-iri-on-linux.md)
-## Learn about the basic ideas and concepts around IOTA and etc
+[The ledger](/0.1/concepts/the-ledger.md)
+## Learn about the immutible ledger that's stored and maintained by all IRI nodes in an IOTA network
 
-[Updating your Node](/0.1/how-to-guides/updating-the-iri.md)
-## Learn about the basic ideas and concepts around IOTA and etc
+[Transaction validation](/0.1/concepts/transaction-validation.md)
+## Learn how and when IRI nodes determine if a transaction is valid
 
-[Interacting with IRI](/0.1/how-to-guides/interacting-with-the-iri.md)
-## Learn about the basic ideas and concepts around IOTA and etc
+[Run an IRI node](/0.1/how-to-guides/run-an-iri-node.md)
+## Learn how to contribute to the network
 
-[Subscribing to Messages](/0.1/how-to-guides/subscribing-to-events-in-the-iri.md)
-## Learn about the basic ideas and concepts around IOTA and etc
+[Interact with the IRI](/0.1/how-to-guides/interact-with-the-iri.md)
+## Learn how to communicate with an IRI node to send and request data on an IOTA network

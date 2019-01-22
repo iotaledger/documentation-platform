@@ -26,7 +26,7 @@ class TableOfContents extends React.PureComponent {
                 </h3>
                 <ul className="table-of-contents__section">
                     {this.props.items.map((item, idx) => (
-                        <li key={idx} className={classNames("table-of-contents-list-item", {"table-of-contents-list-item__sub" : item.level > 2})}>
+                        <li key={idx} className={classNames('table-of-contents-list-item', {'table-of-contents-list-item__sub' : item.level > 2})}>
                             <a href={item.link}>
                                 {item.name}
                             </a>

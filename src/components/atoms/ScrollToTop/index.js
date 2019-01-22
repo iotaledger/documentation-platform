@@ -5,7 +5,7 @@ const ScrollToTop  = () => {
     const onScrollToTop = () => {
         const target = document.querySelector('#root');
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    };
 
     return (
         <button
@@ -14,6 +14,6 @@ const ScrollToTop  = () => {
             <i className="icon icon-chevron-up"></i>
         </button>
     );
-}
+};
 
 export default ScrollToTop;

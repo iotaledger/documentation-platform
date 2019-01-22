@@ -15,16 +15,16 @@ class FloatingMenu extends React.Component {
 
         this.state = {
             activeTarget: null
-        }
+        };
     }
 
     componentDidMount() {
         this.handleScroll = this.handleScroll.bind(this);
 
         this.targets = this.props.menuItems.map(item => {
-            const target = item.name.toLowerCase().replace(/ /g, '_')
+            const target = item.name.toLowerCase().replace(/ /g, '_');
             return document.getElementById(target);
-        })
+        });
 
         document.addEventListener('scroll', this.handleScroll);
         window.addEventListener('resize', this.handleScroll);
@@ -41,20 +41,20 @@ class FloatingMenu extends React.Component {
 
         const treshold = window.innerHeight * 0.35;
         
-        let activeTarget = null
+        let activeTarget = null;
 
         this.targets.forEach(target => {
             const rect = target.getBoundingClientRect();
 
             if(rect.top < treshold && rect.bottom > 0){
-                activeTarget = target.id
+                activeTarget = target.id;
             }
-        })
+        });
 
         if(activeTarget !== this.state.activeTarget){
             this.setState({
                 activeTarget
-            })
+            });
         }
 
     }

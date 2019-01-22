@@ -11,7 +11,7 @@ To access security settings on a desktop, go to **Settings** > **Two-factor auth
 
 ![Security settings](../2fa.jpg)
 
-## Setting up two-factor authentication
+## Set up two-factor authentication
 
 Two-factor authentication (2FA) is a security process in which you provide two different authentication factors to log into Trinity.
 
@@ -24,7 +24,7 @@ Two-factor authentication (2FA) is a security process in which you provide two d
 
 Whenever you want to log into Trinity, you'll be prompted to enter this 2FA code after you enter your password.
 
-## Setting up biometric authentication
+## Set up biometric authentication
 
 Biometric authentication is a security process, which allows you to log into Trinity with your fingerprint.
 

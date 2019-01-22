@@ -1,6 +1,6 @@
 # Change the advanced settings
 
-**Advanced settings affect the functionality of Trinity.**
+**Advanced settings affect the functionality of Trinity. Change the advanced settings if you're familiar with how IOTA works.**
 
 ## Change the proof-of-work settings
 

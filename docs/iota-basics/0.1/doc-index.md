@@ -1,23 +1,25 @@
 # Index
 
-[Overview](/overview.md)
+[Introduction/Overview](/introduction/overview.md)
 
-[Networks/The Mainnet](/networks/the-mainnet.md)
+[Concepts/Addresses and signatures](/concepts/addresses-and-signatures.md)
 
-[Networks/The Devnet](/networks/the-devnet.md)
+[Concepts/Bundles and transactions](/concepts/bundles-and-transactions.md)
 
-[Networks/The Spamnet](/networks/the-spamnet.md)
+[Concepts/Trinary](/concepts/trinary.md)
 
-[Seeds, Private Keys & Accounts/Seeds](/seeds-privatekeys-accounts/seeds.md)
+[How-to Guides/Convert data to trytes](/how-to-guides/convert-data-to-trytes.md)
 
-[Seeds, Private Keys & Accounts/Private Keys & Accounts](/seeds-privatekeys-accounts/private-keys-accounts.md)
+[How-to Guides/Generate an address](/how-to-guides/generate-an-address.md)
 
-[Transactions/Anatomy of a Transaction](/transactions/anatomy-of-a-transaction.md)
+[How-to Guides/Send a bundle](/how-to-guides/send-bundle.md)
 
-[Transactions/Bundle Construction](/transactions/bundle-construction.md)
+[References/Structure of a transaction](/references/structure-of-a-transaction.md)
 
-[Transactions/Making a Transaction](/transactions/making-a-transaction.md)
+[References/Security levels of addresses](/references/security-levels-of-addresses.md)
 
-[Transactions/Querying the Tangle](/transactions/querying-the-tangle.md)
+[References/Tryte alphabet](/references/tryte-alphabet.md)
 
-[Glossary](/glossary.md)
+[References/Units of IOTA tokens](/references/units-of-iota-tokens.md)
+
+[References/Glossary](/references/glossary.md)

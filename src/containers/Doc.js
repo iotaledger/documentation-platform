@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { Head, withRouteData, withRouter, withSiteData } from 'react-static';
-import BottomSticky from '../components/atoms/BottomSticky';
 import DropSelector from '../components/atoms/DropSelector';
 import ScrollInContainer from '../components/atoms/ScrollInContainer';
 import Feedback from '../components/molecules/Feedback';
@@ -20,7 +19,7 @@ import { createPageTableOfContents, createProjectLinks, getProjectTitle, getProj
 import { ProjectsPropTypes } from '../utils/propTypes.js';
 import { extractSearchQuery } from '../utils/search';
 import Container from './Container';
-import { DocPageLayout, TabletHidden } from './Layouts';
+import { DocPageLayout } from './Layouts';
 
 class Doc extends React.Component {
     static propTypes = {

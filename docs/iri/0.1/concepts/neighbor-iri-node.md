@@ -1,6 +1,6 @@
 # Neighbor IRI node
 
-**Neighbor IRI nodes are those that are mutually connected and communicate directly with each other on the same IOTA network.**
+**To synchronize their ledgers with the rest of the network, all IRI nodes must communicate with other IRI nodes, which are called neighbors. Neighbors are IRI nodes that are mutually connected and that communicate directly with each other on the same IOTA network.**
 
 The primary reason that IRI nodes connect to neighbor IRI nodes is to validate each other's transactions. If all clients relied on only one IRI node that wasn't connected to any neighbors, that IRI node could start validating invalid transactions.
 
@@ -20,5 +20,5 @@ As well as sending transactions to neighbors, IRI nodes request non-solid transa
 
 A non-solid transaction is one that is referenced by a transaction in an IRI node's ledger, but that the IRI has not yet validated.
 
-If an IRI node sees a non-solid transaction during [validation](concepts/transaction-validation.md) or [tip selection](concepts/tip-selection.md), the IRI node asks its neighbors for it, and if its neighbors are missing the information, those neighbors will ask their neighbors, and so on.
+If an IRI node sees a non-solid transaction during [validation](../concepts/transaction-validation.md) or [tip selection](../concepts/tip-selection.md), the IRI node asks its neighbors for it, and if its neighbors are missing the information, those neighbors will ask their neighbors, and so on.
 

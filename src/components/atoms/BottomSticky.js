@@ -45,7 +45,7 @@ class BottomSticky extends React.PureComponent {
         const thisRect = thisDom.getBoundingClientRect();
         const parentRect = parentDom.getBoundingClientRect();
 
-        const offset = Math.min(window.innerHeight, parentRect.bottom)
+        const offset = Math.min(window.innerHeight, parentRect.bottom);
 
         const top = offset - thisRect.height - this.props.bottomOffset;
 

@@ -1,6 +1,6 @@
 # Change the general settings
 
-**General settings change elements of the user interface in Trinity.**
+**General settings change elements of the user interface in Trinity. Change the general settings to customize the user interface.**
 
 In Trinity, go to **Settings** to customize general settings. 
 

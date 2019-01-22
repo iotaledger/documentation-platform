@@ -1,12 +1,10 @@
 # Index
 
 [Introduction/Overview](/introduction/overview.md)
-[How-to Guides/Download the IRI on Linux](/how-to-guides/download-the-iri-on-linux.md)
-[How-to Guides/Download the IRI using Docker](/how-to-guides/download-the-iri-using-docker.md)
 [How-to Guides/Find neighbors](/how-to-guides/find-neighbors.md)
-[How-to Guides/Run the IRI](/how-to-guides/run-the-iri.md)
+[How-to Guides/Run an IRI node](/how-to-guides/run-an-iri-node.md)
 [How-to Guides/Update the IRI](/how-to-guides/update-the-iri.md)
-[How-to Guides/Schedule the deletion of old transactions](/how-to-guides/schedule-the-deletion-of-old-transactions.md)
+[How-to Guides/Prune transactions from the ledger](/how-to-guides/prune-transactions-from-the-ledger.md)
 [How-to Guides/Interact with the IRI](/how-to-guides/interact-with-the-iri.md)
 [How-to Guides/Subscribe to events in the IRI](/how-to-guides/subscribe-to-events-in-the-iri.md)
 [Concepts/The ledger](/concepts/the-ledger.md)
