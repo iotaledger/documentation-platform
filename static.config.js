@@ -151,7 +151,7 @@ function assetHtmlImage(markdown, docPath) {
 }
 
 function assetMarkdownImage(markdown, docPath) {
-    const re = /(!\[(.*?)\]\((.*?)("(.*)")?\))/gm;
+    const re = /(!\[(.*?)\]\((.*?)( ".*")?\))/gm;
 
     let match;
     do {

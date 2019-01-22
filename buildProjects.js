@@ -1,52 +1,54 @@
 const fs = require('fs');
+const fsPromises = require('fs').promises;
 const path = require('path');
-    
-const webifyPath = (p) => p.replace(/\\/g, '/');
-
-const listDirs = dir => fs.readdirSync(dir).filter(f => fs.statSync(path.join(dir, f)).isDirectory());
-
-const sanitizeLink = item => item
-    .replace(/^\.?\//, '')
-    .replace(/\.md$/i, '');
+const axios = require('axios');
 
 const reportFile = 'projects-summary.log';
 let errorCount = 0;
+const checkRemotePages = false;
 
-function buildProjects(baseDir) {
+// eslint-disable no-console
+
+async function buildProjects(baseDir) {
+    console.log('Building Projects');
+
     try {
-        fs.unlinkSync(reportFile);
+        await fsPromises.unlink(reportFile);
     } catch (err) {
         // Do nothing
     }
 
-    reportEntry(`Built on: ${new Date().toISOString()}`);
-    reportEntry('');
+    await reportEntry(`Built on: ${new Date().toISOString()}`);
+    await reportEntry('');
 
-    reportEntry(`Reading Project Dir: '${baseDir}'`);
-    reportEntry('');
+    await reportEntry(`Reading Project Dir: '${baseDir}'`);
+    await reportEntry('');
 
-    const projects = readProjects(baseDir);
+    const projects = await readProjects(baseDir);
+    console.log(`Found ${projects.length} Projects.`);
 
     for (let i = 0; i < projects.length; i++) {
-        reportEntry('');
-        reportEntry(`\tProject: '${projects[i].name}'`);
-        reportEntry(`\tFolder: '${projects[i].folder}'`);
+        console.log(`Processing ${projects[i].name}.`);
 
-        buildHome(baseDir, projects[i]);
-        buildVersions(baseDir, projects[i]);
+        await reportEntry('');
+        await reportEntry(`\tProject: '${projects[i].name}'`);
+        await reportEntry(`\tFolder: '${projects[i].folder}'`);
+
+        await buildHome(baseDir, projects[i]);
+        await buildVersions(baseDir, projects[i]);
     }
 
     return projects;
 }
 
-function readProjects(baseDir) {
+async function readProjects(baseDir) {
     const projectFileName = `${baseDir}/projects.md`;
     const projects = [];
 
     try {
-        reportEntry(`Reading Projects from file '${projectFileName}'`);
+        await reportEntry(`Reading Projects from file '${projectFileName}'`);
 
-        const projectFile = fs.readFileSync(projectFileName).toString();
+        const projectFile = (await fsPromises.readFile(projectFileName)).toString();
 
         const re = /\[(.*?)\]\((.*?)\)/g;
 
@@ -62,21 +64,21 @@ function readProjects(baseDir) {
             }
         } while (match);
     } catch (err) {
-        reportError(`Failed while trying to read the projects file '${projectFileName}'`, err);
+        await reportError(`Failed while trying to read the projects file '${projectFileName}'`, err);
     }
 
     return projects;
 }
 
-function buildHome(baseDir, project) {
+async function buildHome(baseDir, project) {
     const versions = [];
     const homeFile = `${baseDir}/${project.folder}/home.md`;
 
     try {
         if (fs.existsSync(homeFile)) {
-            reportEntry(`\tHome File: '${homeFile}'`);
+            await reportEntry(`\tHome File: '${homeFile}'`);
 
-            const home = fs.readFileSync(homeFile).toString();
+            const home = (await fsPromises.readFile(homeFile)).toString();
 
             const descriptionMatch = /^# (.*)$/gm.exec(home);
             let description = '';
@@ -104,36 +106,36 @@ function buildHome(baseDir, project) {
                 links
             };
         } else {
-            reportEntry(`\tHome File: '${homeFile}' does not exist, project will not show on home navigation`);
+            await reportEntry(`\tHome File: '${homeFile}' does not exist, project will not show on home navigation`);
         }
     } catch (err) {
-        reportError(`Failed while trying to build the home content for '${project.folder}'`, err);
+        await reportError(`Failed while trying to build the home content for '${project.folder}'`, err);
     }
 
     return versions;
 }
 
-function buildVersions(baseDir, project) {
+async function buildVersions(baseDir, project) {
     const projectVersions = listDirs(`${baseDir}/${project.folder}/`);
 
     for (let i = 0; i < projectVersions.length; i++) {
-        reportEntry('');
-        reportEntry(`\t\tVersion: '${projectVersions[i]}'`);
+        await reportEntry('');
+        await reportEntry(`\t\tVersion: '${projectVersions[i]}'`);
 
         project.versions.push({
             version: projectVersions[i],
-            pages: buildSingleVersion(baseDir, project.folder, projectVersions[i])
+            pages: await buildSingleVersion(baseDir, project.folder, projectVersions[i])
         });
     }
 }
 
-function buildSingleVersion(baseDir, projectFolder, version) {
+async function buildSingleVersion(baseDir, projectFolder, version) {
     const versions = [];
     const docIndexFile = `${baseDir}/${projectFolder}/${version}/doc-index.md`;
 
     try {
-        reportEntry(`\t\tVersion Index: '${docIndexFile}'`);
-        const docIndex = fs.readFileSync(docIndexFile).toString();
+        await reportEntry(`\t\tVersion Index: '${docIndexFile}'`);
+        const docIndex = (await fsPromises.readFile(docIndexFile)).toString();
 
         const re = /\[(.*)\]\((.*)\)/g;
 
@@ -148,22 +150,23 @@ function buildSingleVersion(baseDir, projectFolder, version) {
                         link: `/${baseDir}/${sanitizedLink.replace('root://', '')}`
                     });
                 } else {
+                    const toc = await extractTocAndValidateAssets(baseDir, projectFolder, version, match[2], docIndexFile);
                     versions.push({
                         name: match[1],
                         link: `/${baseDir}/${projectFolder}/${version}/${sanitizedLink}`,
-                        toc: extractTocAndValidateAssets(baseDir, projectFolder, version, match[2], docIndexFile)
+                        toc
                     });
                 }
             }
         } while (match);
     } catch (err) {
-        reportError(`Failed while trying to build the content for '${projectFolder}' v${version}`, err);
+        await reportError(`Failed while trying to build the content for '${projectFolder}' v${version}`, err);
     }
 
     return versions;
 }
 
-function extractTocAndValidateAssets(baseDir, projectFolder, version, doc, docIndexFile) {
+async function extractTocAndValidateAssets(baseDir, projectFolder, version, doc, docIndexFile) {
     // Try and load the markdown for the page and if it exists extract
     // the headers to create a toc
     const toc = [];
@@ -172,9 +175,9 @@ function extractTocAndValidateAssets(baseDir, projectFolder, version, doc, docIn
 
     try {
         if (fs.existsSync(docName)) {
-            reportEntry(`\t\t\tTOC: '${docName}'`);
+            await reportEntry(`\t\t\tTOC: '${docName}'`);
 
-            const doc = fs.readFileSync(docName).toString();
+            const doc = (await fsPromises.readFile(docName)).toString();
 
             // Match all headers e.g.
             // # Blah blah
@@ -196,15 +199,18 @@ function extractTocAndValidateAssets(baseDir, projectFolder, version, doc, docIn
                 }
             } while (matchHeader);
 
-            toc.map(t => reportEntry(`\t\t\t\t${t.level}: ${t.name}`));
+            toc.map(async t => await reportEntry(`\t\t\t\t${t.level}: ${t.name}`));
 
-            assetHtmlImage(doc, docName);
-            assetMarkdownImage(doc, docName);
+            await assetHtmlImage(doc, docName);
+            await assetMarkdownImage(doc, docName);
+            if (checkRemotePages) {
+                await assetHtmlLink(doc, docName);
+            }
         } else {
-            reportError(`'${docIndexFile}' referenced '${docName}' but the file does not exist`);
+            await reportError(`'${docIndexFile}' referenced '${docName}' but the file does not exist`);
         }
     } catch (err) {
-        reportError(`'${docIndexFile}' referenced '${docName}' but building TOC failed`, err);
+        await reportError(`'${docIndexFile}' referenced '${docName}' but building TOC failed`, err);
     }
 
     return toc;
@@ -247,7 +253,7 @@ function stripWrapper(markdown, wrapper) {
     return markdown;
 }
 
-function assetHtmlImage(markdown, docPath) {
+async function assetHtmlImage(markdown, docPath) {
     const re = /(<img src="(.*?)")/gm;
 
     let match;
@@ -255,23 +261,28 @@ function assetHtmlImage(markdown, docPath) {
         match = re.exec(markdown);
         if (match && match.length === 3) {
             if (match[2].startsWith('http')) {
-                reportEntry(`\t\t\tRemote Image: '${match[1]}'`);
+                const remoteExists = await checkRemote(match[2]);
+                if (remoteExists) {
+                    await reportEntry(`\t\t\tRemote Image: '${match[2]}'`);
+                } else {
+                    await reportError(`Remote image does not exist: '${match[2]}'`);
+                }
             } else if (match[2].length > 0) {
                 const imgFilename = path.resolve(path.join(path.dirname(docPath), match[2]));
                 if (fs.existsSync(imgFilename)) {
-                    reportEntry(`\t\t\tLocal Image: '${match[2]}'`);
+                    await reportEntry(`\t\t\tLocal Image: '${match[2]}'`);
                 } else {
-                    reportError(`Image file does not exist '${match[2]}' in ${docPath}`);
+                    await reportError(`Image file does not exist '${match[2]}' in ${docPath}`);
                 }
             } else {
-                reportError(`Invalid Image reference: ${match[0]} in ${docPath}`);
+                await reportError(`Invalid Image reference: ${match[0]} in ${docPath}`);
             }
         }
     } while (match);
 }
 
-function assetMarkdownImage(markdown, docPath) {
-    const re = /(!\[(.*?)\]\((.*?)("(.*)")?\))/gm;
+async function assetMarkdownImage(markdown, docPath) {
+    const re = /(!\[(.*?)\]\((.*?)( ".*")?\))/gm;
 
     let match;
     do {
@@ -279,16 +290,21 @@ function assetMarkdownImage(markdown, docPath) {
 
         if (match && (match.length === 4 || match.length === 5)) {
             if (match[3].startsWith('http')) {
-                reportEntry(`\t\t\tRemote Image: '${match[3]}'`);
+                const remoteExists = await checkRemote(match[3]);
+                if (remoteExists) {
+                    await reportEntry(`\t\t\tRemote Image: '${match[3]}'`);
+                } else {
+                    await reportError(`Remote image does not exist: '${match[3]}'`);
+                }
             } else if (match[3].length > 0) {
                 const imgFilename = path.resolve(path.join(path.dirname(docPath), match[3]));
                 if (fs.existsSync(imgFilename)) {
-                    reportEntry(`\t\t\tLocal Image: '${match[3]}'`);
+                    await reportEntry(`\t\t\tLocal Image: '${match[3]}'`);
                 } else {
-                    reportError(`Image file does not exist '${match[2]}' in ${docPath}`);
+                    await reportError(`Image file does not exist '${match[3]}' in ${docPath}`);
                 }
             } else {
-                reportError(`Invalid Image reference: ${match[0]} in ${docPath}`);
+                await reportError(`Invalid Image reference: ${match[0]} in ${docPath}`);
             }
         }
     } while (match);
@@ -296,25 +312,82 @@ function assetMarkdownImage(markdown, docPath) {
     return markdown;
 }
 
-function reportEntry(data) {
-    fs.appendFileSync(reportFile, `${data}\n`);
+async function assetHtmlLink(markdown, docPath) {
+    const re = /\[(.*?)\]\((.*?)\)/gm;
+
+    let match;
+    do {
+        match = re.exec(markdown);
+
+        if (match && match.length === 3) {
+            if (match[2].startsWith('http')) {
+                const remoteExists = await checkRemote(match[2]);
+                if (remoteExists) {
+                    await reportEntry(`\t\t\tRemote Page: '${match[2]}'`);
+                } else {
+                    await reportError(`Remote page does not exist: '${match[2]}'`);
+                }
+            } else if (match[2].length > 0) {
+                const docFilename = path.resolve(path.join(path.dirname(docPath), match[2]));
+                if (!fs.existsSync(docFilename)) {
+                    await reportError(`Local page does not exist '${match[2]}' in ${docPath}`);
+                }
+            } else {
+                await reportError(`Invalid html reference: ${match[0]} in ${docPath}`);
+            }
+        }
+    } while (match);
+
+    return markdown;
 }
 
-function reportError(data, err) {
+async function reportEntry(data) {
+    await fsPromises.appendFile(reportFile, `${data}\n`);
+}
+
+async function reportError(data, err) {
     errorCount++;
 
-    fs.appendFileSync(reportFile, `ERROR: ${data}\n`);
+    await fsPromises.appendFile(reportFile, `ERROR: ${data}\n`);
 
     if (err) {
-        fs.appendFileSync(reportFile, `ERROR: ${err.message}\n`);
+        await fsPromises.appendFile(reportFile, `ERROR: ${err.message}\n`);
     }
 }
 
-const projects = buildProjects('docs');
-
-fs.writeFileSync('projects.json', JSON.stringify(projects, undefined, '\t'));
-
-if (errorCount > 0) {
-    // eslint-disable-next-line no-console
-    console.error(`ERROR: There were ${errorCount} errors found during project build, see ${reportFile} for details.`);
+function webifyPath(p) {
+    return p.replace(/\\/g, '/');
 }
+
+function listDirs(dir) {
+    return fs.readdirSync(dir).filter(f => fs.statSync(path.join(dir, f)).isDirectory());
+}
+
+function sanitizeLink(item) {
+    return item
+        .replace(/^\.?\//, '')
+        .replace(/\.md$/i, '');
+}
+
+async function checkRemote(url) {
+    try {
+        await axios.head(url);
+        return true;
+    } catch (err) {
+        return false;
+    }
+}
+
+async function run() {
+    const projects = await buildProjects('docs');
+
+    await fsPromises.writeFile('projects.json', JSON.stringify(projects, undefined, '\t'));
+
+    if (errorCount > 0) {
+        console.error(`ERROR: There were ${errorCount} errors found during project build, see ${reportFile} for details.`);
+    }
+}
+
+run()
+    .then('Done')
+    .catch((err) => console.error(err));
