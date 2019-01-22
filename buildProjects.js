@@ -1,34 +1,37 @@
-const { existsSync, readdirSync, statSync, readFileSync } = require('fs');
-const { join } = require('path');
-
-const listDirs = dir => readdirSync(dir).filter(f => statSync(join(dir, f)).isDirectory());
-
-const listFiles = dir => statSync(dir).isDirectory()
-    ? Array.prototype.concat(...readdirSync(dir).map(f => listFiles(join(dir, f))))
-    : dir;
-
+const fs = require('fs');
+const path = require('path');
+    
 const webifyPath = (p) => p.replace(/\\/g, '/');
+
+const listDirs = dir => fs.readdirSync(dir).filter(f => fs.statSync(path.join(dir, f)).isDirectory());
 
 const sanitizeLink = item => item
     .replace(/^\.?\//, '')
     .replace(/\.md$/i, '');
 
-const getDocPages = baseDir => {
-    const dirs = listDirs(baseDir);
-    const files = Array.prototype.concat(...dirs.map(dir =>
-        listFiles(`${baseDir}/${dir}`).filter(f => /.md$/i.test(f)).map(file => ({
-            path: webifyPath(file).replace('.md', ''),
-            title: `${webifyPath(dir)} ${webifyPath(file).replace(`docs/${webifyPath(dir)}/`, '').replace('.md', '')}`,
-            markdownSrc: webifyPath(file)
-        }))
-    ));
-    return files;
-};
+const reportFile = 'projects-summary.log';
+let errorCount = 0;
 
 function buildProjects(baseDir) {
+    try {
+        fs.unlinkSync(reportFile);
+    } catch (err) {
+        // Do nothing
+    }
+
+    reportEntry(`Built on: ${new Date().toISOString()}`);
+    reportEntry('');
+
+    reportEntry(`Reading Project Dir: '${baseDir}'`);
+    reportEntry('');
+
     const projects = readProjects(baseDir);
 
     for (let i = 0; i < projects.length; i++) {
+        reportEntry('');
+        reportEntry(`\tProject: '${projects[i].name}'`);
+        reportEntry(`\tFolder: '${projects[i].folder}'`);
+
         buildHome(baseDir, projects[i]);
         buildVersions(baseDir, projects[i]);
     }
@@ -41,7 +44,9 @@ function readProjects(baseDir) {
     const projects = [];
 
     try {
-        const projectFile = readFileSync(projectFileName).toString();
+        reportEntry(`Reading Projects from file '${projectFileName}'`);
+
+        const projectFile = fs.readFileSync(projectFileName).toString();
 
         const re = /\[(.*?)\]\((.*?)\)/g;
 
@@ -57,8 +62,7 @@ function readProjects(baseDir) {
             }
         } while (match);
     } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(`Failed while trying to read the projects file ${projectFileName}`, err.message);
+        reportError(`Failed while trying to read the projects file '${projectFileName}'`, err);
     }
 
     return projects;
@@ -69,8 +73,10 @@ function buildHome(baseDir, project) {
     const homeFile = `${baseDir}/${project.folder}/home.md`;
 
     try {
-        if (existsSync(homeFile)) {
-            const home = readFileSync(homeFile).toString();
+        if (fs.existsSync(homeFile)) {
+            reportEntry(`\tHome File: '${homeFile}'`);
+
+            const home = fs.readFileSync(homeFile).toString();
 
             const descriptionMatch = /^# (.*)$/gm.exec(home);
             let description = '';
@@ -97,10 +103,11 @@ function buildHome(baseDir, project) {
                 description,
                 links
             };
+        } else {
+            reportEntry(`\tHome File: '${homeFile}' does not exist, project will not show on home navigation`);
         }
     } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(`Failed while trying to build the home content for ${project.folder}`, err.message);
+        reportError(`Failed while trying to build the home content for '${project.folder}'`, err);
     }
 
     return versions;
@@ -110,6 +117,9 @@ function buildVersions(baseDir, project) {
     const projectVersions = listDirs(`${baseDir}/${project.folder}/`);
 
     for (let i = 0; i < projectVersions.length; i++) {
+        reportEntry('');
+        reportEntry(`\t\tVersion: '${projectVersions[i]}'`);
+
         project.versions.push({
             version: projectVersions[i],
             pages: buildSingleVersion(baseDir, project.folder, projectVersions[i])
@@ -122,7 +132,8 @@ function buildSingleVersion(baseDir, projectFolder, version) {
     const docIndexFile = `${baseDir}/${projectFolder}/${version}/doc-index.md`;
 
     try {
-        const docIndex = readFileSync(docIndexFile).toString();
+        reportEntry(`\t\tVersion Index: '${docIndexFile}'`);
+        const docIndex = fs.readFileSync(docIndexFile).toString();
 
         const re = /\[(.*)\]\((.*)\)/g;
 
@@ -140,50 +151,60 @@ function buildSingleVersion(baseDir, projectFolder, version) {
                     versions.push({
                         name: match[1],
                         link: `/${baseDir}/${projectFolder}/${version}/${sanitizedLink}`,
-                        toc: extractToc(baseDir, projectFolder, version, match[2], docIndexFile)
+                        toc: extractTocAndValidateAssets(baseDir, projectFolder, version, match[2], docIndexFile)
                     });
                 }
             }
         } while (match);
     } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(`Failed while trying to build the content for ${projectFolder} v${version}`, err.message);
+        reportError(`Failed while trying to build the content for '${projectFolder}' v${version}`, err);
     }
 
     return versions;
 }
 
-function extractToc(baseDir, projectFolder, version, doc, docIndexFile) {
+function extractTocAndValidateAssets(baseDir, projectFolder, version, doc, docIndexFile) {
     // Try and load the markdown for the page and if it exists extract
     // the headers to create a toc
     const toc = [];
 
-    const docName = webifyPath(join(`${baseDir}/${projectFolder}/${version}/`, doc));
+    const docName = webifyPath(path.join(`${baseDir}/${projectFolder}/${version}/`, doc));
 
     try {
-        const doc = readFileSync(docName).toString();
+        if (fs.existsSync(docName)) {
+            reportEntry(`\t\t\tTOC: '${docName}'`);
 
-        // Match all headers e.g.
-        // # Blah blah
-        // ## Blah blah
-        // But not those ending in # which are our custom styles
-        // ## LABEL ##
+            const doc = fs.readFileSync(docName).toString();
 
-        const reHeaders = /^(#+)(.*?)(?<!#)$/gm;
-        let matchHeader;
+            // Match all headers e.g.
+            // # Blah blah
+            // ## Blah blah
+            // But not those ending in # which are our custom styles
+            // ## LABEL ##
 
-        do {
-            matchHeader = reHeaders.exec(doc);
-            if (matchHeader && matchHeader.length === 3) {
-                toc.push({
-                    level: matchHeader[1].length,
-                    name: extractContent(matchHeader[2])
-                });
-            }
-        } while (matchHeader);
+            const reHeaders = /^(#+)(.*?)(?<!#)$/gm;
+            let matchHeader;
+
+            do {
+                matchHeader = reHeaders.exec(doc);
+                if (matchHeader && matchHeader.length === 3) {
+                    toc.push({
+                        level: matchHeader[1].length,
+                        name: extractContent(matchHeader[2])
+                    });
+
+                }
+            } while (matchHeader);
+
+            toc.map(t => reportEntry(`\t\t\t\t${t.level}: ${t.name}`));
+
+            assetHtmlImage(doc, docName);
+            assetMarkdownImage(doc, docName);
+        } else {
+            reportError(`'${docIndexFile}' referenced '${docName}' but the file does not exist`);
+        }
     } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(`${docIndexFile} referenced ${docName} but building TOC failed`, err.message);
+        reportError(`'${docIndexFile}' referenced '${docName}' but building TOC failed`, err);
     }
 
     return toc;
@@ -226,7 +247,74 @@ function stripWrapper(markdown, wrapper) {
     return markdown;
 }
 
-module.exports = {
-    getDocPages,
-    buildProjects
-};
+function assetHtmlImage(markdown, docPath) {
+    const re = /(<img src="(.*?)")/gm;
+
+    let match;
+    do {
+        match = re.exec(markdown);
+        if (match && match.length === 3) {
+            if (match[2].startsWith('http')) {
+                reportEntry(`\t\t\tRemote Image: '${match[1]}'`);
+            } else if (match[2].length > 0) {
+                const imgFilename = path.resolve(path.join(path.dirname(docPath), match[2]));
+                if (fs.existsSync(imgFilename)) {
+                    reportEntry(`\t\t\tLocal Image: '${match[2]}'`);
+                } else {
+                    reportError(`Image file does not exist '${match[2]}' in ${docPath}`);
+                }
+            } else {
+                reportError(`Invalid Image reference: ${match[0]} in ${docPath}`);
+            }
+        }
+    } while (match);
+}
+
+function assetMarkdownImage(markdown, docPath) {
+    const re = /(!\[(.*?)\]\((.*?)("(.*)")?\))/gm;
+
+    let match;
+    do {
+        match = re.exec(markdown);
+
+        if (match && (match.length === 4 || match.length === 5)) {
+            if (match[3].startsWith('http')) {
+                reportEntry(`\t\t\tRemote Image: '${match[3]}'`);
+            } else if (match[3].length > 0) {
+                const imgFilename = path.resolve(path.join(path.dirname(docPath), match[3]));
+                if (fs.existsSync(imgFilename)) {
+                    reportEntry(`\t\t\tLocal Image: '${match[3]}'`);
+                } else {
+                    reportError(`Image file does not exist '${match[2]}' in ${docPath}`);
+                }
+            } else {
+                reportError(`Invalid Image reference: ${match[0]} in ${docPath}`);
+            }
+        }
+    } while (match);
+
+    return markdown;
+}
+
+function reportEntry(data) {
+    fs.appendFileSync(reportFile, `${data}\n`);
+}
+
+function reportError(data, err) {
+    errorCount++;
+
+    fs.appendFileSync(reportFile, `ERROR: ${data}\n`);
+
+    if (err) {
+        fs.appendFileSync(reportFile, `ERROR: ${err.message}\n`);
+    }
+}
+
+const projects = buildProjects('docs');
+
+fs.writeFileSync('projects.json', JSON.stringify(projects, undefined, '\t'));
+
+if (errorCount > 0) {
+    // eslint-disable-next-line no-console
+    console.error(`ERROR: There were ${errorCount} errors found during project build, see ${reportFile} for details.`);
+}

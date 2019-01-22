@@ -26,3 +26,6 @@ node_modules
 /src/searchData
 /api/dist
 /api/src/data/config.json
+/public/assets/docs
+/projects.json
+/projects-summary.txt

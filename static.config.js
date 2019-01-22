@@ -1,12 +1,12 @@
 import chokidar from 'chokidar';
-import fs from 'fs-extra';
+import fs from 'fs';
 import path from 'path';
 import React, { Component } from 'react';
 import { reloadRoutes } from 'react-static/node';
 import { ServerStyleSheet } from 'styled-components';
-import { buildProjects, getDocPages } from './buildProjects';
+import projects from './projects.json';
 import HotJar from './src/components/atoms/HotJar';
-import { siteName, hotJarId, siteRoot } from './src/config.json';
+import { hotJarId, siteName, siteRoot } from './src/config.json';
 
 const docsFolder = 'docs';
 
@@ -17,9 +17,6 @@ const webifyPath = (p) => p.replace(/\\/g, '/');
 // These are the documentation pages. They can either use the `markdownSrc` to point
 // to a markdown file, or they can use `component` to point to a react component
 const docPages = getDocPages(docsFolder);
-
-// This is the complete tree of all the documents with meta data like tocs
-const projects = buildProjects(docsFolder);
 
 // No need to touch any of this, unless you want to.
 export default {
@@ -98,10 +95,32 @@ export default {
     }
 };
 
+function listDirs(dir) {
+    return fs.readdirSync(dir).filter(f => fs.statSync(path.join(dir, f)).isDirectory());
+}
+
+function listFiles(dir) {
+    return fs.statSync(dir).isDirectory()
+    ? Array.prototype.concat(...fs.readdirSync(dir).map(f => listFiles(path.join(dir, f))))
+    : dir;
+}
+
+function getDocPages(baseDir) {
+    const dirs = listDirs(baseDir);
+    const files = Array.prototype.concat(...dirs.map(dir =>
+        listFiles(`${baseDir}/${dir}`).filter(f => /.md$/i.test(f)).map(file => ({
+            path: webifyPath(file).replace('.md', ''),
+            title: `${webifyPath(dir)} ${webifyPath(file).replace(`docs/${webifyPath(dir)}/`, '').replace('.md', '')}`,
+            markdownSrc: webifyPath(file)
+        }))
+    ));
+    return files;
+}
+
 function processMarkdown(markdownSrc) {
     let markdown = fs.readFileSync(markdownSrc).toString();
     markdown = assetMarkdownImage(markdown, markdownSrc);
-    markdown = assetImg(markdown, markdownSrc);
+    markdown = assetHtmlImage(markdown, markdownSrc);
     markdown = replaceRootUrls(markdown);
     return markdown;
 }
@@ -110,7 +129,7 @@ function replaceRootUrls(markdown) {
     return markdown.replace(/root:\/\/(.*?)(.md)/g, `/${docsFolder}/$1`);
 }
 
-function assetImg(markdown, docPath) {
+function assetHtmlImage(markdown, docPath) {
     const re = /(<img src="(.*?)")/gm;
 
     let match;
@@ -123,8 +142,7 @@ function assetImg(markdown, docPath) {
                     markdown = markdown.replace(match[1], `<img src="/assets/${webifyPath(path.relative('.', imgFilename))}"`);
                 }
             } catch (err) {
-                // eslint-disable-next-line no-console
-                console.error(`Missing image ${match[1]} in ${docPath}`, err);
+                // Do Nothing
             }
         }
     } while (match);
@@ -133,21 +151,20 @@ function assetImg(markdown, docPath) {
 }
 
 function assetMarkdownImage(markdown, docPath) {
-    const re = /(!\[(.*?)\]\((.*?)\))/gm;
+    const re = /(!\[(.*?)\]\((.*?)("(.*)")?\))/gm;
 
     let match;
     do {
         match = re.exec(markdown);
 
-        if (match && match.length === 4) {
+        if (match && (match.length === 4 || match.length === 5)) {
             try {
                 if (!match[3].startsWith('http') && match[3].length > 0) {
                     const imgFilename = path.resolve(path.join(path.dirname(docPath), match[3]));
                     markdown = markdown.replace(match[1], `![${match[2]}](/assets/${webifyPath(path.relative('.', imgFilename))})`);
                 }
             } catch (err) {
-                // eslint-disable-next-line no-console
-                console.error(`Missing image ${match[3]} in ${docPath}`);
+                // Do Nothing
             }
         }
     } while (match);

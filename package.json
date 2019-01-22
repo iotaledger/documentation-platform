@@ -10,9 +10,10 @@
     "license": "Apache-2.0",
     "scripts": {
         "build-doc-assets": "node buildAssets",
+        "build-projects": "node buildProjects",
         "start": "react-static start",
         "stage": "react-static build --staging",
-        "build": "npm run index && npm run build-doc-assets && react-static build",
+        "build": "npm run index && npm run build-projects && npm run build-doc-assets && react-static build",
         "serve": "serve dist -p 3000",
         "index": "node buildSearchIndex.js docs src/searchData/index.json src/searchData/corpus.json",
         "lint": "eslint src/**/*.js",

@@ -63,10 +63,20 @@ const indexDocs = callback => {
 
 indexDocs(lunrIndex => {
     if (indexFile) {
-        fs.writeFile(indexFile, JSON.stringify(lunrIndex), 'utf8', err => (err ? console.log(err) : null));
+        const dirName = path.dirname(indexFile);
+        if (!fs.existsSync(dirName)) {
+            fs.mkdirSync(dirName);
+        }
+        
+        fs.writeFileSync(indexFile, JSON.stringify(lunrIndex), 'utf8', err => (err ? console.error(err) : null));
     }
 
     if (corpusFile) {
-        fs.writeFile(corpusFile, JSON.stringify(corpus), 'utf8', err => (err ? console.log(err) : null));
+        const dirName = path.dirname(corpusFile);
+        if (!fs.existsSync(dirName)) {
+            fs.mkdirSync(dirName);
+        }
+
+        fs.writeFileSync(corpusFile, JSON.stringify(corpus), 'utf8', err => (err ? console.error(err) : null));
     }
 });
