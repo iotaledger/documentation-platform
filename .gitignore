@@ -20,6 +20,7 @@ node_modules
 .editorconfig
 .prettierrc
 
+/docs
 /dist
 /src/config.json
 /api/dist
