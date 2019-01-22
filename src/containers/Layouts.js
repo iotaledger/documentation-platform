@@ -130,17 +130,15 @@ justify-content: center;
 `;
 
 const SearchPageLayout = styled.div`
-  margin: 80px;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  margin: 72px auto;
+  max-width: 820px;
   .middle-column {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
   ${media.tabletDown`
-    margin: 40px;
+    margin: 32px;
   `};
 `;
 

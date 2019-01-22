@@ -39,6 +39,8 @@ const indexDocs = callback => {
             const docName = webifyPath(fileLocation).match(/[^\/]+$/)[0].replace('.md', '');
 
             let docTitle = $('h1').first().text();
+            let docSummary = $('p').first().text().substr(0, 160);
+
             // set the docTitle
             if (docTitle.trim() === '') {
                 docTitle = docName;
@@ -46,7 +48,8 @@ const indexDocs = callback => {
 
             corpus.push({
                 id: webifyPath(fileLocation).replace('.md', ''),
-                name: docTitle
+                name: docTitle,
+                summary: docSummary
             });
 
             const indexDoc = {
