@@ -337,8 +337,8 @@ async function assetHtmlLink(markdown, docPath) {
                 if (!fs.existsSync(docFilename)) {
                     await reportError(`Root page does not exist '${match[2]}' in '${docPath}'`);
                 }
-            } else if (match[2].startsWith('#')) {
-                // Anchor skip
+            } else if (match[2].startsWith('#') || match[0].startsWith('!')) {
+                // Anchor skip and images skip
             } else if (match[2].length > 0) {
                 let localUrl = match[2].replace(/#.*$/, '');
                 const docFilename = path.resolve(path.join(path.dirname(docPath), localUrl));
@@ -346,9 +346,7 @@ async function assetHtmlLink(markdown, docPath) {
                     await reportError(`Local page does not exist '${match[2]}' in '${docPath}'`);
                 }
             } else {
-                if (!match[0].startsWith('!')) { // Ignore images
-                    await reportError(`Invalid html reference: ${match[0]} in '${docPath}'`);
-                }
+                await reportError(`Invalid html reference: ${match[0]} in '${docPath}'`);
             }
         }
     } while (match);

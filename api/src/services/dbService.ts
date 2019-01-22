@@ -106,4 +106,23 @@ export abstract class DbService<T> {
             Item: item
         }).promise();
     }
+
+    /**
+     * Get all the items.
+     */
+    public async getAll(): Promise<T[]> {
+        try {
+            const fullTableName = `${this._config.dbTablePrefix}${this._tableName}`;
+
+            const docClient = DbHelper.createDocClient(this._config);
+
+            const response = await docClient.scan({
+                TableName: fullTableName
+            }).promise();
+
+            return <T[]>response.Items;
+        } catch (err) {
+            return [];
+        }
+    }
 }
