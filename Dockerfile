@@ -1,4 +1,5 @@
 FROM node:10.13.0-alpine
+RUN apk --no-cache add git
 
 # Working DIR
 WORKDIR /usr/src/app
