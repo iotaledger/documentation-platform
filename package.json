@@ -17,7 +17,7 @@
         "serve": "serve dist -p 3000",
         "index": "node buildSearchIndex.js docs src/searchData/index.json src/searchData/corpus.json",
         "lint": "eslint src/**/*.js",
-        "deploy-dev": "cd dist && now --local-config=../now.json && now alias --local-config=../now.json"
+        "deploy-staging": "cd dist && now --local-config=../now.json && now alias --local-config=../now.json"
     },
     "dependencies": {
         "axios": "^0.18.0",
