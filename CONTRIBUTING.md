@@ -1,4 +1,4 @@
-# Contributing to IOTA Documentation
+# Contribute to IOTA Documentation
 
 We encourage everyone with knowledge of IOTA to contribute to our documentation. To discuss the documentation, join our #Documentation channel on [Discord](https://discordapp.com/invite/fNGZXvh).
 
@@ -6,9 +6,9 @@ We encourage everyone with knowledge of IOTA to contribute to our documentation.
 2. Filter the issues by the `Help Wanted` label
 3. Pick something that you'd like to work on
 4. Comment on the issue that you'd like to work on
-5. [Set up GitHub](#setting-up-github)
+5. [Set up GitHub](#set-up-github)
 6. Start writing your content using our [writing guide](#writing-guide)
-7. [Push your content to our GitHub repository](#pushing-content-to-our-github-repository)
+7. [Push your content to our GitHub repository](#push-content-to-our-github-repository)
 
 Thanks! :heart:
 
@@ -57,12 +57,16 @@ We always write in US English.
 | :----| :-------|
 |Use sentence case for titles. Do not use title case.|'The distributed ledger', not 'The Distributed Ledger'|
 |Article titles in the 'Concepts' sections should always be nouns|'Tip selection' not 'What is tip selection?' or 'Understanding tip selection'|
-|Article titles in the 'How to guides' section should always start with an infinitive| 'Run the IRI' not 'Running the IRI'|
+|Article titles in the 'How-to guides' section should always start with an infinitive| 'Run the IRI' not 'Running the IRI'|
 |Article titles in the 'References' section should always be plural nouns| 'IRI configuration options' not 'IRI configuration' or 'Configuring the IRI'|
 
 ### First paragraph
 
-Always embolded the first paragraph of an article. This paragraph should explain the contents of the article in as few words as possible.
+Always embolded the first paragraph of an article. This paragraph should explain the main purpose or point of the article in as few words as possible.
+
+Make sure you answer the following questions:
+* What is the article about?
+* Why do users care about or need the information in the article?
 
 ### How-to guides
 
@@ -114,7 +118,7 @@ Concept articles must not include task information or reference information.
 
 When adding code examples and snippets into an article, make sure you format it accordingly and add language identifiers for correct code highlighting. See [Creating and highlighting code blocks](https://help.github.com/articles/creating-and-highlighting-code-blocks/) for more information.
 
-## Setting up GitHub
+## Set up GitHub
 
 Our documentation is hosted on GitHub, which is a version control tool. To send us your content, you must use Git or GitHub.
 
@@ -136,7 +140,7 @@ If you already have a GitHub account and Git is set up on your computer, go stra
     ```
 Now, your documentation directory will contain all the documentations files.
 
-### Creating a new branch
+### Create a new branch
 
 Branches help make contributing seamless. Make sure each branch only addresses one article to make adding the changes to the documentation repository as easy as possible. The following types of contribution are appropriate for a new branch:
 
@@ -156,7 +160,7 @@ Branches help make contributing seamless. Make sure each branch only addresses o
 
 Please follow our [writing guide](#writing-guide) when you write and edit articles.
 
-## Pushing content to our GitHub repository
+## Push content to our GitHub repository
 
 1. After writing or editing content in your local copy of the branch, do the following in the command prompt:
     ```cmd
