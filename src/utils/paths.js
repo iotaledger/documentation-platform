@@ -1,10 +1,15 @@
-export function sanitizeHashId(id) {
+export function sanitizeHashId(id, skipLowerCase) {
     // make lower case
     // de-escape spaces
     // replace spaces with hyphens
-    return id ? id
-        .toLowerCase()
+    if (!id) {
+        return id;
+    }
+    if (!skipLowerCase) {
+        id = id.toLowerCase();
+    }
+    return id
         .replace(/\\ /g, ' ')
-        .replace(/ /g, '-') : undefined;
+        .replace(/ /g, '-');
 }
 

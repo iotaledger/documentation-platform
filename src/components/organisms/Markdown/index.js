@@ -295,7 +295,7 @@ class Markdown extends PureComponent {
             } else {
                 // For local links remove .md extension
                 // and also de-escape space characters
-                localProps.href = sanitizeHashId(localProps.href).replace(/.md$/i, '');
+                localProps.href = sanitizeHashId(localProps.href, true).replace(/.md$/i, '');
             }
         }
         return (

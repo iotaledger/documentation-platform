@@ -94,7 +94,7 @@ class Search extends React.Component {
         let searchResults;
         if (this.state.query) {
             const idx = lunr.Index.load(json);
-            const results = idx.search(this.state.query);
+            const results = idx.search(`*${this.state.query}*`);
             const documents = this.buildDocuments();
             searchResults = results.map(result => documents[result.ref]);
         }
