@@ -4,7 +4,8 @@ import React from 'react';
 
 class FeedbackForm extends React.Component {
     static propTypes = {
-        onSubmit: PropTypes.func
+        onClose: PropTypes.func,
+        onSubmit: PropTypes.func,
     };
 
     constructor(props) {
@@ -15,8 +16,16 @@ class FeedbackForm extends React.Component {
             comments: ''
         };
 
+        this.handleClose = this.handleClose.bind(this);
         this.handleOnSubmit = this.handleOnSubmit.bind(this);
         this.handleYesNo = this.handleWasItUseful.bind(this);
+    }
+
+    handleClose() {
+        const { onClose } = this.props;
+        if (onClose) {
+            onClose();
+        }
     }
 
     handleOnSubmit(e) {
@@ -41,6 +50,11 @@ class FeedbackForm extends React.Component {
                 <form className="feedback-form">
                     <h1>Was this page useful?</h1>
                     <h2>Let us know...</h2>
+                    <button
+                        className="feedback-form-close"
+                        onClick={this.handleClose}>
+                        <i className="icon icon-cross"></i>
+                    </button>
                     <div>
                         <div
                             className={

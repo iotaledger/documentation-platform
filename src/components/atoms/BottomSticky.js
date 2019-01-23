@@ -29,7 +29,10 @@ class BottomSticky extends React.PureComponent {
         document.addEventListener('scroll', this.handleBottomStop);
         window.addEventListener('resize', this.handleBottomStop);
 
-        this.handleBottomStop();
+        // We must set the initial position on next redraw cycle
+        // otherwise the component gets the initial position
+        // wrong based on the parent bottom until first scroll
+        setTimeout(() => this.handleBottomStop(), 0);
     }
 
     componentWillUnmount() {
@@ -50,7 +53,6 @@ class BottomSticky extends React.PureComponent {
         const top = offset - thisRect.height - this.props.bottomOffset;
 
         thisDom.style.top = `${Math.floor(top)}px`;
-
     }
 
     render() {

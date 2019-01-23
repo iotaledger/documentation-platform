@@ -1,3 +1,4 @@
+import BottomSticky from '../components/atoms/BottomSticky';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
@@ -19,7 +20,7 @@ import { createPageTableOfContents, createProjectLinks, getProjectTitle, getProj
 import { ProjectsPropTypes } from '../utils/propTypes.js';
 import { extractSearchQuery } from '../utils/search';
 import Container from './Container';
-import { DocPageLayout } from './Layouts';
+import { DocPageLayout, TabletHidden } from './Layouts';
 
 class Doc extends React.Component {
     static propTypes = {
@@ -123,13 +124,15 @@ class Doc extends React.Component {
                         <Markdown source={this.props.markdown} query={extractSearchQuery(this.props.location)} />
                     </section>
                     <section className="right-column">
-                        <ScrollInContainer>
+                        <ScrollInContainer bottomOffset={200}>
                             <TableOfContents items={this.state.pageTableOfContents} title="Sections On This Page" />
-                            <div style={{ marginTop: '20px', marginLeft: '10px' }}>
-                                <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)} />
-                            </div>
                         </ScrollInContainer>
                     </section>
+                    <BottomSticky zIndex={10} horizontalAlign='right'>
+                        <TabletHidden>
+                            <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)} />
+                        </TabletHidden>
+                    </BottomSticky>
                 </DocPageLayout>
                 <Navigator
                     projects={this.props.projects}

@@ -64,9 +64,9 @@ class Feedback extends React.Component {
                     isExpanded={this.state.isExpanded}
                     showButtonContent={this.state.showButtonContent}
                     wasItUseful={this.state.wasItUseful} />
-                <FeedbackOverlay onClose={() => this.handleOnExpand(false)} isExpanded={this.state.showForm}>
+                <FeedbackOverlay isExpanded={this.state.showForm}>
                     {this.state.showForm && (
-                        <FeedbackForm onSubmit={this.handleOnSubmit} />
+                        <FeedbackForm onClose={() => this.handleOnExpand(false)} onSubmit={this.handleOnSubmit} />
                     )}
                 </FeedbackOverlay>
             </React.Fragment>
