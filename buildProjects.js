@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const fs = require('fs');
 const fsPromises = require('fs').promises;
 const path = require('path');
@@ -205,11 +206,15 @@ async function extractTocAndValidateAssets(baseDir, projectFolder, version, doc,
 
             toc.map(async t => await reportEntry(`\t\t\t\t${t.level}: ${t.name}`));
 
+            if (!doc.startsWith('# ')) {
+                await reportError(`'${docName}' does not start with a level 1 heading`);
+            }
+
             await assetHtmlImage(doc, docName);
             await assetMarkdownImage(doc, docName);
-            if (checkRemotePages) {
-                await assetHtmlLink(doc, docName);
-            }
+            await htmlLinks(doc, docName);
+            await markdownLinks(doc, docName);
+            await separators(doc, docName);
         } else {
             await reportError(`'${docIndexFile}' referenced '${docName}' but the file does not exist`);
         }
@@ -316,7 +321,7 @@ async function assetMarkdownImage(markdown, docPath) {
     return markdown;
 }
 
-async function assetHtmlLink(markdown, docPath) {
+async function markdownLinks(markdown, docPath) {
     const re = /(?:!)?\[(.*?)\]\((.*?)\)/gm;
 
     let match;
@@ -354,6 +359,35 @@ async function assetHtmlLink(markdown, docPath) {
     return markdown;
 }
 
+async function htmlLinks(markdown, docPath) {
+    const re = /<a\s+href="(.*?)"/gm;
+
+    let match;
+    do {
+        match = re.exec(markdown);
+
+        if (match && match.length === 2) {
+            if (!match[1].startsWith('#')) {
+                await reportError(`HTML Links should be converted to Markdown: '${match[1]}' in '${docPath}'`);
+            }
+        }
+    } while (match);
+
+    return markdown;
+}
+
+async function separators(markdown, docPath) {
+    const re = /<hr/gmi;
+
+    const match = re.exec(markdown);
+
+    if (match && match.length === 1) {
+        await reportError(`HTML Separators <hr> should be converted to Markdown ---: in '${docPath}'`);
+    }
+
+    return markdown;
+}
+
 async function reportEntry(data) {
     await fsPromises.appendFile(reportFile, `${data}\n`);
 }
@@ -387,13 +421,15 @@ function sanitizeLink(item) {
 }
 
 async function checkRemote(url) {
-    try {
-        await axios.head(url);
-    } catch (err) {
-        if (err.message.indexOf('404') >= 0) {
-            return 'Not found';
-        } else if (err.message.indexOf('409') < 0) {
-            return err.message;
+    if (checkRemotePages) {
+        try {
+            await axios.head(url);
+        } catch (err) {
+            if (err.message.indexOf('404') >= 0) {
+                return 'Not found';
+            } else if (err.message.indexOf('409') < 0) {
+                return err.message;
+            }
         }
     }
 }
