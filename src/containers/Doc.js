@@ -1,8 +1,8 @@
-import BottomSticky from '../components/atoms/BottomSticky';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { Head, withRouteData, withRouter, withSiteData } from 'react-static';
+import BottomSticky from '../components/atoms/BottomSticky';
 import DropSelector from '../components/atoms/DropSelector';
 import ScrollInContainer from '../components/atoms/ScrollInContainer';
 import Feedback from '../components/molecules/Feedback';
@@ -18,7 +18,7 @@ import { submitFeedback } from '../utils/api';
 import { localStorageSet } from '../utils/localStorage';
 import { createPageTableOfContents, createProjectLinks, getProjectTitle, getProjectVersionPagesUrl, getVersionsUrl, parseProjectUrl, replaceVersion } from '../utils/projects';
 import { ProjectsPropTypes } from '../utils/propTypes.js';
-import { extractSearchQuery } from '../utils/search';
+import { extractSearchQuery, initCorpusIndex } from '../utils/search';
 import Container from './Container';
 import { DocPageLayout, TabletHidden } from './Layouts';
 
@@ -74,6 +74,9 @@ class Doc extends React.Component {
         // We must store last path in here as when we create react-static
         // there is no other way of getting where we were for 404 logging
         localStorageSet('lastDocPath', this.props.location.pathname);
+
+        // Trigger the search index load here so a search is quicker
+        initCorpusIndex();
     }
 
     handleBurgerClick() {

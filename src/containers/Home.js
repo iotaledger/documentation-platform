@@ -16,6 +16,7 @@ import { submitFeedback } from '../utils/api';
 import { localStorageSet } from '../utils/localStorage';
 import { createProjectLinks, createProjectTopics } from '../utils/projects';
 import { ProjectsPropTypes } from '../utils/propTypes.js';
+import { initCorpusIndex } from '../utils/search';
 import Container from './Container';
 import { HomePageLayout, TabletHidden } from './Layouts';
 
@@ -42,6 +43,9 @@ class Home extends React.Component {
         // We must store last path in here as when we create react-static
         // there is no other way of getting where we were for 404 logging
         localStorageSet('lastDocPath', '/home/');
+
+        // Trigger the search index load here so a search is quicker
+        initCorpusIndex();
     }
 
     handleBurgerClick() {

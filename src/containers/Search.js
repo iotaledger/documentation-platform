@@ -10,12 +10,10 @@ import Pagination from '../components/molecules/Pagination';
 import SearchResult from '../components/molecules/SearchResult';
 import SideMenu from '../components/molecules/SideMenu';
 import StickyHeader from '../components/organisms/StickyHeader';
-import corpus from '../searchData/corpus.json';
-import json from '../searchData/index.json';
 import { submitFeedback } from '../utils/api';
 import { localStorageSet } from '../utils/localStorage';
 import { ProjectsPropTypes } from '../utils/propTypes.js';
-import { extractSearchQuery } from '../utils/search';
+import { extractSearchQuery, initCorpusIndex } from '../utils/search';
 import Container from './Container';
 import { SearchPageLayout, TabletHidden } from './Layouts';
 
@@ -46,6 +44,8 @@ class Search extends React.Component {
     }
 
     componentDidMount() {
+        this.corpusIndex = initCorpusIndex();
+
         this.search();
         // We must store last path in here as when we create react-static
         // there is no other way of getting where we were for 404 logging
@@ -82,21 +82,12 @@ class Search extends React.Component {
         }
     }
 
-    buildDocuments() {
-        const documents = corpus.reduce((memo, doc) => {
-            memo[doc.id] = doc;
-            return memo;
-        }, {});
-        return documents;
-    }
-
     search() {
         let searchResults;
         if (this.state.query) {
-            const idx = lunr.Index.load(json);
+            const idx = lunr.Index.load(this.corpusIndex.index);
             const results = idx.search(`*${this.state.query}*`);
-            const documents = this.buildDocuments();
-            searchResults = results.map(result => documents[result.ref]);
+            searchResults = results.map(result => this.corpusIndex.documents[result.ref]);
         }
 
         if (searchResults && searchResults.length > 0) {
