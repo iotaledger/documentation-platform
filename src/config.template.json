@@ -2,5 +2,6 @@
   "siteName": "IOTA Documentation",
   "siteRoot": "SITE_ROOT",
   "apiEndpoint": "API_ENDPOINT",
-  "hotJarId": "HOT_JAR_ID"
+  "hotJarId": "HOT_JAR_ID",
+  "googleAnalyticsId": "GOOGLE_TAG_ID"
 }

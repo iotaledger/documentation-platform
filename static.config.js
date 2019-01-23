@@ -5,8 +5,9 @@ import React, { Component } from 'react';
 import { reloadRoutes } from 'react-static/node';
 import { ServerStyleSheet } from 'styled-components';
 import projects from './projects.json';
+import GoogleAnalytics from './src/components/atoms/GoogleAnalytics';
 import HotJar from './src/components/atoms/HotJar';
-import { hotJarId, siteName, siteRoot } from './src/config.json';
+import { googleAnalyticsId, hotJarId, siteName, siteRoot } from './src/config.json';
 
 const docsFolder = 'docs';
 
@@ -85,9 +86,8 @@ export default {
                     </Head>
                     <Body>
                         {children}
-                        {hotJarId && (
-                            <HotJar id={hotJarId} />
-                        )}
+                        <HotJar id={hotJarId} />
+                        <GoogleAnalytics id={googleAnalyticsId} />
                     </Body>
                 </Html>
             );

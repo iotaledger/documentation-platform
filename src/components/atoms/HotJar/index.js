@@ -7,7 +7,11 @@ class HotJar extends React.PureComponent {
     };
 
     render() {
-		const src = `(function(h,o,t,j,a,r){
+        if (!this.props.id) {
+            return null;
+        }
+
+        const src = `(function(h,o,t,j,a,r){
             h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
             h._hjSettings={hjid:${this.props.id},hjsv:6};
             a=o.getElementsByTagName('head')[0];
