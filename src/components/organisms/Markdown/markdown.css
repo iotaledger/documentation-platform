@@ -90,6 +90,11 @@ code, pre {
 .markdown__wrapper hr {
   border-top: 3px solid #f3f2f1;
 }
+
+.markdown__wrapper a {
+  word-break: break-all;
+  word-break: break-word;
+}
  
 .search-keyword {
   background-color: #cdbfe4; /* lighten($blueberry, 40%); */
