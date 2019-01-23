@@ -19,8 +19,6 @@ code, pre {
   font-size: 0.92rem;
 }
 
-
-
 .markdown-code pre {
   line-height: 2rem;
 }
@@ -94,8 +92,21 @@ code, pre {
 .markdown__wrapper a {
   word-break: break-all;
   word-break: break-word;
+  color: #4f4f4f;
+  text-decoration: underline !important;
+  text-decoration-color: #1e9a93 !important;
 }
- 
+
+.markdown__wrapper a:hover {
+  color: #1e9a93;
+  text-decoration-color: #1e9a93 !important;
+}
+
+.markdown__wrapper a:visited {
+  color: #603f98;
+  text-decoration-color: #603f98 !important;
+}
+
 .search-keyword {
   background-color: #cdbfe4; /* lighten($blueberry, 40%); */
 }

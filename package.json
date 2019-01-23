@@ -19,6 +19,9 @@
         "lint": "eslint src/**/*.js",
         "deploy-staging": "cd dist && now --local-config=../now.json && now alias --local-config=../now.json"
     },
+    "engines": {
+        "node": "10.x.x"
+    },
     "dependencies": {
         "axios": "^0.18.0",
         "cheerio": "^1.0.0-rc.2",
