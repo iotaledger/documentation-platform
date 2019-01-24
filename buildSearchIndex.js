@@ -30,39 +30,36 @@ const indexDocs = callback => {
         this.field('docTitle', { boost: 10 });
         this.field('docBody', { boost: 5 });
 
-        files
-            .filter(f => /.md$/i.test(f))
-            .filter(f => !/doc-index/i.test(f))
-            .forEach((fileLocation, index) => {
-                const file = fs.readFileSync(fileLocation, 'utf8');
-                const md = require('markdown-it')();
-                const renderedHtml = md.render(file);
-                const $ = cheerio.load(renderedHtml);
+        files.filter(f => /.md$/i.test(f)).forEach((fileLocation, index) => {
+            const file = fs.readFileSync(fileLocation, 'utf8');
+            const md = require('markdown-it')();
+            const renderedHtml = md.render(file);
+            const $ = cheerio.load(renderedHtml);
 
-                const docName = webifyPath(fileLocation).match(/[^\/]+$/)[0].replace('.md', '');
+            const docName = webifyPath(fileLocation).match(/[^\/]+$/)[0].replace('.md', '');
 
-                let docTitle = $('h1').first().text();
-                let docSummary = $('p').first().text().substr(0, 160);
+            let docTitle = $('h1').first().text();
+            let docSummary = $('p').first().text().substr(0, 160);
 
-                // set the docTitle
-                if (docTitle.trim() === '') {
-                    docTitle = docName;
-                }
+            // set the docTitle
+            if (docTitle.trim() === '') {
+                docTitle = docName;
+            }
 
-                corpus.push({
-                    id: webifyPath(fileLocation).replace('.md', ''),
-                    name: docTitle,
-                    summary: docSummary
-                });
+            corpus.push({
+                id: webifyPath(fileLocation).replace('.md', ''),
+                name: docTitle,
+                summary: docSummary
+            });
 
-                const indexDoc = {
-                    docTitle,
-                    docBody: $.html(),
-                    id: webifyPath(fileLocation).replace('.md', '')
-                };
+            const indexDoc = {
+                docTitle,
+                docBody: $.html(),
+                id: webifyPath(fileLocation).replace('.md', '')
+            };
 
-                this.add(indexDoc);
-            }, this);
+            this.add(indexDoc);
+        }, this);
     });
     callback(lunrIndex);
 };
@@ -73,7 +70,7 @@ indexDocs(lunrIndex => {
         if (!fs.existsSync(dirName)) {
             fs.mkdirSync(dirName);
         }
-
+        
         fs.writeFileSync(indexFile, JSON.stringify(lunrIndex), 'utf8', err => (err ? console.error(err) : null));
     }
 
