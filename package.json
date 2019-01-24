@@ -1,58 +1,61 @@
 {
-  "name": "documentation",
-  "version": "0.0.2",
-  "description": "IOTA Documentation",
-  "keywords": [
-    "iota",
-    "docs",
-    "documentation"
-  ],
-  "license": "Apache-2.0",
-  "scripts": {
-    "build-doc-assets": "node buildAssets",
-    "build-projects": "node buildProjects",
-    "start": "react-static start",
-    "stage": "react-static build --staging",
-    "build": "npm run index && npm run build-projects && npm run build-doc-assets && react-static build",
-    "serve": "serve dist -p 3000",
-    "index": "node buildSearchIndex.js docs src/searchData/corpus.json",
-    "lint": "eslint src/**/*.js",
-    "deploy-staging": "cd dist && now --local-config=../now.json && now alias --local-config=../now.json"
-  },
-  "engines": {
-    "node": "10.x.x"
-  },
-  "dependencies": {
-    "axios": "^0.18.0",
-    "cheerio": "^1.0.0-rc.2",
-    "classnames": "^2.2.6",
-    "emoji-dictionary": "^1.0.9",
-    "fuse.js": "^3.3.0",
-    "iota-css-theme": "iotaledger/iota-css-theme",
-    "markdown-it": "^8.4.2",
-    "nprogress": "^0.2.0",
-    "parallax-js": "^3.1.0",
-    "prismjs": "^1.15.0",
-    "react": "^16.0.0",
-    "react-click-outside": "^3.0.1",
-    "react-dom": "^16.0.0",
-    "react-markdown": "^4.0.4",
-    "react-router": "^4.2.0",
-    "react-router-prop-types": "^1.0.4",
-    "react-static": "^5.9.8",
-    "react-style-proptype": "^3.2.2",
-    "reprism": "^0.0.11",
-    "styled-components": "^4.1.3"
-  },
-  "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "babel-plugin-styled-components": "^1.10.0",
-    "eslint": "^5.10.0",
-    "eslint-config-react-tools": "1.x.x",
-    "eslint-plugin-react": "^7.12.2",
-    "express": "^4.16.4",
-    "mkdirp": "^0.5.1",
-    "rimraf": "^2.6.3",
-    "serve": "^10.0.2"
-  }
+    "name": "documentation",
+    "version": "0.0.2",
+    "description": "IOTA Documentation",
+    "keywords": [
+        "iota",
+        "docs",
+        "documentation"
+    ],
+    "license": "Apache-2.0",
+    "scripts": {
+        "build-projects": "node buildProjects docs",
+        "build-search-index": "node buildSearchIndex projects.json src/searchData/corpus.json src/searchData/index.json",
+        "build-doc-assets": "node buildAssets projects.json public/assets/docs",
+        "start": "react-static start",
+        "production": "react-static build",
+        "build": "run-s build-projects build-search-index build-doc-assets production",
+        "serve": "serve dist -p 3000",
+        "lint": "eslint src/**/*.js",
+        "deploy-staging": "cd dist && now --local-config=../now.json && now alias --local-config=../now.json"
+    },
+    "engines": {
+        "node": "10.x.x"
+    },
+    "dependencies": {
+        "axios": "^0.18.0",
+        "cheerio": "^1.0.0-rc.2",
+        "classnames": "^2.2.6",
+        "emoji-dictionary": "^1.0.9",
+        "iota-css-theme": "iotaledger/iota-css-theme",
+        "lunr": "^2.3.5",
+        "markdown-it": "^8.4.2",
+        "nprogress": "^0.2.0",
+        "parallax-js": "^3.1.0",
+        "prismjs": "^1.15.0",
+        "react": "^16.0.0",
+        "react-click-outside": "^3.0.1",
+        "react-dom": "^16.0.0",
+        "react-markdown": "^4.0.4",
+        "react-router": "^4.2.0",
+        "react-router-prop-types": "^1.0.4",
+        "react-static": "^5.9.8",
+        "react-style-proptype": "^3.2.2",
+        "reprism": "^0.0.11",
+        "styled-components": "^4.1.3"
+    },
+    "devDependencies": {
+        "babel-eslint": "^10.0.1",
+        "babel-plugin-styled-components": "^1.10.0",
+        "chalk": "^2.4.2",
+        "eslint": "^5.10.0",
+        "eslint-config-react-tools": "1.x.x",
+        "eslint-plugin-react": "^7.12.2",
+        "express": "^4.16.4",
+        "mkdirp": "^0.5.1",
+        "node-emoji": "^1.8.1",
+        "npm-run-all": "^4.1.5",
+        "rimraf": "^2.6.3",
+        "serve": "^10.0.2"
+    }
 }

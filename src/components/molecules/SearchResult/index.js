@@ -1,11 +1,18 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-static';
-import { constructSearchQuery } from '../../../utils/search';
+import { constructHighlights, constructSearchQuery } from '../../../utils/search';
 
 class SearchResult extends React.Component {
     static propTypes = {
-        foundResult: PropTypes.array,
+        foundResult: PropTypes.arrayOf(
+            PropTypes.shape({
+                id: PropTypes.string,
+                name: PropTypes.string,
+                summary: PropTypes.string,
+                matches: PropTypes.arrayOf(PropTypes.string)
+            })
+        ),
         indexStart: PropTypes.number,
         indexEnd: PropTypes.number,
         query: PropTypes.string
@@ -22,9 +29,9 @@ class SearchResult extends React.Component {
                 <div className="search-result__total">{`${this.props.foundResult.length} documents found for "${this.props.query}". ${res}`}</div>
                 {this.props.foundResult.slice(this.props.indexStart, this.props.indexEnd + 1).map(elm =>
                     (<section key={elm.id} className="search-result__item">
-                        <Link to={`/${elm.id}?${constructSearchQuery(this.props.query)}`} exact className="search-result-item__heading">{elm.name}</Link>
+                        <Link to={`/${elm.id}?${constructSearchQuery(this.props.query)}&${constructHighlights(elm.matches)}`} exact className="search-result-item__heading">{elm.name}</Link>
                         <p className="text-paragraph">{elm.summary}</p>
-                        <Link to={`/${elm.id}?${constructSearchQuery(this.props.query)}`} exact className="search-result-item__link">
+                        <Link to={`/${elm.id}?${constructSearchQuery(this.props.query)}&${constructHighlights(elm.matches)}`} exact className="search-result-item__link">
                             {`/${elm.id}`}
                         </Link>
                     </section>)

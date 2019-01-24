@@ -3,14 +3,14 @@ const fs = require('fs');
 const fsPromises = require('fs').promises;
 const path = require('path');
 const axios = require('axios');
+const emoji = require('node-emoji');
+const chalk = require('chalk');
 
 const { rootFolder, reportFile, projectsFile, checkRemotePages, consoleDetail } = require('./buildProjects.config.json');
 
 let errorCount = 0;
 
-async function buildProjects(baseDir) {
-    console.log('Building Projects');
-
+async function buildProjects(docsFolder) {
     try {
         await fsPromises.unlink(reportFile);
     } catch (err) {
@@ -20,10 +20,10 @@ async function buildProjects(baseDir) {
     await reportEntry(`Built on: ${new Date().toISOString()}`);
     await reportEntry('');
 
-    await reportEntry(`Reading Project Dir: '${baseDir}'`);
+    await reportEntry(`Reading Project Dir: '${docsFolder}'`);
     await reportEntry('');
 
-    const projects = await readProjects(baseDir);
+    const projects = await readProjects(docsFolder);
     console.log(`Found ${projects.length} Projects.`);
 
     for (let i = 0; i < projects.length; i++) {
@@ -39,15 +39,15 @@ async function buildProjects(baseDir) {
         await reportEntry(`\tProject: '${projects[i].name}'`);
         await reportEntry(`\tFolder: '${projects[i].folder}'`);
 
-        await buildHome(baseDir, projects[i]);
-        await buildVersions(baseDir, projects[i]);
+        await buildHome(docsFolder, projects[i]);
+        await buildVersions(docsFolder, projects[i]);
     }
 
     return projects;
 }
 
-async function readProjects(baseDir) {
-    const projectFileName = `${baseDir}/projects.md`;
+async function readProjects(docsFolder) {
+    const projectFileName = `${docsFolder}/projects.md`;
     const projects = [];
 
     try {
@@ -75,9 +75,9 @@ async function readProjects(baseDir) {
     return projects;
 }
 
-async function buildHome(baseDir, project) {
+async function buildHome(docsFolder, project) {
     const versions = [];
-    const homeFile = `${baseDir}/${project.folder}/home.md`;
+    const homeFile = `${docsFolder}/${project.folder}/home.md`;
 
     try {
         if (fs.existsSync(homeFile)) {
@@ -100,8 +100,8 @@ async function buildHome(baseDir, project) {
                 if (match && match.length === 4) {
                     links.push({
                         name: match[1],
-                        link: match[2].startsWith('http') ? match[2] : `/${baseDir}/${project.folder}/${sanitizeLink(match[2])}`,
-                        description: match[3].replace(/root:\/\//g, `/${baseDir}/`)
+                        link: match[2].startsWith('http') ? match[2] : `/${docsFolder}/${project.folder}/${sanitizeLink(match[2])}`,
+                        description: match[3].replace(/root:\/\//g, `/${docsFolder}/`)
                     });
                 }
             } while (match);
@@ -120,8 +120,8 @@ async function buildHome(baseDir, project) {
     return versions;
 }
 
-async function buildVersions(baseDir, project) {
-    const projectVersions = listDirs(`${baseDir}/${project.folder}/`);
+async function buildVersions(docsFolder, project) {
+    const projectVersions = listDirs(`${docsFolder}/${project.folder}/`);
 
     for (let i = 0; i < projectVersions.length; i++) {
         await reportEntry('');
@@ -129,14 +129,14 @@ async function buildVersions(baseDir, project) {
 
         project.versions.push({
             version: projectVersions[i],
-            pages: await buildSingleVersion(baseDir, project.folder, projectVersions[i])
+            pages: await buildSingleVersion(docsFolder, project.folder, projectVersions[i])
         });
     }
 }
 
-async function buildSingleVersion(baseDir, projectFolder, version) {
+async function buildSingleVersion(docsFolder, projectFolder, version) {
     const versions = [];
-    const docIndexFile = `${baseDir}/${projectFolder}/${version}/doc-index.md`;
+    const docIndexFile = `${docsFolder}/${projectFolder}/${version}/doc-index.md`;
 
     try {
         await reportEntry(`\t\tVersion Index: '${docIndexFile}'`);
@@ -152,14 +152,15 @@ async function buildSingleVersion(baseDir, projectFolder, version) {
                 if (sanitizedLink.startsWith('root://')) {
                     versions.push({
                         name: match[1],
-                        link: `/${baseDir}/${sanitizedLink.replace('root://', '')}`
+                        link: `/${docsFolder}/${sanitizedLink.replace('root://', '')}`
                     });
                 } else {
-                    const toc = await extractTocAndValidateAssets(baseDir, projectFolder, version, match[2], docIndexFile);
+                    const { toc, assets } = await extractTocAndValidateAssets(docsFolder, projectFolder, version, match[2], docIndexFile);
                     versions.push({
                         name: match[1],
-                        link: `/${baseDir}/${projectFolder}/${version}/${sanitizedLink}`,
-                        toc
+                        link: `/${docsFolder}/${projectFolder}/${version}/${sanitizedLink}`,
+                        toc,
+                        assets: assets.length > 0 ? assets : undefined
                     });
                 }
             }
@@ -171,12 +172,13 @@ async function buildSingleVersion(baseDir, projectFolder, version) {
     return versions;
 }
 
-async function extractTocAndValidateAssets(baseDir, projectFolder, version, doc, docIndexFile) {
+async function extractTocAndValidateAssets(docsFolder, projectFolder, version, doc, docIndexFile) {
     // Try and load the markdown for the page and if it exists extract
     // the headers to create a toc
     const toc = [];
+    const assets = [];
 
-    const docName = webifyPath(path.join(`${baseDir}/${projectFolder}/${version}/`, doc));
+    const docName = webifyPath(path.join(`${docsFolder}/${projectFolder}/${version}/`, doc));
 
     try {
         if (fs.existsSync(docName)) {
@@ -210,8 +212,9 @@ async function extractTocAndValidateAssets(baseDir, projectFolder, version, doc,
                 await reportError(`'${docName}' does not start with a level 1 heading`);
             }
 
-            await assetHtmlImage(doc, docName);
-            await assetMarkdownImage(doc, docName);
+            await assetHtmlImage(doc, docName, assets);
+            await assetMarkdownImage(doc, docName, assets);
+
             await htmlLinks(doc, docName);
             await markdownLinks(doc, docName);
             await separators(doc, docName);
@@ -222,7 +225,7 @@ async function extractTocAndValidateAssets(baseDir, projectFolder, version, doc,
         await reportError(`'${docIndexFile}' referenced '${docName}' but building TOC failed`, err);
     }
 
-    return toc;
+    return { toc, assets };
 }
 
 function extractContent(markdown) {
@@ -262,7 +265,7 @@ function stripWrapper(markdown, wrapper) {
     return markdown;
 }
 
-async function assetHtmlImage(markdown, docPath) {
+async function assetHtmlImage(markdown, docPath, assets) {
     const re = /(<img src="(.*?)")/gm;
 
     let match;
@@ -280,6 +283,7 @@ async function assetHtmlImage(markdown, docPath) {
                 const imgFilename = path.resolve(path.join(path.dirname(docPath), match[2]));
                 if (fs.existsSync(imgFilename)) {
                     await reportEntry(`\t\t\tLocal Image: '${match[2]}'`);
+                    assets.push(`/${webifyPath(path.relative('.', imgFilename))}`);
                 } else {
                     await reportError(`Image file does not exist '${match[2]}' in '${docPath}'`);
                 }
@@ -290,7 +294,7 @@ async function assetHtmlImage(markdown, docPath) {
     } while (match);
 }
 
-async function assetMarkdownImage(markdown, docPath) {
+async function assetMarkdownImage(markdown, docPath, assets) {
     const re = /(!\[(.*?)\]\((.*?)( ".*")?\))/gm;
 
     let match;
@@ -309,6 +313,7 @@ async function assetMarkdownImage(markdown, docPath) {
                 const imgFilename = path.resolve(path.join(path.dirname(docPath), match[3]));
                 if (fs.existsSync(imgFilename)) {
                     await reportEntry(`\t\t\tLocal Image: '${match[3]}'`);
+                    assets.push(`/${webifyPath(path.relative('.', imgFilename))}`);
                 } else {
                     await reportError(`Image file does not exist '${match[3]}' in '${docPath}'`);
                 }
@@ -442,10 +447,18 @@ async function run() {
     }
 
     if (errorCount > 0) {
-        console.error(`\nERROR: There were ${errorCount} errors found during project build, see ${reportFile} for details.`);
+        console.error(chalk.red(`\nERROR: There were ${errorCount} errors found during project build, see ${reportFile} for details.`));
     }
 }
 
-run()
-    .then('Done')
-    .catch((err) => console.error(err));
+console.log(chalk.green.underline.bold('Build Projects'));
+
+const docsFolder = process.argv[2] || 'docs';
+
+run(docsFolder)
+    .then(() => console.log(chalk.green(`\n${emoji.get('smile')}  Completed Successfully`)))
+    .catch((err) => {
+        console.error(chalk.red(`\n${emoji.get('frown')}  Building failed with the following error:`));
+        console.error(chalk.red(err.message));
+        process.exit(1);
+    });

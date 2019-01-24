@@ -25,7 +25,8 @@ loadLanguages(jsx, bash, c, cpp, java, javascript, json, python);
 class Markdown extends PureComponent {
     static propTypes = {
         source: PropTypes.string.isRequired,
-        query: PropTypes.string
+        query: PropTypes.string,
+        highlights: PropTypes.arrayOf(PropTypes.string)
     };
 
     constructor(props) {
@@ -52,6 +53,16 @@ class Markdown extends PureComponent {
     }
 
     componentDidMount() {
+        this.highlights = [];
+        if (this.props.highlights) {
+            this.highlights = this.highlights.concat(this.props.highlights);
+        }
+        if (this.props.query) {
+            if (this.highlights.indexOf(this.props.query) < 0) {
+                this.highlights.push(this.props.query);
+            }
+        }
+
         let content = this.fixReprismSyntaxHighlighting(this.props.source);
 
         // Strip the h1 from the start of the content
@@ -66,7 +77,7 @@ class Markdown extends PureComponent {
         const projectTopicMatches = this.findProjectTopicContainers(content);
         for (let i = 0; i < projectTopicMatches.length; i++) {
             this.projectTopicContainers.push(this.findProjectTopics(projectTopicMatches[i]));
-            content = content.replace(projectTopicMatches[i], `<project-topics index="${i}"></tabs>`);
+            content = content.replace(projectTopicMatches[i], `<project-topics index="${i}"></project-topics>`);
         }
 
         const headingMatches = this.findHeadingLabels(content);
@@ -89,11 +100,19 @@ class Markdown extends PureComponent {
             .replace(/```bash/g, '```shell');
     }
 
-    replaceSearchQuery(content) {
-        if (this.props.query) {
-            const re = new RegExp(`(^\\s|\\s$|\\S\\s|\\s\\S)(${this.props.query})(^\\s|\\s$|\\S\\s|\\s\\S)`, 'gi');
+    stripSearchQuery(content) {
+        return content.replace(/<query text="(.*?)" \/>/g, '$1');
+    }
 
-            content = content.replace(re, '$1<query text="$2"/>$3');
+    replaceSearchQuery(content, useSpan) {
+        if (this.highlights.length > 0) {
+            const re = new RegExp(`(${this.highlights.join('|')})`, 'gi');
+
+            if (useSpan) {
+                content = content.replace(re, '<span class="search-keyword">$1</span>');
+            } else {
+                content = content.replace(re, '<query text="$1" />');
+            }
         }
 
         return content;
@@ -240,7 +259,7 @@ class Markdown extends PureComponent {
 
             if (match && match.length === 2) {
                 const index = parseInt(match[1], 10);
-                return (<ProjectTopicsInner content={this.projectTopicContainers[index]} compressed={true} />);
+                return (<ProjectTopicsInner content={this.projectTopicContainers[index]} compressed={true} highlights={this.highlights} />);
             }
         } else if (props.value.startsWith('<heading-label')) {
             const re = /<heading-label index="(.*)">/;
@@ -304,12 +323,13 @@ class Markdown extends PureComponent {
     }
 
     codeBlock(props, wrap) {
-        let html;
+        let html = this.stripSearchQuery(props.value);
         try {
-            html = highlight(props.value, props.language);
+            html = highlight(html, props.language);
         } catch (err) {
-            html = `<pre className="reprism markup language-markup"><code>${props.value}</code></pre>`;
+            html = `<pre className="reprism markup language-markup"><code>${html}</code></pre>`;
         }
+        html = this.replaceSearchQuery(html, true);
 
         return (
             <div
@@ -360,7 +380,7 @@ class Markdown extends PureComponent {
         } else {
             children = [
                 React.createElement('span', { className: 'table-body-row-item--inline-header', key: 0 }, this.currentTableHeaders[this.currentTableColumn]),
-                React.createElement('span', { key: 1}, children)
+                React.createElement('span', { key: 1 }, children)
             ];
         }
         return React.createElement(

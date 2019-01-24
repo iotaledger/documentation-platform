@@ -18,7 +18,7 @@ import { submitFeedback } from '../utils/api';
 import { localStorageSet } from '../utils/localStorage';
 import { createPageTableOfContents, createProjectLinks, getProjectTitle, getProjectVersionPagesUrl, getVersionsUrl, parseProjectUrl, replaceVersion } from '../utils/projects';
 import { ProjectsPropTypes } from '../utils/propTypes.js';
-import { extractSearchQuery, initCorpusIndex } from '../utils/search';
+import { extractHighlights, extractSearchQuery, initCorpusIndex } from '../utils/search';
 import Container from './Container';
 import { DocPageLayout, TabletHidden } from './Layouts';
 
@@ -124,7 +124,7 @@ class Doc extends React.Component {
                         <div className="middle-toc">
                             <TableOfContents items={this.state.pageTableOfContents} title="Sections On This Page" compact={true} />
                         </div>
-                        <Markdown source={this.props.markdown} query={extractSearchQuery(this.props.location)} />
+                        <Markdown source={this.props.markdown} query={extractSearchQuery(this.props.location)} highlights={extractHighlights(this.props.location)} />
                     </section>
                     <section className="right-column">
                         <ScrollInContainer bottomOffset={200}>

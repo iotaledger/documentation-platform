@@ -12,7 +12,8 @@ class ProjectTopicsInner extends React.Component {
             description: PropTypes.string.isRequired,
             bullet: PropTypes.oneOf(['none', 'primary', 'secondary'])
         })).isRequired,
-        compressed: PropTypes.bool
+        compressed: PropTypes.bool,
+        highlights: PropTypes.arrayOf(PropTypes.string)
     };
 
     render() {
@@ -52,7 +53,7 @@ class ProjectTopicsInner extends React.Component {
                                     {item.name}
                                 </span>
                             )}
-                            <Markdown className="project-topic__subheading" source={item.description} />
+                            <Markdown className="project-topic__subheading" source={item.description} highlights={this.props.highlights} />
                         </div>
                     )}
             </div>
