@@ -88,7 +88,7 @@ class Search extends React.Component {
         let searchResults;
         if (this.state.query) {
             const idx = lunr.Index.load(this.corpusIndex.index);
-            const results = idx.search(`*${this.state.query}*`);
+            const results = idx.search(`*${this.state.query}*~2`);
             searchResults = results
                 .map(result => ({
                     ...this.corpusIndex.documents[result.ref],
