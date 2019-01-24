@@ -41,7 +41,6 @@ class Markdown extends PureComponent {
         this.headingLabels = [];
 
         this.html = this.html.bind(this);
-        this.image = this.image.bind(this);
         this.textRenderer = this.textRenderer.bind(this);
         this.tableRenderer = this.tableRenderer.bind(this);
         this.tableCellRenderer = this.tableCellRenderer.bind(this);
@@ -405,14 +404,6 @@ class Markdown extends PureComponent {
         return props['data-sourcepos'] ? { 'data-sourcepos': props['data-sourcepos'] } : {};
     }
 
-    image(props) {
-        const localProps = {...props};
-        localProps.alt = this.stripSearchQuery(localProps.alt);
-        return (
-            <img {...localProps} />
-        );
-    }
-
     render() {
         return (
             <div className="markdown__wrapper"><ReactMarkdown
@@ -427,9 +418,7 @@ class Markdown extends PureComponent {
                     heading: this.heading,
                     table: this.tableRenderer,
                     tableRow: this.tableRowRenderer,
-                    tableCell: this.tableCellRenderer,
-                    image: this.image,
-                    imageReference: this.image
+                    tableCell: this.tableCellRenderer
                 }}
                 skipHtml={false}
                 escapeHtml={false} />
