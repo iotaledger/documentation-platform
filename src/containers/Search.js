@@ -13,7 +13,7 @@ import StickyHeader from '../components/organisms/StickyHeader';
 import { submitFeedback } from '../utils/api';
 import { localStorageSet } from '../utils/localStorage';
 import { ProjectsPropTypes } from '../utils/propTypes.js';
-import { extractSearchQuery, initCorpusIndex } from '../utils/search';
+import { constructSearchQuery, extractSearchQuery, initCorpusIndex } from '../utils/search';
 import Container from './Container';
 import { SearchPageLayout, TabletHidden } from './Layouts';
 
@@ -74,6 +74,8 @@ class Search extends React.Component {
         this.setState({ query }, () => {
             this.search();
         });
+
+        this.props.history.replace(`?${constructSearchQuery(query)}`);
     }
 
     handleKeyUp(e) {

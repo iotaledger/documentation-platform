@@ -17,19 +17,17 @@
         "build": "run-s build-projects build-search-index build-doc-assets production",
         "serve": "serve dist -p 3000",
         "lint": "eslint src/**/*.js",
-        "deploy-staging": "cd dist && now --local-config=../now.json && now alias --local-config=../now.json"
+        "deploy-dev": "cd dist && now --local-config=../now.json && now alias --local-config=../now.json"
     },
     "engines": {
         "node": "10.x.x"
     },
     "dependencies": {
         "axios": "^0.18.0",
-        "cheerio": "^1.0.0-rc.2",
         "classnames": "^2.2.6",
         "emoji-dictionary": "^1.0.9",
         "iota-css-theme": "iotaledger/iota-css-theme",
         "lunr": "^2.3.5",
-        "markdown-it": "^8.4.2",
         "nprogress": "^0.2.0",
         "parallax-js": "^3.1.0",
         "prismjs": "^1.15.0",
@@ -55,7 +53,9 @@
         "mkdirp": "^0.5.1",
         "node-emoji": "^1.8.1",
         "npm-run-all": "^4.1.5",
+        "remark": "^10.0.1",
         "rimraf": "^2.6.3",
-        "serve": "^10.0.2"
+        "serve": "^10.0.2",
+        "strip-markdown": "^3.0.3"
     }
 }

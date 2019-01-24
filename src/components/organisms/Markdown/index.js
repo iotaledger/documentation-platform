@@ -41,6 +41,7 @@ class Markdown extends PureComponent {
         this.headingLabels = [];
 
         this.html = this.html.bind(this);
+        this.image = this.image.bind(this);
         this.textRenderer = this.textRenderer.bind(this);
         this.tableRenderer = this.tableRenderer.bind(this);
         this.tableCellRenderer = this.tableCellRenderer.bind(this);
@@ -106,12 +107,12 @@ class Markdown extends PureComponent {
 
     replaceSearchQuery(content, useSpan) {
         if (this.highlights.length > 0) {
-            const re = new RegExp(`(${this.highlights.join('|')})`, 'gi');
+            const re = new RegExp(`(^\\s|\\s$|\\S\\s|\\s\\S)(${this.highlights.join('|')})(^\\s|\\s$|\\S\\s|\\s\\S)`, 'gi');
 
             if (useSpan) {
-                content = content.replace(re, '<span class="search-keyword">$1</span>');
+                content = content.replace(re, '$1<span class="search-keyword">$2</span>$3');
             } else {
-                content = content.replace(re, '<query text="$1" />');
+                content = content.replace(re, '$1<query text="$2" />$3');
             }
         }
 
@@ -323,7 +324,7 @@ class Markdown extends PureComponent {
     }
 
     codeBlock(props, wrap) {
-        let html = this.stripSearchQuery(props.value);
+        let html = props.value;
         try {
             html = highlight(html, props.language);
         } catch (err) {
@@ -396,14 +397,20 @@ class Markdown extends PureComponent {
 
     heading(props) {
         return (
-            <React.Fragment>
-                <Heading className='text--tertiary' level={props.level} id={sanitizeHashId(props.children[0].props.value)} {...props} />
-            </React.Fragment>
+            <Heading className='text--tertiary' level={props.level} id={sanitizeHashId(props.children[0].props.value)} {...props} />
         );
     }
 
     getCoreProps(props) {
         return props['data-sourcepos'] ? { 'data-sourcepos': props['data-sourcepos'] } : {};
+    }
+
+    image(props) {
+        const localProps = {...props};
+        localProps.alt = this.stripSearchQuery(localProps.alt);
+        return (
+            <img {...localProps} />
+        );
     }
 
     render() {
@@ -420,7 +427,9 @@ class Markdown extends PureComponent {
                     heading: this.heading,
                     table: this.tableRenderer,
                     tableRow: this.tableRowRenderer,
-                    tableCell: this.tableCellRenderer
+                    tableCell: this.tableCellRenderer,
+                    image: this.image,
+                    imageReference: this.image
                 }}
                 skipHtml={false}
                 escapeHtml={false} />
