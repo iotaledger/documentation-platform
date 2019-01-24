@@ -14,4 +14,4 @@ RUN npm run build
 EXPOSE 3000:3000
 
 # Serve the prod build from the dist folder
-CMD ["npm" , "run", "serve"]
+CMD ["npm", "run", "serve"]
