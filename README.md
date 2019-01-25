@@ -1,30 +1,40 @@
-**NOTICE: The IOTA Docs have moved!**
--------------------------------------
+# IOTA Documentation
 
-All IOTA documentation may now be found conveniently through our websites:
+All IOTA documentation can be viewed on our websites:
 
 - [iota.org](https://iota.org)
 - [docs.iota.org](https://docs.iota.org)
 
-Contributions to `docs.iota.org` are welcome [here](https://github.com/iotaledger/docs).
+## Accepting Contributions
 
-# Accepting contributions
 If you'd like to help us build missing content, please see [open issues](https://github.com/iotaledger/documentation/issues) and filter by the `Help Wanted` label. We'll be adding more of these issues in the coming weeks as we identify more content to be added. Before writing new content, please refer to the [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Use our [Discord](https://discordapp.com/invite/fNGZXvh) to join the discussion in the #Documentation channel and ask questions.
 
-# React-Static - Documentation Example
+## Development
 
-This example includes:
+The documentation application is created as a React Static application. If you wish to do any development work on the app you should perform the following steps.
 
-* Styled-Components
-* Basic Documentation Setup w/ styles
+```shell
+git clone https://github.com/iotaledger/documentation.git
+npm install
+```
 
-To get started:
+You will then need to add the content from the `https://github.com/iotaledger/documentation-markdown.git` repository to the `/docs` folder.
 
-1.  Run `react-static create` and use the `documentation` template.
-2.  Follow installation instructions
-3.  Edit `TODO` commented items `static.config.js
+Once you have the content in the `docs` folder you need to index all the documents, you can do this by running:
+
+```shell
+npm run build-index
+```
+
+Only once the steps above are completed can you build and run the app:
+
+```shell
+npm run start
+```
+
+There is also an associated API for the application for more details on that see [./api/README.md](./api/README.md)
 
 ## Deployment
 

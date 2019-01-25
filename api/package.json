@@ -1,7 +1,7 @@
 {
     "name": "documentation-api",
     "description": "API for IOTA Documentation",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "author": "Martyn Janes <martyn.janes@iota.org>",
     "repository": {
         "type": "git",

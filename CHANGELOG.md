@@ -1,7 +1,5 @@
 # Changelog
 
-## Version 0.0.1
+## Version 1.0.0
 
-*September 27, 2018*
-
-- Testing react-static
+Release

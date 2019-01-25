@@ -126,16 +126,16 @@ If you already have a GitHub account and Git is set up on your computer, go stra
 
 1. [Create a new GitHub account](https://github.com/) if you don't already have one
 2. [Set up Git](https://help.github.com/articles/set-up-git/)
-3. Go to our [documentation repository](https://github.com/iotaledger/documentation.git) and click **Fork** at the top of the page
+3. Go to our [documentation repository](https://github.com/iotaledger/documentation-markdown.git) and click **Fork** at the top of the page
 4. Copy your fork to your local machine by doing the following in the command prompt:
     ```cmd
-    git clone https://github.com/{your username}/documentation
+    git clone https://github.com/{your username}/documentation-markdown
     ```
 5. Create a reference to the root repository by doing the following:
 
     ```cmd
-    cd documentation
-    git remote add upstream https://github.com/iotaledger/documentation.git
+    cd documentation-markdown
+    git remote add upstream https://github.com/iotaledger/documentation-markdown.git
     git fetch upstream
     ```
 Now, your documentation directory will contain all the documentations files.
@@ -183,7 +183,7 @@ Please follow our [writing guide](#writing-guide) when you write and edit articl
     ```
     git push origin <your branch name>
     ```
-4. In GitHub, go to the repository that you forked from `iotaledger/documentation`, and click **Pull Request** at the top of the page
+4. In GitHub, go to the repository that you forked from `iotaledger/documentation-markdown`, and click **Pull Request** at the top of the page
 5. Make sure that the base branch is `iotaledger/documentation@master` and the head branch is `<your username>/documentation@<your branch name>`
 6. Click **Update Commit Range** or **Compare & pull request**
 7. Give your pull request a title, and describe all the changes you're making

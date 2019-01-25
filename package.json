@@ -1,6 +1,6 @@
 {
     "name": "documentation",
-    "version": "0.0.2",
+    "version": "1.0.0",
     "description": "IOTA Documentation",
     "keywords": [
         "iota",
@@ -12,9 +12,10 @@
         "build-projects": "node buildProjects docs",
         "build-search-index": "node buildSearchIndex projects.json src/searchData/corpus.json src/searchData/index.json",
         "build-doc-assets": "node buildAssets projects.json public/assets/docs",
+        "build-index": "run-s build-projects build-search-index build-doc-assets",
         "start": "react-static start",
         "production": "react-static build",
-        "build": "run-s build-projects build-search-index build-doc-assets production",
+        "build": "run-s build-index production",
         "serve": "serve dist -p 3000",
         "lint": "eslint src/**/*.js",
         "deploy-dev": "cd dist && now --local-config=../now.json && now alias --local-config=../now.json"
@@ -23,7 +24,6 @@
         "node": "10.x.x"
     },
     "dependencies": {
-        "@babel/polyfill": "^7.2.5",
         "axios": "^0.18.0",
         "classnames": "^2.2.6",
         "emoji-dictionary": "^1.0.9",
