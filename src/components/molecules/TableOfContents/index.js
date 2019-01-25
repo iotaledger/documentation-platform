@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { scrollIntoView } from '../../../utils/scroll';
 
 class TableOfContents extends React.PureComponent {
     static propTypes = {
@@ -16,6 +17,17 @@ class TableOfContents extends React.PureComponent {
         super(props);
     }
 
+    handleClick(e) {
+        e.preventDefault();
+
+        scrollIntoView(document.querySelector(e.target.getAttribute('href')));
+
+        // document.querySelector(e.target.getAttribute('href')).scrollIntoView({
+        //     block: 'start',
+        //     behavior: 'smooth'
+        // });
+    }
+
     render() {
         return (
             <div className={classNames('table-of-contents',
@@ -27,7 +39,7 @@ class TableOfContents extends React.PureComponent {
                 <ul className="table-of-contents__section">
                     {this.props.items.map((item, idx) => (
                         <li key={idx} className={classNames('table-of-contents-list-item', {'table-of-contents-list-item__sub' : item.level > 2})}>
-                            <a href={item.link}>
+                            <a href={item.link} onClick={this.handleClick}>
                                 {item.name}
                             </a>
                         </li>

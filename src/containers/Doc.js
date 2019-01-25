@@ -107,7 +107,6 @@ class Doc extends React.Component {
                     currentVersion={this.state.projectVersion}
                     onChange={(newVersion) => this.changeVersion(newVersion)}
                 />
-                <div id="floating-menu-top-limit"></div>
                 <DocPageLayout>
                     <section className="left-column">
                         <DropSelector

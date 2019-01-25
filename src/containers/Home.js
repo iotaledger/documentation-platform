@@ -46,10 +46,21 @@ class Home extends React.Component {
 
         // Trigger the search index load here so a search is quicker
         initCorpusIndex();
+
+        window.addEventListener('resize', this.handleResize);
+        this.handleResize();
     }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleResize);
+    }    
 
     handleBurgerClick() {
         this.setState({isMenuOpen: !this.state.isMenuOpen});
+    }
+
+    handleResize() {
+        document.querySelector('#image-background').style.height = `${document.querySelector('.cards-container').clientHeight}px`;
     }
 
     render() {
@@ -70,18 +81,21 @@ class Home extends React.Component {
                     projects={this.props.projects}
                     onCloseClick={this.handleBurgerClick} 
                     highlightedItem={this.state.projectFullURL}/>
-                <HomePageLayout id="new_to_iota?">
-                    <aside>
-                        <ScrollInContainer topOffset={50} bottomOffset={160}>   
+                <div id='image-background' style={{ background: '#f3f2f1', width: '100%', height: '0px', position: 'absolute'}} />
+                <HomePageLayout>
+                    <div className="left-column">
+                        <ScrollInContainer topOffset={50} bottomOffset={150}>   
                             <FloatingMenu menuItems={createProjectLinks(this.props.projects)} />
                         </ScrollInContainer>
-                    </aside>
-                    <article style={{background: '#f3f2f1'}}>
-                        <CardContainer content={contentHomePage.cards} />
-                    </article>
-                    <article>
-                        <ProjectTopicsContainer content={createProjectTopics(this.props.projects)} />
-                    </article>
+                    </div>
+                    <div className="right-column">
+                        <article>
+                            <CardContainer content={contentHomePage.cards} />
+                        </article>
+                        <article>
+                            <ProjectTopicsContainer content={createProjectTopics(this.props.projects)} />
+                        </article>
+                    </div>
                     <BottomSticky zIndex={10} horizontalAlign='right'>
                         <TabletHidden>
                             <Feedback onSubmit={(data) => submitFeedback('/home/', data)} />

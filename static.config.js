@@ -1,25 +1,13 @@
-import chokidar from 'chokidar';
+import '@babel/polyfill';
 import fs from 'fs';
 import path from 'path';
 import React, { Component } from 'react';
-import { reloadRoutes } from 'react-static/node';
 import { ServerStyleSheet } from 'styled-components';
 import projects from './projects.json';
 import GoogleAnalytics from './src/components/atoms/GoogleAnalytics';
 import HotJar from './src/components/atoms/HotJar';
 import { googleAnalyticsId, hotJarId, siteName, siteRoot } from './src/config.json';
 
-const docsFolder = 'docs';
-
-chokidar.watch(`../${docsFolder}`).on('all', () => reloadRoutes());
-
-const webifyPath = (p) => p.replace(/\\/g, '/');
-
-// These are the documentation pages. They can either use the `markdownSrc` to point
-// to a markdown file, or they can use `component` to point to a react component
-const docPages = getDocPages(docsFolder);
-
-// No need to touch any of this, unless you want to.
 export default {
     siteRoot,
     getSiteData: () => ({
@@ -31,7 +19,7 @@ export default {
             path: '/',
             component: 'src/containers/Home'
         },
-        ...docPages.map(page => ({
+        ...getDocPages().map(page => ({
             path: page.path,
             component: 'src/containers/Doc',
             getData: async () => ({
@@ -95,26 +83,30 @@ export default {
     }
 };
 
-function listDirs(dir) {
-    return fs.readdirSync(dir).filter(f => fs.statSync(path.join(dir, f)).isDirectory());
+function getDocPages() {
+    const documents = [];
+
+    for (let i = 0; i < projects.length; i++) {
+        const project = projects[i];
+
+        for (let j = 0; j < project.versions.length; j++) {
+            const version = project.versions[j];
+
+            for (let k = 0; k < version.pages.length; k++) {
+                documents.push({
+                    path: version.pages[k].link,
+                    title: `${version.pages[k].name.split('/').reverse().join(' | ')} | ${project.name}`,
+                    markdownSrc: `.${version.pages[k].link}.md`
+                });
+            }
+        }
+    }
+
+    return documents;
 }
 
-function listFiles(dir) {
-    return fs.statSync(dir).isDirectory()
-    ? Array.prototype.concat(...fs.readdirSync(dir).map(f => listFiles(path.join(dir, f))))
-    : dir;
-}
-
-function getDocPages(baseDir) {
-    const dirs = listDirs(baseDir);
-    const files = Array.prototype.concat(...dirs.map(dir =>
-        listFiles(`${baseDir}/${dir}`).filter(f => /.md$/i.test(f)).map(file => ({
-            path: webifyPath(file).replace('.md', ''),
-            title: `${webifyPath(dir)} ${webifyPath(file).replace(`docs/${webifyPath(dir)}/`, '').replace('.md', '')}`,
-            markdownSrc: webifyPath(file)
-        }))
-    ));
-    return files;
+function webifyPath(p) {
+    return p.replace(/\\/g, '/');
 }
 
 function processMarkdown(markdownSrc) {
@@ -126,7 +118,7 @@ function processMarkdown(markdownSrc) {
 }
 
 function replaceRootUrls(markdown) {
-    return markdown.replace(/root:\/\/(.*?)(.md)/g, `/${docsFolder}/$1`);
+    return markdown.replace(/root:\/\/(.*?)(.md)/g, '/docs/$1');
 }
 
 function assetHtmlImage(markdown, docPath) {

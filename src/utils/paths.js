@@ -10,6 +10,7 @@ export function sanitizeHashId(id, skipLowerCase) {
     }
     return id
         .replace(/\\ /g, ' ')
+        .replace(/\?/g, '')
         .replace(/ /g, '-');
 }
 

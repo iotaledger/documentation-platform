@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 class ScrollInContainer extends React.Component {
     static defaultProps = {
+        topOffset: 0,
         bottomOffset: 100
     };
 
@@ -35,42 +36,45 @@ class ScrollInContainer extends React.Component {
     }
 
     handleScroll() {
-        if (!this.container) {
-            return;
-        }
-
         const thisDom = ReactDOM.findDOMNode(this);
         const parentDom = thisDom.parentNode;
 
         const thisRect = thisDom.getBoundingClientRect();
         const parentRect = parentDom.getBoundingClientRect();
 
-        let newTop = 0;
         if (parentRect.top < 0) {
-            newTop -= parentRect.top;
+            let newRelativeTop = -parentRect.top + this.props.topOffset;
+            if (this._lastRelativeTop === undefined) {
+                this._lastRelativeTop = newRelativeTop;
+            }
+
+            let thisHeight = thisRect.height + this.props.bottomOffset;
+
+            let fixBottom = false;
+            if (thisHeight + this._lastRelativeTop >= parentRect.height) {
+                fixBottom = true;
+            }
+
+            this._lastRelativeTop = Math.floor(newRelativeTop);
+
+            if (fixBottom) {
+                thisDom.style.top = `${parentRect.height - thisHeight}px`;
+                thisDom.style.position = 'relative';
+            } else {
+                const parentTopPadding = parseInt(getComputedStyle(parentDom).paddingTop, 10);
+
+                thisDom.style.top = `${parentTopPadding + this.props.topOffset}px`;
+                thisDom.style.position = 'fixed';
+            }
+        } else {
+            thisDom.style.top = `${this.props.topOffset}px`;
+            thisDom.style.position = 'relative';
         }
-
-        let thisHeight = thisRect.height + this.props.bottomOffset;
-
-        if (newTop + thisHeight > parentRect.height) {
-            newTop = parentRect.height - thisHeight;
-        }
-
-        if(this.props.topOffset){
-            newTop += this.props.topOffset;
-        }
-
-        thisDom.style.top = `${Math.floor(newTop)}px`;
     }
 
     render() {
-        const style = {
-            position: 'relative',
-            top: '0px'
-        };
-
         return (
-            <div ref={(el) => this.container = el} style={style}>
+            <div>
                 {this.props.children}
             </div>
         );

@@ -23,6 +23,7 @@
         "node": "10.x.x"
     },
     "dependencies": {
+        "@babel/polyfill": "^7.2.5",
         "axios": "^0.18.0",
         "classnames": "^2.2.6",
         "emoji-dictionary": "^1.0.9",

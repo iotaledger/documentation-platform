@@ -40,37 +40,28 @@ const TabletHidden = styled.div`
 `;
 
 const HomePageLayout = styled.div`
-  position: relative;
-  padding-bottom: 100px;
-  > aside {
-    position: absolute;
-    top: 0px;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    max-width: 1495px;
-    box-sizing: border-box;
-    padding: 0 40px;
-    z-index: 2;
-    transform: translate(-50%, 0);
-    pointer-events: none;
-  }
-  > aside > div{
-    pointer-events: all;
-    width: 250px;
-  }
-  > article > div {
-    max-width: 1495px;
+display: flex;
+margin: 0 auto;
+max-width: ${maxWidthLayout}px;
+.left-column {
+  padding-left: 40px;
+  padding-right: 40px;
+  flex: 0 0 250px;
+
+}
+.right-column {
+  flex: 1;
+  max-width: 1495px;
     margin: auto;
     padding-right: 40px;
-    padding-left: 290px;
-    box-sizing: border-box;
-  }
+    padding-left: 40px;
+
+}
   ${media.tabletDown`
-    > aside {
+    .left-column {
       display: none;
     }
-    > article > div {
+    .right-column {
       padding-right: 16px;
       padding-left: 16px;
     }
