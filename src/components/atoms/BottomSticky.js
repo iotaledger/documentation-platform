@@ -41,24 +41,26 @@ class BottomSticky extends React.PureComponent {
     }
 
     handleBottomStop() {
-
         const thisDom = ReactDOM.findDOMNode(this);
         const parentDom = thisDom.parentNode;
 
-        const thisRect = thisDom.getBoundingClientRect();
         const parentRect = parentDom.getBoundingClientRect();
 
-        const offset = Math.min(window.innerHeight, parentRect.bottom);
+        if (window.innerHeight - parentRect.bottom > 0) {
+            thisDom.style.bottom = `${Math.abs(window.innerHeight - parentRect.bottom) + this.props.bottomOffset}px`;
+        } else {
+            thisDom.style.bottom = `${this.props.bottomOffset}px`;
+        }
 
-        const top = offset - thisRect.height - this.props.bottomOffset;
-
-        thisDom.style.top = `${Math.floor(top)}px`;
+        thisDom.style.opacity = 1;
     }
 
     render() {
         const style = {
             ...this.props.styles,
-            position: 'fixed'
+            position: 'fixed',
+            opacity: 0,
+            bottom: `${this.props.bottomOffset}px`
         };
 
         style[this.props.horizontalAlign] = this.props.horizontalOffset;
