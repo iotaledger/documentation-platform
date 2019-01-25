@@ -29,11 +29,11 @@ class SearchResult extends React.Component {
                 <div className="search-result__total">{`${this.props.foundResult.length} documents found for "${this.props.query}". ${res}`}</div>
                 {this.props.foundResult.slice(this.props.indexStart, this.props.indexEnd + 1).map(elm =>
                     (<section key={elm.id} className="search-result__item">
-                        <Link to={`/${elm.id}?${constructSearchQuery(this.props.query)}&${constructHighlights(elm.matches)}`} exact className="search-result-item__heading">{elm.name}</Link>
-                        <p className="text-paragraph">{elm.summary}</p>
-                        <Link to={`/${elm.id}?${constructSearchQuery(this.props.query)}&${constructHighlights(elm.matches)}`} exact className="search-result-item__link">
-                            {`/${elm.id}`}
+                        <Link to={`/${elm.id}?${constructSearchQuery(this.props.query)}&${constructHighlights(elm.matches)}`} exact>
+                            <div className="search-result-item__heading">{elm.name}</div>
+                            <div className="search-result-item__link">{`/${elm.id}`}</div>
                         </Link>
+                        <p className="text-paragraph">{elm.summary}</p>
                     </section>)
                 )}
             </div>
