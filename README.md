@@ -1,15 +1,12 @@
 # IOTA Documentation
 
-All IOTA documentation can be viewed on our websites:
+This repository contains the web application which displays the documentation, the actual content is housed in its own repository `https://github.com/iotaledger/documentation-markdown.git`
 
-- [iota.org](https://iota.org)
-- [docs.iota.org](https://docs.iota.org)
+## Supporting The Project
 
-## Accepting Contributions
+If you would like to contribute to the web application, consider posting a [bug report](https://github.com/iotaledger/documentation/issues/new), [feature request](https://github.com/iotaledger/documentation/issues/new) or a [pull request](https://github.com/iotaledger/documentation/pulls/).
 
-If you'd like to help us build missing content, please see [open issues](https://github.com/iotaledger/documentation/issues) and filter by the `Help Wanted` label. We'll be adding more of these issues in the coming weeks as we identify more content to be added. Before writing new content, please refer to the [CONTRIBUTING.md](CONTRIBUTING.md).
-
-Use our [Discord](https://discordapp.com/invite/fNGZXvh) to join the discussion in the #Documentation channel and ask questions.
+For information and issues related to the documentation content please visit the [documentation-markdown repo](https://github.com/iotaledger/documentation-markdown)
 
 ## Development
 
