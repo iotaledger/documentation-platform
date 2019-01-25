@@ -42,6 +42,8 @@ class ScrollInContainer extends React.Component {
         const thisRect = thisDom.getBoundingClientRect();
         const parentRect = parentDom.getBoundingClientRect();
 
+        const computedParent = getComputedStyle(parentDom);
+
         if (parentRect.top < 0) {
             let newRelativeTop = -parentRect.top + this.props.topOffset;
             if (this._lastRelativeTop === undefined) {
@@ -60,15 +62,20 @@ class ScrollInContainer extends React.Component {
             if (fixBottom) {
                 thisDom.style.top = `${parentRect.height - thisHeight}px`;
                 thisDom.style.position = 'relative';
+                thisDom.style.width = 'auto';
             } else {
-                const parentTopPadding = parseInt(getComputedStyle(parentDom).paddingTop, 10);
+                const parentTopPadding = parseInt(computedParent.paddingTop, 10);
+                const parentLeftPadding = parseInt(computedParent.paddingLeft, 10);
+                const parentRightPadding = parseInt(computedParent.paddingRight, 10);
 
                 thisDom.style.top = `${parentTopPadding + this.props.topOffset}px`;
                 thisDom.style.position = 'fixed';
+                thisDom.style.width = `${parentRect.width - parentLeftPadding - parentRightPadding}px`;
             }
         } else {
             thisDom.style.top = `${this.props.topOffset}px`;
             thisDom.style.position = 'relative';
+            thisDom.style.width = 'auto';
         }
     }
 
