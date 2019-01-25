@@ -4,7 +4,7 @@
 
 Remove all the contents from the `./docs` folder.
 
-Get the latest content from the <https://github.com/iotaledger/documentation-markdown> repo and copy it to the `/docs` folder.
+Get the latest content from the <https://github.com/iotaledger/documentation> repo and copy it to the `/docs` folder.
 
 ## Configuration
 

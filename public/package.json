@@ -1,6 +1,6 @@
 {
-    "name": "documentation-runtime",
-    "version": "0.0.1",
+    "name": "documentation",
+    "version": "1.0.0",
     "description": "Used by zeit/now to launch serve which automatically handles 404 redirects to 404.html",
     "devDependencies": {
         "serve": "latest"

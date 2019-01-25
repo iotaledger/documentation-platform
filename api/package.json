@@ -1,11 +1,11 @@
 {
-    "name": "documentation-api",
+    "name": "documentation-platform-api",
     "description": "API for IOTA Documentation",
     "version": "1.0.0",
     "author": "Martyn Janes <martyn.janes@iota.org>",
     "repository": {
         "type": "git",
-        "url": "https://github.com/iotaledger/documentation.git/tree/master/api"
+        "url": "https://github.com/iotaledger/documentation-platform.git/tree/master/api"
     },
     "license": "MIT",
     "private": true,
