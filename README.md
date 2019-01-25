@@ -1,12 +1,12 @@
 # IOTA Documentation
 
-This repository contains the web application which displays the documentation, the actual content is housed in its own repository `https://github.com/iotaledger/documentation-markdown.git`
+This repository contains the web application which displays the documentation, the actual content is housed in its own repository [https://github.com/iotaledger/documentation-markdown.git](https://github.com/iotaledger/documentation-markdown.git)
 
 ## Supporting The Project
 
 If you would like to contribute to the web application, consider posting a [bug report](https://github.com/iotaledger/documentation/issues/new), [feature request](https://github.com/iotaledger/documentation/issues/new) or a [pull request](https://github.com/iotaledger/documentation/pulls/).
 
-For information and issues related to the documentation content please visit the [documentation-markdown repo](https://github.com/iotaledger/documentation-markdown)
+For information and issues related to the documentation content please visit the [documentation-markdown](https://github.com/iotaledger/documentation-markdown) repository.
 
 ## Development
 
@@ -17,9 +17,9 @@ git clone https://github.com/iotaledger/documentation.git
 npm install
 ```
 
-You will then need to add the content from the `https://github.com/iotaledger/documentation-markdown.git` repository to the `/docs` folder.
+You will then need to add the content from the [https://github.com/iotaledger/documentation-markdown.git](https://github.com/iotaledger/documentation-markdown.git) repository to the `/docs` folder.
 
-Once you have the content in the `docs` folder you need to index all the documents, you can do this by running:
+Once you have the content in the `/docs` folder you need to index all the documents, you can do this by running:
 
 ```shell
 npm run build-index

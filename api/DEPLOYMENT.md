@@ -2,7 +2,7 @@
 
 ## Configuration
 
-Copy the `./api/src/data/config.template.json` to `./api/src/data/config.json` and populate the fields.
+Copy the `./src/data/config.template.json` to `./src/data/config.json` and populate the fields.
 
 ```js
 {
@@ -25,7 +25,7 @@ npm run build
 
 ## Deploy
 
-The build is setup to use Zeit/now for hosting, to configure this for production modify `./api/now.json` to point at where it needs to be deployed to, and then execute.
+The build is setup to use Zeit/now for hosting, to configure this for production modify `./now.json` to point at where it needs to be deployed to, and then execute.
 
 ```shell
 cd api
@@ -38,7 +38,7 @@ You can check that the api deployment has succeeded by visiting the url of the e
 
 ```json
 {
-    "version":"0.1.0"
+    "version":"1.0.0"
 }
 ```
 
