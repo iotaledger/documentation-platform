@@ -1,3 +1,7 @@
 {
-  "domain": "https://us-central1-iota-documentation.cloudfunctions.net"
+  "siteName": "IOTA Documentation",
+  "siteRoot": "https://iota-documentation.dag.sh",
+  "apiEndpoint": "https://iota-documentation-api.dag.sh",
+  "hotJarId": "1166153",
+  "googleAnalyticsId": "UA-106048607-2"
 }

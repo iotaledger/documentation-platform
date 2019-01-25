@@ -25,3 +25,7 @@ To get started:
 1.  Run `react-static create` and use the `documentation` template.
 2.  Follow installation instructions
 3.  Edit `TODO` commented items `static.config.js
+
+## Deployment
+
+See [./DEPLOYMENT.md](./DEPLOYMENT.md) for deployment instructions.

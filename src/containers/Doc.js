@@ -1,174 +1,148 @@
-import React from 'react'
-import { SiteData, RouteData, Head, withRouter } from 'react-static'
-import Markdown from 'components/Markdown'
-import Sidebar from 'components/Sidebar'
-import CommentModal from 'components/Modal'
-import Feedback from 'components/Feedback'
-import api from '../utils/api';
+import PropTypes from 'prop-types';
+import React from 'react';
+import ReactRouterPropTypes from 'react-router-prop-types';
+import { Head, withRouteData, withRouter, withSiteData } from 'react-static';
+import BottomSticky from '../components/atoms/BottomSticky';
+import DropSelector from '../components/atoms/DropSelector';
+import ScrollInContainer from '../components/atoms/ScrollInContainer';
+import Feedback from '../components/molecules/Feedback';
+import Navigator from '../components/molecules/Navigator';
+import SideMenu from '../components/molecules/SideMenu';
+import SubHeader from '../components/molecules/SubHeader';
+import TableOfContents from '../components/molecules/TableOfContents';
+import TreeMenu from '../components/molecules/TreeMenu';
+import VersionPicker from '../components/molecules/VersionPicker';
+import Markdown from '../components/organisms/Markdown';
+import StickyHeader from '../components/organisms/StickyHeader';
+import { submitFeedback } from '../utils/api';
+import { localStorageSet } from '../utils/localStorage';
+import { createPageTableOfContents, createProjectLinks, getProjectTitle, getProjectVersionPagesUrl, getVersionsUrl, parseProjectUrl, replaceVersion } from '../utils/projects';
+import { ProjectsPropTypes } from '../utils/propTypes.js';
+import { extractHighlights, extractSearchQuery, initCorpusIndex } from '../utils/search';
+import Container from './Container';
+import { DocPageLayout, TabletHidden } from './Layouts';
 
 class Doc extends React.Component {
-  constructor(props) {
-    super(props);
+    static propTypes = {
+        title: PropTypes.string.isRequired,
+        siteName: PropTypes.string.isRequired,
+        markdown: PropTypes.string.isRequired,
+        projects: ProjectsPropTypes.isRequired,
+        history: ReactRouterPropTypes.history,
+        location: ReactRouterPropTypes.location
+    };
 
-    this.state = { isOpen: false, comments: '', selection: null, erratum: null };
+    constructor(props) {
+        super(props);
 
-    this.getSelection = this.getSelection.bind(this);
-    this.getTextContent = this.getTextContent.bind(this);
-    this.keydown = this.keydown.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.handleTextChange = this.handleTextChange.bind(this);
-    this.submitErratum = this.submitErratum.bind(this);
-    this.submitFeedback = this.submitFeedback.bind(this);
-  }
+        this.state = {
+            projectFullURL: '',
+            projectFolder: '',
+            projectVersion: '',
+            projectDocParts: [],
+            projectDoc: '',
+            projectDocTitle: '',
+            projectVersions: [],
+            projectVersionPages: [],
+            pageTableOfContents: [],
+            isMenuOpen: false
+        };
 
-  componentDidMount(){
-    document.addEventListener('keydown', this.keydown, false);
-  }
-
-  componentWillUnmount(){
-    document.removeEventListener('keydown', this.keydown, false);
-  }
-
-  keydown(event) {
-    if (event.keyCode === 27 && this.state.isOpen) {
-      this.closeModal();
+        this.changeVersion = this.changeVersion.bind(this);
+        this.handleBurgerClick = this.handleBurgerClick.bind(this);
     }
-    if (event.keyCode === 13) {
-      if (event.ctrlKey || event.shiftKey) {
-        const selection = this.getSelection();
-        if (selection) {
-          const erratum = selection ? selection.fullText.replace(
-            selection.selected, `<span class="erratum-text">${selection.selected}</span>`
-          ) : null;
-          this.setState({ isOpen: true, selection, erratum })
+
+    changeVersion(newVersion) {
+        const projectParts = parseProjectUrl(this.state.projectFullURL);
+        const newUrl = replaceVersion(projectParts, newVersion, this.props.projects);
+        if (newUrl) {
+            this.props.history.push(newUrl);
+            this.setState({ projectVersion: newVersion });
         }
-      }
-    }
-  }
-
-  getSelection() {
-    const selectionObj = document.getSelection();
-    const selected = selectionObj.toString();
-    const node = selectionObj.baseNode;
-
-    if (selectionObj && selected && node) {
-      const link = node.baseURI;
-      const fullText = node.textContent;
-      const prevText = this.getTextContent(node, true);
-      const nextText = this.getTextContent(node, false);
-      const { location } = this.props;
-      const project = location.pathname !== '/404' && location.pathname.match(/(?<=docs\/).*?(?=\/+)/)[0];
-
-      return {
-        link,
-        project,
-        selected,
-        fullText,
-        textAround: `${prevText} ${fullText} ${nextText}`,
-        document: location.pathname,
-      }
-    }
-    return null;
-  }
-
-  getTextContent(node, isPrevious = true) {
-    let obj = isPrevious ? node.previousSibling : node.nextSibling;
-
-    const getText = obj => {
-      const className = obj.className;
-      if (!className || (className && className !== 'line-numbers')) {
-        return obj.textContent || '';
-      }
     }
 
-    if (obj && obj.textContent) {
-      return getText(obj)
-    } else if (node.parentNode) {
-      obj = isPrevious ? node.parentNode.previousSibling : node.parentNode.nextSibling;
-      if (obj && obj.textContent) {
-        return getText(obj)
-      }
-      return ''
+    componentDidMount() {
+        const projectParts = parseProjectUrl(this.props.location.pathname);
+
+        this.setState({
+            ...projectParts,
+            projectVersions: getVersionsUrl(projectParts, this.props.projects),
+            projectVersionPages: getProjectVersionPagesUrl(projectParts, projectParts.projectVersion, this.props.projects),
+            pageTableOfContents: createPageTableOfContents(projectParts, this.props.projects)
+        });
+
+        // We must store last path in here as when we create react-static
+        // there is no other way of getting where we were for 404 logging
+        localStorageSet('lastDocPath', this.props.location.pathname);
+
+        // Trigger the search index load here so a search is quicker
+        initCorpusIndex();
     }
-  }
 
-  closeModal() {
-    this.setState({ isOpen: false, comments: '', selection: null, erratum: null })
-  }
+    handleBurgerClick() {
+        this.setState({ isMenuOpen: !this.state.isMenuOpen });
+    }
 
-  handleTextChange({ target: { value } }) {
-    this.setState({ comments: value });
-  }
-
-  async submitErratum() {
-    const { comments, selection } = this.state;
-    const response = await api('submitComment', { ...selection, comments });
-    this.closeModal();
-  }
-
-  async submitFeedback(rating, comments) {
-    const document = this.props.location.pathname;
-    const project = document !== '/404' && document.match(/(?<=docs\/).*?(?=\/+)/)[0];
-    const response = await api('submitFeedback', { rating, comments, project, document });
-  }
-
-  render() {
-    const { location } = this.props;
-    const { isOpen, comments, selection, erratum } = this.state;
-    const query = location.state && location.state.query || '';
-
-    return (
-      <SiteData
-        render={({ repoName }) => (
-          <RouteData
-            render={({ editPath, markdown, title }) => (
-              <Sidebar>
+    render() {
+        return (
+            <Container {...this.props}>
                 <Head>
-                  <title>{`${title} | ${repoName}`}</title>
+                    <title>{`${this.props.title} | ${this.props.siteName}`}</title>
                 </Head>
-                <Markdown source={query ?
-                  markdown.replace(new RegExp(query, 'gi'), `<span class="search-keyword">${query}</span>`)
-                  : markdown}
+                <StickyHeader
+                    history={this.props.history}
+                    onBurgerClick={this.handleBurgerClick}
                 />
-                <div>
-                  <a href={editPath}>Edit this page on Github</a>
-                </div>
-                <div className="erratumHint">
-                  <p>Found a mistake on the page? Select a text and press <b>Ctrl+Enter</b> or <b>Shift+Enter</b></p>
-                </div>
-                {
-                  selection ? (
-                    <CommentModal show={isOpen} closeModal={this.closeModal}>
-                      <div className="modalHeader">
-                        <h3>Found a mistake?</h3>
-                        <button onClick={this.closeModal}>
-                          Close
-                        </button>
-                      </div>
-                      <p dangerouslySetInnerHTML={{ __html: erratum }} />
-                      <textarea
-                        value={comments}
-                        placeholder="Additional comments"
-                        name="comments"
-                        onChange={this.handleTextChange}
-                      />
-                      <button onClick={this.submitErratum}>
-                        Submit
-                      </button>
-                    </CommentModal>
-                  ) : null
-                }
-                <Feedback
-                  title="Did you find this page helpful?"
-                  submitFn={this.submitFeedback}
+                <SideMenu
+                    isMenuOpen={this.state.isMenuOpen}
+                    projects={this.props.projects}
+                    onCloseClick={this.handleBurgerClick}
+                    highlightedItem={this.state.projectFullURL} />
+                <SubHeader
+                    projects={this.props.projects}
+                    pathname={this.props.location.pathname}
                 />
-              </Sidebar>
-            )}
-          />
-        )}
-      />
-    )
-  }
+                <VersionPicker
+                    versions={this.state.projectVersions}
+                    currentVersion={this.state.projectVersion}
+                    onChange={(newVersion) => this.changeVersion(newVersion)}
+                />
+                <DocPageLayout>
+                    <section className="left-column">
+                        <DropSelector
+                            items={createProjectLinks(this.props.projects)}
+                            currentName={getProjectTitle(this.state, this.props.projects)}
+                            style={{ marginBottom: '30px' }}
+                        />
+                        <TreeMenu
+                            menuItems={this.state.projectVersionPages}
+                            highlightedItem={this.state.projectFullURL}
+                        />
+                    </section>
+                    <section className="middle-column">
+                        <div className="middle-toc">
+                            <TableOfContents items={this.state.pageTableOfContents} title="Sections On This Page" compact={true} />
+                        </div>
+                        <Markdown source={this.props.markdown} query={extractSearchQuery(this.props.location)} highlights={extractHighlights(this.props.location)} />
+                    </section>
+                    <section className="right-column">
+                        <ScrollInContainer bottomOffset={200}>
+                            <TableOfContents items={this.state.pageTableOfContents} title="Sections On This Page" />
+                        </ScrollInContainer>
+                    </section>
+                    <BottomSticky zIndex={10} horizontalAlign='right'>
+                        <TabletHidden>
+                            <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)} />
+                        </TabletHidden>
+                    </BottomSticky>
+                </DocPageLayout>
+                <Navigator
+                    projects={this.props.projects}
+                    pathname={this.props.location.pathname}
+                />
+            </Container>
+        );
+    }
 }
 
-export default withRouter(Doc);
+export default withSiteData(withRouteData(withRouter(Doc)));

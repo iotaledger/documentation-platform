@@ -1,0 +1,102 @@
+.not-found {
+  position: relative;
+  width: 100%;
+  height: 800px;
+  overflow: hidden;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.not-found h1 {
+  font-size: 140px;
+  line-height: 140px;
+  color: #20A49D;
+  font-weight: 300;
+  text-align: center;
+  margin: 110px 0 20px;
+}
+
+.not-found nav {
+  display: flex;
+  justify-content: center;
+}
+
+.not-found .button {
+  text-transform: none;
+  border-color: #3F3F3F;
+  color: #3F3F3F;
+}
+
+.not-found .button:hover {
+  text-decoration: none;
+  border-color: #7D7D7D;
+}
+
+.not-found h2 {
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 32px;
+  max-width: 370px;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #3F3F3F;
+}
+
+.not-found p {
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 32px;
+  max-width: 370px;
+  text-align: center;
+  margin-bottom: 175px;
+  color: #4f4f4f;
+}
+
+.not-found aside {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.not-found aside {
+  max-width: 1495px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+@media (max-width: 980px) {
+  .not-found h1 {
+    font-size: 90px;
+    line-height: 90px;
+    margin: 0 0 20px;
+  }
+
+  .not-found h2 {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+@media (max-width: 620px) {
+  .not-found {
+    height: auto;
+    padding: 100px 40px 160px;
+    box-sizing: border-box;
+  }
+
+  .not-found p {
+    margin-bottom: 16px;
+  }
+
+  .not-found .button {
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+}

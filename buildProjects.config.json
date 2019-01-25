@@ -1,0 +1,7 @@
+{
+    "rootFolder": "docs",
+    "reportFile": "projects-summary.log",
+    "projectsFile": "projects.json",
+    "checkRemotePages": false,
+    "consoleDetail": false
+}

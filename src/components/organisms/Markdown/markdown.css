@@ -1,0 +1,112 @@
+:not(pre) > code[class*='language-'], pre[class*='language-'] {
+  background: none;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+}
+
+code, pre {
+  font-family: 'Source Code Pro', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important;
+}
+
+.markdown-code {
+  border: 1px solid #ececec;
+  border-radius: 0px 0px 5px 5px;
+  background-color: #f8f8f8;
+  padding: 10px 25px;
+  overflow: auto;
+  margin-bottom: 1.5rem;
+  font-size: 0.92rem;
+}
+
+.markdown-code pre {
+  line-height: 2rem;
+}
+
+.markdown-code-inline {
+  display: inline;
+  border: 1px solid #ececec;
+  border-radius: 3px;
+  background-color: #f8f8f8;
+  padding: 0px 5px 0px 5px;
+  font-size: 0.93rem;
+  line-height: 1.5;
+}
+
+.markdown__wrapper img {
+  max-width: 100%;
+  border: 10px solid #f3f2f1;
+}
+
+.markdown__wrapper dl {
+  padding: 1px 0px 10px 20px;
+  border-left: 3px solid #20a49d;
+}
+
+.markdown__wrapper dl dt {
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.75;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  padding: 0;
+}
+
+.markdown__wrapper dl dd {
+  font-style: italic;
+  font-weight: 300;
+  margin-left: 0px;
+  line-height: 1.75;
+}
+
+.markdown__wrapper table + h1 {
+  margin-top: 48px;
+}
+
+.markdown__wrapper ol {
+  padding-left: 24px;
+  counter-reset: ol-counter;
+}
+
+.markdown__wrapper ol li{
+  list-style: none;
+  position: relative;
+  line-height: 1.75;
+  font-size: 1.05rem;
+}
+
+.markdown__wrapper ol li:before {
+  content: counter(ol-counter) ".";
+  counter-increment: ol-counter;
+  position: absolute;
+  top: 0px;
+  left: -24px;
+  width: 20px;
+  font-weight: 600;
+}
+
+.markdown__wrapper hr {
+  border-top: 3px solid #f3f2f1;
+}
+
+.markdown__wrapper a {
+  word-break: break-all;
+  word-break: break-word;
+  color: #4f4f4f;
+  text-decoration: underline !important;
+  text-decoration-color: #1e9a93 !important;
+}
+
+.markdown__wrapper a:hover {
+  color: #1e9a93;
+  text-decoration-color: #1e9a93 !important;
+}
+
+.markdown__wrapper a:visited {
+  color: #603f98;
+  text-decoration-color: #603f98 !important;
+}
+
+.search-keyword {
+  background-color: #cdbfe4; /* lighten($blueberry, 40%); */
+}

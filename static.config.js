@@ -1,106 +1,165 @@
-import { reloadRoutes } from "react-static/node";
-import fs from "fs-extra";
-import path from "path";
-import React, { Component } from "react";
-import { ServerStyleSheet } from "styled-components";
-import chokidar from "chokidar";
-import { getDocPages, buildMenuItems } from './buildList'
+import '@babel/polyfill';
+import fs from 'fs';
+import path from 'path';
+import React, { Component } from 'react';
+import { ServerStyleSheet } from 'styled-components';
+import projects from './projects.json';
+import GoogleAnalytics from './src/components/atoms/GoogleAnalytics';
+import HotJar from './src/components/atoms/HotJar';
+import { googleAnalyticsId, hotJarId, siteName, siteRoot } from './src/config.json';
 
-chokidar.watch("../docs").on("all", () => reloadRoutes());
+export default {
+    siteRoot,
+    getSiteData: () => ({
+        projects,
+        siteName
+    }),
+    getRoutes: () => [
+        {
+            path: '/',
+            component: 'src/containers/Home'
+        },
+        ...getDocPages().map(page => ({
+            path: page.path,
+            component: 'src/containers/Doc',
+            getData: async () => ({
+                markdown: processMarkdown(page.markdownSrc),
+                title: page.title
+            })
+        })),
+        {
+            path: '/search',
+            component: 'src/containers/Search'
+        },
+        {
+            is404: true,
+            path: '/404',
+            component: 'src/containers/NotFound'
+        }
+    ],
+    renderToHtml: (render, Comp, meta) => {
+        try {
+            const sheet = new ServerStyleSheet();
+            const html = render(sheet.collectStyles(<Comp />));
+            meta.styleTags = sheet.getStyleElement();
+            return html;
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.log('ERROR', e);
+        }
+    },
+    Document: class CustomHtml extends Component {
+        render() {
+            const { Html, Head, Body, children, renderMeta } = this.props;
 
-const packageFile = "package.json"; // Point this to your package.json file
-const repoName = "IOTA Documentation";
-const repo = "iotaledger/documentation";
-const repoURL = `https://github.com/${repo}`;
+            return (
+                <Html>
+                    <Head>
+                        <meta charSet="UTF-8" />
+                        <meta
+                            name="viewport"
+                            content="width=device-width, initial-scale=1"
+                        />
+                        <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+                        <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+                        <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+                        <link rel="shortcut icon" href="/favicon/favicon.ico" />
+                        <link rel="manifest" href="/favicon/site.webmanifest" />
+                        <meta name="apple-mobile-web-app-title" content={siteName} />
+                        <meta name="application-name" content={siteName} />
+                        <meta name="msapplication-TileColor" content="#ffffff" />
+                        <meta name="theme-color" content="#ffffff" />
+                        {renderMeta.styleTags}
+                        <title>{siteName}</title>
+                    </Head>
+                    <Body>
+                        {children}
+                        <HotJar id={hotJarId} />
+                        <GoogleAnalytics id={googleAnalyticsId} />
+                    </Body>
+                </Html>
+            );
+        }
+    }
+};
 
-try {
-  // eslint-disable-next-line
-  process.env.REPO_VERSION = require(path.resolve(packageFile)).version;
-} catch (err) {
-  //
+function getDocPages() {
+    const documents = [];
+
+    for (let i = 0; i < projects.length; i++) {
+        const project = projects[i];
+
+        for (let j = 0; j < project.versions.length; j++) {
+            const version = project.versions[j];
+
+            for (let k = 0; k < version.pages.length; k++) {
+                documents.push({
+                    path: version.pages[k].link,
+                    title: `${version.pages[k].name.split('/').reverse().join(' | ')} | ${project.name}`,
+                    markdownSrc: `.${version.pages[k].link}.md`
+                });
+            }
+        }
+    }
+
+    return documents;
 }
 
-// These are the documentation pages. They can either use the `markdownSrc` to point
-// to a markdown file, or they can use `component` to point to a react component
-const docPages = getDocPages('docs')
+function webifyPath(p) {
+    return p.replace(/\\/g, '/');
+}
 
-// This is the side menu for the documentation section.
-// You can nest items in `children` to create groups.
-// If a group name has a `link` prop, it will also act as a link in addition to a header.
-const menu = buildMenuItems('docs')
+function processMarkdown(markdownSrc) {
+    let markdown = fs.readFileSync(markdownSrc).toString();
+    markdown = assetMarkdownImage(markdown, markdownSrc);
+    markdown = assetHtmlImage(markdown, markdownSrc);
+    markdown = replaceRootUrls(markdown);
+    return markdown;
+}
 
-const readFile = src => fs.readFileSync(path.resolve(src), "utf8")
+function replaceRootUrls(markdown) {
+    return markdown.replace(/root:\/\/(.*?)(.md)/g, '/docs/$1');
+}
 
-const fixReprismSyntaxHighlighting = content => content
-  .replace(/```Python/g, '```python')
-  .replace(/```c\+\+/g, '```cpp')
-  .replace(/```proto/g, '```cpp')
+function assetHtmlImage(markdown, docPath) {
+    const re = /(<img src="(.*?)")/gm;
 
-// No need to touch any of this, unless you want to.
-export default {
-  getSiteData: () => ({
-    menu,
-    repo,
-    repoURL,
-    repoName
-  }),
-  getRoutes: () => [
-    {
-      path: "/",
-      component: "src/containers/Home"
-    },
-    ...docPages.map(page => ({
-      path: page.path,
-      component: "src/containers/Doc",
-      getData: async () => ({
-        markdown: fixReprismSyntaxHighlighting(await readFile(page.markdownSrc)),
-        editPath:
-          repoURL +
-          path.join(
-            "/blob/master/",
-            __dirname.split("/").pop(),
-            page.markdownSrc
-          ),
-        title: page.title
-      })
-    })),
-    {
-      is404: true,
-      component: "src/containers/404"
-    }
-  ],
-  renderToHtml: (render, Comp, meta) => {
-    try{
-      const sheet = new ServerStyleSheet();
-      const html = render(sheet.collectStyles(<Comp />));
-      meta.styleTags = sheet.getStyleElement();
-      return html;
-    } catch (e) {
-      console.log("ERROR", e);
-    }
-  },
-  Document: class CustomHtml extends Component {
-    render() {
-      const { Html, Head, Body, children, renderMeta } = this.props;
+    let match;
+    do {
+        match = re.exec(markdown);
+        if (match && match.length === 3) {
+            try {
+                if (!match[2].startsWith('http') && match[2].length > 0) {
+                    const imgFilename = path.resolve(path.join(path.dirname(docPath), match[2]));
+                    markdown = markdown.replace(match[1], `<img src="/assets/${webifyPath(path.relative('.', imgFilename))}"`);
+                }
+            } catch (err) {
+                // Do Nothing
+            }
+        }
+    } while (match);
 
-      return (
-        <Html>
-          <Head>
-            <meta charSet="UTF-8" />
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1"
-            />
-            <link
-              href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i"
-              rel="stylesheet"
-            />
-            {renderMeta.styleTags}
-            <title>{repoName}</title>
-          </Head>
-          <Body>{children}</Body>
-        </Html>
-      );
-    }
-  }
-};
+    return markdown;
+}
+
+function assetMarkdownImage(markdown, docPath) {
+    const re = /(!\[(.*?)\]\((.*?)( ".*")?\))/gm;
+
+    let match;
+    do {
+        match = re.exec(markdown);
+
+        if (match && (match.length === 4 || match.length === 5)) {
+            try {
+                if (!match[3].startsWith('http') && match[3].length > 0) {
+                    const imgFilename = path.resolve(path.join(path.dirname(docPath), match[3]));
+                    markdown = markdown.replace(match[1], `![${match[2]}](/assets/${webifyPath(path.relative('.', imgFilename))})`);
+                }
+            } catch (err) {
+                // Do Nothing
+            }
+        }
+    } while (match);
+
+    return markdown;
+}

@@ -1,5 +1,5 @@
 # dependencies
-/node_modules
+node_modules
 
 # testing
 /coverage
@@ -19,6 +19,13 @@
 
 .editorconfig
 .prettierrc
-/src/components/Search/*.json
-/src/components/Search/wrapper.js
-/.firebase
+
+/docs
+/dist
+/src/config.json
+/src/searchData
+/api/dist
+/api/src/data/config.json
+/public/assets/docs
+/projects.json
+/projects-summary.txt

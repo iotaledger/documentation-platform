@@ -1,158 +1,111 @@
-import React from "react";
-import { SiteData, Link, Head } from "react-static";
-import styled from "styled-components";
+import PropTypes from 'prop-types';
+import React from 'react';
+import ReactRouterPropTypes from 'react-router-prop-types';
+import { Head, withSiteData } from 'react-static';
+import BottomSticky from '../components/atoms/BottomSticky';
+import ScrollInContainer from '../components/atoms/ScrollInContainer';
+import EmailSignup from '../components/molecules/EmailSignup';
+import Feedback from '../components/molecules/Feedback';
+import FloatingMenu from '../components/molecules/FloatingMenu';
+import CardContainer from '../components/molecules/HomePageCard';
+import ProjectTopicsContainer from '../components/molecules/ProjectTopicsContainer';
+import SideMenu from '../components/molecules/SideMenu';
+import Header from '../components/organisms/Header';
+import contentHomePage from '../contentHomePage.json';
+import { submitFeedback } from '../utils/api';
+import { localStorageSet } from '../utils/localStorage';
+import { createProjectLinks, createProjectTopics } from '../utils/projects';
+import { ProjectsPropTypes } from '../utils/propTypes.js';
+import { initCorpusIndex } from '../utils/search';
+import Container from './Container';
+import { HomePageLayout, TabletHidden } from './Layouts';
 
-import logoImg from "../logo.png";
 
-const Styles = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  align-items: center;
-  justify-content: center;
-  padding: 5vw;
-  text-align: center;
+class Home extends React.Component {
+    static propTypes = {
+        siteName: PropTypes.string.isRequired,
+        history: ReactRouterPropTypes.history,
+        location: ReactRouterPropTypes.location,
+        projects: ProjectsPropTypes.isRequired
+    };
 
-  .backgrounds {
-    overflow: hidden;
-    pointer-events: none;
-    position: absolute;
-    z-index: -1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    constructor(props) {
+        super(props);
 
-    .background1,
-    .background2 {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
+        this.state = {
+            isMenuOpen: false
+        };
+
+        this.handleBurgerClick = this.handleBurgerClick.bind(this);
     }
 
-    .background1 {
-      transform: scale(3) rotate(50deg);
-      transform-origin: top left;
-      background: linear-gradient(
-        to bottom,
-        rgba(0, 120, 150, 0.05),
-        transparent 15px
-      );
+    componentDidMount() {
+        // We must store last path in here as when we create react-static
+        // there is no other way of getting where we were for 404 logging
+        localStorageSet('lastDocPath', '/home/');
+
+        // Trigger the search index load here so a search is quicker
+        initCorpusIndex();
+
+        window.addEventListener('resize', this.handleResize);
+        this.handleResize();
     }
 
-    .background2 {
-      transform: scale(3) rotate(-25deg);
-      transform-origin: top right;
-      background: linear-gradient(
-        to bottom,
-        rgba(0, 120, 150, 0.05),
-        transparent 15px
-      );
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleResize);
+    }    
+
+    handleBurgerClick() {
+        this.setState({isMenuOpen: !this.state.isMenuOpen});
     }
-  }
 
-  img {
-    width: 600px;
-  }
+    handleResize() {
+        document.querySelector('#image-background').style.height = `${document.querySelector('.cards-container').clientHeight}px`;
+    }
 
-  h1 {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-  }
+    render() {
+        return (
+            <Container {...this.props}>
+                <Head>
+                    <title>Home | {this.props.siteName}</title>
+                </Head>
+                <Header
+                    history={this.props.history}
+                    headerTitle='Developer Documentation'
+                    topTitles={contentHomePage.headerTopLinks}
+                    popularTopics={contentHomePage.popularTopics}
+                    onBurgerClick={this.handleBurgerClick}
+                />
+                <SideMenu
+                    isMenuOpen={this.state.isMenuOpen}
+                    projects={this.props.projects}
+                    onCloseClick={this.handleBurgerClick} 
+                    highlightedItem={this.state.projectFullURL}/>
+                <div id='image-background' style={{ background: '#f3f2f1', width: '100%', height: '0px', position: 'absolute'}} />
+                <HomePageLayout>
+                    <div className="left-column">
+                        <ScrollInContainer topOffset={50} bottomOffset={150}>   
+                            <FloatingMenu menuItems={createProjectLinks(this.props.projects)} />
+                        </ScrollInContainer>
+                    </div>
+                    <div className="right-column">
+                        <article>
+                            <CardContainer content={contentHomePage.cards} />
+                        </article>
+                        <article>
+                            <ProjectTopicsContainer content={createProjectTopics(this.props.projects)} />
+                        </article>
+                    </div>
+                    <BottomSticky zIndex={10} horizontalAlign='right'>
+                        <TabletHidden>
+                            <Feedback onSubmit={(data) => submitFeedback('/home/', data)} />
+                        </TabletHidden>
+                    </BottomSticky>
+                </HomePageLayout>
+                <EmailSignup />
+            </Container>
+        );
+    }
+}
 
-  h2 {
-    width: 400px;
-    max-width: 100%;
-    color: rgba(0, 0, 0, 0.8);
-  }
-
-  p {
-    max-width: 750px;
-  }
-
-  .github {
-    margin-top: 2rem;
-    width: 150px;
-  }
-`;
-
-const Cards = styled.div`
-  display: flex;
-  flex-align: stretch;
-  justify-content: stretch;
-  flex-wrap: wrap;
-  width: 1000px;
-  max-width: 95%;
-`;
-
-const Card = styled(Link)`
-  flex: 1 1 150px;
-  border: 2px solid rgba(0, 0, 0, 0.1);
-  background: ${props => props.background};
-  color: white;
-  border-radius: 5px;
-  padding: 2vh 2vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin: 1rem;
-  font-weight: bold;
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: 0.1s ease-out;
-  white-space: nowrap;
-
-  :hover {
-    transform: translate(3px, -5px);
-    box-shadow: -6px 10px 40px rgba(0, 0, 0, 0.2);
-  }
-`;
-
-export default () => (
-  <SiteData
-    render={({ menu, repo, repoURL, repoName }) => (
-      <Styles>
-        <Head>
-          <title>Home | {repoName}</title>
-        </Head>
-        <div className="backgrounds">
-          <div className="background1" />
-          <div className="background2" />
-        </div>
-        <img
-          src={logoImg}
-          alt=""
-          style={{ display: "block", margin: "0 auto" }}
-        />
-        <h1>IOTA Documentation</h1>
-        <h2>
-          The most bestest blazingliest fastest freaking documentation site.
-        </h2>
-        <p>
-          This awesome site was built to help you find product documentation across all IOTA's libraries and services.
-        </p>
-        <Cards>
-          {
-            Object.values(menu).map(({ name, versions }) =>
-              <Card key={name} to={{ pathname: `/docs/${name}/reference/${Object.keys(versions)[Object.keys(versions).length - 1]}/README`, state: { project: name }}} background="#ff6073">
-                {name}
-              </Card>
-            )
-          }
-        </Cards>
-        <div className="github">
-          <Link to={repoURL}>
-            <img
-              src={`https://img.shields.io/github/stars/${repo}.svg?style=social&label=Star`}
-              alt="Github Stars"
-            />
-          </Link>
-        </div>
-      </Styles>
-    )}
-  />
-);
+export default withSiteData(Home);
