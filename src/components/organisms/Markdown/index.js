@@ -1,7 +1,6 @@
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import emoji from 'emoji-dictionary';
 import 'prismjs/themes/prism.css';
+import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { highlight, loadLanguages } from 'reprism';
@@ -13,6 +12,7 @@ import javascript from 'reprism/languages/javascript';
 import json from 'reprism/languages/json';
 import jsx from 'reprism/languages/jsx';
 import python from 'reprism/languages/python';
+import { copyToClipboard } from '../../../utils/clipboard';
 import { sanitizeHashId } from '../../../utils/paths';
 import Heading from '../../atoms/Heading';
 import HeadingLabel from '../../atoms/HeadingLabel';
@@ -46,10 +46,16 @@ class Markdown extends PureComponent {
         this.tableCellRenderer = this.tableCellRenderer.bind(this);
         this.tableRowRenderer = this.tableRowRenderer.bind(this);
         this.replaceSearchQuery = this.replaceSearchQuery.bind(this);
+        this.codeBlock = this.codeBlock.bind(this);
+        this.handleCopy = this.handleCopy.bind(this);
 
         this.currentTable = undefined;
         this.currentTableRow = 0;
         this.currentTableHeaders = [];
+    }
+
+    handleCopy(code) {
+        copyToClipboard(code);
     }
 
     componentDidMount() {
@@ -331,15 +337,20 @@ class Markdown extends PureComponent {
         }
         html = this.replaceSearchQuery(html, true);
 
-        return (
-            <div
-                className={
-                    classNames(
-                        { 'markdown-code': wrap }
-                    )
-                }
-                dangerouslySetInnerHTML={{ __html: html }} />
-        );
+        if (wrap) {
+            return (
+                <div className='markdown-code'>
+                    <button className='markdown-code--copy' onClick={() => this.handleCopy(props.value)} />
+                    <div dangerouslySetInnerHTML={{ __html: html }} />
+                </div>
+            );
+        } else {
+            return (
+                <div
+                    className='markdown-code'
+                    dangerouslySetInnerHTML={{ __html: html }} />
+            );
+        }
     }
 
     inlineCodeBlock(props) {

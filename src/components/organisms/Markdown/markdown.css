@@ -85,10 +85,6 @@ code, pre {
   font-weight: 600;
 }
 
-.markdown__wrapper hr {
-  border-top: 3px solid #f3f2f1;
-}
-
 .markdown__wrapper a {
   word-break: break-all;
   word-break: break-word;
@@ -106,6 +102,26 @@ code, pre {
   color: #603f98;
   text-decoration-color: #603f98 !important;
 }
+
+.markdown-code--copy {
+  position: absolute;
+  right: 10px;
+  border: 0px;
+  background: none;
+  cursor: pointer;
+  outline: 0;
+}
+
+.markdown-code--copy:hover {
+  opacity: 0.5;
+}
+
+.markdown-code--copy::before {
+  font-family: "IOTA icons";
+  font-size: 18px;
+  content: '📄';
+}
+
 
 .search-keyword {
   background-color: #cdbfe4; /* lighten($blueberry, 40%); */
