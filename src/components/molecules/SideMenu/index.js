@@ -22,6 +22,7 @@ class SideMenu extends React.Component {
         };
 
         this.handleHeadingClick = this.handleHeadingClick.bind(this);
+        this.handleCloseClick = this.handleCloseClick.bind(this);
         this.keydown = this.keydown.bind(this);
     }
 
@@ -41,6 +42,10 @@ class SideMenu extends React.Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        document.body.classList.toggle('no-scroll', nextProps.isMenuOpen);
+    }
+
     componentWillUnmount() {
         document.removeEventListener('keydown', this.keydown, false);
     }
@@ -58,6 +63,13 @@ class SideMenu extends React.Component {
         });
     }
 
+    handleCloseClick() {
+        if(this.props.isMenuOpen && this.props.onCloseClick) {
+            document.body.classList.toggle('no-scroll', false);
+            this.props.onCloseClick();
+        }
+    }
+
     keydown(event) {
         if (event.keyCode === 27 && this.props.isMenuOpen) {
             this.props.onCloseClick();
@@ -66,7 +78,7 @@ class SideMenu extends React.Component {
 
     render() {
         return (
-            <ClickOutside onClickOutside={this.props.isMenuOpen ? this.props.onCloseClick : undefined}>
+            <ClickOutside onClickOutside={this.handleCloseClick}>
                 <section className={classNames(
                     'side-menu',
                     { 'side-menu__shown': this.props.isMenuOpen },
@@ -74,7 +86,7 @@ class SideMenu extends React.Component {
                 )}>
                     <h4 className="side-menu__caption">
                         <span>Navigation</span>
-                        <button className="side-menu__close" onClick={this.props.onCloseClick}></button>
+                        <button className="side-menu__close" onClick={this.handleCloseClick}></button>
                     </h4>
 
                     {this.state.menuData.map((menuItem, index) => (
