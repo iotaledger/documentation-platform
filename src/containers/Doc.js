@@ -20,7 +20,6 @@ import { createPageTableOfContents, createProjectLinks, getProjectTitle, getProj
 import { ProjectsPropTypes } from '../utils/propTypes.js';
 import { extractHighlights, extractSearchQuery, initCorpusIndex } from '../utils/search';
 import Container from './Container';
-import { DocPageLayout, TabletHidden } from './Layouts';
 
 class Doc extends React.Component {
     static propTypes = {
@@ -107,7 +106,7 @@ class Doc extends React.Component {
                     currentVersion={this.state.projectVersion}
                     onChange={(newVersion) => this.changeVersion(newVersion)}
                 />
-                <DocPageLayout>
+                <div className="layouts--doc">
                     <section className="left-column">
                         <DropSelector
                             items={createProjectLinks(this.props.projects)}
@@ -131,11 +130,11 @@ class Doc extends React.Component {
                         </ScrollInContainer>
                     </section>
                     <BottomSticky zIndex={10} horizontalAlign='right'>
-                        <TabletHidden>
+                        <div className="tablet-hidden">
                             <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)} />
-                        </TabletHidden>
+                        </div>
                     </BottomSticky>
-                </DocPageLayout>
+                </div>
                 <Navigator
                     projects={this.props.projects}
                     pathname={this.props.location.pathname}

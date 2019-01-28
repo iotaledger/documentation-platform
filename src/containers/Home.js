@@ -18,8 +18,6 @@ import { createProjectLinks, createProjectTopics } from '../utils/projects';
 import { ProjectsPropTypes } from '../utils/propTypes.js';
 import { initCorpusIndex } from '../utils/search';
 import Container from './Container';
-import { HomePageLayout, TabletHidden } from './Layouts';
-
 
 class Home extends React.Component {
     static propTypes = {
@@ -82,7 +80,7 @@ class Home extends React.Component {
                     onCloseClick={this.handleBurgerClick} 
                     highlightedItem={this.state.projectFullURL}/>
                 <div id='image-background' style={{ background: '#f3f2f1', width: '100%', height: '0px', position: 'absolute'}} />
-                <HomePageLayout>
+                <div className="layouts--home">
                     <div className="left-column">
                         <ScrollInContainer topOffset={50} bottomOffset={150}>   
                             <FloatingMenu menuItems={createProjectLinks(this.props.projects)} />
@@ -97,11 +95,11 @@ class Home extends React.Component {
                         </article>
                     </div>
                     <BottomSticky zIndex={10} horizontalAlign='right'>
-                        <TabletHidden>
+                    <div className="tablet-hidden">
                             <Feedback onSubmit={(data) => submitFeedback('/home/', data)} />
-                        </TabletHidden>
+                        </div>
                     </BottomSticky>
-                </HomePageLayout>
+                </div>
                 <EmailSignup />
             </Container>
         );

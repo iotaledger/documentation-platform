@@ -15,7 +15,6 @@ import { localStorageSet } from '../utils/localStorage';
 import { ProjectsPropTypes } from '../utils/propTypes.js';
 import { constructSearchQuery, extractSearchQuery, initCorpusIndex } from '../utils/search';
 import Container from './Container';
-import { SearchPageLayout, TabletHidden } from './Layouts';
 
 class Search extends React.Component {
     static propTypes = {
@@ -123,7 +122,7 @@ class Search extends React.Component {
                         <span className="sub-header__title sub-header-title__fixed">Search results</span>
                     </section>
                 </section>
-                <SearchPageLayout>
+                <div className="layouts--search">
                     <div className="middle-column">
                         <div className="input-wrapper-basic">
                             <InputSearch
@@ -148,11 +147,11 @@ class Search extends React.Component {
                         </div>
                     </div>
                     <BottomSticky zIndex={10} horizontalAlign='right'>
-                        <TabletHidden>
+                    <div className="tablet-hidden">
                             <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)} />
-                        </TabletHidden>
+                        </div>
                     </BottomSticky>
-                </SearchPageLayout>
+                </div>
             </Container>
         );
     }

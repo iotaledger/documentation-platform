@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import React, { Component } from 'react';
-import { ServerStyleSheet } from 'styled-components';
 import projects from './projects.json';
 import GoogleAnalytics from './src/components/atoms/GoogleAnalytics';
 import HotJar from './src/components/atoms/HotJar';
@@ -36,20 +35,9 @@ export default {
             component: 'src/containers/NotFound'
         }
     ],
-    renderToHtml: (render, Comp, meta) => {
-        try {
-            const sheet = new ServerStyleSheet();
-            const html = render(sheet.collectStyles(<Comp />));
-            meta.styleTags = sheet.getStyleElement();
-            return html;
-        } catch (e) {
-            // eslint-disable-next-line no-console
-            console.log('ERROR', e);
-        }
-    },
     Document: class CustomHtml extends Component {
         render() {
-            const { Html, Head, Body, children, renderMeta } = this.props;
+            const { Html, Head, Body, children } = this.props;
 
             return (
                 <Html>
@@ -68,7 +56,6 @@ export default {
                         <meta name="application-name" content={siteName} />
                         <meta name="msapplication-TileColor" content="#ffffff" />
                         <meta name="theme-color" content="#ffffff" />
-                        {renderMeta.styleTags}
                         <title>{siteName}</title>
                     </Head>
                     <Body>
