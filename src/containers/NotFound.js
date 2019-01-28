@@ -14,6 +14,7 @@ import './notFound.css';
 class NotFound extends React.PureComponent {
     static propTypes = {
         siteName: PropTypes.string.isRequired,
+        apiEndpoint: PropTypes.string.isRequired,
         projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location
@@ -39,7 +40,7 @@ class NotFound extends React.PureComponent {
         // this can be empty
         const lastLocation = localStorageGet('lastDocPath');
 
-        submitMissing(this.props.location.pathname, lastLocation);
+        submitMissing(this.props.apiEndpoint, this.props.location.pathname, lastLocation);
     }
 
     render() {

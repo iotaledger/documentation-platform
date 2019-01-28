@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { apiEndpoint } from '../config.json';
 
-async function sendRequest(endpoint, method, data = {}) {
+async function sendRequest(apiEndpoint, endpoint, method, data = {}) {
     const response = await axios({
         method,
         headers: {
@@ -13,9 +12,9 @@ async function sendRequest(endpoint, method, data = {}) {
     return response ? response.data : null;
 }
 
-export async function submitFeedback(document, data) {
+export async function submitFeedback(apiEndpoint, document, data) {
     try {
-        return await sendRequest('feedback', 'POST', { document, wasItUseful: data.wasItUseful, comments: data.comments });
+        return await sendRequest(apiEndpoint, 'feedback', 'POST', { document, wasItUseful: data.wasItUseful, comments: data.comments });
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
@@ -27,9 +26,9 @@ export async function submitFeedback(document, data) {
     }
 }
 
-export async function submitMissing(document, fromDocument) {
+export async function submitMissing(apiEndpoint, document, fromDocument) {
     try {
-        return await sendRequest('missing', 'POST', { document, fromDocument });
+        return await sendRequest(apiEndpoint, 'missing', 'POST', { document, fromDocument });
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
@@ -41,9 +40,9 @@ export async function submitMissing(document, fromDocument) {
     }
 }
 
-export async function submitEmail(email) {
+export async function submitEmail(apiEndpoint, email) {
     try {
-        return await sendRequest('email', 'POST', { email });
+        return await sendRequest(apiEndpoint, 'email', 'POST', { email });
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);

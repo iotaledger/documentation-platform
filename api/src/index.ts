@@ -8,14 +8,11 @@ import { missingCreate } from "./routes/missingCreate";
 
 // tslint:disable:no-var-requires no-require-imports
 const port = process.env.PORT || 4000;
-let configId = process.env.CONFIG_ID || "";
-if (configId.length > 0) {
-    configId += ".";
-}
+let configId = process.env.CONFIG_ID || "dev";
 
 const packageJson = require("../package.json");
 // tslint:disable-next-line:non-literal-require
-const config: IConfiguration = require(`./data/config.${configId}json`);
+const config: IConfiguration = require(`./data/config.${configId}.json`);
 
 const app = express();
 

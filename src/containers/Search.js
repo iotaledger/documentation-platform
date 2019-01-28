@@ -19,6 +19,7 @@ import Container from './Container';
 class Search extends React.Component {
     static propTypes = {
         siteName: PropTypes.string.isRequired,
+        apiEndpoint: PropTypes.string.isRequired,
         projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location
@@ -148,7 +149,7 @@ class Search extends React.Component {
                     </div>
                     <BottomSticky zIndex={10} horizontalAlign='right'>
                     <div className="tablet-hidden">
-                            <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)} />
+                            <Feedback onSubmit={(data) => submitFeedback(this.props.apiEndpoint, this.props.location.pathname, data)} />
                         </div>
                     </BottomSticky>
                 </div>

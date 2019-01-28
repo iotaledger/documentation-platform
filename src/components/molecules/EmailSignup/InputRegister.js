@@ -1,8 +1,13 @@
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { submitEmail } from '../../../utils/api';
 
 class InputRegister extends React.Component {
+    static propTypes = {
+        apiEndpoint: PropTypes.string.isRequired
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -31,7 +36,7 @@ class InputRegister extends React.Component {
             this.setState({ error: 'Please provide a valid e-mail address.' });
         } else {
             this.setState({ loading: true }, async () => {
-                const response = await submitEmail(email);
+                const response = await submitEmail(this.props.apiEndpoint, email);
                 this.setState({ success: response.success, loading: false, apiMessage: response.message });
             });
         }

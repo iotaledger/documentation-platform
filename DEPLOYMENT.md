@@ -8,7 +8,7 @@ Get the latest content from the <https://github.com/iotaledger/documentation> re
 
 ## Configuration
 
-Copy the `./src/config.template.json` to `./src/config.json` and populate the fields.
+Copy the `./src/config.template.json` to `./src/config.dev.json` and populate the fields.
 
 ```js
 {
@@ -31,6 +31,8 @@ npm run build
 ## Deploy
 
 The build is setup to use Zeit/now for hosting, to configure this for production modify `./now.json` to point at where it needs to be deployed to, and then execute.
+
+If you want to use a different name for the config file you can specify an environment variable of CONFIG_ID, e.g. set CONFIG_ID to dev will load `config.dev.json` instead.
 
 ```shell
 cd dist

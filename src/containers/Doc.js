@@ -25,6 +25,7 @@ class Doc extends React.Component {
     static propTypes = {
         title: PropTypes.string.isRequired,
         siteName: PropTypes.string.isRequired,
+        apiEndpoint: PropTypes.string.isRequired,
         markdown: PropTypes.string.isRequired,
         projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
@@ -131,7 +132,7 @@ class Doc extends React.Component {
                     </section>
                     <BottomSticky zIndex={10} horizontalAlign='right'>
                         <div className="tablet-hidden">
-                            <Feedback onSubmit={(data) => submitFeedback(this.props.location.pathname, data)} />
+                            <Feedback onSubmit={(data) => submitFeedback(this.props.apiEndpoint, this.props.location.pathname, data)} />
                         </div>
                     </BottomSticky>
                 </div>

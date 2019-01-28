@@ -22,6 +22,7 @@ import Container from './Container';
 class Home extends React.Component {
     static propTypes = {
         siteName: PropTypes.string.isRequired,
+        apiEndpoint: PropTypes.string.isRequired,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location,
         projects: ProjectsPropTypes.isRequired
@@ -96,11 +97,11 @@ class Home extends React.Component {
                     </div>
                     <BottomSticky zIndex={10} horizontalAlign='right'>
                     <div className="tablet-hidden">
-                            <Feedback onSubmit={(data) => submitFeedback('/home/', data)} />
+                            <Feedback onSubmit={(data) => submitFeedback(this.props.apiEndpoint, '/home/', data)} />
                         </div>
                     </BottomSticky>
                 </div>
-                <EmailSignup />
+                <EmailSignup apiEndpoint={this.props.apiEndpoint} />
             </Container>
         );
     }

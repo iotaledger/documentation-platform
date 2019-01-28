@@ -4,13 +4,15 @@ import React, { Component } from 'react';
 import projects from './projects.json';
 import GoogleAnalytics from './src/components/atoms/GoogleAnalytics';
 import HotJar from './src/components/atoms/HotJar';
-import { googleAnalyticsId, hotJarId, siteName, siteRoot } from './src/config.json';
+
+let configId = process.env.CONFIG_ID || 'dev';
+const config = require(`./src/config.${configId}.json`);
 
 export default {
-    siteRoot,
+    siteRoot: config.siteRoot,
     getSiteData: () => ({
         projects,
-        siteName
+        ...config
     }),
     getRoutes: () => [
         {
@@ -52,16 +54,16 @@ export default {
                         <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
                         <link rel="shortcut icon" href="/favicon/favicon.ico" />
                         <link rel="manifest" href="/favicon/site.webmanifest" />
-                        <meta name="apple-mobile-web-app-title" content={siteName} />
-                        <meta name="application-name" content={siteName} />
+                        <meta name="apple-mobile-web-app-title" content={config.siteName} />
+                        <meta name="application-name" content={config.siteName} />
                         <meta name="msapplication-TileColor" content="#ffffff" />
                         <meta name="theme-color" content="#ffffff" />
-                        <title>{siteName}</title>
+                        <title>{config.siteName}</title>
                     </Head>
                     <Body>
                         {children}
-                        <HotJar id={hotJarId} />
-                        <GoogleAnalytics id={googleAnalyticsId} />
+                        <HotJar id={config.hotJarId} />
+                        <GoogleAnalytics id={config.googleAnalyticsId} />
                     </Body>
                 </Html>
             );

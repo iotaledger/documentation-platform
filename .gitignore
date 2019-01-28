@@ -23,9 +23,11 @@ node_modules
 /docs
 /dist
 /src/config.json
+/src/config.dev.json
 /src/searchData
 /api/dist
 /api/src/data/config.json
+/api/src/data/config.dev.json
 /public/assets/docs
 /projects.json
 /projects-summary.txt
