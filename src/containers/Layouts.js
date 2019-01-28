@@ -82,7 +82,7 @@ max-width: ${maxWidthLayout}px;
 .middle-column {
   min-height: 500px;
   flex: 1;
-  padding: 70px 65px 120px 55px;
+  padding: 70px 55px 120px 45px;
   max-width: 720px;
   box-sizing: border-box;
   overflow:hidden;
