@@ -5,7 +5,7 @@ import projects from './projects.json';
 import GoogleAnalytics from './src/components/atoms/GoogleAnalytics';
 import HotJar from './src/components/atoms/HotJar';
 
-let configId = process.env.CONFIG_ID || 'dev';
+const configId = process.env.CONFIG_ID || 'dev';
 const config = require(`./src/config.${configId}.json`);
 
 export default {
