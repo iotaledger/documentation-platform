@@ -46,6 +46,7 @@ code, pre {
   cursor: pointer;
   outline: 0;
   opacity: 0.2;
+  transition: opacity 0.3s ease;
 }
 
 .markdown-code--copy:hover {
