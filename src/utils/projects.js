@@ -217,29 +217,75 @@ export function replaceVersion(projectUrlParts, newVersion, projects) {
 }
 
 export const getNextPage = (projectUrlParts, projects) => {
+    let nextPage;
     const project = lookupProject(projectUrlParts, projects);
 
     const projectVersionPages = getProjectVersionPages(project, projectUrlParts.projectVersion);
     if (projectVersionPages) {
         const currentIndex = projectVersionPages.findIndex(indexItem => indexItem.link === projectUrlParts.projectFullURL);
         if (currentIndex >= 0 && currentIndex < projectVersionPages.length) {
-            return projectVersionPages[currentIndex + 1];
+            nextPage = projectVersionPages[currentIndex + 1];
         }
     }
 
-    return undefined;
+    // We exhausted the pages in the current project, so we need to find the next project
+    if (!nextPage) {
+        let projectIndex = projects.findIndex(p => p.folder === projectUrlParts.projectFolder);
+        projectIndex++;
+        if (projectIndex === projects.length) {
+            projectIndex = 0;
+        }
+
+        // Skip any that don't have home page content
+        while(!projects[projectIndex].home) {
+            projectIndex++;
+            if (projectIndex === projects.length) {
+                projectIndex = 0;
+            }
+        }
+
+        const latestVersion = getLatestVersion(projects[projectIndex]);
+        const projectVersionPages = getProjectVersionPages(projects[projectIndex], latestVersion);
+
+        nextPage = projectVersionPages[0];
+    }
+
+    return nextPage;
 };
 
 export const getPreviousPage = (projectUrlParts, projects) => {
+    let prevPage;
     const project = lookupProject(projectUrlParts, projects);
 
     const projectVersionPages = getProjectVersionPages(project, projectUrlParts.projectVersion);
     if (projectVersionPages) {
         const currentIndex = projectVersionPages.findIndex(indexItem => indexItem.link === projectUrlParts.projectFullURL);
         if (currentIndex > 0) {
-            return projectVersionPages[currentIndex - 1];
+            prevPage = projectVersionPages[currentIndex - 1];
         }
     }
 
-    return undefined;
+    // We exhausted the pages in the current project, so we need to find the previous project
+    if (!prevPage) {
+        let projectIndex = projects.findIndex(p => p.folder === projectUrlParts.projectFolder);
+        projectIndex--;
+        if (projectIndex < 0) {
+            projectIndex = projects.length - 1;
+        }
+
+        // Skip any that don't have home page content
+        while(!projects[projectIndex].home) {
+            projectIndex--;
+            if (projectIndex < 0) {
+                projectIndex = projects.length - 1;
+            }
+        }
+
+        const latestVersion = getLatestVersion(projects[projectIndex]);
+        const projectVersionPages = getProjectVersionPages(projects[projectIndex], latestVersion);
+
+        prevPage = projectVersionPages[projectVersionPages.length - 1];
+    }
+
+    return prevPage;
 };
