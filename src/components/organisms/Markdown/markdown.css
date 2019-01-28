@@ -9,11 +9,15 @@ code, pre {
   font-family: 'Source Code Pro', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important;
 }
 
+.markdown-code__wrapper {
+  position: relative;
+}
+
 .markdown-code {
   border: 1px solid #ececec;
   border-radius: 0px 0px 5px 5px;
   background-color: #f8f8f8;
-  padding: 10px 25px;
+  padding: 20px 25px;
   overflow: auto;
   margin-bottom: 1.5rem;
   font-size: 0.92rem;
@@ -31,6 +35,26 @@ code, pre {
   padding: 0px 5px 0px 5px;
   font-size: 0.93rem;
   line-height: 1.5;
+}
+
+.markdown-code--copy {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border: 0px;
+  background: none;
+  cursor: pointer;
+  outline: 0;
+}
+
+.markdown-code--copy:hover {
+  opacity: 0.5;
+}
+
+.markdown-code--copy::before {
+  font-family: "IOTA icons";
+  font-size: 18px;
+  content: '📄';
 }
 
 .markdown__wrapper img {
@@ -102,26 +126,6 @@ code, pre {
   color: #603f98;
   text-decoration-color: #603f98 !important;
 }
-
-.markdown-code--copy {
-  position: absolute;
-  right: 10px;
-  border: 0px;
-  background: none;
-  cursor: pointer;
-  outline: 0;
-}
-
-.markdown-code--copy:hover {
-  opacity: 0.5;
-}
-
-.markdown-code--copy::before {
-  font-family: "IOTA icons";
-  font-size: 18px;
-  content: '📄';
-}
-
 
 .search-keyword {
   background-color: #cdbfe4; /* lighten($blueberry, 40%); */

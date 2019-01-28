@@ -339,9 +339,9 @@ class Markdown extends PureComponent {
 
         if (wrap) {
             return (
-                <div className='markdown-code'>
+                <div className='markdown-code__wrapper'>
                     <button className='markdown-code--copy' onClick={() => this.handleCopy(props.value)} />
-                    <div dangerouslySetInnerHTML={{ __html: html }} />
+                    <div className='markdown-code' dangerouslySetInnerHTML={{ __html: html }} />
                 </div>
             );
         } else {
