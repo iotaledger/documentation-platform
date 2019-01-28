@@ -38,25 +38,23 @@ class FloatingMenu extends React.Component {
     }
 
     handleScroll() {
+        const threshold = window.innerHeight * 0.35;
 
-        const treshold = window.innerHeight * 0.35;
-        
         let activeTarget = null;
 
         this.targets.forEach(target => {
             const rect = target.getBoundingClientRect();
 
-            if(rect.top < treshold && rect.bottom > 0){
+            if (rect.top < threshold && rect.bottom > 0) {
                 activeTarget = target.id;
             }
         });
 
-        if(activeTarget !== this.state.activeTarget){
+        if (activeTarget !== this.state.activeTarget) {
             this.setState({
                 activeTarget
             });
         }
-
     }
 
     render() {
@@ -68,7 +66,7 @@ class FloatingMenu extends React.Component {
                         className={
                             classNames('floating-menu__item',
                                 {
-                                    'floating-menu__item--selected': this.props.highlightedItem === item.folder || this.state.activeTarget === item.name.toLowerCase().replace(/ /g, '_') 
+                                    'floating-menu__item--selected': this.props.highlightedItem === item.folder || this.state.activeTarget === item.name.toLowerCase().replace(/ /g, '_')
                                 })}
                     >
                         <Link to={item.link} exact>

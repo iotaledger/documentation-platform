@@ -41,6 +41,7 @@ class Markdown extends PureComponent {
         this.headingLabels = [];
 
         this.html = this.html.bind(this);
+        this.heading = this.heading.bind(this);
         this.textRenderer = this.textRenderer.bind(this);
         this.tableRenderer = this.tableRenderer.bind(this);
         this.tableCellRenderer = this.tableCellRenderer.bind(this);
@@ -52,6 +53,7 @@ class Markdown extends PureComponent {
         this.currentTable = undefined;
         this.currentTableRow = 0;
         this.currentTableHeaders = [];
+        this.headingCounters = {};
     }
 
     handleCopy(code) {
@@ -60,6 +62,7 @@ class Markdown extends PureComponent {
 
     componentDidMount() {
         this.highlights = [];
+        this.headingCounters = {};
         if (this.props.highlights) {
             this.highlights = this.highlights.concat(this.props.highlights);
         }
@@ -96,6 +99,11 @@ class Markdown extends PureComponent {
         this.setState({
             content
         });
+    }
+
+    componentDidUpdate() {
+        this.highlights = [];
+        this.headingCounters = {};
     }
 
     fixReprismSyntaxHighlighting(content) {
@@ -406,8 +414,16 @@ class Markdown extends PureComponent {
     }
 
     heading(props) {
+        let id = sanitizeHashId(props.children[0].props.value);
+        if (this.headingCounters[id] === undefined) {
+            this.headingCounters[id] = -1;
+        }
+        this.headingCounters[id]++;
+        if (this.headingCounters[id] > 0) {
+            id = `${id}_${this.headingCounters[id]}`;
+        }
         return (
-            <Heading className='text--tertiary' level={props.level} id={sanitizeHashId(props.children[0].props.value)} {...props} />
+            <Heading className='text--tertiary' level={props.level} id={id} {...props} />
         );
     }
 

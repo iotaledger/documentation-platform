@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { scrollIntoView } from '../../../utils/scroll';
+import { currentScrollTop, scrollIntoView } from '../../../utils/scroll';
 
 class TableOfContents extends React.PureComponent {
     static propTypes = {
@@ -15,17 +15,71 @@ class TableOfContents extends React.PureComponent {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            activeTarget: undefined
+        };
+    }
+
+    componentDidMount() {
+        this.handleScroll = this.handleScroll.bind(this);
+
+        document.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('resize', this.handleScroll);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.items.length !== prevProps.items.length || !this.targets) {
+            const headingCounters = {};
+    
+            this.targets = this.props.items.map(item => {
+                let id = item.link;
+
+                if (headingCounters[id] === undefined) {
+                    headingCounters[id] = -1;
+                }
+                headingCounters[id]++;
+                if (headingCounters[id] > 0) {
+                    id = `${id}_${headingCounters[id]}`;
+                }
+
+                item.link = id;
+    
+                return document.getElementById(item.link.substring(1));
+            });
+
+            this.handleScroll();
+        }
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.handleScroll);
+    }
+
+    handleScroll() {
+        if (this.targets && this.targets.length > 0) {
+            let activeTarget = this.targets[0].id;
+            const scrollTop = currentScrollTop();
+
+            for (let i = 0; i < this.targets.length; i++) {
+                if (scrollTop >= this.targets[i].offsetTop - 200) {
+                    activeTarget = this.targets[i].id;
+                }
+            }
+
+            if (activeTarget !== this.state.activeTarget) {
+                this.setState({
+                    activeTarget
+                });
+            }
+        }
     }
 
     handleClick(e) {
         e.preventDefault();
 
         scrollIntoView(document.querySelector(e.target.getAttribute('href')));
-
-        // document.querySelector(e.target.getAttribute('href')).scrollIntoView({
-        //     block: 'start',
-        //     behavior: 'smooth'
-        // });
     }
 
     render() {
@@ -38,7 +92,10 @@ class TableOfContents extends React.PureComponent {
                 </h3>
                 <ul className="table-of-contents__section">
                     {this.props.items.map((item, idx) => (
-                        <li key={idx} className={classNames('table-of-contents-list-item', {'table-of-contents-list-item__sub' : item.level > 2})}>
+                        <li key={idx} className={classNames(
+                            'table-of-contents-list-item',
+                            { 'table-of-contents-list-item__sub': item.level > 2 },
+                            { 'table-of-contents-list-item__selected': this.state.activeTarget === item.link.substring(1) })}>
                             <a href={item.link} onClick={this.handleClick}>
                                 {item.name}
                             </a>
