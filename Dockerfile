@@ -7,6 +7,10 @@ WORKDIR /usr/src/app
 # Copy everything from current Folder
 COPY . ./
 
+# Set the env variables
+ARG CONFIG_ID
+RUN echo "CONFIG_ID=$CONFIG_ID"
+
 # Running required steps to prepare the app prod build
 RUN npm install
 RUN npm run build
