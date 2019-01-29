@@ -27,8 +27,10 @@ async function indexDocs(projectDataFile, corpusFile, indexFile) {
             console.log(chalk.cyan(`\n\tv${version.version}`));
 
             for (let k = 0; k < version.pages.length; k++) {
-                console.log(chalk.cyan(`\t\tAdding '${version.pages[k].name}' in file '${version.pages[k].link}.md'`));
-                await addFileToCorpusAndDocuments(path.join(__dirname, `${version.pages[k].link}.md`), version.pages[k].toc, corpus, documents);
+                if (!version.pages[k].link.startsWith('http')) {
+                    console.log(chalk.cyan(`\t\tAdding '${version.pages[k].name}' in file '${version.pages[k].link}.md'`));
+                    await addFileToCorpusAndDocuments(path.join(__dirname, `${version.pages[k].link}.md`), version.pages[k].toc, corpus, documents);
+                }
             }
         }
     }

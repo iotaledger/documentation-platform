@@ -158,7 +158,7 @@ async function buildSingleVersion(docsFolder, projectFolder, version) {
                     const { toc, assets } = await extractTocAndValidateAssets(docsFolder, projectFolder, version, match[2], docIndexFile);
                     versions.push({
                         name: match[1],
-                        link: `/${docsFolder}/${projectFolder}/${version}/${sanitizedLink}`,
+                        link: match[2].startsWith('https') ? match[2] : `/${docsFolder}/${projectFolder}/${version}/${sanitizedLink}`,
                         toc,
                         assets: assets.length > 0 ? assets : undefined
                     });

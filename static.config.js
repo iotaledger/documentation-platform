@@ -81,11 +81,13 @@ function getDocPages() {
             const version = project.versions[j];
 
             for (let k = 0; k < version.pages.length; k++) {
-                documents.push({
-                    path: version.pages[k].link,
-                    title: `${version.pages[k].name.split('/').reverse().join(' | ')} | ${project.name}`,
-                    markdownSrc: `.${version.pages[k].link}.md`
-                });
+                if (!version.pages[k].link.startsWith('http')) {
+                    documents.push({
+                        path: version.pages[k].link,
+                        title: `${version.pages[k].name.split('/').reverse().join(' | ')} | ${project.name}`,
+                        markdownSrc: `.${version.pages[k].link}.md`
+                    });
+                }
             }
         }
     }

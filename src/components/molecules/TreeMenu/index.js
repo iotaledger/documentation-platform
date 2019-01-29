@@ -38,7 +38,7 @@ class TreeMenu extends React.Component {
                                 classNames(
                                     'tree-menu__section-title'
                                 )
-                            }><Link to={section.link}>{section.name}</Link></h3>
+                            }><Link to={section.link} target={section.link.startsWith('http') ? '_blank' : undefined}>{section.name}</Link></h3>
                     )}
                     {section.type === 'section-header' && (
                         <React.Fragment>
@@ -61,7 +61,7 @@ class TreeMenu extends React.Component {
                                                 { 'tree-menu__section-item--selected': item.selected }
                                             )
                                         }
-                                    ><Link href={item.link}>{item.name}</Link></li>
+                                    ><Link href={item.link} target={item.link.startsWith('http') ? '_blank' : undefined}>{item.name}</Link></li>
                                 ))}
                             </ul>
                         </React.Fragment>

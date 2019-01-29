@@ -64,7 +64,7 @@ class SideMenu extends React.Component {
     }
 
     handleCloseClick() {
-        if(this.props.isMenuOpen && this.props.onCloseClick) {
+        if (this.props.isMenuOpen && this.props.onCloseClick) {
             document.body.classList.toggle('no-scroll', false);
             this.props.onCloseClick();
         }
@@ -107,7 +107,9 @@ class SideMenu extends React.Component {
                                                 'side-menu-item',
                                                 { 'side-menu-item--active': menuListItem.selected }
                                             )}>
-                                                <Link href={menuListItem.link} className={classNames({ 'side-menu-item--active': menuListItem.selected })}>
+                                                <Link href={menuListItem.link}
+                                                    target={menuListItem.link.startsWith('http') ? '_blank' : undefined}
+                                                    className={classNames({ 'side-menu-item--active': menuListItem.selected })}>
                                                     {menuListItem.name}
                                                 </Link>
                                             </li>
@@ -122,7 +124,10 @@ class SideMenu extends React.Component {
                                                                 'side-menu-item',
                                                                 { 'side-menu-item--active': subItem.selected }
                                                             )}>
-                                                            <Link href={subItem.link} className={classNames({ 'side-menu-item--active': subItem.selected })}>
+                                                            <Link
+                                                                href={subItem.link}
+                                                                target={subItem.link.startsWith('http') ? '_blank' : undefined}
+                                                                className={classNames({ 'side-menu-item--active': subItem.selected })}>
                                                                 {subItem.name}
                                                             </Link>
                                                         </li>
