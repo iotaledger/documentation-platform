@@ -44,9 +44,15 @@ class TableOfContents extends React.PureComponent {
                 }
 
                 item.link = id;
+
+                const target = document.getElementById(item.link.substring(1));
+                if (!target) {
+                    // eslint-disable-next-line no-console
+                    console.error(`Unable to find TOC link '${item.link.substring(1)}' in content`);
+                }
     
-                return document.getElementById(item.link.substring(1));
-            });
+                return target;
+            }).filter(t => t !== undefined);
 
             this.handleScroll();
         }
@@ -74,6 +80,17 @@ class TableOfContents extends React.PureComponent {
                 });
             }
         }
+    }
+
+    isElementInViewport(el) {
+        const rect = el.getBoundingClientRect();
+    
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
     }
 
     handleClick(e) {
