@@ -282,7 +282,7 @@ class Markdown extends PureComponent {
             if (match && match.length === 2) {
                 const index = parseInt(match[1], 10);
                 const headingLabel = this.headingLabels[index];
-                return (<HeadingLabel style={headingLabel.style}>{headingLabel.content}</HeadingLabel>);
+                return (<HeadingLabel style={headingLabel.style} id={sanitizeHashId(headingLabel.content)}>{headingLabel.content}</HeadingLabel>);
             }
         } else if (props.value.startsWith('<a name')) {
             const re = /<a name="(.*)"/i;
@@ -395,7 +395,7 @@ class Markdown extends PureComponent {
         let children = props.children;
 
         if (this.currentTableRow === 0) {
-            this.currentTableHeaders[this.currentTableColumn] = props.children[0].props.children;
+            this.currentTableHeaders[this.currentTableColumn] = props.children.length > 0 ? props.children[0].props.children : '';
         } else {
             children = [
                 React.createElement('span', { className: 'table-body-row-item--inline-header', key: 0 }, this.currentTableHeaders[this.currentTableColumn]),
