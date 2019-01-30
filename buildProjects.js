@@ -194,7 +194,7 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
             doc = removeTabControls(doc);
             doc = removeProjectTopics(doc);
 
-            const reHeaders = /^\s(#+)(.*?)$/gm;
+            const reHeaders = /^\s?(#+)(.*?)$/gm;
             let matchHeader;
 
             do {
