@@ -23,6 +23,11 @@ code, pre {
   font-size: 0.92rem;
 }
 
+.tab-item > .markdown-code {
+  border: none;
+  margin: 0;
+}
+
 .markdown-code pre {
   line-height: 2rem;
 }
