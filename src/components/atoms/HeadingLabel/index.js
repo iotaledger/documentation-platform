@@ -2,16 +2,14 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-// <HeadingLabel />
-// <HeadingLabel style="primary" />
-
 class HeadingLabel extends React.Component {
     static propTypes = {
         style: PropTypes.string,
         children: PropTypes.oneOfType([
             PropTypes.arrayOf(PropTypes.node),
             PropTypes.node
-        ])
+        ]),
+        id: PropTypes.string
     };
 
     render() {
@@ -22,7 +20,8 @@ class HeadingLabel extends React.Component {
                         'heading-label',
                         { 'heading-label--secondary': this.props.style === 'secondary' }
                     )
-                }>
+                }
+                id={this.props.id}>
                 {this.props.children}
             </div>
         );
