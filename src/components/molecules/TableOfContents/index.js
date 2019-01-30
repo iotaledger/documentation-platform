@@ -17,7 +17,8 @@ class TableOfContents extends React.PureComponent {
         super(props);
 
         this.state = {
-            activeTarget: undefined
+            activeTarget: undefined,
+            filteredItems: this.props.items
         };
     }
 
@@ -31,8 +32,13 @@ class TableOfContents extends React.PureComponent {
     componentDidUpdate(prevProps) {
         if (this.props.items.length !== prevProps.items.length || !this.targets) {
             const headingCounters = {};
-    
-            this.targets = this.props.items.map(item => {
+
+            let filteredItems = this.props.items;
+            if (filteredItems.length > 30) {
+                filteredItems = filteredItems.filter(i => i.level <= 2);
+            }
+
+            this.targets = filteredItems.map(item => {
                 let id = item.link;
 
                 if (headingCounters[id] === undefined) {
@@ -50,11 +56,16 @@ class TableOfContents extends React.PureComponent {
                     // eslint-disable-next-line no-console
                     console.error(`Unable to find TOC link '${item.link.substring(1)}' in content`);
                 }
-    
+
                 return target;
             }).filter(t => t !== undefined);
 
-            this.handleScroll();
+            this.setState(
+                {
+                    filteredItems
+                },
+                () => this.handleScroll()
+            );
         }
     }
 
@@ -84,7 +95,7 @@ class TableOfContents extends React.PureComponent {
 
     isElementInViewport(el) {
         const rect = el.getBoundingClientRect();
-    
+
         return (
             rect.top >= 0 &&
             rect.left >= 0 &&
@@ -108,7 +119,7 @@ class TableOfContents extends React.PureComponent {
                     {this.props.title}
                 </h3>
                 <ul className="table-of-contents__section">
-                    {this.props.items.map((item, idx) => (
+                    {this.state.filteredItems.map((item, idx) => (
                         <li key={idx} className={classNames(
                             'table-of-contents-list-item',
                             { 'table-of-contents-list-item__sub': item.level > 2 },
