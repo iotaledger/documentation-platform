@@ -58,7 +58,7 @@ class TableOfContents extends React.PureComponent {
                 }
 
                 return target;
-            }).filter(t => t !== undefined);
+            }).filter(t => t !== undefined && t !== null);
 
             this.setState(
                 {

@@ -47,6 +47,7 @@ class Markdown extends PureComponent {
         this.tableCellRenderer = this.tableCellRenderer.bind(this);
         this.tableRowRenderer = this.tableRowRenderer.bind(this);
         this.replaceSearchQuery = this.replaceSearchQuery.bind(this);
+        this.stripSearchQuery = this.stripSearchQuery.bind(this);
         this.codeBlock = this.codeBlock.bind(this);
         this.handleCopy = this.handleCopy.bind(this);
 
@@ -414,7 +415,7 @@ class Markdown extends PureComponent {
     }
 
     heading(props) {
-        let id = sanitizeHashId(props.children[0].props.value);
+        let id = sanitizeHashId(this.stripSearchQuery(props.children.map(a => a.props.value).join('')));
         if (this.headingCounters[id] === undefined) {
             this.headingCounters[id] = -1;
         }
