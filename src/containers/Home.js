@@ -96,7 +96,7 @@ class Home extends React.Component {
                         </article>
                     </div>
                     <BottomSticky zIndex={10} horizontalAlign='right'>
-                    <div className="tablet-hidden">
+                    <div className="tablet-down-hidden">
                             <Feedback onSubmit={(data) => submitFeedback(this.props.apiEndpoint, '/home/', data)} />
                         </div>
                     </BottomSticky>

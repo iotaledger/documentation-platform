@@ -131,7 +131,7 @@ class Doc extends React.Component {
                         </ScrollInContainer>
                     </section>
                     <BottomSticky zIndex={10} horizontalAlign='right'>
-                        <div className="tablet-hidden">
+                        <div className="tablet-down-hidden">
                             <Feedback onSubmit={(data) => submitFeedback(this.props.apiEndpoint, this.props.location.pathname, data)} />
                         </div>
                     </BottomSticky>
