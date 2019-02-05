@@ -9,6 +9,7 @@ const chalk = require('chalk');
 const { rootFolder, reportFile, projectsFile, checkRemotePages, consoleDetail } = require('./buildProjects.config.json');
 
 let errorCount = 0;
+let warningCount = 0;
 
 async function buildProjects(docsFolder) {
     try {
@@ -27,11 +28,10 @@ async function buildProjects(docsFolder) {
     console.log(`Found ${projects.length} Projects.`);
 
     for (let i = 0; i < projects.length; i++) {
+        const totalCount = errorCount + warningCount;
         if (consoleDetail) {
             console.log('');
-            console.log('-'.repeat(projects[i].name.length));
-            console.log(`${projects[i].name}`);
-            console.log('-'.repeat(projects[i].name.length));
+            console.log(chalk.blue.underline(`${projects[i].name}`));
             console.log('');
         }
 
@@ -41,6 +41,10 @@ async function buildProjects(docsFolder) {
 
         await buildHome(docsFolder, projects[i]);
         await buildVersions(docsFolder, projects[i]);
+
+        if (errorCount + warningCount === totalCount) {
+            console.log(chalk.green('OK'));
+        }
     }
 
     return projects;
@@ -218,7 +222,9 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
                 }
             } while (matchHeader);
 
-            toc.map(async t => await reportEntry(`\t\t\t\t${t.level}: ${t.name}`));
+            for (let i = 0; i < toc.length; i++) {
+                await reportEntry(`\t\t\t\t${toc[i].level}: ${toc[i].name}`);
+            }
 
             if (!doc.startsWith('# ')) {
                 await reportError(`'${docName}' does not start with a level 1 heading`);
@@ -230,6 +236,10 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
             await htmlLinks(doc, docName);
             await markdownLinks(doc, docName);
             await separators(doc, docName);
+            await code(doc, docName);
+            await bold(doc, docName);
+            await italic(doc, docName);
+            await img(doc, docName);
         } else {
             await reportError(`'${docIndexFile}' referenced '${docName}' but the file does not exist`);
         }
@@ -387,15 +397,15 @@ async function markdownLinks(markdown, docPath) {
 }
 
 async function htmlLinks(markdown, docPath) {
-    const re = /<a\s+href="(.*?)"/gm;
+    const re = /<a\s+href="(.*?)">(.*?)<\/a>/gm;
 
     let match;
     do {
         match = re.exec(markdown);
 
-        if (match && match.length === 2) {
+        if (match && match.length === 3) {
             if (!match[1].startsWith('#')) {
-                await reportError(`HTML Links should be converted to Markdown: '${match[1]}' in '${docPath}'`);
+                await reportError(`HTML Link <a href="${match[1]}">${match[2]}</a> should be converted to Markdown: [${match[2]}](${match[1]}) in '${docPath}'`);
             }
         }
     } while (match);
@@ -404,13 +414,67 @@ async function htmlLinks(markdown, docPath) {
 }
 
 async function separators(markdown, docPath) {
-    const re = /<hr/gmi;
-
-    const match = re.exec(markdown);
-
-    if (match && match.length === 1) {
-        await reportError(`HTML Separators <hr> should be converted to Markdown ---: in '${docPath}'`);
+    if (/<hr/gmi.test(markdown)) {
+        await reportWarning(`HTML Separators <hr> should be converted to Markdown ---: in '${docPath}'`);
     }
+}
+
+async function code(markdown, docPath) {
+    const re = /<code>(.*?)<\/code>/gm;
+
+    let match;
+    do {
+        match = re.exec(markdown);
+
+        if (match && match.length === 2) {
+            await reportWarning(`HTML <code>${match[1]}</code> element should be converted to Markdown: \`${match[1]}\` in '${docPath}'`);
+        }
+    } while (match);
+
+    return markdown;
+}
+
+async function bold(markdown, docPath) {
+    const re = /<b>(.*?)<\/b>/gm;
+
+    let match;
+    do {
+        match = re.exec(markdown);
+
+        if (match && match.length === 2) {
+            await reportWarning(`HTML <b>${match[1]}</b> element should be converted to Markdown: **${match[1]}** in '${docPath}'`);
+        }
+    } while (match);
+
+    return markdown;
+}
+
+async function italic(markdown, docPath) {
+    const re = /<i>(.*?)<\/i>/gm;
+
+    let match;
+    do {
+        match = re.exec(markdown);
+
+        if (match && match.length === 2) {
+            await reportWarning(`HTML <i>${match[1]}</i> element should be converted to Markdown: *${match[1]}* in '${docPath}'`);
+        }
+    } while (match);
+
+    return markdown;
+}
+
+async function img(markdown, docPath) {
+    const re = /<img\ssrc="(.*)"(?:\salt="(.*?)")/gm;
+
+    let match;
+    do {
+        match = re.exec(markdown);
+
+        if (match && match.length === 3) {
+            await reportWarning(`HTML <img src="${match[1]}" alt="${match[2]}"> should be converted to Markdown: ![${match[2]}](${match[1]}) in '${docPath}'`);
+        }
+    } while (match);
 
     return markdown;
 }
@@ -445,11 +509,25 @@ async function reportError(data, err) {
     await fsPromises.appendFile(reportFile, `ERROR: ${data}\n`);
 
     if (consoleDetail) {
-        console.error(`ERROR: ${data}`);
+        console.error(chalk.red(`ERROR: ${data}`));
     }
 
     if (err) {
         await fsPromises.appendFile(reportFile, `ERROR: ${err.message}\n`);
+    }
+}
+
+async function reportWarning(data, err) {
+    warningCount++;
+
+    await fsPromises.appendFile(reportFile, `WARN: ${data}\n`);
+
+    if (consoleDetail) {
+        console.warn(chalk.cyan(`WARN: ${data}`));
+    }
+
+    if (err) {
+        await fsPromises.appendFile(reportFile, `WARN: ${err.message}\n`);
     }
 }
 
@@ -488,8 +566,18 @@ async function run() {
         await fsPromises.writeFile(projectsFile, JSON.stringify(projects, undefined, '\t'));
     }
 
+    if (errorCount > 0 || warningCount > 0) {
+        console.log();
+        console.log();
+        console.log(chalk.blue.underline('Summary'));
+        console.log();
+    }
+
     if (errorCount > 0) {
-        console.error(chalk.red(`\nERROR: There were ${errorCount} errors found during project build, see ${reportFile} for details.`));
+        console.error(chalk.red(`ERROR: There were ${errorCount} errors during project build, see ${reportFile} for details.`));
+    }
+    if (warningCount > 0) {
+        console.error(chalk.cyan(`WARNING: There were ${warningCount} warnings during project build, see ${reportFile} for details.`));
     }
 }
 
