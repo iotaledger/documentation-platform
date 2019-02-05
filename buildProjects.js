@@ -4,6 +4,8 @@ const fsPromises = require('fs').promises;
 const path = require('path');
 const axios = require('axios');
 const emoji = require('node-emoji');
+const emojiRegex = require('emoji-regex');
+const emojiUnicode = require('emoji-unicode');
 const chalk = require('chalk');
 
 const { rootFolder, reportFile, projectsFile, checkRemotePages, consoleDetail } = require('./buildProjects.config.json');
@@ -240,6 +242,7 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
             await bold(doc, docName);
             await italic(doc, docName);
             await img(doc, docName);
+            await emojiChars(doc, docName);
         } else {
             await reportError(`'${docIndexFile}' referenced '${docName}' but the file does not exist`);
         }
@@ -473,6 +476,21 @@ async function img(markdown, docPath) {
 
         if (match && match.length === 3) {
             await reportWarning(`HTML <img src="${match[1]}" alt="${match[2]}"> should be converted to Markdown: ![${match[2]}](${match[1]}) in '${docPath}'`);
+        }
+    } while (match);
+
+    return markdown;
+}
+
+async function emojiChars(markdown, docPath) {
+    const re = emojiRegex();
+
+    let match;
+    do {
+        match = re.exec(markdown);
+
+        if (match) {
+            await reportWarning(`Emoji ${match[0]}  ${emojiUnicode(match[0])} should be converted to Markdown ${emoji.unemojify(match[0])} in '${docPath}'`);
         }
     } while (match);
 

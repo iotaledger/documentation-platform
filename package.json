@@ -46,6 +46,8 @@
         "babel-eslint": "^10.0.1",
         "chalk": "^2.4.2",
         "cross-env": "^5.2.0",
+        "emoji-regex": "^7.0.3",
+        "emoji-unicode": "^1.0.10",
         "eslint": "^5.10.0",
         "eslint-config-react-tools": "1.x.x",
         "eslint-plugin-react": "^7.12.2",
