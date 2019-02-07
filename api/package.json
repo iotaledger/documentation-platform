@@ -19,7 +19,7 @@
         "serve-mon": "nodemon ./dist/index",
         "start-dev": "run-p serve-mon build-watch",
         "start": "node ./dist/index",
-        "deploy-dev": "now --npm && now alias"
+        "deploy-dev": "now --npm"
     },
     "engines": {
         "node": "10.x.x"
