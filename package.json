@@ -18,7 +18,7 @@
         "build": "run-s build-index production",
         "serve": "serve dist -p 3000",
         "lint": "eslint src/**/*.js",
-        "deploy-dev": "cd dist && now --local-config=../now.json --npm && now alias --local-config=../now.json"
+        "deploy-dev": "cd dist && now --local-config=../now.json --npm"
     },
     "engines": {
         "node": "10.x.x"

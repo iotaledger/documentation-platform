@@ -1,7 +1,6 @@
 {
     "version": 1,
     "name": "iota-documentation",
-    "alias": "iota-documentation.dag.sh",
     "static": {
         "trailingSlash": false
     }
