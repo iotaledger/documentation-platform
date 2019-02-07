@@ -44,7 +44,7 @@ async function buildProjects(docsFolder) {
         await buildHome(docsFolder, projects[i]);
         await buildVersions(docsFolder, projects[i]);
 
-        if (errorCount + warningCount === totalCount) {
+        if (errorCount + warningCount === totalCount && consoleDetail) {
             console.log(chalk.green('OK'));
         }
     }

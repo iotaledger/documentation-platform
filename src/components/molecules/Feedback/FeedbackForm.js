@@ -51,9 +51,8 @@ class FeedbackForm extends React.Component {
                     <h1>Was this page useful?</h1>
                     <h2>Let us know...</h2>
                     <button
-                        className="feedback-form-close"
+                        className="feedback-form-close icon-cross"
                         onClick={this.handleClose}>
-                        <i className="icon icon-cross"></i>
                     </button>
                     <div>
                         <div
@@ -64,9 +63,8 @@ class FeedbackForm extends React.Component {
                                 )
                             }>
                             <button
-                                className="feedback-form-button-circle"
+                                className="feedback-form-button-circle icon-thumb-up"
                                 onClick={(e) => this.handleWasItUseful(e, 'yes')}>
-                                <i className="icon icon-thumb-up"></i>
                             </button>
                             <button
                                 className="feedback-form-button-label"
@@ -82,9 +80,8 @@ class FeedbackForm extends React.Component {
                                 )
                             }>
                             <button
-                                className="feedback-form-button-circle"
+                                className="feedback-form-button-circle icon-thumb-down"
                                 onClick={(e) => this.handleWasItUseful(e, 'no')}>
-                                <i className="icon icon-thumb-down"></i>
                             </button>
                             <button
                                 className="feedback-form-button-label"

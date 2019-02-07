@@ -11,7 +11,6 @@ const ScrollToTop  = () => {
         <button
             className='scroll-to-top'
             onClick={onScrollToTop}>
-            <i className="icon icon-chevron-up"></i>
         </button>
     );
 };
