@@ -3,7 +3,7 @@ import React from 'react';
 
 class HotJar extends React.PureComponent {
     static propTypes = {
-        id: PropTypes.string.isRequired
+        id: PropTypes.string
     };
 
     render() {

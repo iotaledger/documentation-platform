@@ -1,4 +1,4 @@
-export const scrollIntoView = (elem) => {
+export const scrollIntoView = (elem, cb) => {
     const animate = (start, from, to, duration) => {
         const time = Math.min(1, ((Date.now() - start) / duration));
         const eased = 0.5 * (1 - Math.cos(Math.PI * time));
@@ -7,6 +7,8 @@ export const scrollIntoView = (elem) => {
 
         if (time < 1) {
             setTimeout(() => animate(start, from , to, duration), 0);
+        } else if (cb) {
+            cb();
         }
     };
 

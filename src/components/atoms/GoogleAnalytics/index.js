@@ -3,7 +3,7 @@ import React from 'react';
 
 class GoogleAnalytics extends React.PureComponent {
     static propTypes = {
-        id: PropTypes.string.isRequired
+        id: PropTypes.string
     };
 
     render() {

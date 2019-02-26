@@ -1,3 +1,4 @@
+import ReactRouterPropTypes from 'react-router-prop-types';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -10,7 +11,8 @@ class TableOfContents extends React.PureComponent {
             link: PropTypes.string.isRequired
         })),
         title: PropTypes.string.isRequired,
-        compact: PropTypes.bool
+        compact: PropTypes.bool,
+        history: ReactRouterPropTypes.history
     };
 
     constructor(props) {
@@ -24,6 +26,7 @@ class TableOfContents extends React.PureComponent {
 
     componentDidMount() {
         this.handleScroll = this.handleScroll.bind(this);
+        this.handleClick = this.handleClick.bind(this);
 
         document.addEventListener('scroll', this.handleScroll);
         window.addEventListener('resize', this.handleScroll);
@@ -64,7 +67,13 @@ class TableOfContents extends React.PureComponent {
                 {
                     filteredItems
                 },
-                () => this.handleScroll()
+                () => {
+                    this.handleScroll();
+                    let defaultTarget = this.props.history.location && this.props.history.location.hash;
+                    if (defaultTarget) {
+                        scrollIntoView(document.querySelector(defaultTarget));
+                    }
+                }
             );
         }
     }
@@ -107,7 +116,10 @@ class TableOfContents extends React.PureComponent {
     handleClick(e) {
         e.preventDefault();
 
-        scrollIntoView(document.querySelector(e.target.getAttribute('href')));
+        const href = e.target.getAttribute('href');
+        scrollIntoView(document.querySelector(href), () => {
+            this.props.history.replace(href);
+        });
     }
 
     render() {
