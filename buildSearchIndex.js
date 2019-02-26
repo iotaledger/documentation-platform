@@ -55,46 +55,50 @@ async function indexDocs(projectDataFile, corpusFile, indexFile) {
 }
 
 async function addFileToCorpusAndDocuments(fileLocation, toc, corpus, documents) {
-    const file = fs.readFileSync(fileLocation, 'utf8');
+    try {
+        const file = fs.readFileSync(fileLocation, 'utf8');
 
-    let markdownStructure;
+        let markdownStructure;
 
-    const resultStripped = await remark()
-        .use(() => {
-            return (ms) => { markdownStructure = ms; };
-        })
-        .use(strip)
-        .process(file);
+        const resultStripped = await remark()
+            .use(() => {
+                return (ms) => { markdownStructure = ms; };
+            })
+            .use(strip)
+            .process(file);
 
-    let tocLevel1 = toc && toc.find(t => t.level === 1);
-    let docTitle = tocLevel1 ? tocLevel1.name : undefined;
+        let tocLevel1 = toc && toc.find(t => t.level === 1);
+        let docTitle = tocLevel1 ? tocLevel1.name : undefined;
 
-    let docSummaryItem = findItem(markdownStructure, 'text', 50);
-    let docSummary = docSummaryItem ? docSummaryItem.value : '';
-    if (docSummary && docSummary.length > 160) {
-        docSummary = `${docSummary.substr(0, 160)}...`;
+        let docSummaryItem = findItem(markdownStructure, 'text', 50);
+        let docSummary = docSummaryItem ? docSummaryItem.value : '';
+        if (docSummary && docSummary.length > 160) {
+            docSummary = `${docSummary.substr(0, 160)}...`;
+        }
+
+        if (!docTitle || docTitle.trim().length === 0) {
+            const docName = webifyPath(fileLocation)
+                .match(/[^/]+$/)[0]
+                .replace('.md', '');
+
+            docTitle = docName;
+        }
+
+        const docPath = webifyPath(path.relative('.', fileLocation)).replace('.md', '');
+        corpus.push({
+            id: docPath,
+            name: docTitle,
+            summary: docSummary
+        });
+
+        documents.push({
+            docTitle,
+            docBody: resultStripped.toString(),
+            id: docPath
+        });
+    } catch (err) {
+        throw new Error(`Failed processing '${fileLocation}'\n${err.message}`);
     }
-
-    if (!docTitle || docTitle.trim().length === 0) {
-        const docName = webifyPath(fileLocation)
-            .match(/[^/]+$/)[0]
-            .replace('.md', '');
-
-        docTitle = docName;
-    }
-
-    const docPath = webifyPath(path.relative('.', fileLocation)).replace('.md', '');
-    corpus.push({
-        id: docPath,
-        name: docTitle,
-        summary: docSummary
-    });
-
-    documents.push({
-        docTitle,
-        docBody: resultStripped.toString(),
-        id: docPath
-    });
 }
 
 function findItem(elem, findType, minLength) {
@@ -126,7 +130,12 @@ indexDocs(projectData, corpusFile, indexFile)
         console.log(chalk.green(`\n${emoji.get('smile')}  Completed Successfully`));
     })
     .catch((err) => {
-        console.error(chalk.red(`\n${emoji.get('frown')}  Building failed with the following error:`));
-        console.error(chalk.red(err));
+        console.error();
+        console.error(chalk.red('*'.repeat(80)));
+        console.error(chalk.red('Building Search Index failed with the following error:'));
+        console.error(chalk.red(err.message));
+        console.error(chalk.red('\nPlease run the buildProjects script in the documentation repo to see if that can provide you with any more clues to the failure.'));
+        console.error(chalk.red('*'.repeat(80)));
+        console.error();
         process.exit(1);
     });
