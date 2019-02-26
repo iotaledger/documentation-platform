@@ -121,13 +121,13 @@ class Doc extends React.Component {
                     </section>
                     <section className="middle-column">
                         <div className="middle-toc">
-                            <TableOfContents items={this.state.pageTableOfContents} title="Sections On This Page" compact={true} />
+                            <TableOfContents items={this.state.pageTableOfContents} title="Sections On This Page" compact={true} history={this.props.history} />
                         </div>
                         <Markdown source={this.props.markdown} query={extractSearchQuery(this.props.location)} highlights={extractHighlights(this.props.location)} />
                     </section>
                     <section className="right-column">
                         <ScrollInContainer bottomOffset={200}>
-                            <TableOfContents items={this.state.pageTableOfContents} title="Sections On This Page" />
+                            <TableOfContents items={this.state.pageTableOfContents} title="Sections On This Page" history={this.props.history} />
                         </ScrollInContainer>
                     </section>
                     <BottomSticky zIndex={10} horizontalAlign='right'>
