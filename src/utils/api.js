@@ -53,3 +53,17 @@ export async function submitEmail(apiEndpoint, email) {
         };
     }
 }
+
+export async function feed(apiEndpoint, context, page, pageSize) {
+    try {
+        return await sendRequest(apiEndpoint, `feed/${context}?page=${page}&pageSize=${pageSize}`, 'GET');
+    } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
+
+        return {
+            success: false,
+            message: 'Failed to retreive feed.'
+        };
+    }
+}
