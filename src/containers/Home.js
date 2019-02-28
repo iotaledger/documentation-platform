@@ -11,18 +11,19 @@ import CardContainer from '../components/molecules/HomePageCard';
 import ProjectTopicsContainer from '../components/molecules/ProjectTopicsContainer';
 import SideMenu from '../components/molecules/SideMenu';
 import Header from '../components/organisms/Header';
-import contentHomePage from '../contentHomePage.json';
 import { submitFeedback } from '../utils/api';
 import { localStorageSet } from '../utils/localStorage';
 import { createProjectLinks, createProjectTopics } from '../utils/projects';
-import { ProjectsPropTypes } from '../utils/propTypes.js';
+import { HomeDataPropTypes, ProjectsPropTypes, ViewDataPropTypes } from '../utils/propTypes.js';
 import { initCorpusIndex } from '../utils/search';
 import Container from './Container';
 
 class Home extends React.Component {
     static propTypes = {
-        siteName: PropTypes.string.isRequired,
         apiEndpoint: PropTypes.string.isRequired,
+        homeData: HomeDataPropTypes.isRequired,
+        viewData: ViewDataPropTypes.isRequired,
+        hideSignup: PropTypes.bool,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location,
         projects: ProjectsPropTypes.isRequired
@@ -52,10 +53,10 @@ class Home extends React.Component {
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.handleResize);
-    }    
+    }
 
     handleBurgerClick() {
-        this.setState({isMenuOpen: !this.state.isMenuOpen});
+        this.setState({ isMenuOpen: !this.state.isMenuOpen });
     }
 
     handleResize() {
@@ -66,42 +67,46 @@ class Home extends React.Component {
         return (
             <Container {...this.props}>
                 <Head>
-                    <title>Home | {this.props.siteName}</title>
+                    <title>Home | {this.props.viewData.siteName}</title>
                 </Head>
                 <Header
                     history={this.props.history}
-                    headerTitle='Developer Documentation'
-                    topTitles={contentHomePage.headerTopLinks}
-                    popularTopics={contentHomePage.popularTopics}
+                    headerTitle={this.props.homeData.headerTitle}
+                    topTitles={this.props.homeData.headerTopLinks}
+                    popularTopics={this.props.homeData.popularTopics}
                     onBurgerClick={this.handleBurgerClick}
                 />
                 <SideMenu
                     isMenuOpen={this.state.isMenuOpen}
                     projects={this.props.projects}
-                    onCloseClick={this.handleBurgerClick} 
-                    highlightedItem={this.state.projectFullURL}/>
-                <div id='image-background' style={{ background: '#f3f2f1', width: '100%', height: '0px', position: 'absolute'}} />
+                    onCloseClick={this.handleBurgerClick}
+                    highlightedItem={this.state.projectFullURL} />
+                <div id='image-background' style={{ background: '#f3f2f1', width: '100%', height: '0px', position: 'absolute' }} />
                 <div className="layouts--home">
                     <div className="left-column">
-                        <ScrollInContainer topOffset={50} bottomOffset={150}>   
+                        <ScrollInContainer topOffset={50} bottomOffset={150}>
                             <FloatingMenu menuItems={createProjectLinks(this.props.projects)} />
                         </ScrollInContainer>
                     </div>
                     <div className="right-column">
                         <article>
-                            <CardContainer content={contentHomePage.cards} />
+                            <CardContainer content={this.props.homeData.cards} />
                         </article>
                         <article>
                             <ProjectTopicsContainer content={createProjectTopics(this.props.projects)} />
                         </article>
                     </div>
-                    <BottomSticky zIndex={10} horizontalAlign='right'>
-                    <div className="tablet-down-hidden">
-                            <Feedback onSubmit={(data) => submitFeedback(this.props.apiEndpoint, '/home/', data)} />
-                        </div>
-                    </BottomSticky>
+                    {this.props.viewData.enableFeedback && (
+                        <BottomSticky zIndex={10} horizontalAlign='right'>
+                            <div className="tablet-down-hidden">
+                                <Feedback onSubmit={(data) => submitFeedback(this.props.apiEndpoint, '/home/', data)} />
+                            </div>
+                        </BottomSticky>
+                    )}
                 </div>
-                <EmailSignup apiEndpoint={this.props.apiEndpoint} />
+                {this.props.viewData.enableSignup && (
+                    <EmailSignup apiEndpoint={this.props.apiEndpoint} />
+                )}
             </Container>
         );
     }

@@ -20,14 +20,18 @@ node_modules
 .editorconfig
 .prettierrc
 
-/docs
+/docs*
 /dist
-/src/config.json
 /src/config.dev.json
+/src/config.local.json
+/src/config.staging.json
+/src/config.prod.json
 /src/searchData
 /api/dist
-/api/src/data/config.json
+/api/src/data/config.local.json
 /api/src/data/config.dev.json
+/api/src/data/config.staging.json
+/api/src/data/config.prod.json
 /public/assets/docs
 /projects.json
 /projects-summary.txt

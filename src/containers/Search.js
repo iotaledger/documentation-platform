@@ -12,13 +12,13 @@ import SideMenu from '../components/molecules/SideMenu';
 import StickyHeader from '../components/organisms/StickyHeader';
 import { submitFeedback } from '../utils/api';
 import { localStorageSet } from '../utils/localStorage';
-import { ProjectsPropTypes } from '../utils/propTypes.js';
+import { ProjectsPropTypes, ViewDataPropTypes } from '../utils/propTypes.js';
 import { constructSearchQuery, extractSearchQuery, initCorpusIndex } from '../utils/search';
 import Container from './Container';
 
 class Search extends React.Component {
     static propTypes = {
-        siteName: PropTypes.string.isRequired,
+        viewData: ViewDataPropTypes.isRequired,
         apiEndpoint: PropTypes.string.isRequired,
         projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
@@ -31,6 +31,7 @@ class Search extends React.Component {
         this.state = {
             isMenuOpen: false,
             foundResult: [],
+            page: 0,
             indexStart: 0,
             indexEnd: 9,
             query: extractSearchQuery(this.props.location)
@@ -64,8 +65,8 @@ class Search extends React.Component {
         this.setState({ isMenuOpen: !this.state.isMenuOpen });
     }
 
-    onDataPaginated(start, end) {
-        this.setState({ indexStart: start, indexEnd: end });
+    onDataPaginated(pageIndex, start, end) {
+        this.setState({ page: pageIndex, indexStart: start, indexEnd: end });
         const target = document.querySelector('#search-top');
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -107,7 +108,7 @@ class Search extends React.Component {
         return (
             <Container {...this.props}>
                 <Head>
-                    <title>{`Search Results | ${this.props.siteName}`}</title>
+                    <title>Search Results | {this.props.viewData.siteName}</title>
                 </Head>
                 <div id="search-top" />
                 <StickyHeader
@@ -142,16 +143,18 @@ class Search extends React.Component {
                         />
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}>
                             <Pagination
-                                total={this.state.foundResult}
+                                totalCount={this.state.foundResult && this.state.foundResult.length}
                                 onDataPaginated={this.onDataPaginated}
                             />
                         </div>
                     </div>
-                    <BottomSticky zIndex={10} horizontalAlign='right'>
-                    <div className="tablet-down-hidden">
-                            <Feedback onSubmit={(data) => submitFeedback(this.props.apiEndpoint, this.props.location.pathname, data)} />
-                        </div>
-                    </BottomSticky>
+                    {this.props.viewData.enableFeedback && (
+                        <BottomSticky zIndex={10} horizontalAlign='right'>
+                            <div className="tablet-down-hidden">
+                                <Feedback onSubmit={(data) => submitFeedback(this.props.apiEndpoint, this.props.location.pathname, data)} />
+                            </div>
+                        </BottomSticky>
+                    )}
                 </div>
             </Container>
         );

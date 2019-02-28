@@ -17,6 +17,15 @@ function run(projectDataFile, assetsFolder) {
         // Dont fail if dir already exists
     }
 
+    const siteAssetsDirSrc = './docs/site-settings/assets';
+    const siteAssetDirDest = `${assetsFolder}/site-settings`;
+    mkdirp.sync(siteAssetDirDest);
+    const siteAssetFiles = fs.readdirSync(siteAssetsDirSrc);
+    for (let i = 0; i < siteAssetFiles.length; i++) {
+        console.log(chalk.cyan(`\tCopying Site Asset: '${siteAssetsDirSrc}/${siteAssetFiles[i]}'`));
+        fs.copyFileSync(`${siteAssetsDirSrc}/${siteAssetFiles[i]}`, `${siteAssetDirDest}/${siteAssetFiles[i]}`);
+    }
+
     for (let i = 0; i < projectData.length; i++) {
         const project = projectData[i];
 

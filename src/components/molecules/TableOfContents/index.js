@@ -71,7 +71,10 @@ class TableOfContents extends React.PureComponent {
                     this.handleScroll();
                     let defaultTarget = this.props.history.location && this.props.history.location.hash;
                     if (defaultTarget) {
-                        scrollIntoView(document.querySelector(defaultTarget));
+                        const elem = document.querySelector(defaultTarget);
+                        if (elem) {
+                            scrollIntoView(elem);
+                        }
                     }
                 }
             );
@@ -118,7 +121,8 @@ class TableOfContents extends React.PureComponent {
 
         const href = e.target.getAttribute('href');
         scrollIntoView(document.querySelector(href), () => {
-            this.props.history.replace(href);
+            this.props.history.replace(
+                `${this.props.history.location.pathname}${this.props.history.location.search}${href === '#root' ? '' : href}`);
         });
     }
 

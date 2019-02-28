@@ -4,8 +4,9 @@ import React from 'react';
 
 class Pagination extends React.Component {
     static propTypes = {
-        total: PropTypes.array.isRequired,
-        maxPerPage: PropTypes.array,
+        totalCount: PropTypes.number.isRequired,
+        page: PropTypes.number.isRequired,
+        maxPerPage: PropTypes.number,
         onDataPaginated: PropTypes.func,
     };
 
@@ -16,17 +17,17 @@ class Pagination extends React.Component {
 
         this.state = {
             maxPerPage,
-            numberOfPages: Math.ceil(this.props.total.length / maxPerPage),
-            currentPage: 0
+            numberOfPages: Math.ceil(this.props.totalCount / maxPerPage),
+            currentPage: props.page
         };
 
         this.handleNext = this.handleNext.bind(this);
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.total.length != prevProps.total.length) {
+        if (this.props.totalCount != prevProps.totalCount) {
             this.setState({
-                numberOfPages: Math.ceil(this.props.total.length / this.state.maxPerPage),
+                numberOfPages: Math.ceil(this.props.totalCount / this.state.maxPerPage),
                 currentPage: 0
             });
         }
@@ -35,8 +36,9 @@ class Pagination extends React.Component {
     handleNext(newIndex) {
         if (this.props.onDataPaginated) {
             this.props.onDataPaginated(
+                newIndex,
                 newIndex * this.state.maxPerPage,
-                Math.min(((newIndex + 1) * this.state.maxPerPage) - 1, this.props.total.length - 1));
+                Math.min(((newIndex + 1) * this.state.maxPerPage) - 1, this.props.totalCount - 1));
             this.setState({ currentPage: newIndex });
         }
     }

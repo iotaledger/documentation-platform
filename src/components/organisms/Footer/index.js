@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { footerSections, footerStaticContent } from '../../../contentFooter.json';
 import { createProjectLinks, parseProjectUrl } from '../../../utils/projects.js';
-import { ProjectsPropTypes } from '../../../utils/propTypes.js';
+import { FooterDataPropTypes, ProjectsPropTypes } from '../../../utils/propTypes.js';
 import Heading from '../../atoms/Heading';
-import ScrollToTop from '../../atoms/ScrollToTop';
 import Link from '../../atoms/Link';
+import ScrollToTop from '../../atoms/ScrollToTop';
 import Text from '../../atoms/Text';
 
 class Footer extends React.Component {
     static propTypes = {
+        footerData: FooterDataPropTypes,
         projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location
@@ -23,14 +23,15 @@ class Footer extends React.Component {
         const projectLinks = createProjectLinks(this.props.projects);
 
         let dynamicSections = [ {
-            heading: 'Developer Docs',
+            heading: props.footerData.footerDocsSectionTitle,
             links: projectLinks
         } ];
 
         this.state = {
             projectLinks: createProjectLinks(this.props.projects),
             currentProjectFolder: projectParts.projectFolder,
-            footerSections: dynamicSections.concat(footerSections)
+            footerSections: dynamicSections.concat(props.footerData.footerSections),
+            footerStaticContent: props.footerData.footerStaticContent
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -94,7 +95,7 @@ class Footer extends React.Component {
                     <div className="footer-bottom-content">
                         <section className="footer-bottom-content__wrapper">
                             {
-                                footerStaticContent.address.map(text =>
+                                this.state.footerStaticContent.address.map(text =>
                                     <Text key={text} className="footer-bottom-content__item" html>
                                         {text}
                                     </Text>
@@ -103,7 +104,7 @@ class Footer extends React.Component {
                         </section>
                         <section className="footer-bottom-content__wrapper legal">
                             {
-                                footerStaticContent.legal.map(text =>
+                                this.state.footerStaticContent.legal.map(text =>
                                     <Text key={text} className="footer-bottom-content__item" html>
                                         {text}
                                     </Text>
@@ -112,7 +113,7 @@ class Footer extends React.Component {
                         </section>
                         <section className="footer-bottom-content__wrapper copyright">
                             {
-                                footerStaticContent.copyright.map(text =>
+                                this.state.footerStaticContent.copyright.map(text =>
                                     <Text key={text} className="footer-bottom-content__item" html>
                                         {text}
                                     </Text>

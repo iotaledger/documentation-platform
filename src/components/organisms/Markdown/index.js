@@ -3,6 +3,7 @@ import 'prismjs/themes/prism.css';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import ReactMarkdown from 'react-markdown';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { highlight, loadLanguages } from 'reprism';
 import bash from 'reprism/languages/bash';
 import c from 'reprism/languages/c';
@@ -18,6 +19,7 @@ import Heading from '../../atoms/Heading';
 import HeadingLabel from '../../atoms/HeadingLabel';
 import ProjectTopicsInner from '../../molecules/ProjectTopicsContainer/ProjectTopicsInner';
 import Tabs from '../../molecules/Tabs';
+import Feed from '../../organisms/Feed';
 import './markdown.css';
 
 loadLanguages(jsx, bash, c, cpp, java, javascript, json, python);
@@ -26,7 +28,11 @@ class Markdown extends PureComponent {
     static propTypes = {
         source: PropTypes.string.isRequired,
         query: PropTypes.string,
-        highlights: PropTypes.arrayOf(PropTypes.string)
+        highlights: PropTypes.arrayOf(PropTypes.string),
+        apiEndpoint: PropTypes.string,
+        googleMapsKey: PropTypes.string,
+        history: ReactRouterPropTypes.history,
+        onContentChanged: PropTypes.func
     };
 
     constructor(props) {
@@ -39,6 +45,7 @@ class Markdown extends PureComponent {
         this.tabContainers = [];
         this.projectTopicContainers = [];
         this.headingLabels = [];
+        this.feeds = [];
 
         this.html = this.html.bind(this);
         this.heading = this.heading.bind(this);
@@ -50,6 +57,7 @@ class Markdown extends PureComponent {
         this.stripSearchQuery = this.stripSearchQuery.bind(this);
         this.codeBlock = this.codeBlock.bind(this);
         this.handleCopy = this.handleCopy.bind(this);
+        this.handleFeedLoaded = this.handleFeedLoaded.bind(this);
 
         this.currentTable = undefined;
         this.currentTableRow = 0;
@@ -93,6 +101,11 @@ class Markdown extends PureComponent {
         const headingMatches = this.findHeadingLabels(content);
         for (let i = 0; i < headingMatches.length; i++) {
             content = content.replace(headingMatches[i], `<heading-label index="${i}"></heading-label>`);
+        }
+
+        const feedMatches = this.findFeeds(content);
+        for (let i = 0; i < feedMatches.length; i++) {
+            content = content.replace(feedMatches[i], `<feed index="${i}"></feed>`);
         }
 
         content = this.replaceSearchQuery(content);
@@ -249,6 +262,22 @@ class Markdown extends PureComponent {
         return matches;
     }
 
+    findFeeds(content) {
+        const matches = [];
+        const re = /^¬¬(.*?)\|(.*?)¬¬$/gm;
+
+        let match;
+        do {
+            match = re.exec(content);
+            if (match && match.length === 3) {
+                this.feeds.push({ displayType: match[1], context: match[2] });
+                matches.push(match[0]);
+            }
+        } while (match);
+
+        return matches;
+    }
+
     html(props) {
         if (props.value.startsWith('<tabs')) {
             const re = /<tabs index="(.*)">/;
@@ -275,6 +304,22 @@ class Markdown extends PureComponent {
             if (match && match.length === 2) {
                 const index = parseInt(match[1], 10);
                 return (<ProjectTopicsInner content={this.projectTopicContainers[index]} compressed={true} highlights={this.highlights} />);
+            }
+        } else if (props.value.startsWith('<feed')) {
+            const re = /<feed index="(.*)">/;
+            let match = re.exec(props.value);
+
+            if (match && match.length === 2) {
+                const index = parseInt(match[1], 10);
+                const feed = this.feeds[index];
+                return (<Feed
+                    displayType={feed.displayType}
+                    context={feed.context}
+                    apiEndpoint={this.props.apiEndpoint}
+                    googleMapsKey={this.props.googleMapsKey}
+                    onLoaded={this.handleFeedLoaded}
+                    history={this.props.history}
+                />);
             }
         } else if (props.value.startsWith('<heading-label')) {
             const re = /<heading-label index="(.*)">/;
@@ -328,7 +373,7 @@ class Markdown extends PureComponent {
                 localProps.href = sanitizeHashId(localProps.href);
             } else {
                 // For local links remove .md extension
-                const anchorParts = localProps.href.split('#'); 
+                const anchorParts = localProps.href.split('#');
                 localProps.href = sanitizeHashId(anchorParts[0], true).replace(/.md$/i, '');
                 if (anchorParts.length === 2) {
                     localProps.href += `#${sanitizeHashId(anchorParts[1])}`;
@@ -433,6 +478,12 @@ class Markdown extends PureComponent {
 
     getCoreProps(props) {
         return props['data-sourcepos'] ? { 'data-sourcepos': props['data-sourcepos'] } : {};
+    }
+
+    handleFeedLoaded(itemCount) {
+        if (this.props.onContentChanged) {
+            this.props.onContentChanged(itemCount);
+        }
     }
 
     render() {
