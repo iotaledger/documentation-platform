@@ -53,7 +53,7 @@ class Feed extends React.Component {
         }
 
         this.setState({ 
-            status: 'Retreiving, please wait...',
+            status: 'Retrieving, please wait...',
             items: [],
             totalPages: 0,
             totalItems: 0
@@ -120,7 +120,7 @@ class Feed extends React.Component {
             <React.Fragment>
                 {this.state.status}
                 {this.state.items.map((item, idx) =>
-                    this.props.displayType === 'events' && <EventCard item={item} key={idx} googleMapsKey={this.props.googleMapsKey} />
+                    this.props.displayType === 'event' && <EventCard item={item} key={idx} googleMapsKey={this.props.googleMapsKey} />
                 )}
                 {this.state.totalPages > 0 && (
                     <Pagination totalCount={this.state.totalItems} page={this.state.page} maxPerPage={this.state.pageSize} onDataPaginated={this.onDataPaginated} />

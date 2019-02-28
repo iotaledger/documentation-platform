@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import logo from '../../../assets/logo-small.svg';
 import { sanitizeHashId } from '../../../utils/paths';
 import './eventCard.css';
-import EventCardMarker from './EventCardMarker';
+import MapMarker from '../../atoms/MapMarker';
 
 /**
  * Component to display an event.
@@ -76,10 +76,10 @@ class EventCard extends Component {
                                 }}
                                 defaultZoom={14}
                             >
-                                <EventCardMarker lat={this.props.item.venueLatitude} lng={this.props.item.venueLongitude}>
+                                <MapMarker lat={this.props.item.venueLatitude} lng={this.props.item.venueLongitude}>
                                     <img src={logo} alt="IOTA" />
                                     {this.props.item.venueName}
-                                </EventCardMarker>
+                                </MapMarker>
                             </GoogleMapReact>
                         </div>
                     </div>

@@ -1,4 +1,5 @@
 import emoji from 'emoji-dictionary';
+import GoogleMapReact from 'google-map-react';
 import 'prismjs/themes/prism.css';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
@@ -13,10 +14,12 @@ import javascript from 'reprism/languages/javascript';
 import json from 'reprism/languages/json';
 import jsx from 'reprism/languages/jsx';
 import python from 'reprism/languages/python';
+import logoSmall from '../../../assets/logo-small.svg';
 import { copyToClipboard } from '../../../utils/clipboard';
 import { sanitizeHashId } from '../../../utils/paths';
 import Heading from '../../atoms/Heading';
 import HeadingLabel from '../../atoms/HeadingLabel';
+import MapMarker from '../../atoms/MapMarker';
 import ProjectTopicsInner from '../../molecules/ProjectTopicsContainer/ProjectTopicsInner';
 import Tabs from '../../molecules/Tabs';
 import Feed from '../../organisms/Feed';
@@ -45,7 +48,7 @@ class Markdown extends PureComponent {
         this.tabContainers = [];
         this.projectTopicContainers = [];
         this.headingLabels = [];
-        this.feeds = [];
+        this.objects = [];
 
         this.html = this.html.bind(this);
         this.heading = this.heading.bind(this);
@@ -103,9 +106,9 @@ class Markdown extends PureComponent {
             content = content.replace(headingMatches[i], `<heading-label index="${i}"></heading-label>`);
         }
 
-        const feedMatches = this.findFeeds(content);
-        for (let i = 0; i < feedMatches.length; i++) {
-            content = content.replace(feedMatches[i], `<feed index="${i}"></feed>`);
+        const objectMatches = this.findObjects(content);
+        for (let i = 0; i < objectMatches.length; i++) {
+            content = content.replace(objectMatches[i].content, `<${objectMatches[i].type} index="${i}"></${objectMatches[i].type}>`);
         }
 
         content = this.replaceSearchQuery(content);
@@ -262,16 +265,18 @@ class Markdown extends PureComponent {
         return matches;
     }
 
-    findFeeds(content) {
+    findObjects(content) {
         const matches = [];
-        const re = /^¬¬(.*?)\|(.*?)¬¬$/gm;
+        const re = /¬¬¬\s\[(.*?)\]\s([\s\S]*?)\s¬¬¬/gm;
 
         let match;
         do {
             match = re.exec(content);
             if (match && match.length === 3) {
-                this.feeds.push({ displayType: match[1], context: match[2] });
-                matches.push(match[0]);
+                if (match[1] === 'feed' || match[1] === 'map') {
+                    this.objects.push(JSON.parse(match[2]));
+                    matches.push({ type: match[1], content: match[0]});
+                }
             }
         } while (match);
 
@@ -311,7 +316,7 @@ class Markdown extends PureComponent {
 
             if (match && match.length === 2) {
                 const index = parseInt(match[1], 10);
-                const feed = this.feeds[index];
+                const feed = this.objects[index];
                 return (<Feed
                     displayType={feed.displayType}
                     context={feed.context}
@@ -320,6 +325,31 @@ class Markdown extends PureComponent {
                     onLoaded={this.handleFeedLoaded}
                     history={this.props.history}
                 />);
+            }
+        } else if (props.value.startsWith('<map')) {
+            const re = /<map index="(.*)">/;
+            let match = re.exec(props.value);
+
+            if (match && match.length === 2) {
+                const index = parseInt(match[1], 10);
+                const map = this.objects[index];
+                return (<div className="markdown-map">
+                    <GoogleMapReact
+                        bootstrapURLKeys={{ key: this.props.googleMapsKey }}
+                        defaultCenter={{
+                            lat: map.center.lat,
+                            lng: map.center.lng
+                        }}
+                        defaultZoom={map.zoom}
+                    >
+                        {map.markers && map.markers.map((marker, idx) => (
+                            <MapMarker lat={marker.lat} lng={marker.lng} key={idx}>
+                                <img src={logoSmall} alt="IOTA" />
+                                {marker.name}
+                            </MapMarker>
+                        ))}
+                    </GoogleMapReact>
+                </div>);
             }
         } else if (props.value.startsWith('<heading-label')) {
             const re = /<heading-label index="(.*)">/;

@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import './eventCard.css';
+import './mapMarker.css';
 
 /**
  * Component to display an event map marker.
  */
-class EventCardMarker extends Component {
+class MapMarker extends Component {
     static propTypes = {
         children: PropTypes.any,
         lat: PropTypes.number.isRequired,
@@ -14,11 +14,11 @@ class EventCardMarker extends Component {
 
     render() {
         return (
-            <div className="event-card--map-marker" {...this.props}>
+            <div className="map-marker" {...this.props}>
                 {this.props.children}
             </div>
         );
     }
 }
 
-export default EventCardMarker;
+export default MapMarker;
