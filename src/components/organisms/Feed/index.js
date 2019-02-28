@@ -33,7 +33,7 @@ class Feed extends React.Component {
             items: [],
             initialHash: props.history.location.hash,
             page: paramPage,
-            pageSize: 2,
+            pageSize: 10,
             totalPages: 0,
             totalItems: 0
         };
