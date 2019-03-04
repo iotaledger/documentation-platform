@@ -82,7 +82,7 @@ class Home extends React.Component {
                     onCloseClick={this.handleBurgerClick}
                     highlightedItem={this.state.projectFullURL} />
                 <div id='image-background' style={{ background: '#f3f2f1', width: '100%', height: '0px', position: 'absolute' }} />
-                <div className="layouts--home">
+                <div className="layouts--2-column">
                     <div className="left-column">
                         <ScrollInContainer topOffset={50} bottomOffset={150}>
                             <FloatingMenu menuItems={createProjectLinks(this.props.projects)} />

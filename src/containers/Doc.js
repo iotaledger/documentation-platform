@@ -131,7 +131,7 @@ class Doc extends React.Component {
                     currentVersion={this.state.projectVersion}
                     onChange={(newVersion) => this.changeVersion(newVersion)}
                 />
-                <div className="layouts--doc">
+                <div className="layouts--3-column">
                     <section className="left-column">
                         <DropSelector
                             items={createProjectLinks(this.props.projects)}

@@ -124,7 +124,7 @@ class Search extends React.Component {
                         <span className="sub-header__title sub-header-title__fixed">Search results</span>
                     </section>
                 </section>
-                <div className="layouts--search">
+                <div className="layouts--1-column">
                     <div className="middle-column">
                         <div className="input-wrapper-basic">
                             <InputSearch
