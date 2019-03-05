@@ -7,13 +7,13 @@ import SideMenu from '../components/molecules/SideMenu';
 import StickyHeader from '../components/organisms/StickyHeader';
 import { submitMissing } from '../utils/api';
 import { localStorageGet } from '../utils/localStorage';
-import { ProjectsPropTypes } from '../utils/propTypes.js';
+import { ProjectsPropTypes, ViewDataPropTypes } from '../utils/propTypes.js';
 import Container from './Container';
 import './notFound.css';
 
 class NotFound extends React.PureComponent {
     static propTypes = {
-        siteName: PropTypes.string.isRequired,
+        viewData: ViewDataPropTypes.isRequired,
         apiEndpoint: PropTypes.string.isRequired,
         projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
@@ -47,7 +47,7 @@ class NotFound extends React.PureComponent {
         return (
             <Container {...this.props}>
                 <Head>
-                    <title>{`Not Found | ${this.props.siteName}`}</title>
+                    <title>Not Found | {this.props.viewData.siteName}</title>
                 </Head>
                 <StickyHeader
                     onBurgerClick={this.handleBurgerClick}

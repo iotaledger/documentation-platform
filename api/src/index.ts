@@ -3,12 +3,13 @@ import express from "express";
 import { IConfiguration } from "./models/IConfiguration";
 import { emailCreate } from "./routes/emailCreate";
 import { feedbackCreate } from "./routes/feedbackCreate";
+import { feedList } from "./routes/feedList";
 import { init } from "./routes/init";
 import { missingCreate } from "./routes/missingCreate";
 
 // tslint:disable:no-var-requires no-require-imports
 const port = process.env.PORT || 4000;
-const configId = process.env.CONFIG_ID || "dev";
+const configId = process.env.CONFIG_ID || "local";
 
 const packageJson = require("../package.json");
 // tslint:disable-next-line:non-literal-require
@@ -60,10 +61,18 @@ app.post("/missing", async (req, res) => {
     res.end();
 });
 
+app.get("/feed/:context", async (req, res) => {
+    const response = await feedList(config, { ...req.params, ...req.query });
+    res.setHeader("Content-Type", "application/json");
+    res.send(JSON.stringify(response));
+    res.end();
+});
+
 app.listen(port, async err => {
     if (err) {
         throw err;
     }
 
     console.log(`Started API Server on port ${port} v${packageJson.version}`);
+    console.log(`Config '${configId}'`);
 });

@@ -5,14 +5,27 @@ import projects from './projects.json';
 import GoogleAnalytics from './src/components/atoms/GoogleAnalytics';
 import HotJar from './src/components/atoms/HotJar';
 
-const configId = process.env.CONFIG_ID || 'dev';
+const configId = process.env.CONFIG_ID || 'local';
 const config = require(`./src/config.${configId}.json`);
+
+const homeData = require('./docs/site-settings/home.json');
+if (homeData.cards) {
+    for (let i = 0; i < homeData.cards.length; i++) {
+        homeData.cards[i].image = `../../../assets/docs/site-settings/${homeData.cards[i].image}`;
+    }
+}
+
+const footerData = require('./docs/site-settings/footer.json');
+const viewData = require('./docs/site-settings/view.json');
 
 export default {
     siteRoot: config.siteRoot,
     getSiteData: () => ({
         projects,
-        ...config
+        ...config,
+        homeData,
+        footerData,
+        viewData
     }),
     getRoutes: () => [
         {
@@ -54,11 +67,11 @@ export default {
                         <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
                         <link rel="shortcut icon" href="/favicon/favicon.ico" />
                         <link rel="manifest" href="/favicon/site.webmanifest" />
-                        <meta name="apple-mobile-web-app-title" content={config.siteName} />
-                        <meta name="application-name" content={config.siteName} />
+                        <meta name="apple-mobile-web-app-title" content={viewData.siteName} />
+                        <meta name="application-name" content={viewData.siteName} />
                         <meta name="msapplication-TileColor" content="#ffffff" />
                         <meta name="theme-color" content="#ffffff" />
-                        <title>{config.siteName}</title>
+                        <title>{viewData.siteName}</title>
                     </Head>
                     <Body>
                         {children}

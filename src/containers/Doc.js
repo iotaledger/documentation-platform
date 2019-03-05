@@ -17,15 +17,16 @@ import StickyHeader from '../components/organisms/StickyHeader';
 import { submitFeedback } from '../utils/api';
 import { localStorageSet } from '../utils/localStorage';
 import { createPageTableOfContents, createProjectLinks, getProjectTitle, getProjectVersionPagesUrl, getVersionsUrl, parseProjectUrl, replaceVersion } from '../utils/projects';
-import { ProjectsPropTypes } from '../utils/propTypes.js';
+import { ProjectsPropTypes, ViewDataPropTypes } from '../utils/propTypes.js';
 import { extractHighlights, extractSearchQuery, initCorpusIndex } from '../utils/search';
 import Container from './Container';
 
 class Doc extends React.Component {
     static propTypes = {
         title: PropTypes.string.isRequired,
-        siteName: PropTypes.string.isRequired,
+        viewData: ViewDataPropTypes.isRequired,
         apiEndpoint: PropTypes.string.isRequired,
+        googleMapsKey: PropTypes.string.isRequired,
         markdown: PropTypes.string.isRequired,
         projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
@@ -50,6 +51,7 @@ class Doc extends React.Component {
 
         this.changeVersion = this.changeVersion.bind(this);
         this.handleBurgerClick = this.handleBurgerClick.bind(this);
+        this.handleContentChanged = this.handleContentChanged.bind(this);
     }
 
     changeVersion(newVersion) {
@@ -83,11 +85,33 @@ class Doc extends React.Component {
         this.setState({ isMenuOpen: !this.state.isMenuOpen });
     }
 
+    handleContentChanged(itemCount) {
+        // If the markdown has triggered a content change it must have
+        // dynamic content, if the default toc only has the 'introduction'
+        // entry see if there is any other h2 entries we can use from the dynamic content
+        const projectParts = parseProjectUrl(this.props.location.pathname);
+
+        const toc = createPageTableOfContents(projectParts, this.props.projects);
+
+        if (itemCount > 0) {
+            const markdownHeaders = document.querySelectorAll('.markdown__wrapper h2');
+            if (markdownHeaders && markdownHeaders.length > 0) {
+                for (let i = 0; i < markdownHeaders.length; i++) {
+                    toc.push({ name: markdownHeaders[i].innerText, link: `#${markdownHeaders[i].id}` })
+                }
+            }
+        }
+
+        this.setState({
+            pageTableOfContents: toc
+        });
+    }
+
     render() {
         return (
             <Container {...this.props}>
                 <Head>
-                    <title>{`${this.props.title} | ${this.props.siteName}`}</title>
+                    <title>{`${this.props.title} | ${this.props.viewData.siteName}`}</title>
                 </Head>
                 <StickyHeader
                     history={this.props.history}
@@ -107,7 +131,7 @@ class Doc extends React.Component {
                     currentVersion={this.state.projectVersion}
                     onChange={(newVersion) => this.changeVersion(newVersion)}
                 />
-                <div className="layouts--doc">
+                <div className="layouts--3-column">
                     <section className="left-column">
                         <DropSelector
                             items={createProjectLinks(this.props.projects)}
@@ -123,18 +147,27 @@ class Doc extends React.Component {
                         <div className="middle-toc">
                             <TableOfContents items={this.state.pageTableOfContents} title="Sections On This Page" compact={true} history={this.props.history} />
                         </div>
-                        <Markdown source={this.props.markdown} query={extractSearchQuery(this.props.location)} highlights={extractHighlights(this.props.location)} />
+                        <Markdown
+                            source={this.props.markdown}
+                            query={extractSearchQuery(this.props.location)}
+                            highlights={extractHighlights(this.props.location)}
+                            apiEndpoint={this.props.apiEndpoint}
+                            googleMapsKey={this.props.googleMapsKey}
+                            onContentChanged={this.handleContentChanged}
+                            history={this.props.history} />
                     </section>
                     <section className="right-column">
                         <ScrollInContainer bottomOffset={200}>
                             <TableOfContents items={this.state.pageTableOfContents} title="Sections On This Page" history={this.props.history} />
                         </ScrollInContainer>
                     </section>
-                    <BottomSticky zIndex={10} horizontalAlign='right'>
-                        <div className="tablet-down-hidden">
-                            <Feedback onSubmit={(data) => submitFeedback(this.props.apiEndpoint, this.props.location.pathname, data)} />
-                        </div>
-                    </BottomSticky>
+                    {this.props.viewData.enableFeedback && (
+                        <BottomSticky zIndex={10} horizontalAlign='right'>
+                            <div className="tablet-down-hidden">
+                                <Feedback onSubmit={(data) => submitFeedback(this.props.apiEndpoint, this.props.location.pathname, data)} />
+                            </div>
+                        </BottomSticky>
+                    )}
                 </div>
                 <Navigator
                     projects={this.props.projects}

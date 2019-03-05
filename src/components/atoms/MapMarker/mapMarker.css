@@ -1,0 +1,22 @@
+.map-marker {
+  display: -webkit-inline-flex;
+  display: inline-flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  padding: 10px;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  background: var(--jade);
+  color: var(--white);
+  text-align: center;
+}
+
+.map-marker img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border: none !important;
+}
