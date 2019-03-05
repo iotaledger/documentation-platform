@@ -74,4 +74,5 @@ app.listen(port, async err => {
     }
 
     console.log(`Started API Server on port ${port} v${packageJson.version}`);
+    console.log(`Config '${configId}'`);
 });
