@@ -22,6 +22,7 @@ import HeadingLabel from '../../atoms/HeadingLabel';
 import MapMarker from '../../atoms/MapMarker';
 import ProjectTopicsInner from '../../molecules/ProjectTopicsContainer/ProjectTopicsInner';
 import Tabs from '../../molecules/Tabs';
+import MessageBox from '../../molecules/MessageBox';
 import Feed from '../../organisms/Feed';
 import './markdown.css';
 
@@ -48,6 +49,7 @@ class Markdown extends PureComponent {
         this.tabContainers = [];
         this.projectTopicContainers = [];
         this.headingLabels = [];
+        this.messageBoxes = [];
         this.objects = [];
 
         this.html = this.html.bind(this);
@@ -104,6 +106,11 @@ class Markdown extends PureComponent {
         const headingMatches = this.findHeadingLabels(content);
         for (let i = 0; i < headingMatches.length; i++) {
             content = content.replace(headingMatches[i], `<heading-label index="${i}"></heading-label>`);
+        }
+
+        const messageBoxMatches = this.findMessageBoxes(content);
+        for (let i = 0; i < messageBoxMatches.length; i++) {
+            content = content.replace(messageBoxMatches[i], `<message-box index="${i}"></message-box>`);
         }
 
         const objectMatches = this.findObjects(content);
@@ -265,6 +272,25 @@ class Markdown extends PureComponent {
         return matches;
     }
 
+    findMessageBoxes(content) {
+        const matches = [];
+        const re = /^:::(success:|danger:|warning:|info:)(.+?)?(\n[\s\S]*?)?:::/gm;
+
+        let match;
+        do {
+            match = re.exec(content);
+            if (match && match.length === 4) {
+                this.messageBoxes.push({ 
+                    type: match[1].replace(':', ''),
+                    title: match[2] && this.emojify(match[2].trim()),
+                    content: match[3] && this.emojify(match[3].trim()) });
+                matches.push(match[0]);
+            }
+        } while (match);
+
+        return matches;
+    }
+
     findObjects(content) {
         const matches = [];
         const re = /¬¬¬\s\[(.*?)\]\s([\s\S]*?)\s¬¬¬/gm;
@@ -360,6 +386,15 @@ class Markdown extends PureComponent {
                 const headingLabel = this.headingLabels[index];
                 return (<HeadingLabel style={headingLabel.style} id={sanitizeHashId(headingLabel.content)}>{headingLabel.content}</HeadingLabel>);
             }
+        } else if (props.value.startsWith('<message-box')) {
+            const re = /<message-box index="(.*)">/;
+            let match = re.exec(props.value);
+
+            if (match && match.length === 2) {
+                const index = parseInt(match[1], 10);
+                const messageBox = this.messageBoxes[index];
+                return (<MessageBox type={messageBox.type} title={messageBox.title} content={messageBox.content} />);
+            }
         } else if (props.value.startsWith('<a name')) {
             const re = /<a name="(.*)"/i;
             let match = re.exec(props.value);
@@ -449,7 +484,11 @@ class Markdown extends PureComponent {
     }
 
     textRenderer(props) {
-        return props.children.replace(/:\w+:/gi, name => emoji.getUnicode(name));
+        return this.emojify(props.children);
+    }
+
+    emojify(item) {
+        return item.replace(/:\w+:/gi, name => emoji.getUnicode(name));
     }
 
     tableRenderer(props) {
