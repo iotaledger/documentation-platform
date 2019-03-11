@@ -40,6 +40,10 @@ export default {
                 title: page.title
             })
         })),
+        ...getRootPages().map(page => ({
+            path: `/${page.folder}`,
+            redirect: page.root
+        })),
         {
             path: '/search',
             component: 'src/containers/Search'
@@ -106,6 +110,25 @@ function getDocPages() {
     }
 
     return documents;
+}
+
+function getRootPages() {
+    const roots = [];
+
+    for (let i = 0; i < projects.length; i++) {
+        const project = projects[i];
+
+        if (project.versions.length > 0) {
+            const version = project.versions[project.versions.length - 1];
+
+            roots.push({
+                folder: project.folder,
+                root: version.pages[0].link.replace(/^\//, '')
+            });
+        }
+    }
+
+    return roots;
 }
 
 function webifyPath(p) {
