@@ -75,6 +75,7 @@ class Home extends React.Component {
                     topTitles={this.props.homeData.headerTopLinks}
                     popularTopics={this.props.homeData.popularTopics}
                     onBurgerClick={this.handleBurgerClick}
+                    viewData={this.props.viewData}
                 />
                 <SideMenu
                     isMenuOpen={this.state.isMenuOpen}

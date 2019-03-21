@@ -44,8 +44,9 @@ export const FooterDataPropTypes = PropTypes.shape({
 
 export const ViewDataPropTypes = PropTypes.shape({
     siteName: PropTypes.string.isRequired,
-    enableFeedback: PropTypes.bool.isRequired,
-    enableSignup: PropTypes.bool.isRequired
+    enableFeedback: PropTypes.bool,
+    enableSignup: PropTypes.bool,
+    disableSearch: PropTypes.bool
 });
 
 export const ProjectsPropTypes = PropTypes.arrayOf(

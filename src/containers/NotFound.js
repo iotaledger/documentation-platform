@@ -50,7 +50,9 @@ class NotFound extends React.PureComponent {
                     <title>Not Found | {this.props.viewData.siteName}</title>
                 </Head>
                 <StickyHeader
+                    history={this.props.history}
                     onBurgerClick={this.handleBurgerClick}
+                    viewData={this.props.viewData}
                 />
                 <SideMenu
                     isMenuOpen={this.state.isMenuOpen}
