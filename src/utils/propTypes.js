@@ -12,7 +12,7 @@ export const HomeDataPropTypes = PropTypes.shape({
             query: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired
         })
-    ).isRequired,
+    ),
     cards: PropTypes.arrayOf(
         PropTypes.shape({
             href: PropTypes.string.isRequired,

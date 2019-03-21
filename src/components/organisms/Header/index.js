@@ -17,7 +17,7 @@ class Header extends React.Component {
                 query: PropTypes.string.isRequired,
                 name: PropTypes.string.isRequired
             })
-        ).isRequired,
+        ),
         onBurgerClick: PropTypes.func,
         history: ReactRouterPropTypes.history
     };
@@ -77,21 +77,23 @@ class Header extends React.Component {
                                     onKeyUp={this.handleKeyUp}
                                     onSearch={this.onSearch}
                                 />
-                                <nav>
-                                    <span>Popular topics:</span>
-                                    {
-                                        this.props.popularTopics.map((pt, idx) => (
-                                            <React.Fragment key={idx}>
-                                                <a onClick={() => this.onSearch(pt.query)}>{pt.name}</a>
-                                                {
-                                                    idx < this.props.popularTopics.length - 1 && (
-                                                        <span>,</span>
-                                                    )
-                                                }
-                                            </React.Fragment>
-                                        ))
-                                    }
-                                </nav>
+                                {this.props.popularTopics && (
+                                    <nav>
+                                        <span>Popular topics:</span>
+                                        {
+                                            this.props.popularTopics.map((pt, idx) => (
+                                                <React.Fragment key={idx}>
+                                                    <a onClick={() => this.onSearch(pt.query)}>{pt.name}</a>
+                                                    {
+                                                        idx < this.props.popularTopics.length - 1 && (
+                                                            <span>,</span>
+                                                        )
+                                                    }
+                                                </React.Fragment>
+                                            ))
+                                        }
+                                    </nav>
+                                )}
                             </div>
                         </div>
                     </section>
