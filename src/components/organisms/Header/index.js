@@ -1,7 +1,9 @@
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import logo from '../../../assets/Logo.svg';
+import { ViewDataPropTypes } from '../../../utils/propTypes';
 import { performSearch } from '../../../utils/search';
 import InputSearch from '../../molecules/InputSearch';
 
@@ -17,9 +19,10 @@ class Header extends React.Component {
                 query: PropTypes.string.isRequired,
                 name: PropTypes.string.isRequired
             })
-        ).isRequired,
+        ),
         onBurgerClick: PropTypes.func,
-        history: ReactRouterPropTypes.history
+        history: ReactRouterPropTypes.history,
+        viewData: ViewDataPropTypes.isRequired
     };
 
     constructor(props) {
@@ -50,7 +53,10 @@ class Header extends React.Component {
         const { topTitles, headerTitle } = this.props;
 
         return (
-            <header className="header">
+            <header className={classNames(
+                'header',
+                { 'compact': this.props.viewData.disableSearch }
+            )}>
                 <div className="header__wrapper">
                     <section className="header__head">
                         <img className="header__brand" src={logo} />
@@ -69,31 +75,35 @@ class Header extends React.Component {
                     </section>
                     <section className="header__body" style={{}}>
                         <span className="header__title text text--level1 text--secondary">{headerTitle}</span>
-                        <div className="header__search">
-                            <div className="input-wrapper">
-                                <InputSearch
-                                    className="input-search"
-                                    placeholder="Search for topics"
-                                    onKeyUp={this.handleKeyUp}
-                                    onSearch={this.onSearch}
-                                />
-                                <nav>
-                                    <span>Popular topics:</span>
-                                    {
-                                        this.props.popularTopics.map((pt, idx) => (
-                                            <React.Fragment key={idx}>
-                                                <a onClick={() => this.onSearch(pt.query)}>{pt.name}</a>
-                                                {
-                                                    idx < this.props.popularTopics.length - 1 && (
-                                                        <span>,</span>
-                                                    )
-                                                }
-                                            </React.Fragment>
-                                        ))
-                                    }
-                                </nav>
+                        {!this.props.viewData.disableSearch && (
+                            <div className="header__search">
+                                <div className="input-wrapper">
+                                    <InputSearch
+                                        className="input-search"
+                                        placeholder="Search for topics"
+                                        onKeyUp={this.handleKeyUp}
+                                        onSearch={this.onSearch}
+                                    />
+                                    {this.props.popularTopics && (
+                                        <nav>
+                                            <span>Popular topics:</span>
+                                            {
+                                                this.props.popularTopics.map((pt, idx) => (
+                                                    <React.Fragment key={idx}>
+                                                        <a onClick={() => this.onSearch(pt.query)}>{pt.name}</a>
+                                                        {
+                                                            idx < this.props.popularTopics.length - 1 && (
+                                                                <span>,</span>
+                                                            )
+                                                        }
+                                                    </React.Fragment>
+                                                ))
+                                            }
+                                        </nav>
+                                    )}
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </section>
                 </div>
             </header>

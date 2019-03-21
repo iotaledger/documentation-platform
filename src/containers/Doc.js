@@ -97,7 +97,7 @@ class Doc extends React.Component {
             const markdownHeaders = document.querySelectorAll('.markdown__wrapper h2');
             if (markdownHeaders && markdownHeaders.length > 0) {
                 for (let i = 0; i < markdownHeaders.length; i++) {
-                    toc.push({ name: markdownHeaders[i].innerText, link: `#${markdownHeaders[i].id}` })
+                    toc.push({ name: markdownHeaders[i].innerText, link: `#${markdownHeaders[i].id}` });
                 }
             }
         }
@@ -116,6 +116,7 @@ class Doc extends React.Component {
                 <StickyHeader
                     history={this.props.history}
                     onBurgerClick={this.handleBurgerClick}
+                    viewData={this.props.viewData}
                 />
                 <SideMenu
                     isMenuOpen={this.state.isMenuOpen}

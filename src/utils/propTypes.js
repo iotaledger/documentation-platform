@@ -12,7 +12,7 @@ export const HomeDataPropTypes = PropTypes.shape({
             query: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired
         })
-    ).isRequired,
+    ),
     cards: PropTypes.arrayOf(
         PropTypes.shape({
             href: PropTypes.string.isRequired,
@@ -44,8 +44,9 @@ export const FooterDataPropTypes = PropTypes.shape({
 
 export const ViewDataPropTypes = PropTypes.shape({
     siteName: PropTypes.string.isRequired,
-    enableFeedback: PropTypes.bool.isRequired,
-    enableSignup: PropTypes.bool.isRequired
+    enableFeedback: PropTypes.bool,
+    enableSignup: PropTypes.bool,
+    disableSearch: PropTypes.bool
 });
 
 export const ProjectsPropTypes = PropTypes.arrayOf(

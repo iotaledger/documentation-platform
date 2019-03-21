@@ -114,6 +114,7 @@ class Search extends React.Component {
                 <StickyHeader
                     history={this.props.history}
                     onBurgerClick={this.handleBurgerClick}
+                    viewData={this.props.viewData}
                 />
                 <SideMenu
                     isMenuOpen={this.state.isMenuOpen}
