@@ -67,6 +67,7 @@ code, pre {
 .markdown__wrapper img {
   max-width: 100%;
   border: 10px solid #f3f2f1;
+  cursor: pointer;
 }
 
 .markdown__wrapper dl {
@@ -143,3 +144,38 @@ code, pre {
   height: 300px;
   border: 1px solid var(--jade);
 }
+
+.markdown__wrapper .image-popup--overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #eeeeee;
+  opacity: 0.9;
+  z-index: 100;
+}
+
+.markdown__wrapper .image-popup {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 101;
+  padding: 40px;
+  cursor: pointer;
+}
+
+.markdown__wrapper .image-popup img {
+  flex: 0 0;
+  border: none;
+  background: white;
+  padding: 20px;
+  max-height: 100%;
+  max-width: 100%;
+}
+
