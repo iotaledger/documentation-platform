@@ -9,7 +9,10 @@ class MessageBox extends Component {
     static propTypes = {
         type: PropTypes.string.isRequired,
         title: PropTypes.string,
-        content: PropTypes.string
+        content: PropTypes.oneOfType([
+            PropTypes.node,
+            PropTypes.arrayOf(PropTypes.node)
+        ])
     };
 
     constructor(props) {
@@ -38,11 +41,7 @@ class MessageBox extends Component {
                     )}
                     {this.props.content && (
                         <div className="message-box--content">
-                            {this.props.content.split('\n').map((a, idx) => (
-                                <React.Fragment key={idx}>
-                                    {a}<br />
-                                </React.Fragment>
-                            ))}
+                            {this.props.content}
                         </div>
                     )}
                 </div>
