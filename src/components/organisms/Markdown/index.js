@@ -43,8 +43,7 @@ class Markdown extends PureComponent {
         super(props);
 
         this.state = {
-            content: '',
-            imageUrl: ''
+            content: ''
         };
 
         this.tabContainers = [];
@@ -64,7 +63,6 @@ class Markdown extends PureComponent {
         this.codeBlock = this.codeBlock.bind(this);
         this.handleCopy = this.handleCopy.bind(this);
         this.handleFeedLoaded = this.handleFeedLoaded.bind(this);
-        this.imageRenderer = this.imageRenderer.bind(this);
 
         this.currentTable = undefined;
         this.currentTableRow = 0;
@@ -276,17 +274,16 @@ class Markdown extends PureComponent {
 
     findMessageBoxes(content) {
         const matches = [];
-        const re = /:::(success:|danger:|warning:|info:)(.+?)?(\n[\s\S]*?)?:::/gm;
+        const re = /^:::(success:|danger:|warning:|info:)(.+?)?(\n[\s\S]*?)?:::/gm;
 
         let match;
         do {
             match = re.exec(content);
             if (match && match.length === 4) {
-                this.messageBoxes.push({
+                this.messageBoxes.push({ 
                     type: match[1].replace(':', ''),
                     title: match[2] && this.emojify(match[2].trim()),
-                    content: match[3] && this.emojify(match[3].trim())
-                });
+                    content: match[3] && this.emojify(match[3].trim()) });
                 matches.push(match[0]);
             }
         } while (match);
@@ -304,7 +301,7 @@ class Markdown extends PureComponent {
             if (match && match.length === 3) {
                 if (match[1] === 'feed' || match[1] === 'map') {
                     this.objects.push(JSON.parse(match[2]));
-                    matches.push({ type: match[1], content: match[0] });
+                    matches.push({ type: match[1], content: match[0]});
                 }
             }
         } while (match);
@@ -396,7 +393,7 @@ class Markdown extends PureComponent {
             if (match && match.length === 2) {
                 const index = parseInt(match[1], 10);
                 const messageBox = this.messageBoxes[index];
-                return (<MessageBox type={messageBox.type} title={messageBox.title} content={this.linkify(messageBox.content)} />);
+                return (<MessageBox type={messageBox.type} title={messageBox.title} content={messageBox.content} />);
             }
         } else if (props.value.startsWith('<a name')) {
             const re = /<a name="(.*)"/i;
@@ -411,16 +408,6 @@ class Markdown extends PureComponent {
 
             if (match && match.length === 2) {
                 return (<span className="search-keyword">{match[1]}</span>);
-            }
-        } else if (props.value.startsWith('<img')) {
-            const re = /<img src="(.*?)"\s*(?:alt="(.*?)")?/i;
-            let match = re.exec(props.value);
-
-            if (match && (match.length === 2 || match.length === 3)) {
-                return this.imageRenderer({
-                    src: match[1],
-                    alt: match[2] || ''
-                });
             }
         }
 
@@ -438,27 +425,6 @@ class Markdown extends PureComponent {
 
         const nodeProps = { dangerouslySetInnerHTML: { __html: props.value } };
         return React.createElement(tag, nodeProps);
-    }
-
-    linkify(content) {
-        const output = [];
-        const re = /\[(.*?)\]\((.*?)\)/;
-        let match;
-        do {
-            match = re.exec(content);
-            if (match && match.length === 3) {
-                output.push((<span style={{whiteSpace: 'pre-line'}} key={output.length}>{content.substring(0, match.index)}</span>));
-                output.push(this.aLink({
-                    children: match[1],
-                    href: match[2],
-                    key: output.length
-                }));
-                content = content.substring(match.index + match[0].length);
-            } else {
-                output.push((<span style={{whiteSpace: 'pre-line'}} key={output.length}>{content}</span>));
-            }
-        } while (match);
-        return output;
     }
 
     aLink(props) {
@@ -579,13 +545,6 @@ class Markdown extends PureComponent {
         );
     }
 
-    imageRenderer(props) {
-        return (<img src={props.src} alt={props.alt || ''} onClick={(e) => {
-            this.setState({ imageUrl: e.target.src });
-            document.body.classList.toggle('no-scroll', true);
-        }}/>);
-    }
-
     getCoreProps(props) {
         return props['data-sourcepos'] ? { 'data-sourcepos': props['data-sourcepos'] } : {};
     }
@@ -598,36 +557,22 @@ class Markdown extends PureComponent {
 
     render() {
         return (
-            <div className="markdown__wrapper">
-                <ReactMarkdown
-                    source={this.state.content}
-                    renderers={{
-                        text: this.textRenderer,
-                        code: (props) => this.codeBlock(props, true),
-                        inlineCode: (props) => this.inlineCodeBlock(props),
-                        html: this.html,
-                        link: this.aLink,
-                        paragraph: this.paragraph,
-                        heading: this.heading,
-                        table: this.tableRenderer,
-                        tableRow: this.tableRowRenderer,
-                        tableCell: this.tableCellRenderer,
-                        image: this.imageRenderer,
-                        img: this.imageRenderer
-                    }}
-                    skipHtml={false}
-                    escapeHtml={false} />
-                {this.state.imageUrl && (
-                    <React.Fragment>
-                        <div className="image-popup--overlay" />
-                        <div className="image-popup" onClick={() => {
-                            this.setState({ imageUrl: undefined });
-                            document.body.classList.toggle('no-scroll', false);
-                        }}>
-                            <img src={this.state.imageUrl} />
-                        </div>
-                    </React.Fragment>
-                )}
+            <div className="markdown__wrapper"><ReactMarkdown
+                source={this.state.content}
+                renderers={{
+                    text: this.textRenderer,
+                    code: (props) => this.codeBlock(props, true),
+                    inlineCode: (props) => this.inlineCodeBlock(props),
+                    html: this.html,
+                    link: this.aLink,
+                    paragraph: this.paragraph,
+                    heading: this.heading,
+                    table: this.tableRenderer,
+                    tableRow: this.tableRowRenderer,
+                    tableCell: this.tableCellRenderer
+                }}
+                skipHtml={false}
+                escapeHtml={false} />
             </div>
         );
     }
