@@ -121,10 +121,12 @@ function getRootPages() {
         if (project.versions.length > 0) {
             const version = project.versions[project.versions.length - 1];
 
-            roots.push({
-                folder: project.folder,
-                root: version.pages[0].link.replace(/^\//, '')
-            });
+            if (version.pages && version.pages.length > 0) {
+                roots.push({
+                    folder: project.folder,
+                    root: version.pages[0].link.replace(/^\//, '')
+                });
+            }
         }
     }
 
