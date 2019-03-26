@@ -173,6 +173,7 @@ code, pre {
 .markdown__wrapper .image-popup img {
   flex: 0 0;
   border: none;
-  max-width: auto;
+  background: white;
+  padding: 20px;
 }
 
