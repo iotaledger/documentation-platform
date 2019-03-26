@@ -175,5 +175,7 @@ code, pre {
   border: none;
   background: white;
   padding: 20px;
+  max-height: 100%;
+  max-width: 100%;
 }
 
