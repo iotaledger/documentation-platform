@@ -7,13 +7,18 @@ const emoji = require('node-emoji');
 const emojiRegex = require('emoji-regex');
 const emojiUnicode = require('emoji-unicode');
 const chalk = require('chalk');
+const md = require('markdown-it');
+const spellchecker = require('spellchecker');
+const cheerio = require('cheerio');
 
-const { rootFolder, reportFile, projectsFile, checkRemotePages, consoleDetail, exitWithError } = require('./buildProjects.config.json');
+const { rootFolder, reportFile, projectsFile, checkRemotePages, checkSpelling, spellingFile, consoleDetail, exitWithError } = require('./buildProjects.config.json');
+
+let dictionary = {};
 
 let errorCount = 0;
 let warningCount = 0;
 
-async function buildProjects(docsFolder) {
+async function buildProjects(docsFolder, singleProject) {
     try {
         await fsPromises.unlink(reportFile);
     } catch (err) {
@@ -26,7 +31,10 @@ async function buildProjects(docsFolder) {
     await reportEntry(`Reading Project Dir: '${docsFolder}'`);
     await reportEntry('');
 
-    const projects = await readProjects(docsFolder);
+    let projects = await readProjects(docsFolder);
+    if (singleProject) {
+        projects = projects.filter(p => p.folder === singleProject);
+    }
     console.log(`Found ${projects.length} Projects.`);
 
     for (let i = 0; i < projects.length; i++) {
@@ -243,11 +251,12 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
             await italic(doc, docName);
             await img(doc, docName);
             await emojiChars(doc, docName);
+            await spellCheck(projectFolder, doc, docName);
         } else {
             await reportError(`'${docIndexFile}' referenced '${docName}' but the file does not exist`);
         }
     } catch (err) {
-        await reportError(`'${docIndexFile}' referenced '${docName}' but building TOC failed`, err);
+        await reportError(`'${docIndexFile}' referenced '${docName}' but validating content failed see ${projectsFile} for more details`, err);
     }
 
     return { toc, assets };
@@ -370,11 +379,15 @@ async function markdownLinks(markdown, docPath) {
 
         if (match && match.length === 3) {
             if (isRemote(match[2])) {
-                const response = await checkRemote(match[2]);
-                if (!response) {
-                    await reportEntry(`\t\t\tRemote Page: '${match[2]}'`);
+                if (match[2].indexOf("docs.iota.org") >= 0) {
+                    await reportError(`You should not use absolute paths for docs content: '${match[2]}' in '${docPath}'`);
                 } else {
-                    await reportWarning(`Remote page errors: '${match[2]}' in '${docPath}' with '${response}'`);
+                    const response = await checkRemote(match[2]);
+                    if (!response) {
+                        await reportEntry(`\t\t\tRemote Page: '${match[2]}'`);
+                    } else {
+                        await reportWarning(`Remote page errors: '${match[2]}' in '${docPath}' with '${response}'`);
+                    }
                 }
             } else if (isRoot(match[2])) {
                 let rootUrl = stripAnchor(stripRoot(match[2]));
@@ -419,6 +432,70 @@ async function htmlLinks(markdown, docPath) {
 async function separators(markdown, docPath) {
     if (/<hr/gmi.test(markdown)) {
         await reportWarning(`HTML Separators <hr> should be converted to Markdown ---: in '${docPath}'`);
+    }
+}
+
+function isValidWord(projectFolder, word) {
+    let isValid = false;
+
+    const noPunc = word.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, '');
+
+    if (noPunc.length === 0) {
+        isValid = true;
+    } else {
+        if (dictionary.global) {
+            for (let d = 0; d < dictionary.global.length && !isValid; d++) {
+                isValid = dictionary.global[d].test(noPunc);
+            }
+        }
+
+        if (!isValid && dictionary[projectFolder]) {
+            for (let d = 0; d < dictionary[projectFolder].length && !isValid; d++) {
+                isValid = dictionary[projectFolder][d].test(noPunc);
+            }
+        }
+    }
+
+    return isValid;
+}
+
+async function spellCheck(projectFolder, markdown, docPath) {
+    if (checkSpelling) {
+        let noCode = markdown.replace(/```[\s\S]*?```/g, '');
+        let noObjects = noCode.replace(/¬¬¬[\s\S]*?¬¬¬/g, '');
+        let noHtml = noObjects.replace(/<(?:.*?)>(.*?)<\/(?:.*?)>/g, ' $1 ');
+
+        const html = md({ html: true }).render(noHtml);
+        const dom = cheerio.load(html);
+        const plainText = dom.root().text().replace(/(:.*?:)/g, '');
+
+        const results = await spellchecker.checkSpellingAsync(plainText);
+
+        const misspelled = [];
+        for (let i = 0; i < results.length; i++) {
+            const word = plainText.substring(results[i].start, results[i].end);
+
+            if (!isValidWord(projectFolder, word) && spellchecker.isMisspelled(word)) {
+                misspelled.push(word);
+            }
+        }
+
+        if (misspelled.length > 0) {
+            await reportWarning(`'${misspelled.join('\', \'')}' possible spelling mistake(s) in '${docPath}'`);
+
+            let output = `\n## [${docPath}](${docPath})\n\n`;
+
+            for (let i = 0; i < misspelled.length; i++) {
+                output += misspelled[i];
+                const alts = spellchecker.getCorrectionsForMisspelling(misspelled[i]);
+                if (alts && alts.length > 0) {
+                    output += `${' '.repeat(30 - misspelled[i].length)} => ${alts.join(', ')}`;
+                }
+                output += '\n';
+            }
+
+            fs.appendFileSync(spellingFile, output);
+        }
     }
 }
 
@@ -532,6 +609,10 @@ async function reportError(data, err) {
 
     if (err) {
         await fsPromises.appendFile(reportFile, `ERROR: ${err.message}\n`);
+
+        if (consoleDetail) {
+            console.error(chalk.red(err.message));
+        }
     }
 }
 
@@ -546,6 +627,10 @@ async function reportWarning(data, err) {
 
     if (err) {
         await fsPromises.appendFile(reportFile, `WARN: ${err.message}\n`);
+
+        if (consoleDetail) {
+            console.error(chalk.cyan(err.message));
+        }
     }
 }
 
@@ -577,8 +662,38 @@ async function checkRemote(url) {
     }
 }
 
-async function run() {
-    const projects = await buildProjects(rootFolder);
+function loadDictionary() {
+    const dictionaryFile = 'dictionary.json';
+
+    if (fs.existsSync(dictionaryFile)) {
+        try {
+            const dic = JSON.parse(fs.readFileSync(dictionaryFile));
+
+            const keys = Object.keys(dic);
+
+            for (let k = 0; k < keys.length; k++) {
+                const key = keys[k];
+                dictionary[key] = [];
+                for (let i = 0; i < dic[key].length; i++) {
+                    dictionary[key].push(new RegExp(dic[key][i], 'i'));
+                }
+            }
+        } catch (err) {
+            console.error(chalk.red('ERROR: Failed loading dictionary.'));
+            console.error(chalk.red(err.message));
+        }
+    }
+}
+
+async function run(singleProject) {
+    if (checkSpelling && spellingFile) {
+        if (fs.existsSync(spellingFile)) {
+            fs.unlinkSync(spellingFile);
+        }
+        fs.appendFileSync(spellingFile, '# Spelling Summary\n');
+        loadDictionary();
+    }
+    const projects = await buildProjects(rootFolder, singleProject);
 
     if (projectsFile) {
         await fsPromises.writeFile(projectsFile, JSON.stringify(projects, undefined, '\t'));
@@ -597,7 +712,6 @@ async function run() {
     if (warningCount > 0) {
         console.error(chalk.cyan(`WARNING: There were ${warningCount} warnings during project build, see ${reportFile} for details.`));
     }
-
     if (errorCount > 0 && exitWithError) {
         process.exit(1);
     }
@@ -605,9 +719,9 @@ async function run() {
 
 console.log(chalk.green.underline.bold('Build Projects'));
 
-const docsFolder = process.argv[2] || 'docs';
+const singleProject = process.argv[2] || '';
 
-run(docsFolder)
+run(singleProject)
     .then(() => console.log(chalk.green(`\n${emoji.get('smile')}  Completed Successfully`)))
     .catch((err) => {
         console.error(chalk.red(`\n${emoji.get('frown')}  Building failed with the following error:`));

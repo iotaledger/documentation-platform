@@ -4,5 +4,7 @@
     "projectsFile": "projects.json",
     "checkRemotePages": false,
     "consoleDetail": false,
-    "exitWithError": false
+    "exitWithError": true,
+    "checkSpelling": false,
+    "spellingFile": ""
 }
