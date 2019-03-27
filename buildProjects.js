@@ -101,7 +101,7 @@ async function buildHome(docsFolder, project) {
     const homeFile = `${docsFolder}/${project.folder}/home.md`;
 
     try {
-        if (fs.existsSync(homeFile)) {
+        if (fileExistsWithCaseSync(homeFile)) {
             await reportEntry(`\tHome File: '${homeFile}'`);
 
             const home = (await fsPromises.readFile(homeFile)).toString();
@@ -212,7 +212,7 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
     const docName = webifyPath(path.join(`${docsFolder}/${projectFolder}/${version}/`, doc));
 
     try {
-        if (fs.existsSync(docName)) {
+        if (fileExistsWithCaseSync(docName)) {
             await reportEntry(`\t\t\tTOC: '${docName}'`);
 
             let doc = (await fsPromises.readFile(docName)).toString();
@@ -332,7 +332,7 @@ async function assetHtmlImage(markdown, docPath, assets) {
                 }
             } else if (match[2].length > 0) {
                 const imgFilename = path.resolve(path.join(path.dirname(docPath), match[2]));
-                if (fs.existsSync(imgFilename)) {
+                if (fileExistsWithCaseSync(imgFilename)) {
                     await reportEntry(`\t\t\tLocal Image: '${match[2]}'`);
                     assets.push(`/${webifyPath(path.relative('.', imgFilename))}`);
                 } else {
@@ -362,7 +362,7 @@ async function assetMarkdownImage(markdown, docPath, assets) {
                 }
             } else if (match[3].length > 0) {
                 const imgFilename = path.resolve(path.join(path.dirname(docPath), match[3]));
-                if (fs.existsSync(imgFilename)) {
+                if (fileExistsWithCaseSync(imgFilename)) {
                     await reportEntry(`\t\t\tLocal Image: '${match[3]}'`);
                     assets.push(`/${webifyPath(path.relative('.', imgFilename))}`);
                 } else {
@@ -399,7 +399,7 @@ async function markdownLinks(markdown, docPath) {
             } else if (isRoot(match[2])) {
                 let rootUrl = stripAnchor(stripRoot(match[2]));
                 const docFilename = path.resolve(path.join(rootFolder, rootUrl));
-                if (!fs.existsSync(docFilename)) {
+                if (!fileExistsWithCaseSync(docFilename)) {
                     await reportError(`Root page does not exist '${match[2]}' in '${docPath}'`);
                 }
             } else if (match[2].startsWith('#') || match[0].startsWith('!')) {
@@ -407,7 +407,7 @@ async function markdownLinks(markdown, docPath) {
             } else if (match[2].length > 0) {
                 let localUrl = stripAnchor(match[2]);
                 const docFilename = path.resolve(path.join(path.dirname(docPath), localUrl));
-                if (!fs.existsSync(docFilename)) {
+                if (!fileExistsWithCaseSync(docFilename)) {
                     await reportError(`Local page does not exist '${match[2]}' in '${docPath}'`);
                 }
             } else {
@@ -649,6 +649,15 @@ function listDirs(dir) {
     return fs.readdirSync(dir).filter(f => fs.statSync(path.join(dir, f)).isDirectory());
 }
 
+function fileExistsWithCaseSync(file) {
+    var dir = path.dirname(file);
+    const filenames = fs.readdirSync(dir);
+    if (filenames.indexOf(path.basename(file)) === -1) {
+        return false;
+    }
+    return true;
+}
+
 function sanitizeLink(item) {
     return item
         .replace(/^\.?\//, '')
@@ -672,7 +681,7 @@ async function checkRemote(url) {
 function loadDictionary() {
     const dictionaryFile = 'dictionary.json';
 
-    if (fs.existsSync(dictionaryFile)) {
+    if (fileExistsWithCaseSync(dictionaryFile)) {
         try {
             const dic = JSON.parse(fs.readFileSync(dictionaryFile));
 
