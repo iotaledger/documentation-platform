@@ -260,7 +260,7 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
             await emojiChars(doc, docName);
             await spellCheck(projectFolder, doc, docName);
         } else {
-            await reportError(`'${docIndexFile}' referenced '${docName}' but the file does not exist`);
+            await reportError(`'${docIndexFile}' referenced '${docName}' but the file/folder does not exist or has wrong casing`);
         }
     } catch (err) {
         await reportError(`'${docIndexFile}' referenced '${docName}' but validating content failed see ${projectsFile} for more details`, err);
@@ -336,7 +336,7 @@ async function assetHtmlImage(markdown, docPath, assets) {
                     await reportEntry(`\t\t\tLocal Image: '${match[2]}'`);
                     assets.push(`/${webifyPath(path.relative('.', imgFilename))}`);
                 } else {
-                    await reportError(`Image file does not exist '${match[2]}' in '${docPath}'`);
+                    await reportError(`Image file does not exist or has wrong casing '${match[2]}' in '${docPath}'`);
                 }
             } else {
                 await reportError(`Invalid Image reference: ${match[0]} in '${docPath}'`);
@@ -366,7 +366,7 @@ async function assetMarkdownImage(markdown, docPath, assets) {
                     await reportEntry(`\t\t\tLocal Image: '${match[3]}'`);
                     assets.push(`/${webifyPath(path.relative('.', imgFilename))}`);
                 } else {
-                    await reportError(`Image file does not exist '${match[3]}' in '${docPath}'`);
+                    await reportError(`Image file does not exist or has wrong casing '${match[3]}' in '${docPath}'`);
                 }
             } else {
                 await reportError(`Invalid Image reference: ${match[0]} in '${docPath}'`);
@@ -400,17 +400,15 @@ async function markdownLinks(markdown, docPath) {
                 let rootUrl = stripAnchor(stripRoot(match[2]));
                 const docFilename = path.resolve(path.join(rootFolder, rootUrl));
                 if (!fileExistsWithCaseSync(docFilename)) {
-                    await reportError(`Root page does not exist '${match[2]}' in '${docPath}'`);
+                    await reportError(`Root page does not exist or has wrong casing '${match[2]}' in '${docPath}'`);
                 }
-            } else if (isMail(match[2])) {
-                // Skip mail links
             } else if (match[2].startsWith('#') || match[0].startsWith('!')) {
                 // Anchor skip and images skip
             } else if (match[2].length > 0) {
                 let localUrl = stripAnchor(match[2]);
                 const docFilename = path.resolve(path.join(path.dirname(docPath), localUrl));
                 if (!fileExistsWithCaseSync(docFilename)) {
-                    await reportError(`Local page does not exist '${match[2]}' in '${docPath}'`);
+                    await reportError(`Local page does not exist or has wrong casing '${match[2]}' in '${docPath}'`);
                 }
             } else {
                 await reportError(`Invalid html reference: ${match[0]} in '${docPath}'`);
@@ -591,10 +589,6 @@ function isRemote(link) {
     return link.startsWith('http://') || link.startsWith('https://');
 }
 
-function isMail(link) {
-    return link.startsWith('mailto:');
-}
-
 function rootToDocs(content, docsFolder) {
     return content.replace(/root:\/\//g, `/${docsFolder}/`);
 }
@@ -656,12 +650,17 @@ function listDirs(dir) {
 }
 
 function fileExistsWithCaseSync(file) {
-    var dir = path.dirname(file);
+    const dir = path.dirname(file);
+
+    if (dir === '/' || dir === '.' || dir.indexOf(":") >= 0) {
+        return true;
+    }
+
     const filenames = fs.readdirSync(dir);
     if (filenames.indexOf(path.basename(file)) === -1) {
         return false;
     }
-    return true;
+    return fileExistsWithCaseSync(dir);
 }
 
 function sanitizeLink(item) {
