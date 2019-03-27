@@ -402,6 +402,8 @@ async function markdownLinks(markdown, docPath) {
                 if (!fileExistsWithCaseSync(docFilename)) {
                     await reportError(`Root page does not exist '${match[2]}' in '${docPath}'`);
                 }
+            } else if (isMail(match[2])) {
+                // Skip mail links
             } else if (match[2].startsWith('#') || match[0].startsWith('!')) {
                 // Anchor skip and images skip
             } else if (match[2].length > 0) {
@@ -587,6 +589,10 @@ function isRoot(link) {
 
 function isRemote(link) {
     return link.startsWith('http://') || link.startsWith('https://');
+}
+
+function isMail(link) {
+    return link.startsWith('mailto:');
 }
 
 function rootToDocs(content, docsFolder) {
