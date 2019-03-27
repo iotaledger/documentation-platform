@@ -1,34 +1,15 @@
-# dependencies
-node_modules
-
-# testing
-/coverage
-
-# production
+/.github
+/.history
+/api
 /dist
+/node_modules
 /tmp
-
-# misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-*.log*
-
-.editorconfig
-.prettierrc
-
-/docs*
-/dist
 /src/config.dev.json
 /src/config.local.json
 /src/config.training.json
 /src/config.staging.json
 /src/config.prod.json
 /src/searchData
-/api/dist
 /api/src/data/config.local.json
 /api/src/data/config.training.json
 /api/src/data/config.dev.json
