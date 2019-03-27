@@ -9,7 +9,7 @@
     ],
     "license": "Apache-2.0",
     "scripts": {
-        "build-projects": "node buildProjects docs",
+        "build-projects": "node buildProjects",
         "build-search-index": "node buildSearchIndex projects.json src/searchData/corpus.json src/searchData/index.json",
         "build-doc-assets": "node buildAssets projects.json public/assets/docs",
         "build-index": "run-s build-projects build-search-index build-doc-assets",
@@ -17,8 +17,7 @@
         "production": "react-static build",
         "build": "run-s build-index production",
         "serve": "serve dist -p 3000",
-        "lint": "eslint src/**/*.js",
-        "deploy-dev": "cd dist && now --local-config=../now.json --npm"
+        "lint": "eslint src/**/*.js"
     },
     "engines": {
         "node": "10.x.x"

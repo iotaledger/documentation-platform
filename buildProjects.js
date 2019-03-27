@@ -7,11 +7,18 @@ const emoji = require('node-emoji');
 const emojiRegex = require('emoji-regex');
 const emojiUnicode = require('emoji-unicode');
 const chalk = require('chalk');
-const md = require('markdown-it');
-const spellchecker = require('spellchecker');
-const cheerio = require('cheerio');
 
 const { rootFolder, reportFile, projectsFile, checkRemotePages, checkSpelling, spellingFile, consoleDetail, exitWithError } = require('./buildProjects.config.json');
+
+let md;
+let spellchecker;
+let cheerio;
+
+if (checkSpelling) {
+    md = require('markdown-it');
+    spellchecker = require('spellchecker');
+    cheerio = require('cheerio');
+}
 
 let dictionary = {};
 
@@ -379,7 +386,7 @@ async function markdownLinks(markdown, docPath) {
 
         if (match && match.length === 3) {
             if (isRemote(match[2])) {
-                if (match[2].indexOf("docs.iota.org") >= 0) {
+                if (match[2].indexOf('docs.iota.org') >= 0) {
                     await reportError(`You should not use absolute paths for docs content: '${match[2]}' in '${docPath}'`);
                 } else {
                     const response = await checkRemote(match[2]);
