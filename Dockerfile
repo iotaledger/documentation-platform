@@ -20,6 +20,7 @@ RUN rm -rf node_modules
 RUN rm -rf src
 RUN rm -rf docs
 RUN rm -rf public
+RUN npm install serve
 
 EXPOSE 3000:3000
 
