@@ -1,4 +1,5 @@
 /.github
+/.history
 /api
 /dist
 /node_modules
@@ -16,5 +17,5 @@
 /api/src/data/config.prod.json
 /public/assets/docs
 /projects.json
-/projects-summary.txt
+/projects-summary.log
 /*.bat

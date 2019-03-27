@@ -15,6 +15,12 @@ RUN echo "CONFIG_ID=$CONFIG_ID"
 RUN npm install
 RUN npm run build
 
+RUN apk del git
+RUN rm -rf node_modules
+RUN rm -rf src
+RUN rm -rf docs
+RUN rm -rf public
+
 EXPOSE 3000:3000
 
 # Serve the prod build from the dist folder
