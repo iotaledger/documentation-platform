@@ -171,7 +171,6 @@ code, pre {
 }
 
 .markdown__wrapper .image-popup img {
-  flex: 0 0;
   border: none;
   background: white;
   padding: 20px;
