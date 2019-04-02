@@ -20,9 +20,9 @@ import { sanitizeHashId } from '../../../utils/paths';
 import Heading from '../../atoms/Heading';
 import HeadingLabel from '../../atoms/HeadingLabel';
 import MapMarker from '../../atoms/MapMarker';
+import MessageBox from '../../molecules/MessageBox';
 import ProjectTopicsInner from '../../molecules/ProjectTopicsContainer/ProjectTopicsInner';
 import Tabs from '../../molecules/Tabs';
-import MessageBox from '../../molecules/MessageBox';
 import Feed from '../../organisms/Feed';
 import './markdown.css';
 
@@ -70,10 +70,17 @@ class Markdown extends PureComponent {
         this.currentTableRow = 0;
         this.currentTableHeaders = [];
         this.headingCounters = {};
+        this.copyIdCounter = 0;
     }
 
-    handleCopy(code) {
+    handleCopy(code, elemName) {
         copyToClipboard(code);
+
+        document.getElementById(elemName).classList.toggle('markdown-code-copy-feedback--active', true);
+
+        setTimeout(() => {
+            document.getElementById(elemName).classList.toggle('markdown-code-copy-feedback--active', false);
+        }, 2000);
     }
 
     componentDidMount() {
@@ -447,7 +454,7 @@ class Markdown extends PureComponent {
         do {
             match = re.exec(content);
             if (match && match.length === 3) {
-                output.push((<span style={{whiteSpace: 'pre-line'}} key={output.length}>{content.substring(0, match.index)}</span>));
+                output.push((<span style={{ whiteSpace: 'pre-line' }} key={output.length}>{content.substring(0, match.index)}</span>));
                 output.push(this.aLink({
                     children: match[1],
                     href: match[2],
@@ -455,7 +462,7 @@ class Markdown extends PureComponent {
                 }));
                 content = content.substring(match.index + match[0].length);
             } else {
-                output.push((<span style={{whiteSpace: 'pre-line'}} key={output.length}>{content}</span>));
+                output.push((<span style={{ whiteSpace: 'pre-line' }} key={output.length}>{content}</span>));
             }
         } while (match);
         return output;
@@ -494,9 +501,14 @@ class Markdown extends PureComponent {
         html = this.replaceSearchQuery(html, true);
 
         if (wrap) {
+            this.copyIdCounter++;
+            const elemName = `copy-feedback-${this.copyIdCounter}`;
             return (
                 <div className='markdown-code__wrapper'>
-                    <button className='markdown-code--copy' onClick={() => this.handleCopy(props.value)} />
+                    <span className='markdown-code-copy--wrapper'>
+                        <span className='markdown-code-copy-feedback' id={elemName}>Copied</span>
+                        <button className='markdown-code--copy' onClick={() => this.handleCopy(props.value, elemName)} />
+                    </span>
                     <div className='markdown-code' dangerouslySetInnerHTML={{ __html: html }} />
                 </div>
             );
@@ -583,7 +595,7 @@ class Markdown extends PureComponent {
         return (<img src={props.src} alt={props.alt || ''} onClick={(e) => {
             this.setState({ imageUrl: e.target.src });
             document.body.classList.toggle('no-scroll', true);
-        }}/>);
+        }} />);
     }
 
     getCoreProps(props) {
