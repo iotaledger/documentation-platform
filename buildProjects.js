@@ -10,6 +10,8 @@ const chalk = require('chalk');
 
 const { rootFolder, reportFile, projectsFile, checkRemotePages, checkSpelling, spellingFile, consoleDetail, exitWithError } = require('./buildProjects.config.json');
 
+let remoteCheck = checkRemotePages;
+
 let md;
 let spellchecker;
 let cheerio;
@@ -676,7 +678,7 @@ function sanitizeLink(item) {
 }
 
 async function checkRemote(url) {
-    if (checkRemotePages) {
+    if (remoteCheck) {
         try {
             await axios.head(url);
         } catch (err) {
@@ -746,7 +748,14 @@ async function run(singleProject) {
 
 console.log(chalk.green.underline.bold('Build Projects'));
 
-const singleProject = process.argv[2] || '';
+let singleProject = '';
+for (let i = 2; i < process.argv.length; i++) {
+    if (process.argv[i] === '--no-remote') {
+        remoteCheck = false;
+    } else {
+        singleProject = process.argv[i];
+    }
+}
 
 run(singleProject)
     .then(() => console.log(chalk.green(`\n${emoji.get('smile')}  Completed Successfully`)))
