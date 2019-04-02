@@ -26,4 +26,4 @@ RUN apk del git
 EXPOSE 3000:3000
 
 # Serve the prod build from the dist folder
-CMD ["./node_modules/.bin/serve", "-s", "dist", "-p", "3000"]
+CMD ["./node_modules/.bin/serve", "dist", "-p", "3000"]
