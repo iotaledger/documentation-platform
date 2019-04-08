@@ -42,10 +42,28 @@ code, pre {
   line-height: 1.5;
 }
 
-.markdown-code--copy {
+
+.markdown__wrapper .markdown-code-copy--wrapper {
   position: absolute;
   top: 5px;
   right: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.markdown__wrapper .markdown-code-copy-feedback {
+  transition: 300ms ease-out;
+  transition-property: opacity;
+  opacity: 0;
+  color: var(--tealish);
+  margin-right: 10px;
+}
+
+.markdown__wrapper .markdown-code-copy-feedback--active {
+  opacity: 1;
+}
+
+.markdown-code--copy {
   border: 0px;
   background: none;
   cursor: pointer;
@@ -177,4 +195,3 @@ code, pre {
   max-height: 100%;
   max-width: 100%;
 }
-
