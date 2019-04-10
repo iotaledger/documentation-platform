@@ -557,7 +557,7 @@ class Markdown extends PureComponent {
     }
 
     emojify(item) {
-        return item.replace(/:\w+:/gi, name => emoji.getUnicode(name));
+        return item.replace(/:\w+:/gi, name => emoji.getUnicode(name) || name);
     }
 
     tableRenderer(props) {
