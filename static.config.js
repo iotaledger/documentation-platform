@@ -18,6 +18,11 @@ if (homeData.cards) {
 const footerData = require('./docs/site-settings/footer.json');
 const viewData = require('./docs/site-settings/view.json');
 
+let staticHome;
+if (fs.existsSync('./docs/site-settings/home.html')) {
+    staticHome = fs.readFileSync('./docs/site-settings/home.html').toString();
+}
+
 export default {
     siteRoot: config.siteRoot,
     getSiteData: () => ({
@@ -25,7 +30,8 @@ export default {
         ...config,
         homeData,
         footerData,
-        viewData
+        viewData,
+        staticHome
     }),
     getRoutes: () => [
         {
