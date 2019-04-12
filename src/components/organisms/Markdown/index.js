@@ -472,7 +472,7 @@ class Markdown extends PureComponent {
     messageBoxCode(item) {
         if (item.type === 'span') {
             const output = [];
-            const re = /```([\s\S]*?)```/;
+            const re = /(?:`+)([\s\S]*?)(?:`+)/;
             let content = item.props.children;
             let match;
             do {
