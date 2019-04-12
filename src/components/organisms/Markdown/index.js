@@ -465,7 +465,30 @@ class Markdown extends PureComponent {
                 output.push((<span style={{ whiteSpace: 'pre-line' }} key={output.length}>{content}</span>));
             }
         } while (match);
-        return output;
+
+        return output.map(o => this.messageBoxCode(o));
+    }
+
+    messageBoxCode(item) {
+        if (item.type === 'span') {
+            const output = [];
+            const re = /(?:`+)([\s\S]*?)(?:`+)/;
+            let content = item.props.children;
+            let match;
+            do {
+                match = re.exec(content);
+                if (match && match.length === 2) {
+                    output.push((<span style={{ whiteSpace: 'pre-line' }} key={output.length}>{content.substring(0, match.index)}</span>));
+                    output.push(this.inlineCodeBlock({ value: match[1]}));
+                    content = content.substring(match.index + match[0].length);
+                } else {
+                    output.push((<span style={{ whiteSpace: 'pre-line' }} key={output.length}>{content}</span>));
+                }
+            } while (match);
+            return output;
+        }
+
+        return item;
     }
 
     aLink(props) {
@@ -534,7 +557,7 @@ class Markdown extends PureComponent {
     }
 
     emojify(item) {
-        return item.replace(/:\w+:/gi, name => emoji.getUnicode(name));
+        return item.replace(/:\w+:/gi, name => emoji.getUnicode(name) || name);
     }
 
     tableRenderer(props) {
