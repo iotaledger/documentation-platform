@@ -21,6 +21,8 @@ const viewData = require('./docs/site-settings/view.json');
 let staticHome;
 if (fs.existsSync('./docs/site-settings/home.html')) {
     staticHome = fs.readFileSync('./docs/site-settings/home.html').toString();
+    staticHome = staticHome.replace(/(?:[\s\S]*)<body>([\s\S]*)<\/body>(?:[\s\S]*)/, '$1');
+    staticHome = staticHome.replace(/assets\//g, 'assets/docs/site-settings/');
 }
 
 export default {
