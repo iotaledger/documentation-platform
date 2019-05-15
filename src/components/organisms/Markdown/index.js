@@ -493,7 +493,7 @@ class Markdown extends PureComponent {
 
     aLink(props) {
         const localProps = { ...props };
-        if (localProps.href.startsWith('http')) {
+        if (localProps.href.startsWith('http') || localProps.href.startsWith('iota')) {
             localProps.target = '_blank';
             localProps.rel = 'noopener noreferrer';
         } else {
