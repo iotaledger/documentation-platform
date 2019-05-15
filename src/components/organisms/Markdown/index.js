@@ -493,7 +493,15 @@ class Markdown extends PureComponent {
 
     aLink(props) {
         const localProps = { ...props };
-        if (localProps.href.startsWith('http')) {
+        if (localProps.href.startsWith('javascript:void(0)')) {
+            if (localProps.children && localProps.children.length > 0) {
+                if (localProps.children[0].props && localProps.children[0].props.value) {
+                    localProps.href = localProps.children[0].props.value;
+                    localProps.target = '_blank';
+                    localProps.rel = 'noopener noreferrer';
+                }
+            }
+        } else if (localProps.href.startsWith('http') || localProps.href.startsWith('iota')) {
             localProps.target = '_blank';
             localProps.rel = 'noopener noreferrer';
         } else {
