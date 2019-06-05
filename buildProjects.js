@@ -219,6 +219,17 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
 
             let doc = (await fsPromises.readFile(docName)).toString();
 
+            await assetHtmlImage(doc, docName, assets);
+            await assetMarkdownImage(doc, docName, assets);
+            await htmlLinks(doc, docName);
+            await markdownLinks(doc, docName);
+            await separators(doc, docName);
+            await code(doc, docName);
+            await bold(doc, docName);
+            await italic(doc, docName);
+            await img(doc, docName);
+            await emojiChars(doc, docName);
+
             // Match all headers e.g.
             // # Blah blah
             // ## Blah blah
@@ -249,17 +260,6 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
                 await reportError(`'${docName}' does not start with a level 1 heading`);
             }
 
-            await assetHtmlImage(doc, docName, assets);
-            await assetMarkdownImage(doc, docName, assets);
-
-            await htmlLinks(doc, docName);
-            await markdownLinks(doc, docName);
-            await separators(doc, docName);
-            await code(doc, docName);
-            await bold(doc, docName);
-            await italic(doc, docName);
-            await img(doc, docName);
-            await emojiChars(doc, docName);
             await spellCheck(projectFolder, doc, docName);
         } else {
             await reportError(`'${docIndexFile}' referenced '${docName}' but the file/folder does not exist or has wrong casing`);
