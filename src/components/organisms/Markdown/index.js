@@ -20,6 +20,7 @@ import { sanitizeHashId } from '../../../utils/paths';
 import Heading from '../../atoms/Heading';
 import HeadingLabel from '../../atoms/HeadingLabel';
 import MapMarker from '../../atoms/MapMarker';
+import MarkdownCard from '../../atoms/MarkdownCard';
 import MessageBox from '../../molecules/MessageBox';
 import ProjectTopicsInner from '../../molecules/ProjectTopicsContainer/ProjectTopicsInner';
 import Tabs from '../../molecules/Tabs';
@@ -50,6 +51,7 @@ class Markdown extends PureComponent {
         this.tabContainers = [];
         this.projectTopicContainers = [];
         this.headingLabels = [];
+        this.cards = [];
         this.messageBoxes = [];
         this.objects = [];
 
@@ -115,6 +117,11 @@ class Markdown extends PureComponent {
         const headingMatches = this.findHeadingLabels(content);
         for (let i = 0; i < headingMatches.length; i++) {
             content = content.replace(headingMatches[i], `<heading-label index="${i}"></heading-label>`);
+        }
+
+        const cardMatches = this.findCards(content);
+        for (let i = 0; i < cardMatches.length; i++) {
+            content = content.replace(cardMatches[i], `<card index="${i}"></card>`);
         }
 
         const messageBoxMatches = this.findMessageBoxes(content);
@@ -256,6 +263,28 @@ class Markdown extends PureComponent {
         return projectTopics;
     }
 
+    findCards(content) {
+        const matches = [];
+        const re = /^-------------------------\s+!\[(.*?)\]\((.*?)\)\s+## \[(.*?)\]\((.*?)\)\s+([\S\s]*?)-------------------------$/gm;
+
+        let match;
+        do {
+            match = re.exec(content);
+            if (match && match.length === 6) {
+                this.cards.push({ 
+                    alt: match[1],
+                    img: match[2] ,
+                    title: match[3],
+                    link: match[4],
+                    content: match[5]
+                });
+                matches.push(match[0]);
+            }
+        } while (match);
+
+        return matches;
+    }
+
     findHeadingLabels(content) {
         const matches = [];
         const re = /### (.*) ###/g;
@@ -395,6 +424,21 @@ class Markdown extends PureComponent {
                 const index = parseInt(match[1], 10);
                 const headingLabel = this.headingLabels[index];
                 return (<HeadingLabel style={headingLabel.style} id={sanitizeHashId(headingLabel.content)}>{headingLabel.content}</HeadingLabel>);
+            }
+        } else if (props.value.startsWith('<card')) {
+            const re = /<card index="(.*)">/;
+            let match = re.exec(props.value);
+
+            if (match && match.length === 2) {
+                const index = parseInt(match[1], 10);
+                const card = this.cards[index];
+                return (<MarkdownCard 
+                    id={sanitizeHashId(card.title)}
+                    alt={card.alt}
+                    img={card.img}
+                    title={card.title}
+                    link={card.link.replace(/.md$/i, '')}
+                    >{card.content}</MarkdownCard>);
             }
         } else if (props.value.startsWith('<message-box')) {
             const re = /<message-box index="(.*)">/;
