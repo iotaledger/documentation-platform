@@ -120,10 +120,16 @@ class TableOfContents extends React.PureComponent {
         e.preventDefault();
 
         const href = e.target.getAttribute('href');
-        scrollIntoView(document.querySelector(href), () => {
-            this.props.history.replace(
-                `${this.props.history.location.pathname}${this.props.history.location.search}${href === '#root' ? '' : href}`);
-        });
+        const target = document.querySelector(href);
+        if (!target) {
+            // eslint-disable-next-line no-console
+            console.error(`Unable to find TOC link '${href}' in content`);
+        } else {
+            scrollIntoView(target, () => {
+                this.props.history.replace(
+                    `${this.props.history.location.pathname}${this.props.history.location.search}${href === '#root' ? '' : href}`);
+            });
+        }
     }
 
     render() {
