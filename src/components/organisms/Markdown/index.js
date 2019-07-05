@@ -523,7 +523,7 @@ class Markdown extends PureComponent {
                 match = re.exec(content);
                 if (match && match.length === 2) {
                     output.push((<span style={{ whiteSpace: 'pre-line' }} key={output.length}>{content.substring(0, match.index)}</span>));
-                    output.push(this.inlineCodeBlock({ value: match[1]}));
+                    output.push(this.inlineCodeBlock({ value: match[1] }, output.length));
                     content = content.substring(match.index + match[0].length);
                 } else {
                     output.push((<span style={{ whiteSpace: 'pre-line' }} key={output.length}>{content}</span>));
@@ -596,11 +596,12 @@ class Markdown extends PureComponent {
         }
     }
 
-    inlineCodeBlock(props) {
+    inlineCodeBlock(props, key) {
         return (
             <div
                 className="text text-inline--code markdown-code-inline"
-                dangerouslySetInnerHTML={{ __html: props.value }} />
+                dangerouslySetInnerHTML={{ __html: props.value }}
+                key={key} />
         );
     }
 
