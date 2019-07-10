@@ -557,7 +557,7 @@ class Markdown extends PureComponent {
                 const anchorParts = localProps.href.split('#');
                 localProps.href = sanitizeHashId(anchorParts[0], true).replace(/.md$/i, '');
                 if (anchorParts.length === 2) {
-                    localProps.href += `#${sanitizeHashId(anchorParts[1])}`;
+                    localProps.href += `#${sanitizeHashId(anchorParts[1], false, true)}`;
                 }
             }
         }
@@ -671,7 +671,7 @@ class Markdown extends PureComponent {
     }
 
     heading(props) {
-        let id = sanitizeHashId(this.stripSearchQuery(props.children.map(a => a.props.value).join('')));
+        let id = sanitizeHashId(this.stripSearchQuery(props.children.map(a => a.props.value).join('')), false, true);
         if (this.headingCounters[id] === undefined) {
             this.headingCounters[id] = -1;
         }
