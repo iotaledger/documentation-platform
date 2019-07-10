@@ -38,7 +38,7 @@ export function createPageTableOfContents(projectUrlParts, projects) {
         if (currentIndex && currentIndex.toc) {
             toc = toc.concat(currentIndex.toc
                 .filter(item => item.level > 1)
-                .map(item => ({ name: item.name, link: `#${sanitizeHashId(item.name)}`, level: item.level })));
+                .map(item => ({ name: item.name, link: `#${sanitizeHashId(item.name, false, true)}`, level: item.level })));
         }
     }
 
