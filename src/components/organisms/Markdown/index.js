@@ -234,7 +234,7 @@ class Markdown extends PureComponent {
                         bullet: 'primary',
                         name: matchPrimary[1],
                         description: match[4],
-                        link: match[3]
+                        link: match[3].replace(/.md$/i, '')
                     });
                 } else {
                     let matchSecondary = /__(.*)__ ####/g.exec(match[1]);
@@ -243,7 +243,7 @@ class Markdown extends PureComponent {
                             bullet: 'secondary',
                             name: matchSecondary[1],
                             description: match[4],
-                            link: match[3]
+                            link: match[3].replace(/.md$/i, '')
                         });
                     } else {
                         let matchPlain = /(.*) ####/g.exec(match[1]);
@@ -252,7 +252,7 @@ class Markdown extends PureComponent {
                                 bullet: 'none',
                                 name: matchPlain[1],
                                 description: match[4],
-                                link: match[3]
+                                link: match[3].replace(/.md$/i, '')
                             });
                         }
                     }
