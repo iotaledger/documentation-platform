@@ -271,9 +271,9 @@ class Markdown extends PureComponent {
         do {
             match = re.exec(content);
             if (match && match.length === 6) {
-                this.cards.push({ 
+                this.cards.push({
                     alt: match[1],
-                    img: match[2] ,
+                    img: match[2],
                     title: match[3],
                     link: match[4],
                     content: match[5]
@@ -432,13 +432,13 @@ class Markdown extends PureComponent {
             if (match && match.length === 2) {
                 const index = parseInt(match[1], 10);
                 const card = this.cards[index];
-                return (<MarkdownCard 
+                return (<MarkdownCard
                     id={sanitizeHashId(card.title)}
                     alt={card.alt}
                     img={card.img}
                     title={card.title}
                     link={card.link.replace(/.md$/i, '')}
-                    >{card.content}</MarkdownCard>);
+                >{card.content}</MarkdownCard>);
             }
         } else if (props.value.startsWith('<message-box')) {
             const re = /<message-box index="(.*)">/;
@@ -522,11 +522,11 @@ class Markdown extends PureComponent {
             do {
                 match = re.exec(content);
                 if (match && match.length === 2) {
-                    output.push((<span style={{ whiteSpace: 'pre-line' }} key={output.length}>{content.substring(0, match.index)}</span>));
-                    output.push(this.inlineCodeBlock({ value: match[1]}));
+                    output.push((<span style={{ whiteSpace: 'pre-line' }} key={output.length}>{this.boldify(content.substring(0, match.index))}</span>));
+                    output.push(this.inlineCodeBlock({ value: match[1] }, output.length));
                     content = content.substring(match.index + match[0].length);
                 } else {
-                    output.push((<span style={{ whiteSpace: 'pre-line' }} key={output.length}>{content}</span>));
+                    output.push((<span style={{ whiteSpace: 'pre-line' }} key={output.length}>{this.boldify(content)}</span>));
                 }
             } while (match);
             return output;
@@ -596,11 +596,12 @@ class Markdown extends PureComponent {
         }
     }
 
-    inlineCodeBlock(props) {
+    inlineCodeBlock(props, key) {
         return (
             <div
                 className="text text-inline--code markdown-code-inline"
-                dangerouslySetInnerHTML={{ __html: props.value }} />
+                dangerouslySetInnerHTML={{ __html: props.value }}
+                key={key} />
         );
     }
 
@@ -610,6 +611,23 @@ class Markdown extends PureComponent {
 
     emojify(item) {
         return item.replace(/:\w+:/gi, name => emoji.getUnicode(name) || name);
+    }
+
+    boldify(content) {
+        const output = [];
+        const re = /\*\*(.*?)\*\*/;
+        let match;
+        do {
+            match = re.exec(content);
+            if (match && match.length === 2) {
+                output.push((<span key={output.length}>{content.substring(0, match.index)}</span>));
+                output.push((<strong key={output.length}>{match[1]}</strong>));
+                content = content.substring(match.index + match[0].length);
+            } else {
+                output.push((<span key={output.length}>{content}</span>));
+            }
+        } while (match);
+        return output;
     }
 
     tableRenderer(props) {
