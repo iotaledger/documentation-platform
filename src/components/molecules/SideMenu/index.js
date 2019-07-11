@@ -119,18 +119,41 @@ class SideMenu extends React.Component {
                                                 <div className="side-menu-item__header">{menuListItem.name}</div>
                                                 <ul>
                                                     {menuListItem.items.map((subItem, idx) => (
-                                                        <li key={idx}
-                                                            className={classNames(
+                                                        <React.Fragment key={idx}>
+                                                            <li className={classNames(
                                                                 'side-menu-item',
                                                                 { 'side-menu-item--active': subItem.selected }
                                                             )}>
-                                                            <Link
-                                                                href={subItem.link}
-                                                                target={subItem.link.startsWith('http') ? '_blank' : undefined}
-                                                                className={classNames({ 'side-menu-item--active': subItem.selected })}>
-                                                                {subItem.name}
-                                                            </Link>
-                                                        </li>
+                                                                {subItem.type === 'section-header-item' && (
+                                                                    <Link
+                                                                        href={subItem.link}
+                                                                        target={subItem.link.startsWith('http') ? '_blank' : undefined}
+                                                                        className={classNames({ 'side-menu-item--active': subItem.selected })}>
+                                                                        {subItem.name}
+                                                                    </Link>
+                                                                )}
+                                                                {subItem.type === 'section-header-sub' && (
+                                                                    <React.Fragment>
+                                                                        <Link href={subItem.items[0].link} target={subItem.items[0].link.startsWith('http') ? '_blank' : undefined}>{subItem.name}</Link>
+                                                                        {subItem.selected && (
+                                                                            <ul className="side-menu-item-sub">
+                                                                                {subItem.items.map((child, idx3) => (
+                                                                                    <li key={idx3}
+                                                                                        className={
+                                                                                            classNames(
+                                                                                                'side-menu-item-sub-child',
+                                                                                                { 'side-menu-item-sub-child--active': child.selected }
+                                                                                            )
+                                                                                        }
+                                                                                    >
+                                                                                        <Link href={child.link} target={child.link.startsWith('http') ? '_blank' : undefined}>{child.name}</Link>
+                                                                                    </li>
+                                                                                ))}
+                                                                            </ul>
+                                                                        )}
+                                                                    </React.Fragment>
+                                                                )}                                                            </li>
+                                                        </React.Fragment>
                                                     ))}
                                                 </ul>
                                             </div>

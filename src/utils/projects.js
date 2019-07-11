@@ -104,6 +104,7 @@ export function createSideMenuEntries(projects, projectFullURL) {
 export function buildItemTree(projectVersionPages, projectFullURL) {
     const tree = [];
     let inSection;
+    let inSectionSub;
 
     for (let i = 0; i < projectVersionPages.length; i++) {
         const nameParts = projectVersionPages[i].name.split('/');
@@ -115,6 +116,7 @@ export function buildItemTree(projectVersionPages, projectFullURL) {
                 selected: projectVersionPages[i].link === projectFullURL
             });
             inSection = undefined;
+            inSectionSub = undefined;
         } else {
             const currentSection = inSection ? inSection.name : '';
             if (nameParts[0] !== currentSection) {
@@ -125,14 +127,38 @@ export function buildItemTree(projectVersionPages, projectFullURL) {
                     expanded: false
                 };
                 tree.push(inSection);
+                inSectionSub = undefined;
             }
-            inSection.items.push({
-                name: nameParts.slice(1).join('/'),
-                link: projectVersionPages[i].link,
-                selected: projectVersionPages[i].link === projectFullURL
-            });
             if (projectVersionPages[i].link === projectFullURL) {
                 inSection.selected = true;
+            }
+
+            if (nameParts.length === 2) {
+                inSection.items.push({
+                    type: 'section-header-item',
+                    name: nameParts.slice(1).join('/'),
+                    link: projectVersionPages[i].link,
+                    selected: projectVersionPages[i].link === projectFullURL
+                });
+            } else {
+                const currentSectionSub = inSectionSub ? inSectionSub.name : '';
+                if (nameParts[1] !== currentSectionSub) {
+                    inSectionSub = {
+                        type: 'section-header-sub',
+                        name: nameParts[1],
+                        items: [],
+                        expanded: false
+                    };
+                    inSection.items.push(inSectionSub);
+                }
+                if (projectVersionPages[i].link === projectFullURL) {
+                    inSectionSub.selected = true;
+                }
+                inSectionSub.items.push({
+                    name: nameParts.slice(2).join('/'),
+                    link: projectVersionPages[i].link,
+                    selected: projectVersionPages[i].link === projectFullURL
+                });
             }
         }
     }
@@ -237,7 +263,7 @@ export const getNextPage = (projectUrlParts, projects) => {
         }
 
         // Skip any that don't have home page content
-        while(!projects[projectIndex].home) {
+        while (!projects[projectIndex].home) {
             projectIndex++;
             if (projectIndex === projects.length) {
                 projectIndex = 0;
@@ -274,7 +300,7 @@ export const getPreviousPage = (projectUrlParts, projects) => {
         }
 
         // Skip any that don't have home page content
-        while(!projects[projectIndex].home) {
+        while (!projects[projectIndex].home) {
             projectIndex--;
             if (projectIndex < 0) {
                 projectIndex = projects.length - 1;
