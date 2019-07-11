@@ -53,15 +53,41 @@ class TreeMenu extends React.Component {
                                 )
                             }>
                                 {section.items.map((item, idx2) => (
-                                    <li
-                                        key={idx2}
-                                        className={
-                                            classNames(
-                                                'tree-menu__section-item',
-                                                { 'tree-menu__section-item--selected': item.selected }
-                                            )
-                                        }
-                                    ><Link href={item.link} target={item.link.startsWith('http') ? '_blank' : undefined}>{item.name}</Link></li>
+                                    <React.Fragment key={idx2}>
+                                        <li
+                                            className={
+                                                classNames(
+                                                    'tree-menu__section-item',
+                                                    { 'tree-menu__section-item--selected': item.selected }
+                                                )
+                                            }
+                                        >
+                                            {item.type === 'section-header-item' && (
+                                                <Link href={item.link} target={item.link.startsWith('http') ? '_blank' : undefined}>{item.name}</Link>
+                                            )}
+                                            {item.type === 'section-header-sub' && (
+                                                <React.Fragment>
+                                                    <Link href={item.items[0].link} target={item.items[0].link.startsWith('http') ? '_blank' : undefined}>{item.name}</Link>
+                                                    {item.selected && (
+                                                        <ul className="tree-menu__section-item-sub">
+                                                            {item.items.map((child, idx3) => (
+                                                                <li key={idx3}
+                                                                    className={
+                                                                        classNames(
+                                                                            'tree-menu__section-item-sub-child',
+                                                                            { 'tree-menu__section-item-sub-child--selected': child.selected }
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    <Link href={child.link} target={child.link.startsWith('http') ? '_blank' : undefined}>{child.name}</Link>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    )}
+                                                </React.Fragment>
+                                            )}
+                                        </li>
+                                    </React.Fragment>
                                 ))}
                             </ul>
                         </React.Fragment>
