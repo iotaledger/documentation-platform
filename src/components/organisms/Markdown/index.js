@@ -438,7 +438,7 @@ class Markdown extends PureComponent {
                     img={card.img}
                     title={card.title}
                     link={card.link.replace(/.md$/i, '')}
-                >{card.content}</MarkdownCard>);
+                >{this.boldify(card.content)}</MarkdownCard>);
             }
         } else if (props.value.startsWith('<message-box')) {
             const re = /<message-box index="(.*)">/;
