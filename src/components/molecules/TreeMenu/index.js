@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Link from '../../atoms/Link';
 import { buildItemTree } from '../../../utils/projects';
 import { ContentMenuItemsPropTypes } from '../../../utils/propTypes';
+import Link from '../../atoms/Link';
 
 class TreeMenu extends React.Component {
     static propTypes = {
@@ -67,7 +67,8 @@ class TreeMenu extends React.Component {
                                             )}
                                             {item.type === 'section-header-sub' && (
                                                 <React.Fragment>
-                                                    <Link href={item.items[0].link} target={item.items[0].link.startsWith('http') ? '_blank' : undefined}>{item.name}</Link>
+                                                    <Link href={item.items[0].link} target={item.items[0].link.startsWith('http') ? '_blank' : undefined}>{item.name}
+                                                    <span className="tree-menu__section-item-superscript">{item.items.length > 1 ? ` [${item.items.length}]` : ''}</span></Link>
                                                     {item.selected && (
                                                         <ul className="tree-menu__section-item-sub">
                                                             {item.items.map((child, idx3) => (

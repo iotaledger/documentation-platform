@@ -18,7 +18,8 @@ class SideMenu extends React.Component {
         super(props);
 
         this.state = {
-            menuData: []
+            menuData: [],
+            expanded: undefined
         };
 
         this.handleHeadingClick = this.handleHeadingClick.bind(this);
@@ -134,8 +135,10 @@ class SideMenu extends React.Component {
                                                                 )}
                                                                 {subItem.type === 'section-header-sub' && (
                                                                     <React.Fragment>
-                                                                        <Link href={subItem.items[0].link} target={subItem.items[0].link.startsWith('http') ? '_blank' : undefined}>{subItem.name}</Link>
-                                                                        {subItem.selected && (
+                                                                        <a onClick={() => this.setState({ expanded: subItem })}>{subItem.name}
+                                                                            <span className="side-menu__item-superscript">{subItem.items.length > 1 ? ` [${subItem.items.length}]` : ''}</span>
+                                                                        </a>
+                                                                        {(subItem.selected || subItem === this.state.expanded) && (
                                                                             <ul className="side-menu-item-sub">
                                                                                 {subItem.items.map((child, idx3) => (
                                                                                     <li key={idx3}
