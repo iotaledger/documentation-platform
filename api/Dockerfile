@@ -15,7 +15,7 @@ RUN echo "CONFIG_ID=$CONFIG_ID"
 RUN npm install
 RUN npm run build
 
-EXPOSE 4000:4000
+EXPOSE 4000
 
 # Serve the prod build from the dist folder
 CMD ["npm", "run", "start"]
