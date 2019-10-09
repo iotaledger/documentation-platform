@@ -235,6 +235,7 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
             // ## Blah blah
             // But not inside our tab controls or project topics
 
+            doc = removeMarkdownCode(doc);
             doc = removeTabControls(doc);
             doc = removeProjectTopics(doc);
 
@@ -316,6 +317,20 @@ function removeTabControls(markdown) {
 function removeProjectTopics(markdown) {
     const re = /#### (.*)\n(\[.*\]\((.*)\))?([\S\s]*?)---/gm;
     return markdown.replace(re, '');
+}
+
+function removeMarkdownCode(markdown) {
+    const re = /^```markdown[\S\s]*?```/gm;
+
+    let match;
+    do {
+        match = re.exec(markdown);
+        if (match) {
+            markdown = markdown.replace(match[0], '');
+        }
+    } while (match);
+
+    return markdown;
 }
 
 async function assetHtmlImage(markdown, docPath, assets) {

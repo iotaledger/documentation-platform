@@ -102,6 +102,11 @@ class Markdown extends PureComponent {
         // Strip the h1 from the start of the content
         content = content.trim().replace(/(^# .*)/, '').trim();
 
+        const markdownMatches = this.findMarkdownContainers(content);
+        for (let i = 0; i < markdownMatches.length; i++) {
+            content = content.replace(markdownMatches[i], `<markdown index="${i}"></markdown>`);
+        }
+
         const tabMatches = this.findTabContainers(content);
         for (let i = 0; i < tabMatches.length; i++) {
             this.tabContainers.push(this.findTabs(tabMatches[i]));
@@ -135,6 +140,10 @@ class Markdown extends PureComponent {
         }
 
         content = this.replaceSearchQuery(content);
+
+        for (let i = 0; i < markdownMatches.length; i++) {
+            content = content.replace(`<markdown index="${i}"></markdown>`, markdownMatches[i]);
+        }
 
         this.setState({
             content
@@ -170,6 +179,21 @@ class Markdown extends PureComponent {
         }
 
         return content;
+    }
+
+    findMarkdownContainers(content) {
+        const matches = [];
+        const re = /^```markdown([\S\s]*?)```$/gm;
+
+        let match;
+        do {
+            match = re.exec(content);
+            if (match && match.length === 2) {
+                matches.push(match[0]);
+            }
+        } while (match);
+
+        return matches;
     }
 
     findTabContainers(content) {
@@ -473,7 +497,7 @@ class Markdown extends PureComponent {
                     alt: match[2] || ''
                 });
             }
-        }
+        } 
 
         // Do default html processing
         // https://github.com/rexxars/react-markdown/blob/b6caaba0437b00132d58337913e66a7d1bfb30ce/src/renderers.js#L100-L113
