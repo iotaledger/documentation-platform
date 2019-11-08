@@ -16,9 +16,9 @@ import Markdown from '../components/organisms/Markdown';
 import StickyHeader from '../components/organisms/StickyHeader';
 import { submitFeedback } from '../utils/api';
 import { localStorageSet } from '../utils/localStorage';
-import { createPageTableOfContents, createProjectLinks, getProjectTitle, getProjectVersionPagesUrl, getVersionsUrl, parseProjectUrl, replaceVersion } from '../utils/projects';
+import { createPageTableOfContents, createProjectLinks, getDocumentTags, getProjectTitle, getProjectVersionPagesUrl, getVersionsUrl, parseProjectUrl, replaceVersion } from '../utils/projects';
 import { ProjectsPropTypes, ViewDataPropTypes } from '../utils/propTypes.js';
-import { extractHighlights, extractSearchQuery, initCorpusIndex } from '../utils/search';
+import { extractHighlights, extractSearchQuery } from '../utils/search';
 import Container from './Container';
 
 class Doc extends React.Component {
@@ -46,6 +46,7 @@ class Doc extends React.Component {
             projectVersions: [],
             projectVersionPages: [],
             pageTableOfContents: [],
+            tags: [],
             isMenuOpen: false
         };
 
@@ -70,15 +71,13 @@ class Doc extends React.Component {
             ...projectParts,
             projectVersions: getVersionsUrl(projectParts, this.props.projects),
             projectVersionPages: getProjectVersionPagesUrl(projectParts, projectParts.projectVersion, this.props.projects),
-            pageTableOfContents: createPageTableOfContents(projectParts, this.props.projects)
+            pageTableOfContents: createPageTableOfContents(projectParts, this.props.projects),
+            tags: getDocumentTags(projectParts, this.props.projects)
         });
 
         // We must store last path in here as when we create react-static
         // there is no other way of getting where we were for 404 logging
         localStorageSet('lastDocPath', this.props.location.pathname);
-
-        // Trigger the search index load here so a search is quicker
-        initCorpusIndex();
     }
 
     handleBurgerClick() {
@@ -112,6 +111,7 @@ class Doc extends React.Component {
             <Container {...this.props}>
                 <Head>
                     <title>{`${this.props.title} | ${this.props.viewData.siteName}`}</title>
+                    <meta name="keywords" content={this.state.tags} />
                 </Head>
                 <StickyHeader
                     history={this.props.history}

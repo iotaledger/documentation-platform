@@ -1,4 +1,3 @@
-import lunr from 'lunr';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
@@ -10,10 +9,10 @@ import Pagination from '../components/molecules/Pagination';
 import SearchResult from '../components/molecules/SearchResult';
 import SideMenu from '../components/molecules/SideMenu';
 import StickyHeader from '../components/organisms/StickyHeader';
-import { submitFeedback } from '../utils/api';
+import { submitFeedback, search as searchApi } from '../utils/api';
 import { localStorageSet } from '../utils/localStorage';
 import { ProjectsPropTypes, ViewDataPropTypes } from '../utils/propTypes.js';
-import { constructSearchQuery, extractSearchQuery, initCorpusIndex } from '../utils/search';
+import { constructSearchQuery, extractSearchQuery } from '../utils/search';
 import Container from './Container';
 
 class Search extends React.Component {
@@ -45,8 +44,6 @@ class Search extends React.Component {
     }
 
     componentDidMount() {
-        this.corpusIndex = initCorpusIndex();
-
         this.search();
         // We must store last path in here as when we create react-static
         // there is no other way of getting where we were for 404 logging
@@ -86,21 +83,15 @@ class Search extends React.Component {
     }
 
     search() {
-        let searchResults;
         if (this.state.query) {
-            const idx = lunr.Index.load(this.corpusIndex.index);
-            const results = idx.search(`*${this.state.query}*~2`);
-            searchResults = results
-                .map(result => ({
-                    ...this.corpusIndex.documents[result.ref],
-                    matches: Object.keys(result.matchData.metadata)
-                }));
-        }
-
-        if (searchResults && searchResults.length > 0) {
-            this.setState({ foundResult: searchResults, indexStart: 0, indexEnd: Math.min(9, searchResults.length - 1) });
-        } else {
-            this.setState({ foundResult: [], indexStart: 0, indexEnd: 0 });
+            searchApi(this.props.apiEndpoint, this.state.query)
+                .then((res) => {
+                    if (res.items && res.items.length > 0) {
+                        this.setState({ foundResult: res.items, indexStart: 0, indexEnd: Math.min(9, res.items.length - 1) });
+                    } else {
+                        this.setState({ foundResult: [], indexStart: 0, indexEnd: 0 });
+                    }
+                });
         }
     }
 
@@ -144,6 +135,7 @@ class Search extends React.Component {
                         />
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}>
                             <Pagination
+                                page={this.state.page}
                                 totalCount={this.state.foundResult && this.state.foundResult.length}
                                 onDataPaginated={this.onDataPaginated}
                             />

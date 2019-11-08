@@ -188,11 +188,12 @@ async function buildSingleVersion(docsFolder, projectFolder, version) {
                         link: match[2]
                     });
                 } else {
-                    const { toc, assets } = await extractTocAndValidateAssets(docsFolder, projectFolder, version, match[2], docIndexFile);
+                    const { toc, assets, tags } = await extractTocAndValidateAssets(docsFolder, projectFolder, version, match[2], docIndexFile);
                     versions.push({
                         name: match[1],
                         link: `/${docsFolder}/${projectFolder}/${version}/${sanitizeLink(match[2])}`,
                         toc,
+                        tags,
                         assets: assets.length > 0 ? assets : undefined
                     });
                 }
@@ -210,6 +211,7 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
     // the headers to create a toc
     const toc = [];
     const assets = [];
+    let tags;
 
     const docName = webifyPath(path.join(`${docsFolder}/${projectFolder}/${version}/`, doc));
 
@@ -253,6 +255,13 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
                 }
             } while (matchHeader);
 
+            const reTags = /> search-tags: (.*)/gm;
+            const matchTags = reTags.exec(doc);
+
+            if(matchTags && matchTags.length === 2) {
+                tags = matchTags[1].split(',').map(t => t.trim());
+            }
+
             for (let i = 0; i < toc.length; i++) {
                 await reportEntry(`\t\t\t\t${toc[i].level}: ${toc[i].name}`);
             }
@@ -269,7 +278,7 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
         await reportError(`'${docIndexFile}' referenced '${docName}' but validating content failed see ${projectsFile} for more details`, err);
     }
 
-    return { toc, assets };
+    return { toc, assets, tags };
 }
 
 function extractContent(markdown) {

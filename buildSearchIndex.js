@@ -5,14 +5,12 @@ const remark = require('remark');
 const strip = require('strip-markdown');
 const emoji = require('node-emoji');
 const chalk = require('chalk');
-const lunr = require('lunr');
+const axios = require('axios').default;
 
 const webifyPath = p => p.replace(/\\/g, '/');
 
-
-async function indexDocs(projectDataFile, corpusFile, indexFile) {
+async function indexDocs(searchServer, searchCore, projectDataFile) {
     const corpus = [];
-    const documents = [];
 
     const projectData = JSON.parse(fs.readFileSync(projectDataFile).toString());
 
@@ -29,32 +27,93 @@ async function indexDocs(projectDataFile, corpusFile, indexFile) {
             for (let k = 0; k < version.pages.length; k++) {
                 if (!version.pages[k].link.startsWith('http')) {
                     console.log(chalk.cyan(`\t\tAdding '${version.pages[k].name}' in file '${version.pages[k].link}.md'`));
-                    await addFileToCorpusAndDocuments(path.join(__dirname, `${version.pages[k].link}.md`), version.pages[k].toc, corpus, documents);
+                    await addFileToCorpus(path.join(__dirname, `${version.pages[k].link}.md`), version.pages[k].toc, version.pages[k].tags, corpus);
                 }
             }
         }
     }
 
-    const lunrIndex = lunr((config) => {
-        config.ref('id');
-        config.field('docTitle', { boost: 10 });
-        config.field('docBody', { boost: 5 });
-
-        documents.forEach((doc) => {
-            config.add(doc);
-        });
-    });
-
-    const dirName = path.dirname(corpusFile);
-    if (!fs.existsSync(dirName)) {
-        fs.mkdirSync(dirName);
-    }
-
-    fs.writeFileSync(corpusFile, JSON.stringify(corpus));
-    fs.writeFileSync(indexFile, JSON.stringify(lunrIndex));
+    await populateSolr(searchServer, searchCore, corpus);
 }
 
-async function addFileToCorpusAndDocuments(fileLocation, toc, corpus, documents) {
+async function populateSolr(searchServer, searchCore, corpus) {
+    if (searchServer[searchServer.length - 1] !== '/') {
+        searchServer += '/';
+    }
+    console.log(`Solr: Server at ${searchServer}`);
+
+    let res;
+    console.log(`Solr: Deleting Core ${searchCore}`);
+    try {
+        res = await axios.get(`${searchServer}solr/admin/cores?action=UNLOAD&core=${searchCore}&deleteInstanceDir=true`);
+        console.log(JSON.stringify(res.data, undefined, '\t'));
+    } catch (err) {
+        if (!err.response || !err.response.data || !err.response.data.error || err.response.data.error.code !== 400) {
+            console.error('Error Deleting Core', err.toString());
+        }
+    }
+    try {
+        console.log(`Solr: Creating Core ${searchCore}`);
+        res = await axios.get(`${searchServer}solr/admin/cores?action=CREATE&name=${searchCore}&configSet=_default`);
+        console.log(JSON.stringify(res.data, undefined, '\t'));
+
+        console.log(`Solr: Get Schema Fields ${searchCore}`);
+        res = await axios.get(`${searchServer}solr/${searchCore}/schema/fields`);
+        console.log(JSON.stringify(res.data, undefined, '\t'));
+
+        const titleOp = res.data.fields && res.data.fields.find(f => f.name === 'title') ? 'replace-field' : 'add-field';
+        const bodyOp = res.data.fields && res.data.fields.find(f => f.name === 'body') ? 'replace-field' : 'add-field';
+        const snippetOp = res.data.fields && res.data.fields.find(f => f.name === 'snippet') ? 'replace-field' : 'add-field';
+        const tagsOp = res.data.fields && res.data.fields.find(f => f.name === 'tags') ? 'replace-field' : 'add-field';
+
+        console.log(`Solr: Update Schema ${searchCore}`);
+
+        // the omitNorms is critical in the schema to boost the scoring of documents that
+        // have multiple hits for terms
+        res = await axios({
+            method: 'POST',
+            url: `${searchServer}solr/${searchCore}/schema`,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: `{
+            "${titleOp}" : {
+                "name": "title",
+                "type": "text_general",
+                "stored": true
+            },
+            "${bodyOp}" : {
+                "name": "body",
+                "type": "text_general",
+                "omitNorms": true,
+                "stored": true
+            },
+            "${snippetOp}" : {
+                "name": "snippet",
+                "type": "text_general",
+                "stored": true
+            },
+            "${tagsOp}" : {
+                "name": "tags",
+                "type": "text_general",
+                "stored": true
+            }
+        }`
+        });
+        console.log(JSON.stringify(res.data, undefined, '\t'));
+        console.log(`Solr: Adding documents to ${searchCore}`);
+        res = await axios.post(`${searchServer}solr/${searchCore}/update?commit=true`, corpus);
+        console.log(JSON.stringify(res.data, undefined, '\t'));
+        console.log('Solr: Status of Core ${searchCore}');
+        res = await axios.get(`${searchServer}solr/admin/cores?action=STATUS&code=${searchCore}`);
+        console.log(JSON.stringify(res.data, undefined, '\t'));
+    } catch (err) {
+        console.error(JSON.stringify(err.response.data.error, undefined, '\t'));
+        throw new Error('Error Initializing Solr');
+    }
+}
+
+async function addFileToCorpus(fileLocation, toc, tags, corpus) {
     try {
         const file = fs.readFileSync(fileLocation, 'utf8');
 
@@ -70,10 +129,10 @@ async function addFileToCorpusAndDocuments(fileLocation, toc, corpus, documents)
         let tocLevel1 = toc && toc.find(t => t.level === 1);
         let docTitle = tocLevel1 ? tocLevel1.name : undefined;
 
-        let docSummaryItem = findItem(markdownStructure, 'text', 50);
-        let docSummary = docSummaryItem ? docSummaryItem.value : '';
-        if (docSummary && docSummary.length > 160) {
-            docSummary = `${docSummary.substr(0, 160)}...`;
+        let docSnippetItem = findItem(markdownStructure, 'text', 50);
+        let docSnippet = docSnippetItem ? docSnippetItem.value : '';
+        if (docSnippet && docSnippet.length > 160) {
+            docSnippet = `${docSnippet.substr(0, 160)}...`;
         }
 
         if (!docTitle || docTitle.trim().length === 0) {
@@ -87,14 +146,10 @@ async function addFileToCorpusAndDocuments(fileLocation, toc, corpus, documents)
         const docPath = webifyPath(path.relative('.', fileLocation)).replace('.md', '');
         corpus.push({
             id: docPath,
-            name: docTitle,
-            summary: docSummary
-        });
-
-        documents.push({
-            docTitle,
-            docBody: resultStripped.toString(),
-            id: docPath
+            title: docTitle,
+            snippet: docSnippet,
+            body: resultStripped.toString(),
+            tags: (tags || []).join(', ')
         });
     } catch (err) {
         throw new Error(`Failed processing '${fileLocation}'\n${err.message}`);
@@ -118,14 +173,11 @@ function findItem(elem, findType, minLength) {
 
 console.log(chalk.green.underline.bold('Build Search Index'));
 
-const projectData = process.argv[2];
-const corpusFile = process.argv[3];
-const indexFile = process.argv[4];
-if (!projectData || !corpusFile) {
-    console.log('\nUsage: \nprojectDataFile\ncorpusFile\nindexFile\n');
-    process.exit(1);
-}
-indexDocs(projectData, corpusFile, indexFile)
+const searchServer = process.env.SEARCH_ENDPOINT || 'http://localhost:8983/';
+const searchCore = process.env.SEARCH_CORE || 'document-core';
+const projectData = 'projects.json';
+
+indexDocs(searchServer, searchCore, projectData)
     .then(() => {
         console.log(chalk.green(`\n${emoji.get('smile')}  Completed Successfully`));
     })

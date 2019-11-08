@@ -8,8 +8,8 @@ class SearchResult extends React.Component {
         foundResult: PropTypes.arrayOf(
             PropTypes.shape({
                 id: PropTypes.string,
-                name: PropTypes.string,
-                summary: PropTypes.string,
+                title: PropTypes.string,
+                snippet: PropTypes.string,
                 matches: PropTypes.arrayOf(PropTypes.string)
             })
         ),
@@ -30,10 +30,10 @@ class SearchResult extends React.Component {
                 {this.props.foundResult.slice(this.props.indexStart, this.props.indexEnd + 1).map(elm =>
                     (<section key={elm.id} className="search-result__item">
                         <Link to={`/${elm.id}?${constructSearchQuery(this.props.query)}&${constructHighlights(elm.matches)}`} exact>
-                            <div className="search-result-item__heading">{elm.name}</div>
+                            <div className="search-result-item__heading">{elm.title}</div>
                             <div className="search-result-item__link">{`/${elm.id}`}</div>
                         </Link>
-                        <p className="text-paragraph">{elm.summary}</p>
+                        <p className="text-paragraph">{elm.snippet}</p>
                     </section>)
                 )}
             </div>

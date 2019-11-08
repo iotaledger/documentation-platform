@@ -10,6 +10,11 @@ COPY . ./
 # Set the env variables
 ARG CONFIG_ID
 RUN echo "CONFIG_ID=$CONFIG_ID"
+# This following are used by the buildSearchIndex to upload the index
+ARG SEARCH_ENDPOINT
+RUN echo "SEARCH_ENDPOINT=$SEARCH_ENDPOINT"
+ARG SEARCH_CORE
+RUN echo "SEARCH_CORE=$SEARCH_CORE"
 
 # Running required steps to prepare the app prod build
 RUN npm install
