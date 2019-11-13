@@ -2,7 +2,7 @@
 
 ## Configuration
 
-Copy the `./src/data/config.template.json` to `./src/data/config.dev.json` and populate the fields.
+Copy the `./src/data/config.template.json` to `./src/data/config.local.json` and populate the fields.
 
 ```js
 {
