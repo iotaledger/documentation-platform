@@ -10,7 +10,7 @@
     "license": "Apache-2.0",
     "scripts": {
         "build-projects": "node buildProjects",
-        "build-search-index": "cross-env SEARCH_CORE=document-core-local node buildSearchIndex",
+        "build-search-index": "node buildSearchIndex",
         "build-doc-assets": "node buildAssets",
         "build-index": "run-s build-projects build-search-index build-doc-assets",
         "start": "react-static start",

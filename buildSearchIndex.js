@@ -174,7 +174,7 @@ function findItem(elem, findType, minLength) {
 console.log(chalk.green.underline.bold('Build Search Index'));
 
 const searchServer = process.env.SEARCH_ENDPOINT || 'http://localhost:8983/';
-const searchCore = process.env.SEARCH_CORE || 'document-core';
+const searchCore = process.env.SEARCH_CORE || 'document-core-local';
 const projectData = 'projects.json';
 
 indexDocs(searchServer, searchCore, projectData)
