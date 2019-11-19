@@ -5,15 +5,29 @@ import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import ReactMarkdown from 'react-markdown';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { highlight, loadLanguages } from 'reprism';
-import bash from 'reprism/languages/bash';
-import c from 'reprism/languages/c';
-import cpp from 'reprism/languages/cpp';
-import java from 'reprism/languages/java';
-import javascript from 'reprism/languages/javascript';
-import json from 'reprism/languages/json';
-import jsx from 'reprism/languages/jsx';
-import python from 'reprism/languages/python';
+import * as Prism from 'prismjs';
+import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-c';
+import 'prismjs/components/prism-cpp';
+import 'prismjs/components/prism-css';
+import 'prismjs/components/prism-csharp';
+import 'prismjs/components/prism-docker';
+import 'prismjs/components/prism-elixir';
+import 'prismjs/components/prism-go';
+import 'prismjs/components/prism-groovy';
+import 'prismjs/components/prism-http';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-markdown';
+import 'prismjs/components/prism-objectivec';
+import 'prismjs/components/prism-sql';
+import 'prismjs/components/prism-powershell';
+import 'prismjs/components/prism-python';
+import 'prismjs/components/prism-rust';
+import 'prismjs/components/prism-yaml';
 import logoSmall from '../../../assets/logo-small.svg';
 import { copyToClipboard } from '../../../utils/clipboard';
 import { sanitizeHashId } from '../../../utils/paths';
@@ -26,8 +40,6 @@ import ProjectTopicsInner from '../../molecules/ProjectTopicsContainer/ProjectTo
 import Tabs from '../../molecules/Tabs';
 import Feed from '../../organisms/Feed';
 import './markdown.css';
-
-loadLanguages(jsx, bash, c, cpp, java, javascript, json, python);
 
 class Markdown extends PureComponent {
     static propTypes = {
@@ -97,7 +109,7 @@ class Markdown extends PureComponent {
             }
         }
 
-        let content = this.fixReprismSyntaxHighlighting(this.props.source);
+        let content = this.fixPrismSyntaxHighlighting(this.props.source);
 
         // Strip the h1 from the start of the content
         content = content.trim().replace(/(^# .*)/, '').trim();
@@ -155,12 +167,8 @@ class Markdown extends PureComponent {
         this.headingCounters = {};
     }
 
-    fixReprismSyntaxHighlighting(content) {
-        return content
-            .replace(/```Python/g, '```python')
-            .replace(/```c\+\+/g, '```cpp')
-            .replace(/```proto/g, '```cpp')
-            .replace(/```bash/g, '```shell');
+    fixPrismSyntaxHighlighting(content) {
+        return content.replace(/```gradle/g, '```groovy');
     }
 
     stripSearchQuery(content) {
@@ -497,7 +505,7 @@ class Markdown extends PureComponent {
                     alt: match[2] || ''
                 });
             }
-        } 
+        }
 
         // Do default html processing
         // https://github.com/rexxars/react-markdown/blob/b6caaba0437b00132d58337913e66a7d1bfb30ce/src/renderers.js#L100-L113
@@ -592,11 +600,23 @@ class Markdown extends PureComponent {
 
     codeBlock(props, wrap) {
         let html = props.value;
+        let renderedCode = false;
         try {
-            html = highlight(html, props.language);
+            if (Prism.languages[props.language]) {
+                const highlight = Prism.highlight(html, Prism.languages[props.language], props.language);
+                html = `<pre className="language-${props.language}"><code className="language-${props.language}">${highlight}</code></pre>`;
+                renderedCode = true;
+            } else {
+                // eslint-disable-next-line no-console
+                console.error(`Unrecognized language for syntax highlighter ${props.language}`);
+            }
         } catch (err) {
-            html = `<pre className="reprism markup language-markup"><code>${html}</code></pre>`;
+            // Don't care what the error was just render as markup instead
         }
+        if (!renderedCode) {
+            html = `<pre className="language-markup"><code className="language-${props.language}">${html}</code></pre>`;
+        }
+
         html = this.replaceSearchQuery(html, true);
 
         if (wrap) {
