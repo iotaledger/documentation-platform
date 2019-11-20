@@ -205,15 +205,21 @@ export function getDocumentTitle(projectUrlParts, projects) {
     return docTitle;
 }
 
-export function getDocumentTags(projectUrlParts, projects) {
+export function getDocumentTagsAndDescription(projectUrlParts, projects) {
     const project = lookupProject(projectUrlParts, projects);
 
     const projectVersionPages = getProjectVersionPages(project, projectUrlParts.projectVersion);
     const indexItem = getPage(projectVersionPages, projectUrlParts.projectFullURL);
-    if (indexItem && indexItem.tags) {
-        return indexItem.tags;
+    let tags;
+    let description;
+    if (indexItem) {
+        tags = indexItem.tags;
+        description = indexItem.description;
     }
-    return [];
+    return {
+        tags,
+        description
+    };
 }
 
 export function getProjectVersionPagesUrl(projectPartsUrlPart, projectVersion, projects) {

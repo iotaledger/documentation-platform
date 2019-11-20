@@ -16,7 +16,7 @@ import Markdown from '../components/organisms/Markdown';
 import StickyHeader from '../components/organisms/StickyHeader';
 import { submitFeedback } from '../utils/api';
 import { localStorageSet } from '../utils/localStorage';
-import { createPageTableOfContents, createProjectLinks, getDocumentTags, getProjectTitle, getProjectVersionPagesUrl, getVersionsUrl, parseProjectUrl, replaceVersion } from '../utils/projects';
+import { createPageTableOfContents, createProjectLinks, getDocumentTagsAndDescription, getProjectTitle, getProjectVersionPagesUrl, getVersionsUrl, parseProjectUrl, replaceVersion } from '../utils/projects';
 import { ProjectsPropTypes, ViewDataPropTypes } from '../utils/propTypes.js';
 import { extractHighlights, extractSearchQuery } from '../utils/search';
 import Container from './Container';
@@ -47,6 +47,7 @@ class Doc extends React.Component {
             projectVersionPages: [],
             pageTableOfContents: [],
             tags: [],
+            description: '',
             isMenuOpen: false
         };
 
@@ -67,12 +68,15 @@ class Doc extends React.Component {
     componentDidMount() {
         const projectParts = parseProjectUrl(this.props.location.pathname);
 
+        const tagsAndDescription = getDocumentTagsAndDescription(projectParts, this.props.projects);
+
         this.setState({
             ...projectParts,
             projectVersions: getVersionsUrl(projectParts, this.props.projects),
             projectVersionPages: getProjectVersionPagesUrl(projectParts, projectParts.projectVersion, this.props.projects),
             pageTableOfContents: createPageTableOfContents(projectParts, this.props.projects),
-            tags: getDocumentTags(projectParts, this.props.projects)
+            tags: tagsAndDescription.tags,
+            description: tagsAndDescription.description
         });
 
         // We must store last path in here as when we create react-static
@@ -111,7 +115,12 @@ class Doc extends React.Component {
             <Container {...this.props}>
                 <Head>
                     <title>{`${this.props.title} | ${this.props.viewData.siteName}`}</title>
-                    <meta name="keywords" content={this.state.tags} />
+                    {this.state.tags && (
+                        <meta name="keywords" content={this.state.tags.join(',')} />
+                    )}
+                    {this.state.description && (
+                        <meta name="description" content={this.state.description} />
+                    )}
                 </Head>
                 <StickyHeader
                     history={this.props.history}

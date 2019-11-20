@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 const fs = require('fs');
+const remark = require('remark');
 const fsPromises = require('fs').promises;
+const strip = require('strip-markdown');
 const path = require('path');
 const axios = require('axios');
 const emoji = require('node-emoji');
@@ -188,12 +190,13 @@ async function buildSingleVersion(docsFolder, projectFolder, version) {
                         link: match[2]
                     });
                 } else {
-                    const { toc, assets, tags } = await extractTocAndValidateAssets(docsFolder, projectFolder, version, match[2], docIndexFile);
+                    const { toc, assets, tags, description } = await extractTocAndValidateAssets(docsFolder, projectFolder, version, match[2], docIndexFile);
                     versions.push({
                         name: match[1],
                         link: `/${docsFolder}/${projectFolder}/${version}/${sanitizeLink(match[2])}`,
                         toc,
                         tags,
+                        description,
                         assets: assets.length > 0 ? assets : undefined
                     });
                 }
@@ -212,6 +215,7 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
     const toc = [];
     const assets = [];
     let tags;
+    let description;
 
     const docName = webifyPath(path.join(`${docsFolder}/${projectFolder}/${version}/`, doc));
 
@@ -220,6 +224,19 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
             await reportEntry(`\t\t\tTOC: '${docName}'`);
 
             let doc = (await fsPromises.readFile(docName)).toString();
+
+            let markdownStructure;
+            await remark()
+                .use(() => {
+                    return (ms) => { markdownStructure = ms; };
+                })
+                .use(strip)
+                .process(doc);
+
+            const descriptionObject = findItem(markdownStructure, 'text', 50);
+            if (descriptionObject) {
+                description = descriptionObject.value;
+            }
 
             await assetHtmlImage(doc, docName, assets);
             await assetMarkdownImage(doc, docName, assets);
@@ -278,7 +295,22 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
         await reportError(`'${docIndexFile}' referenced '${docName}' but validating content failed see ${projectsFile} for more details`, err);
     }
 
-    return { toc, assets, tags };
+    return { toc, assets, tags, description };
+}
+
+function findItem(elem, findType, minLength) {
+    if (elem.type === findType && elem.value && elem.value.length >= minLength) {
+        return elem;
+    }
+
+    if (elem.children) {
+        for (let i = 0; i < elem.children.length; i++) {
+            const f = findItem(elem.children[i], findType, minLength);
+            if (f) {
+                return f;
+            }
+        }
+    }
 }
 
 function extractContent(markdown) {
