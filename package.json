@@ -41,7 +41,8 @@
         "react-router-prop-types": "^1.0.4",
         "react-static": "^5.9.8",
         "react-style-proptype": "^3.2.2",
-        "reprism": "^0.0.11"
+        "reprism": "^0.0.11",
+        "universal-cookie": "^4.0.3"
     },
     "devDependencies": {
         "babel-eslint": "^10.0.1",
