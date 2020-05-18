@@ -102,6 +102,10 @@ export function createSideMenuEntries(projects, projectFullURL) {
 }
 
 export function buildItemTree(projectVersionPages, projectFullURL) {
+    if (!projectVersionPages) {
+        return [];
+    }
+
     const tree = [];
     let inSection;
     let inSectionSub;
