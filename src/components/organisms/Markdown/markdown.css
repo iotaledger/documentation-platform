@@ -28,6 +28,11 @@ code, pre {
   margin: 0;
 }
 
+.tab-item > p {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+  
 .markdown-code pre {
   line-height: 2rem;
 }

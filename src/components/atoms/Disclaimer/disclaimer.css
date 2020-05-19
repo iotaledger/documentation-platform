@@ -1,0 +1,15 @@
+.disclaimer {
+    display: flex;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-top: 1px solid var(--jade);
+    background: #f3f2f1;
+    color: rgba(64, 66, 73, 0.9);
+    z-index: 1000;
+}
