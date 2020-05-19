@@ -187,7 +187,7 @@ console.log(chalk.green.underline.bold('Build Search Index'));
 
 const searchServer = process.env.SEARCH_ENDPOINT || 'http://localhost:8983/';
 const searchCore = process.env.SEARCH_CORE || 'document-core-local';
-const searchAuth = process.env.SEARCH_AUTH;
+const searchAuth = process.env.SEARCH_AUTHORIZATION;
 const projectData = 'projects.json';
 
 indexDocs(searchServer, searchAuth, searchCore, projectData)
