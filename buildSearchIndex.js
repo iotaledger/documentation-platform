@@ -9,7 +9,7 @@ const axios = require('axios').default;
 
 const webifyPath = p => p.replace(/\\/g, '/');
 
-async function indexDocs(searchServer, searchCore, projectDataFile) {
+async function indexDocs(searchServer, searchAuth, searchCore, projectDataFile) {
     const corpus = [];
 
     const projectData = JSON.parse(fs.readFileSync(projectDataFile).toString());
@@ -33,19 +33,30 @@ async function indexDocs(searchServer, searchCore, projectDataFile) {
         }
     }
 
-    await populateSolr(searchServer, searchCore, corpus);
+    await populateSolr(searchServer, searchAuth, searchCore, corpus);
 }
 
-async function populateSolr(searchServer, searchCore, corpus) {
+async function populateSolr(searchServer, searchAuth, searchCore, corpus) {
     if (searchServer[searchServer.length - 1] !== '/') {
         searchServer += '/';
     }
     console.log(`Solr: Server at ${searchServer}`);
 
+    const options = {
+        headers: {
+        }
+    };
+
+    if (searchAuth) {
+        options.headers.Authorization = "Basic " + searchAuth;
+    }
+
+    console.log(options)
+
     let res;
     console.log(`Solr: Deleting Core ${searchCore}`);
     try {
-        res = await axios.get(`${searchServer}solr/admin/cores?action=UNLOAD&core=${searchCore}&deleteInstanceDir=true`);
+        res = await axios.get(`${searchServer}solr/admin/cores?action=UNLOAD&core=${searchCore}&deleteInstanceDir=true`, options);
         console.log(JSON.stringify(res.data, undefined, '\t'));
     } catch (err) {
         if (!err.response || !err.response.data || !err.response.data.error || err.response.data.error.code !== 400) {
@@ -54,11 +65,11 @@ async function populateSolr(searchServer, searchCore, corpus) {
     }
     try {
         console.log(`Solr: Creating Core ${searchCore}`);
-        res = await axios.get(`${searchServer}solr/admin/cores?action=CREATE&name=${searchCore}&configSet=_default`);
+        res = await axios.get(`${searchServer}solr/admin/cores?action=CREATE&name=${searchCore}&configSet=_default`, options);
         console.log(JSON.stringify(res.data, undefined, '\t'));
 
         console.log(`Solr: Get Schema Fields ${searchCore}`);
-        res = await axios.get(`${searchServer}solr/${searchCore}/schema/fields`);
+        res = await axios.get(`${searchServer}solr/${searchCore}/schema/fields`, options);
         console.log(JSON.stringify(res.data, undefined, '\t'));
 
         const titleOp = res.data.fields && res.data.fields.find(f => f.name === 'title') ? 'replace-field' : 'add-field';
@@ -74,7 +85,8 @@ async function populateSolr(searchServer, searchCore, corpus) {
             method: 'POST',
             url: `${searchServer}solr/${searchCore}/schema`,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                ...options.headers
             },
             data: `{
             "${titleOp}" : {
@@ -102,10 +114,10 @@ async function populateSolr(searchServer, searchCore, corpus) {
         });
         console.log(JSON.stringify(res.data, undefined, '\t'));
         console.log(`Solr: Adding documents to ${searchCore}`);
-        res = await axios.post(`${searchServer}solr/${searchCore}/update?commit=true`, corpus);
+        res = await axios.post(`${searchServer}solr/${searchCore}/update?commit=true`, corpus, options);
         console.log(JSON.stringify(res.data, undefined, '\t'));
         console.log('Solr: Status of Core ${searchCore}');
-        res = await axios.get(`${searchServer}solr/admin/cores?action=STATUS&code=${searchCore}`);
+        res = await axios.get(`${searchServer}solr/admin/cores?action=STATUS&code=${searchCore}`, options);
         console.log(JSON.stringify(res.data, undefined, '\t'));
     } catch (err) {
         console.error(JSON.stringify(err.response.data.error, undefined, '\t'));
@@ -175,9 +187,10 @@ console.log(chalk.green.underline.bold('Build Search Index'));
 
 const searchServer = process.env.SEARCH_ENDPOINT || 'http://localhost:8983/';
 const searchCore = process.env.SEARCH_CORE || 'document-core-local';
+const searchAuth = process.env.SEARCH_AUTH;
 const projectData = 'projects.json';
 
-indexDocs(searchServer, searchCore, projectData)
+indexDocs(searchServer, searchAuth, searchCore, projectData)
     .then(() => {
         console.log(chalk.green(`\n${emoji.get('smile')}  Completed Successfully`));
     })

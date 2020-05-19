@@ -8,6 +8,11 @@ export interface ISolrConfiguration {
     endpoint: string;
 
     /**
+     * Authorization.
+     */
+    authorization?: string;
+
+    /**
      * The document core.
      */
     core: string;

@@ -7,6 +7,7 @@
     },
     "search": {
         "endpoint": "SEARCH_ENDPOINT",
-        "core": "SEARCH_CORE"
+        "core": "SEARCH_CORE",
+        "authorization": "SEARCH_AUTHORIZATION"
     }
 }

@@ -44,7 +44,20 @@ export async function search(config: IConfiguration, request: ISearchRequest): P
 
         const solrExec = `${config.search.endpoint}/solr/${config.search.core}/select?${solrQuery}&${solrOptions}`;
 
-        const res = await Axios.get(solrExec);
+        const axiosOptions: {
+            /**
+             * Http request headers.
+             */
+            headers: { [id: string]: string };
+        } = {
+            headers: {}
+        };
+
+        if (config.search.authorization) {
+            axiosOptions.headers.Authorization = `Basic ${config.search.authorization}`;
+        }
+
+        const res = await Axios.get(solrExec, axiosOptions);
         if (res.data && res.data.response && res.data.response.docs) {
             for (let i = 0; i < res.data.response.docs.length; i++) {
                 const matches = [];
