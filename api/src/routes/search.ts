@@ -38,8 +38,6 @@ export async function search(config: IConfiguration, request: ISearchRequest): P
             boostMultiplier = 1;
         }
 
-        console.log(solrQuery);
-
         const solrOptions = "hl=true&hl.fl=title,body&hl.fragsize=0&hl.method=unified&rows=50";
 
         const solrExec = `${config.search.endpoint}/solr/${config.search.core}/select?${solrQuery}&${solrOptions}`;
