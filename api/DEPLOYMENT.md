@@ -14,7 +14,8 @@ Copy the `./src/data/config.template.json` to `./src/data/config.local.json` and
     },
     "search": {
         "endpoint": "SEARCH_ENDPOINT",               // Solr endpoint e.g. http://solr-server:8983
-        "core": "SEARCH_CORE"                        // Solr core name e.g. document-core-local
+        "core": "SEARCH_CORE",                       // Solr core name e.g. document-core-local
+        "authorization": "SEARCH_AUTHORIZATION"      // Solr basic auth base64(user:password)
     }
 }
 ```
