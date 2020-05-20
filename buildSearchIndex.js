@@ -54,7 +54,7 @@ async function populateSolr(searchServer, searchAuth, searchCore, corpus) {
     let res;
     console.log(`Solr: Deleting Core ${searchCore}`);
     try {
-        res = await axios.get(`${searchServer}solr/admin/cores?action=UNLOAD&core=${searchCore}&deleteInstanceDir=true`, options);
+        res = await axios.get(`${searchServer}admin/cores?action=UNLOAD&core=${searchCore}&deleteInstanceDir=true`, options);
         console.log(JSON.stringify(res.data, undefined, '\t'));
     } catch (err) {
         if (!err.response || !err.response.data || !err.response.data.error || err.response.data.error.code !== 400) {
@@ -63,11 +63,11 @@ async function populateSolr(searchServer, searchAuth, searchCore, corpus) {
     }
     try {
         console.log(`Solr: Creating Core ${searchCore}`);
-        res = await axios.get(`${searchServer}solr/admin/cores?action=CREATE&name=${searchCore}&configSet=_default`, options);
+        res = await axios.get(`${searchServer}admin/cores?action=CREATE&name=${searchCore}&configSet=_default`, options);
         console.log(JSON.stringify(res.data, undefined, '\t'));
 
         console.log(`Solr: Get Schema Fields ${searchCore}`);
-        res = await axios.get(`${searchServer}solr/${searchCore}/schema/fields`, options);
+        res = await axios.get(`${searchServer}${searchCore}/schema/fields`, options);
         console.log(JSON.stringify(res.data, undefined, '\t'));
 
         const titleOp = res.data.fields && res.data.fields.find(f => f.name === 'title') ? 'replace-field' : 'add-field';
@@ -81,7 +81,7 @@ async function populateSolr(searchServer, searchAuth, searchCore, corpus) {
         // have multiple hits for terms
         res = await axios({
             method: 'POST',
-            url: `${searchServer}solr/${searchCore}/schema`,
+            url: `${searchServer}${searchCore}/schema`,
             headers: {
                 'Content-Type': 'application/json',
                 ...options.headers
@@ -112,10 +112,10 @@ async function populateSolr(searchServer, searchAuth, searchCore, corpus) {
         });
         console.log(JSON.stringify(res.data, undefined, '\t'));
         console.log(`Solr: Adding documents to ${searchCore}`);
-        res = await axios.post(`${searchServer}solr/${searchCore}/update?commit=true`, corpus, options);
+        res = await axios.post(`${searchServer}${searchCore}/update?commit=true`, corpus, options);
         console.log(JSON.stringify(res.data, undefined, '\t'));
         console.log('Solr: Status of Core ${searchCore}');
-        res = await axios.get(`${searchServer}solr/admin/cores?action=STATUS&code=${searchCore}`, options);
+        res = await axios.get(`${searchServer}admin/cores?action=STATUS&code=${searchCore}`, options);
         console.log(JSON.stringify(res.data, undefined, '\t'));
     } catch (err) {
         console.error(JSON.stringify(err.response.data.error, undefined, '\t'));
@@ -188,9 +188,12 @@ const searchCore = process.env.SEARCH_CORE || 'document-core-local';
 const searchAuth = process.env.SEARCH_AUTHORIZATION;
 const projectData = 'projects.json';
 
+if (!searchServer.endsWith('solr/')) {
+    searchServer += 'solr/';
+}
+
 console.log("SEARCH_ENDPOINT", searchServer);
 console.log("SEARCH_CORE", searchCore);
-console.log("SEARCH_AUTHORIZATION", searchAuth);
 
 indexDocs(searchServer, searchAuth, searchCore, projectData)
     .then(() => {
