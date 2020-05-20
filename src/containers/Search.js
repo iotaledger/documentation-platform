@@ -33,7 +33,8 @@ class Search extends React.Component {
             page: 0,
             indexStart: 0,
             indexEnd: 9,
-            query: extractSearchQuery(this.props.location)
+            query: extractSearchQuery(this.props.location),
+            searching: true
         };
 
         this.onSearch = this.onSearch.bind(this);
@@ -84,14 +85,26 @@ class Search extends React.Component {
 
     search() {
         if (this.state.query) {
-            searchApi(this.props.apiEndpoint, this.state.query)
-                .then((res) => {
-                    if (res.items && res.items.length > 0) {
-                        this.setState({ foundResult: res.items, indexStart: 0, indexEnd: Math.min(9, res.items.length - 1) });
-                    } else {
-                        this.setState({ foundResult: [], indexStart: 0, indexEnd: 0 });
-                    }
-                });
+            this.setState({ searching: true }, () => {
+                searchApi(this.props.apiEndpoint, this.state.query)
+                    .then((res) => {
+                        if (res.items && res.items.length > 0) {
+                            this.setState({
+                                searching: false,
+                                foundResult: res.items,
+                                indexStart: 0,
+                                indexEnd: Math.min(9, res.items.length - 1)
+                            });
+                        } else {
+                            this.setState({
+                                searching: false,
+                                foundResult: [],
+                                indexStart: 0,
+                                indexEnd: 0
+                            });
+                        }
+                    });
+            });
         }
     }
 
@@ -127,19 +140,28 @@ class Search extends React.Component {
                                 onSearch={this.onSearch}
                             />
                         </div>
-                        <SearchResult
-                            foundResult={this.state.foundResult}
-                            indexStart={this.state.indexStart}
-                            indexEnd={this.state.indexEnd}
-                            query={this.state.query}
-                        />
-                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}>
-                            <Pagination
-                                page={this.state.page}
-                                totalCount={this.state.foundResult && this.state.foundResult.length}
-                                onDataPaginated={this.onDataPaginated}
-                            />
-                        </div>
+                        {this.state.searching && (
+                            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}>
+                                Searching, please wait...
+                            </div>
+                        )}
+                        {!this.state.searching && (
+                            <React.Fragment>
+                                <SearchResult
+                                    foundResult={this.state.foundResult}
+                                    indexStart={this.state.indexStart}
+                                    indexEnd={this.state.indexEnd}
+                                    query={this.state.query}
+                                />
+                                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}>
+                                    <Pagination
+                                        page={this.state.page}
+                                        totalCount={this.state.foundResult && this.state.foundResult.length}
+                                        onDataPaginated={this.onDataPaginated}
+                                    />
+                                </div>
+                            </React.Fragment>
+                        )}
                     </div>
                     {this.props.viewData.enableFeedback && (
                         <BottomSticky zIndex={10} horizontalAlign='right'>
