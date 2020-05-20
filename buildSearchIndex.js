@@ -188,6 +188,10 @@ const searchCore = process.env.SEARCH_CORE || 'document-core-local';
 const searchAuth = process.env.SEARCH_AUTHORIZATION;
 const projectData = 'projects.json';
 
+console.log("SEARCH_ENDPOINT", searchServer);
+console.log("SEARCH_CORE", searchCore);
+console.log("SEARCH_AUTHORIZATION", searchAuth);
+
 indexDocs(searchServer, searchAuth, searchCore, projectData)
     .then(() => {
         console.log(chalk.green(`\n${emoji.get('smile')}  Completed Successfully`));
