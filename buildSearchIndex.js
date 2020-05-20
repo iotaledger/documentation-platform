@@ -51,8 +51,6 @@ async function populateSolr(searchServer, searchAuth, searchCore, corpus) {
         options.headers.Authorization = "Basic " + searchAuth;
     }
 
-    console.log(options)
-
     let res;
     console.log(`Solr: Deleting Core ${searchCore}`);
     try {
