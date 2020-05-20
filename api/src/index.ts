@@ -6,6 +6,7 @@ import { feedbackCreate } from "./routes/feedbackCreate";
 import { feedList } from "./routes/feedList";
 import { init } from "./routes/init";
 import { missingCreate } from "./routes/missingCreate";
+import { search } from "./routes/search";
 
 // tslint:disable:no-var-requires no-require-imports
 const port = process.env.PORT || 4000;
@@ -63,6 +64,13 @@ app.post("/missing", async (req, res) => {
 
 app.get("/feed/:context", async (req, res) => {
     const response = await feedList(config, { ...req.params, ...req.query });
+    res.setHeader("Content-Type", "application/json");
+    res.send(JSON.stringify(response));
+    res.end();
+});
+
+app.get("/search/", async (req, res) => {
+    const response = await search(config, { ...req.params, ...req.query });
     res.setHeader("Content-Type", "application/json");
     res.send(JSON.stringify(response));
     res.end();

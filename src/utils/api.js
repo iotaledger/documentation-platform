@@ -67,3 +67,17 @@ export async function feed(apiEndpoint, context, page, pageSize) {
         };
     }
 }
+
+export async function search(apiEndpoint, query) {
+    try {
+        return await sendRequest(apiEndpoint, `search/?query=${query}`, 'GET');
+    } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
+
+        return {
+            success: false,
+            message: 'Failed to search.'
+        };
+    }
+}

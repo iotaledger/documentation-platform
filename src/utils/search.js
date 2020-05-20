@@ -24,19 +24,3 @@ export const extractHighlights = (location) => {
     const params = qs.parse(location.search, { ignoreQueryPrefix: true });
     return params && params[QUERY_PARAM_HIGHLIGHTS] ? params[QUERY_PARAM_HIGHLIGHTS].split(';') : [];
 };
-
-
-export const initCorpusIndex = () => {
-    const corpus = require('../searchData/corpus.json');
-    const index = require('../searchData/index.json');
-
-    const documents = corpus.reduce((memo, doc) => {
-        memo[doc.id] = doc;
-        return memo;
-    }, {});
-    
-    return {
-        documents,
-        index
-    };
-};

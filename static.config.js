@@ -150,11 +150,16 @@ function processMarkdown(markdownSrc) {
     markdown = assetMarkdownImage(markdown, markdownSrc);
     markdown = assetHtmlImage(markdown, markdownSrc);
     markdown = replaceRootUrls(markdown);
+    markdown = removeSearchTags(markdown);
     return markdown;
 }
 
 function replaceRootUrls(markdown) {
     return markdown.replace(/root:\/\/(.*?)(.md)/g, '/docs/$1');
+}
+
+function removeSearchTags(markdown) {
+    return markdown.replace(/> search-tags: (.*)/gm, '');
 }
 
 function assetHtmlImage(markdown, docPath) {

@@ -4,5 +4,10 @@
         "accessKeyId": "AWS-ACCESS-KEY-ID",
         "secretAccessKey": "AWS-SECRET-ACCESS-KEY",
         "dbTablePrefix": "DATABASE-TABLE-PREFIX"
+    },
+    "search": {
+        "endpoint": "SEARCH_ENDPOINT",
+        "core": "SEARCH_CORE",
+        "authorization": "SEARCH_AUTHORIZATION"
     }
 }

@@ -1,4 +1,5 @@
 import { IAWSConfiguration } from "./IAWSConfiguration";
+import { ISolrConfiguration } from "./ISolrConfiguration";
 
 /**
  * Definition of configuration file.
@@ -24,4 +25,9 @@ export interface IConfiguration {
             config: any;
         };
     };
+
+    /**
+     * Configuration for search.
+     */
+    search: ISolrConfiguration;
 }

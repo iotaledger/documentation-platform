@@ -2,7 +2,7 @@
 
 ## Configuration
 
-Copy the `./src/data/config.template.json` to `./src/data/config.dev.json` and populate the fields.
+Copy the `./src/data/config.template.json` to `./src/data/config.local.json` and populate the fields.
 
 ```js
 {
@@ -11,6 +11,11 @@ Copy the `./src/data/config.template.json` to `./src/data/config.dev.json` and p
         "accessKeyId": "AWS-ACCESS-KEY-ID",          // AWS Access Key e.g. AKIAI57SG4YC2ZUCSABC
         "secretAccessKey": "AWS-SECRET-ACCESS-KEY",  // AWS Secret e.g. MUo72/UQWgL97QArGt9HVUA
         "dbTablePrefix": "DATABASE-TABLE-PREFIX"     // Prefix for database table names e.g. docs-dev-
+    },
+    "search": {
+        "endpoint": "SEARCH_ENDPOINT",               // Solr endpoint e.g. http://solr-server:8983
+        "core": "SEARCH_CORE",                       // Solr core name e.g. document-core-local
+        "authorization": "SEARCH_AUTHORIZATION"      // Solr basic auth base64(user:password)
     }
 }
 ```

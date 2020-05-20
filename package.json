@@ -10,8 +10,8 @@
     "license": "Apache-2.0",
     "scripts": {
         "build-projects": "node buildProjects",
-        "build-search-index": "node buildSearchIndex projects.json src/searchData/corpus.json src/searchData/index.json",
-        "build-doc-assets": "node buildAssets projects.json public/assets/docs",
+        "build-search-index": "node buildSearchIndex",
+        "build-doc-assets": "node buildAssets",
         "build-index": "run-s build-projects build-search-index build-doc-assets",
         "start": "react-static start",
         "production": "react-static build",
@@ -28,7 +28,6 @@
         "emoji-dictionary": "^1.0.9",
         "google-map-react": "^1.1.2",
         "iota-css-theme": "iotaledger/iota-css-theme",
-        "lunr": "^2.3.5",
         "moment": "^2.24.0",
         "nprogress": "^0.2.0",
         "parallax-js": "^3.1.0",

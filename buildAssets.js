@@ -51,12 +51,8 @@ function run(projectDataFile, assetsFolder) {
 
 try {
     console.log(chalk.green.underline.bold('Build Doc Assets\n'));
-    const projectsJson = process.argv[2];
-    const assetsFolder = process.argv[3];
-    if (!projectsJson || !assetsFolder) {
-        console.log('\nUsage: \nprojectsJson\nassetsFolder\n');
-        process.exit(1);
-    }
+    const projectsJson = 'projects.json';
+    const assetsFolder = 'public/assets/docs';
     run(projectsJson, assetsFolder);
     console.log(chalk.green(`\n${emoji.get('smile')}  Completed Successfully`));
 } catch (err) {
