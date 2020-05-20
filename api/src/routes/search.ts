@@ -40,7 +40,15 @@ export async function search(config: IConfiguration, request: ISearchRequest): P
 
         const solrOptions = "hl=true&hl.fl=title,body&hl.fragsize=0&hl.method=unified&rows=50";
 
-        const solrExec = `${config.search.endpoint}/solr/${config.search.core}/select?${solrQuery}&${solrOptions}`;
+        let endPoint = config.search.endpoint;
+        if (!endPoint.endsWith("/")) {
+            endPoint += "/";
+        }
+        if (!endPoint.endsWith("solr/")) {
+            endPoint += "solr/";
+        }
+
+        const solrExec = `${endPoint}/${config.search.core}/select?${solrQuery}&${solrOptions}`;
 
         const axiosOptions: {
             /**

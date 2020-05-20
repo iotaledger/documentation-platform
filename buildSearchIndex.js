@@ -188,6 +188,9 @@ const searchCore = process.env.SEARCH_CORE || 'document-core-local';
 const searchAuth = process.env.SEARCH_AUTHORIZATION;
 const projectData = 'projects.json';
 
+if (!searchServer.endsWith("/")) {
+    searchServer += "/";
+}
 if (!searchServer.endsWith('solr/')) {
     searchServer += 'solr/';
 }
