@@ -48,7 +48,7 @@ export async function search(config: IConfiguration, request: ISearchRequest): P
             endPoint += "solr/";
         }
 
-        const solrExec = `${endPoint}/${config.search.core}/select?${solrQuery}&${solrOptions}`;
+        const solrExec = `${endPoint}${config.search.core}/select?${solrQuery}&${solrOptions}`;
 
         const axiosOptions: {
             /**
