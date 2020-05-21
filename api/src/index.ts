@@ -3,7 +3,6 @@ import express from "express";
 import { IConfiguration } from "./models/IConfiguration";
 import { emailCreate } from "./routes/emailCreate";
 import { feedbackCreate } from "./routes/feedbackCreate";
-import { feedList } from "./routes/feedList";
 import { init } from "./routes/init";
 import { missingCreate } from "./routes/missingCreate";
 import { search } from "./routes/search";
@@ -57,13 +56,6 @@ app.post("/feedback", async (req, res) => {
 
 app.post("/missing", async (req, res) => {
     const response = await missingCreate(config, req.body);
-    res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify(response));
-    res.end();
-});
-
-app.get("/feed/:context", async (req, res) => {
-    const response = await feedList(config, { ...req.params, ...req.query });
     res.setHeader("Content-Type", "application/json");
     res.send(JSON.stringify(response));
     res.end();

@@ -38,7 +38,6 @@ import MarkdownCard from '../../atoms/MarkdownCard';
 import MessageBox from '../../molecules/MessageBox';
 import ProjectTopicsInner from '../../molecules/ProjectTopicsContainer/ProjectTopicsInner';
 import Tabs from '../../molecules/Tabs';
-import Feed from '../../organisms/Feed';
 import './markdown.css';
 
 class Markdown extends PureComponent {
@@ -77,7 +76,6 @@ class Markdown extends PureComponent {
         this.stripSearchQuery = this.stripSearchQuery.bind(this);
         this.codeBlock = this.codeBlock.bind(this);
         this.handleCopy = this.handleCopy.bind(this);
-        this.handleFeedLoaded = this.handleFeedLoaded.bind(this);
         this.imageRenderer = this.imageRenderer.bind(this);
 
         this.currentTable = undefined;
@@ -370,7 +368,7 @@ class Markdown extends PureComponent {
         do {
             match = re.exec(content);
             if (match && match.length === 3) {
-                if (match[1] === 'feed' || match[1] === 'map') {
+                if (match[1] === 'map') {
                     this.objects.push(JSON.parse(match[2]));
                     matches.push({ type: match[1], content: match[0] });
                 }
@@ -406,22 +404,6 @@ class Markdown extends PureComponent {
             if (match && match.length === 2) {
                 const index = parseInt(match[1], 10);
                 return (<ProjectTopicsInner content={this.projectTopicContainers[index]} compressed={true} highlights={this.highlights} />);
-            }
-        } else if (props.value.startsWith('<feed')) {
-            const re = /<feed index="(.*)">/;
-            let match = re.exec(props.value);
-
-            if (match && match.length === 2) {
-                const index = parseInt(match[1], 10);
-                const feed = this.objects[index];
-                return (<Feed
-                    displayType={feed.displayType}
-                    context={feed.context}
-                    apiEndpoint={this.props.apiEndpoint}
-                    googleMapsKey={this.props.googleMapsKey}
-                    onLoaded={this.handleFeedLoaded}
-                    history={this.props.history}
-                />);
             }
         } else if (props.value.startsWith('<map')) {
             const re = /<map index="(.*)">/;
@@ -737,12 +719,6 @@ class Markdown extends PureComponent {
 
     getCoreProps(props) {
         return props['data-sourcepos'] ? { 'data-sourcepos': props['data-sourcepos'] } : {};
-    }
-
-    handleFeedLoaded(itemCount) {
-        if (this.props.onContentChanged) {
-            this.props.onContentChanged(itemCount);
-        }
     }
 
     render() {
