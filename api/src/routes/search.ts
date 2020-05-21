@@ -1,4 +1,4 @@
-import Axios from "axios";
+import fetch from "node-fetch";
 import { ISearchRequest } from "../models/api/ISearchRequest";
 import { ISearchResponse } from "../models/api/ISearchResponse";
 import { ISearchResultItem } from "../models/api/ISearchResultItem";
@@ -50,7 +50,7 @@ export async function search(config: IConfiguration, request: ISearchRequest): P
 
         const solrExec = `${endPoint}${config.search.core}/select?${solrQuery}&${solrOptions}`;
 
-        const axiosOptions: {
+        const options: {
             /**
              * Http request headers.
              */
@@ -60,33 +60,36 @@ export async function search(config: IConfiguration, request: ISearchRequest): P
         };
 
         if (config.search.authorization) {
-            axiosOptions.headers.Authorization = `Basic ${config.search.authorization}`;
+            options.headers.Authorization = `Basic ${config.search.authorization}`;
         }
 
-        const res = await Axios.get(solrExec, axiosOptions);
-        if (res.data && res.data.response && res.data.response.docs) {
-            for (let i = 0; i < res.data.response.docs.length; i++) {
-                const matches = [];
-                if (res.data.highlighting && res.data.highlighting[res.data.response.docs[i].id]) {
-                    if (res.data.highlighting[res.data.response.docs[i].id].title) {
-                        extractMatches(res.data.highlighting[res.data.response.docs[i].id].title[0], matches);
+        const res = await fetch(solrExec, options);
+        if (res.status === 200) {
+            const resData = await res.json();
+            if (resData.response && resData.response.docs) {
+                for (let i = 0; i < resData.response.docs.length; i++) {
+                    const matches = [];
+                    if (resData.highlighting && resData.highlighting[resData.response.docs[i].id]) {
+                        if (resData.highlighting[resData.response.docs[i].id].title) {
+                            extractMatches(resData.highlighting[resData.response.docs[i].id].title[0], matches);
+                        }
+                        if (resData.highlighting[resData.response.docs[i].id].body) {
+                            extractMatches(resData.highlighting[resData.response.docs[i].id].body[0], matches);
+                        }
                     }
-                    if (res.data.highlighting[res.data.response.docs[i].id].body) {
-                        extractMatches(res.data.highlighting[res.data.response.docs[i].id].body[0], matches);
+                    const searchResultItem: ISearchResultItem = {
+                        id: resData.response.docs[i].id,
+                        title: resData.response.docs[i].title[0],
+                        snippet: resData.response.docs[i].snippet[0],
+                        matches
+                    };
+                    // Boost overview pages to the start of the list if they contain the query
+                    if (searchResultItem.id.toLowerCase().indexOf(request.query.toLowerCase()) >= 0 &&
+                        searchResultItem.id.endsWith("overview")) {
+                        items.unshift(searchResultItem);
+                    } else {
+                        items.push(searchResultItem);
                     }
-                }
-                const searchResultItem: ISearchResultItem = {
-                    id: res.data.response.docs[i].id,
-                    title: res.data.response.docs[i].title[0],
-                    snippet: res.data.response.docs[i].snippet[0],
-                    matches
-                };
-                // Boost overview pages to the start of the list if they contain the query
-                if (searchResultItem.id.toLowerCase().indexOf(request.query.toLowerCase()) >= 0 &&
-                    searchResultItem.id.endsWith("overview")) {
-                    items.unshift(searchResultItem);
-                } else {
-                    items.push(searchResultItem);
                 }
             }
         }

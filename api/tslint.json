@@ -1,8 +1,9 @@
 {
     "extends": [
         "tslint:recommended",
-        "tslint-microsoft-contrib",
-        "tslint-eslint-rules"
+        "tslint-microsoft-contrib/recommended",
+        "tslint-eslint-rules",
+        "tslint-consistent-codestyle"
     ],
     "linterOptions": {
         "exclude": [
@@ -21,7 +22,6 @@
         "no-document-write": true,
         "no-eval": true,
         "no-exec-script": true,
-        "no-function-constructor-with-string-args": true,
         "no-http-string": [
             false
         ],
@@ -81,14 +81,12 @@
         "no-stateless-class": false,
         "no-string-literal": true,
         "no-string-throw": true,
-        "no-unnecessary-bind": true,
         "no-unnecessary-callback-wrapper": true,
         "no-unnecessary-initializer": true,
         "no-unnecessary-override": true,
         "no-unsafe-any": false,
         "no-unsafe-finally": true,
         "no-unused-expression": true,
-        "no-use-before-declare": true,
         "no-with-statement": true,
         "promise-function-async": true,
         "promise-must-complete": true,

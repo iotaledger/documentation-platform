@@ -5,7 +5,7 @@ const remark = require('remark');
 const strip = require('strip-markdown');
 const emoji = require('node-emoji');
 const chalk = require('chalk');
-const axios = require('axios').default;
+const fetch = require('node-fetch');
 
 const webifyPath = p => p.replace(/\\/g, '/');
 
@@ -37,56 +37,71 @@ async function indexDocs(searchServer, searchAuth, searchCore, projectDataFile) 
 }
 
 async function populateSolr(searchServer, searchAuth, searchCore, corpus) {
-    if (searchServer[searchServer.length - 1] !== '/') {
-        searchServer += '/';
-    }
-    console.log(`Solr: Server at ${searchServer}`);
-
-    const options = {
-        headers: {
-        }
-    };
-
-    if (searchAuth) {
-        options.headers.Authorization = "Basic " + searchAuth;
-    }
-
-    let res;
-    console.log(`Solr: Deleting Core ${searchCore}`);
     try {
-        res = await axios.get(`${searchServer}admin/cores?action=UNLOAD&core=${searchCore}&deleteInstanceDir=true`, options);
-        console.log(JSON.stringify(res.data, undefined, '\t'));
-    } catch (err) {
-        if (!err.response || !err.response.data || !err.response.data.error || err.response.data.error.code !== 400) {
-            console.error('Error Deleting Core', err.toString());
+        if (!searchServer.endsWith('/')) {
+            searchServer += '/';
         }
-    }
-    try {
+        if (!searchServer.endsWith('solr/')) {
+            searchServer += 'solr/';
+        }
+
+        console.log(`Solr: Server at ${searchServer}`);
+
+        const options = {
+            headers: {
+            }
+        };
+
+        if (searchAuth) {
+            options.headers.Authorization = 'Basic ' + searchAuth;
+        }
+
+        console.log(`Solr: Deleting Core ${searchCore}`);
+        let res = await fetch(`${searchServer}admin/cores?action=UNLOAD&core=${searchCore}&deleteInstanceDir=true`, options);
+        let resData;
+        if (res.ok) {
+            resData = await res.json();
+            console.log(JSON.stringify(resData, undefined, '\t'));
+        } else {
+            if (res.status !== 400) {
+                throw new Error(`${res.status}: ${res.statusText}:\n${resData ? JSON.stringify(resData, undefined, '\t') : 'No Data'}`);
+            }
+        }
+
         console.log(`Solr: Creating Core ${searchCore}`);
-        res = await axios.get(`${searchServer}admin/cores?action=CREATE&name=${searchCore}&configSet=_default`, options);
-        console.log(JSON.stringify(res.data, undefined, '\t'));
+        res = await fetch(`${searchServer}admin/cores?action=CREATE&name=${searchCore}&configSet=_default`, options);
+        if (res.ok) {
+            resData = await res.json();
+            console.log(JSON.stringify(resData, undefined, '\t'));
+        } else {
+            throw new Error(`${res.status}: ${res.statusText}:\n${resData ? JSON.stringify(resData, undefined, '\t') : 'No Data'}`);
+        }
 
         console.log(`Solr: Get Schema Fields ${searchCore}`);
-        res = await axios.get(`${searchServer}${searchCore}/schema/fields`, options);
-        console.log(JSON.stringify(res.data, undefined, '\t'));
+        res = await fetch(`${searchServer}${searchCore}/schema/fields`, options);
+        if (res.ok) {
+            resData = await res.json();
+            console.log(JSON.stringify(resData, undefined, '\t'));
+        } else {
+            throw new Error(`${res.status}: ${res.statusText}:\n${resData ? JSON.stringify(resData, undefined, '\t') : 'No Data'}`);
+        }
 
-        const titleOp = res.data.fields && res.data.fields.find(f => f.name === 'title') ? 'replace-field' : 'add-field';
-        const bodyOp = res.data.fields && res.data.fields.find(f => f.name === 'body') ? 'replace-field' : 'add-field';
-        const snippetOp = res.data.fields && res.data.fields.find(f => f.name === 'snippet') ? 'replace-field' : 'add-field';
-        const tagsOp = res.data.fields && res.data.fields.find(f => f.name === 'tags') ? 'replace-field' : 'add-field';
+        const titleOp = resData.fields && resData.fields.find(f => f.name === 'title') ? 'replace-field' : 'add-field';
+        const bodyOp = resData.fields && resData.fields.find(f => f.name === 'body') ? 'replace-field' : 'add-field';
+        const snippetOp = resData.fields && resData.fields.find(f => f.name === 'snippet') ? 'replace-field' : 'add-field';
+        const tagsOp = resData.fields && resData.fields.find(f => f.name === 'tags') ? 'replace-field' : 'add-field';
 
         console.log(`Solr: Update Schema ${searchCore}`);
 
         // the omitNorms is critical in the schema to boost the scoring of documents that
         // have multiple hits for terms
-        res = await axios({
+        res = await fetch(`${searchServer}${searchCore}/schema`, {
             method: 'POST',
-            url: `${searchServer}${searchCore}/schema`,
             headers: {
                 'Content-Type': 'application/json',
                 ...options.headers
             },
-            data: `{
+            body: `{
             "${titleOp}" : {
                 "name": "title",
                 "type": "text_general",
@@ -110,16 +125,37 @@ async function populateSolr(searchServer, searchAuth, searchCore, corpus) {
             }
         }`
         });
-        console.log(JSON.stringify(res.data, undefined, '\t'));
+        if (res.ok) {
+            resData = await res.json();
+            console.log(JSON.stringify(resData, undefined, '\t'));
+        } else {
+            throw new Error(`${res.status}: ${res.statusText}:\n${resData ? JSON.stringify(resData, undefined, '\t') : 'No Data'}`);
+        }
         console.log(`Solr: Adding documents to ${searchCore}`);
-        res = await axios.post(`${searchServer}${searchCore}/update?commit=true`, corpus, options);
-        console.log(JSON.stringify(res.data, undefined, '\t'));
+        res = await fetch(`${searchServer}${searchCore}/update?commit=true`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            },
+            body: JSON.stringify(corpus)
+        });
+        if (res.ok) {
+            resData = await res.json();
+            console.log(JSON.stringify(resData, undefined, '\t'));
+        } else {
+            throw new Error(`${res.status}: ${res.statusText}:\n${resData ? JSON.stringify(resData, undefined, '\t') : 'No Data'}`);
+        }
         console.log('Solr: Status of Core ${searchCore}');
-        res = await axios.get(`${searchServer}admin/cores?action=STATUS&code=${searchCore}`, options);
-        console.log(JSON.stringify(res.data, undefined, '\t'));
+        res = await fetch(`${searchServer}admin/cores?action=STATUS&code=${searchCore}`, options);
+        if (res.ok) {
+            resData = await res.json();
+            console.log(JSON.stringify(resData, undefined, '\t'));
+        } else {
+            throw new Error(`${res.status}: ${res.statusText}:\n${resData ? JSON.stringify(resData, undefined, '\t') : 'No Data'}`);
+        }
     } catch (err) {
-        console.error(JSON.stringify(err.response.data.error, undefined, '\t'));
-        throw new Error('Error Initializing Solr');
+        throw new Error(err.message);
     }
 }
 
@@ -188,15 +224,8 @@ const searchCore = process.env.SEARCH_CORE || 'document-core-local';
 const searchAuth = process.env.SEARCH_AUTHORIZATION;
 const projectData = 'projects.json';
 
-if (!searchServer.endsWith("/")) {
-    searchServer += "/";
-}
-if (!searchServer.endsWith('solr/')) {
-    searchServer += 'solr/';
-}
-
-console.log("SEARCH_ENDPOINT", searchServer);
-console.log("SEARCH_CORE", searchCore);
+console.log('SEARCH_ENDPOINT', searchServer);
+console.log('SEARCH_CORE', searchCore);
 
 indexDocs(searchServer, searchAuth, searchCore, projectData)
     .then(() => {

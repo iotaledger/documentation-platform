@@ -4,7 +4,6 @@ const remark = require('remark');
 const fsPromises = require('fs').promises;
 const strip = require('strip-markdown');
 const path = require('path');
-const axios = require('axios');
 const emoji = require('node-emoji');
 const emojiRegex = require('emoji-regex');
 const emojiUnicode = require('emoji-unicode');
@@ -736,7 +735,9 @@ function sanitizeLink(item) {
 async function checkRemote(url) {
     if (remoteCheck) {
         try {
-            await axios.head(url);
+            await fetch(url, {
+                method: 'HEAD'
+            });
         } catch (err) {
             if (err.message.indexOf('404') >= 0) {
                 return 'Not found';
