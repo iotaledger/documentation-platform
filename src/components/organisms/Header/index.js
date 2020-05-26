@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import logo from '../../../assets/Logo.svg';
-import { ViewDataPropTypes } from '../../../utils/propTypes';
+import ViewDataPropTypes from '../../../utils/viewDataPropTypes';
 import { performSearch } from '../../../utils/search';
 import InputSearch from '../../molecules/InputSearch';
 

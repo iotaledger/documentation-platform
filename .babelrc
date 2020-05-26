@@ -1,4 +1,3 @@
 {
-  "extends": "react-static/.babelrc",
-  "plugins": []
+  "presets": ["react-static/babel-preset.js"]
 }

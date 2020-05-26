@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Link from '../../atoms/Link';
 import { createSideMenuEntries } from '../../../utils/projects';
-import { ProjectsPropTypes } from '../../../utils/propTypes';
+import ProjectsPropTypes from '../../../utils/projectsPropTypes';
 import ClickOutside from '../../atoms/ClickOutside';
 
 class SideMenu extends React.Component {

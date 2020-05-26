@@ -25,7 +25,7 @@ class ProjectTopicsInner extends React.Component {
                 )
             }>
                 {
-                    this.props.content.map((item, idx) =>
+                    this.props.content && this.props.content.map((item, idx) =>
                         <div key={idx} className="project-topic__item">
                             {item.link && (
                                 <Link href={item.link} target={item.link.startsWith('http') ? '_blank' : undefined} className="project-topic__link">

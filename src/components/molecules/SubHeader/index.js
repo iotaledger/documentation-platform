@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { getDocumentTitle, getNextPage, getPreviousPage, getProjectTitle, parseProjectUrl } from '../../../utils/projects';
-import { ProjectsPropTypes } from '../../../utils/propTypes';
+import ProjectsPropTypes from '../../../utils/projectsPropTypes';
 import Link from '../../atoms/Link';
 
 class SubHeader extends React.Component {
