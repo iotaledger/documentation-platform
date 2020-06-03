@@ -36,7 +36,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: iotaledger/documentation
-          ref: develop
+          ref: master
           path: docs
       - name: Client Config
         run: |
