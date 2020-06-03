@@ -1,13 +1,16 @@
 {
     "dynamoDbConnection": {
-        "region": "AWS-REGION",
-        "accessKeyId": "AWS-ACCESS-KEY-ID",
-        "secretAccessKey": "AWS-SECRET-ACCESS-KEY",
-        "dbTablePrefix": "DATABASE-TABLE-PREFIX"
+        "region": "DB-AWS-REGION",
+        "accessKeyId": "DB-AWS-ACCESS-KEY-ID",
+        "secretAccessKey": "DB-AWS-SECRET-ACCESS-KEY",
+        "dbTablePrefix": "DB-TABLE-PREFIX"
     },
     "search": {
-        "endpoint": "SEARCH_ENDPOINT",
-        "core": "SEARCH_CORE",
-        "authorization": "SEARCH_AUTHORIZATION"
-    }
+        "endpoint": "SEARCH-ENDPOINT",
+        "core": "SEARCH-CORE",
+        "authorization": "SEARCH-AUTHORIZATION"
+    },
+    "allowedDomains": [
+        "ALLOWED-DOMAIN"
+    ]
 }

@@ -1,7 +1,7 @@
 {
-  "siteRoot": "SITE_ROOT",
-  "apiEndpoint": "API_ENDPOINT",
-  "hotJarId": "HOT_JAR_ID",
-  "googleAnalyticsId": "GOOGLE_TAG_ID",
-  "googleMapsKey": "GOOGLE_MAPS_KEY"
+  "siteName": "IOTA Documentation",
+  "siteRoot": "SITE-ROOT",
+  "apiEndpoint": "API-ENDPOINT",
+  "hotJarId": "HOTJAR-ID",
+  "googleAnalyticsId": "GOOGLE-ANALYTICS-ID"
 }

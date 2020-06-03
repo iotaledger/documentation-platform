@@ -1,4 +1,4 @@
-import { IConfiguration } from "../models/IConfiguration";
+import { IConfiguration } from "../models/configuration/IConfiguration";
 import { EmailService } from "../services/emailService";
 import { FeedbackService } from "../services/feedbackService";
 import { MissingService } from "../services/missingService";

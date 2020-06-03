@@ -1,4 +1,4 @@
-import { IAWSConfiguration } from "../models/IAWSConfiguration";
+import { IAWSConfiguration } from "../models/configuration/IAWSConfiguration";
 import { DbHelper } from "../utils/dbHelper";
 
 /**

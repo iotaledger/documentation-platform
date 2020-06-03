@@ -1,0 +1,54 @@
+name: API Build and Deploy Production
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "api/**"
+      - ".github/workflows/api-prod.yaml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      # Build specific env vars
+      CONFIG_ID: prod
+      CONFIG_DB_AWS_REGION: ${{ secrets.PROD_CONFIG_DB_AWS_REGION }}
+      CONFIG_DB_AWS_ACCESS_KEY_ID: ${{ secrets.PROD_CONFIG_DB_AWS_ACCESS_KEY_ID }}
+      CONFIG_DB_AWS_SECRET_ACCESS_KEY: ${{ secrets.PROD_CONFIG_DB_AWS_SECRET_ACCESS_KEY }}
+      CONFIG_DB_TABLE_PREFIX: ${{ secrets.PROD_CONFIG_DB_TABLE_PREFIX }}
+      CONFIG_SEARCH_ENDPOINT: ${{ secrets.PROD_CONFIG_SEARCH_ENDPOINT }}
+      CONFIG_SEARCH_CORE: ${{ secrets.PROD_CONFIG_SEARCH_CORE }}
+      CONFIG_SEARCH_AUTHORIZATION: ${{ secrets.PROD_CONFIG_SEARCH_AUTHORIZATION }}
+      CONFIG_ALLOWED_DOMAIN: ${{ secrets.PROD_CONFIG_ALLOWED_DOMAIN }}
+      VERCEL_DOMAIN: ${{ secrets.VERCEL_API_PROD_DOMAIN }}
+
+      # Global Vercel env vars
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_API_PROJECT_ID }}
+      VERCEL_PROJECT_NAME: ${{ secrets.VERCEL_API_PROJECT_NAME }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: API Config
+        run: |
+          cd api/src/data/
+          mv config.template.json config.$CONFIG_ID.json
+          sed -i 's/DB-AWS-REGION/${{ env.CONFIG_DB_AWS_REGION }}/g' config.$CONFIG_ID.json
+          sed -i 's/DB-AWS-ACCESS-KEY-ID/${{ env.CONFIG_DB_AWS_ACCESS_KEY_ID }}/g' config.$CONFIG_ID.json
+          sed -i 's/DB-AWS-SECRET-ACCESS-KEY/${{ env.CONFIG_DB_AWS_SECRET_ACCESS_KEY }}/g' config.$CONFIG_ID.json
+          sed -i 's/DB-TABLE-PREFIX/${{ env.CONFIG_DB_TABLE_PREFIX }}/g' config.$CONFIG_ID.json
+          sed -i 's/SEARCH-ENDPOINT/${{ env.CONFIG_SEARCH_ENDPOINT }}/g' config.$CONFIG_ID.json
+          sed -i 's/SEARCH-CORE/${{ env.CONFIG_SEARCH_CORE }}/g' config.$CONFIG_ID.json
+          sed -i 's/SEARCH-AUTHORIZATION/${{ env.CONFIG_SEARCH_AUTHORIZATION }}/g' config.$CONFIG_ID.json
+            sed -i 's/ALLOWED-DOMAIN/${{ env.CONFIG_ALLOWED_DOMAIN }}/g' config.$CONFIG_ID.json
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12"
+      - name: API Deploy
+        run: |
+          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_SCOPE }} --force -m githubCommitSha=${{ github.sha }} --env CONFIG_ID=$CONFIG_ID
+          VERCEL_DEPLOYMENT_URL=$(npx vercel ls --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_SCOPE }} -m githubCommitSha=${{ github.sha }} | grep $VERCEL_PROJECT_NAME | awk {'print $2'})
+          npx vercel alias --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_SCOPE }} $VERCEL_DEPLOYMENT_URL $VERCEL_DOMAIN

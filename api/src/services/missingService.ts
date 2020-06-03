@@ -1,5 +1,5 @@
+import { IAWSConfiguration } from "../models/configuration/IAWSConfiguration";
 import { IMissing } from "../models/db/IMissing";
-import { IAWSConfiguration } from "../models/IAWSConfiguration";
 import { DbService } from "./dbService";
 
 /**

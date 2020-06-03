@@ -219,10 +219,13 @@ function findItem(elem, findType, minLength) {
 
 console.log(chalk.green.underline.bold('Build Search Index'));
 
-const searchServer = process.env.SEARCH_ENDPOINT || 'http://localhost:8983/';
+let searchServer = process.env.SEARCH_ENDPOINT || 'http://localhost:8983/';
 const searchCore = process.env.SEARCH_CORE || 'document-core-local';
 const searchAuth = process.env.SEARCH_AUTHORIZATION;
 const projectData = 'projects.json';
+
+searchServer = searchServer.replace(/\\\//g, '/');
+searchServer = searchServer.replace(/\\./g, '.');
 
 console.log('SEARCH_ENDPOINT', searchServer);
 console.log('SEARCH_CORE', searchCore);

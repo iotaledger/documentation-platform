@@ -1,5 +1,6 @@
 # dependencies
 node_modules
+.history
 
 # testing
 /coverage
@@ -24,13 +25,10 @@ node_modules
 /dist
 /src/config.dev.json
 /src/config.local.json
-/src/config.training.json
 /src/config.staging.json
 /src/config.prod.json
-/src/searchData
 /api/dist
 /api/src/data/config.local.json
-/api/src/data/config.training.json
 /api/src/data/config.dev.json
 /api/src/data/config.staging.json
 /api/src/data/config.prod.json
@@ -38,3 +36,4 @@ node_modules
 /projects.json
 /projects-summary.log
 /*.bat
+.vercel
