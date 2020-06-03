@@ -224,8 +224,8 @@ const searchCore = process.env.SEARCH_CORE || 'document-core-local';
 const searchAuth = process.env.SEARCH_AUTHORIZATION;
 const projectData = 'projects.json';
 
-searchServer = searchServer.replace(/\//g, '/');
-searchServer = searchServer.replace(/\./g, '.');
+searchServer = searchServer.replace(/\\\//g, '/');
+searchServer = searchServer.replace(/\\./g, '.');
 
 console.log('SEARCH_ENDPOINT', searchServer);
 console.log('SEARCH_CORE', searchCore);
