@@ -4,8 +4,11 @@ on:
   push:
     branches: [develop]
     paths:
-      - "client/**"
+      - "**"
       - ".github/workflows/client-staging.yaml"
+      - "!.github/workflows/api-staging.yaml"
+      - "!api/docs/**"
+    
 
 jobs:
   build:
