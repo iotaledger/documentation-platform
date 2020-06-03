@@ -1,0 +1,20 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "package.json",
+            "use": "@now/static-build"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "/$1"
+        },
+        {
+            "src": "/.*",
+            "status": 404,
+            "dest": "/404.html"
+        }
+    ]
+}
