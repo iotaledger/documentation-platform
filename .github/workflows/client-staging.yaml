@@ -30,12 +30,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
           repository: iotaledger/documentation
           ref: develop
           path: docs
-
-      - uses: actions/checkout@v2
       - name: Client Config
         run: |
           cd src
