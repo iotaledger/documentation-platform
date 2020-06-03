@@ -2,7 +2,7 @@ name: Client Build and Deploy Production
 
 on:
   push:
-    branches: [develop]
+    branches: [master]
     paths:
       - "**"
       - ".github/workflows/client-prod.yaml"
