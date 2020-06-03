@@ -1,49 +1,37 @@
 import { IFeedbackCreateRequest } from "../models/api/IFeedbackCreateRequest";
 import { IResponse } from "../models/api/IResponse";
-import { IConfiguration } from "../models/IConfiguration";
+import { IConfiguration } from "../models/configuration/IConfiguration";
 import { FeedbackService } from "../services/feedbackService";
 
 /**
  * Generate a feedback record from the request.
  */
 export async function feedbackCreate(config: IConfiguration, request: IFeedbackCreateRequest): Promise<IResponse> {
-    let response: IResponse;
+    if (!request.document) {
+        throw new Error("Parameter document is missing");
+    }
 
-    try {
-        if (!request.document) {
-            throw new Error("Parameter document is missing");
-        }
+    const feedbackService = new FeedbackService(config.dynamoDbConnection);
 
-        const feedbackService = new FeedbackService(config.dynamoDbConnection);
+    let documentFeedback = await feedbackService.get(request.document);
 
-        let documentFeedback = await feedbackService.get(request.document);
-
-        if (!documentFeedback) {
-            documentFeedback = {
-                document: request.document,
-                entries: []
-            };
-        }
-
-        documentFeedback.entries.push({
-            wasItUseful: request.wasItUseful,
-            comments: request.comments,
-            timestamp: Date.now()
-        });
-
-        await feedbackService.set(documentFeedback);
-
-        response = {
-            success: true,
-            message: "OK"
-        };
-
-    } catch (err) {
-        response = {
-            success: false,
-            message: err.toString()
+    if (!documentFeedback) {
+        documentFeedback = {
+            document: request.document,
+            entries: []
         };
     }
 
-    return response;
+    documentFeedback.entries.push({
+        wasItUseful: request.wasItUseful,
+        comments: request.comments,
+        timestamp: Date.now()
+    });
+
+    await feedbackService.set(documentFeedback);
+
+    return {
+        success: true,
+        message: "OK"
+    };
 }

@@ -301,7 +301,7 @@
         "no-reference": true,
         "no-unexternalized-strings": false,
         "object-literal-shorthand": false,
-        "prefer-type-cast": true,
+        "prefer-type-cast": false,
         "space-before-function-paren": false,
         "prefer-switch": false,
         "prefer-function-over-method": false,

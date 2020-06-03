@@ -30,4 +30,9 @@ export interface IConfiguration {
      * Configuration for search.
      */
     search: ISolrConfiguration;
+
+    /**
+     * A list of domains allowed to access the api.
+     */
+    allowedDomains: string[];
 }

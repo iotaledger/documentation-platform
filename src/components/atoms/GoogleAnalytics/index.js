@@ -7,7 +7,7 @@ class GoogleAnalytics extends React.PureComponent {
     };
 
     render() {
-        if (!this.props.id) {
+        if (!this.props.id || this.props.id.trim().length === 0) {
             return null;
         }
 
