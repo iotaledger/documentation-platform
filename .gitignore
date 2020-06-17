@@ -38,3 +38,4 @@ node_modules
 /*.bat
 .vercel
 dictionary.json
+artifacts
