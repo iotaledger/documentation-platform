@@ -3,6 +3,7 @@ import { ISearchRequest } from "../models/api/ISearchRequest";
 import { ISearchResponse } from "../models/api/ISearchResponse";
 import { ISearchResultItem } from "../models/api/ISearchResultItem";
 import { IConfiguration } from "../models/configuration/IConfiguration";
+import { SearchQueryService } from "../services/searchQueryService";
 
 /**
  * Search the documents.
@@ -13,10 +14,39 @@ import { IConfiguration } from "../models/configuration/IConfiguration";
 export async function search(config: IConfiguration, request: ISearchRequest): Promise<ISearchResponse> {
     const items: ISearchResultItem[] = [];
 
+    const q = (request.query || "").trim();
+
+    if (!q) {
+        return {
+            success: true,
+            message: "OK",
+            items: []
+        };
+    }
+
+    try {
+        const searchQueryService = new SearchQueryService(config.dynamoDbConnection);
+
+        let existing = await searchQueryService.get(q);
+
+        if (existing) {
+            existing.count++;
+        } else {
+            existing = {
+                query: q,
+                count: 1
+            };
+        }
+
+        await searchQueryService.set(existing);
+    } catch (err) {
+        console.error(err);
+    }
+
     let solrQuery = "q=";
 
-    let queries = [request.query];
-    const queryParts = request.query.split(" ");
+    let queries = [q];
+    const queryParts = q.split(" ");
     if (queryParts.length > 1) {
         queries = queries.concat(queryParts);
     }

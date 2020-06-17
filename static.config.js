@@ -54,7 +54,8 @@ export default {
         }
     ],
     plugins: [
-        'react-static-plugin-sitemap'
+        'react-static-plugin-sitemap',
+        'react-static-plugin-react-router'
     ],
     Document: class CustomHtml extends Component {
         render() {

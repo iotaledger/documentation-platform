@@ -26,8 +26,8 @@
         "classnames": "^2.2.6",
         "emoji-dictionary": "^1.0.9",
         "google-map-react": "^1.1.7",
-        "moment": "^2.26.0",
         "iota-css-theme": "github:iotaledger/iota-css-theme",
+        "moment": "^2.26.0",
         "nprogress": "^0.2.0",
         "parallax-js": "^3.1.0",
         "prismjs": "^1.20.0",
@@ -39,7 +39,7 @@
         "react-router-dom": "^5.2.0",
         "react-router-prop-types": "^1.0.4",
         "react-static": "^7.3.0",
-        "react-static-plugin-react-router": "^7.3.0",
+        "react-static-plugin-react-router": "^7.4.0",
         "react-style-proptype": "^3.2.2",
         "universal-cookie": "^4.0.3"
     },
