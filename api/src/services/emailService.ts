@@ -1,5 +1,5 @@
+import { IAWSConfiguration } from "../models/configuration/IAWSConfiguration";
 import { IEmail } from "../models/db/IEmail";
-import { IAWSConfiguration } from "../models/IAWSConfiguration";
 import { DbService } from "./dbService";
 
 /**

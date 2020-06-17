@@ -1,78 +1,45 @@
 import bodyParser from "body-parser";
-import express from "express";
-import { IConfiguration } from "./models/IConfiguration";
-import { emailCreate } from "./routes/emailCreate";
-import { feedbackCreate } from "./routes/feedbackCreate";
-import { init } from "./routes/init";
-import { missingCreate } from "./routes/missingCreate";
-import { search } from "./routes/search";
+import express, { Application } from "express";
+import { IConfiguration } from "./models/configuration/IConfiguration";
+import { routes } from "./routes";
+import { cors, executeRoute } from "./utils/apiHelper";
 
-// tslint:disable:no-var-requires no-require-imports
-const port = process.env.PORT || 4000;
+// tslint:disable:no-var-requires no-require-imports non-literal-require
 const configId = process.env.CONFIG_ID || "local";
-
-const packageJson = require("../package.json");
-// tslint:disable-next-line:non-literal-require
 const config: IConfiguration = require(`./data/config.${configId}.json`);
 
-const app = express();
+const app: Application = express();
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 
 app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", `*`);
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
-    res.setHeader("Access-Control-Allow-Headers", "content-type");
-
+    cors(
+        req,
+        res,
+        config.allowedDomains ? config.allowedDomains.join(",") : undefined,
+        "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+        "Content-Type, Authorization");
     next();
 });
 
-app.get("/", (req, res) => {
-    res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify({ version: packageJson.version }));
-    res.end();
-});
+for (const route of routes) {
+    app[route.method](route.path, async (req, res) => {
+        await executeRoute(
+            req,
+            res,
+            config,
+            route,
+            req.params);
+    });
+}
 
-app.get("/init", async (req, res) => {
-    const log = await init(config);
-    res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify({ log }));
-    res.end();
-});
-
-app.post("/email", async (req, res) => {
-    const response = await emailCreate(config, req.body);
-    res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify(response));
-    res.end();
-});
-
-app.post("/feedback", async (req, res) => {
-    const response = await feedbackCreate(config, req.body);
-    res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify(response));
-    res.end();
-});
-
-app.post("/missing", async (req, res) => {
-    const response = await missingCreate(config, req.body);
-    res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify(response));
-    res.end();
-});
-
-app.get("/search/", async (req, res) => {
-    const response = await search(config, { ...req.params, ...req.query });
-    res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify(response));
-    res.end();
-});
-
-app.listen(port, async err => {
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 4000;
+app.listen(port, err => {
     if (err) {
         throw err;
     }
 
-    console.log(`Started API Server on port ${port} v${packageJson.version}`);
-    console.log(`Config '${configId}'`);
+    console.log(`Started API Server on port ${port}`);
+    console.log(`Running Config '${configId}'`);
 });

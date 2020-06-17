@@ -1,7 +1,23 @@
 {
-    "version": 1,
-    "name": "iota-documentation",
-    "static": {
-        "trailingSlash": false
-    }
+    "version": 2,
+    "builds": [
+        {
+            "src": "package.json",
+            "use": "@now/static-build"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "/$1"
+        },
+        {
+            "handle": "filesystem"
+        },
+        {
+            "src": "/(.*)",
+            "status": 404,
+            "dest": "/404.html"
+        }
+    ]
 }

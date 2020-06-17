@@ -1,5 +1,5 @@
 import * as aws from "aws-sdk";
-import { IAWSConfiguration } from "../models/IAWSConfiguration";
+import { IAWSConfiguration } from "../models/configuration/IAWSConfiguration";
 
 /**
  * Class to helper with database.

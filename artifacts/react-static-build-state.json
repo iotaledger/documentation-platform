@@ -1,0 +1,55 @@
+{
+  "prefetchRate": 5,
+  "maxThreads": null,
+  "disableRoutePrefixing": false,
+  "outputFileRate": 100,
+  "extensions": [
+    ".js",
+    ".jsx"
+  ],
+  "minLoadTime": 200,
+  "disablePreload": false,
+  "disableRuntime": false,
+  "preloadPollInterval": 300,
+  "productionSourceMaps": false,
+  "silent": false,
+  "entry": "index.js",
+  "siteRoot": "http://localhost:3000",
+  "plugins": [
+    "react-static-plugin-sitemap",
+    "D:\\Workarea\\iota.org\\documentation-platform"
+  ],
+  "paths": {
+    "ROOT": "D:\\Workarea\\iota.org\\documentation-platform",
+    "SRC": "D:\\Workarea\\iota.org\\documentation-platform\\src",
+    "DIST": "D:\\Workarea\\iota.org\\documentation-platform\\dist",
+    "ASSETS": "D:\\Workarea\\iota.org\\documentation-platform\\dist",
+    "PLUGINS": "D:\\Workarea\\iota.org\\documentation-platform\\plugins",
+    "TEMP": "D:\\Workarea\\iota.org\\documentation-platform\\tmp",
+    "ARTIFACTS": "D:\\Workarea\\iota.org\\documentation-platform\\artifacts",
+    "PUBLIC": "D:\\Workarea\\iota.org\\documentation-platform\\public",
+    "NODE_MODULES": "D:\\Workarea\\iota.org\\documentation-platform\\node_modules",
+    "EXCLUDE_MODULES": "D:\\Workarea\\iota.org\\documentation-platform\\node_modules",
+    "PACKAGE": "D:\\Workarea\\iota.org\\documentation-platform\\package.json",
+    "HTML_TEMPLATE": "D:\\Workarea\\iota.org\\documentation-platform\\dist\\index.html",
+    "STATIC_DATA": "D:\\Workarea\\iota.org\\documentation-platform\\dist\\staticData"
+  },
+  "basePath": "",
+  "publicPath": "http://localhost:3000/",
+  "assetsPath": "",
+  "extractCssChunks": false,
+  "inlineCss": false,
+  "babelExcludes": [],
+  "devServer": {
+    "host": "localhost",
+    "port": 3000
+  },
+  "terser": {
+    "terserOptions": {
+      "mangle": {},
+      "parse": {},
+      "compress": {},
+      "output": {}
+    }
+  }
+}

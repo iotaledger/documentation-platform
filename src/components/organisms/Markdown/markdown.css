@@ -234,3 +234,11 @@ code, pre {
   padding-bottom: 10px;
   color: var(--jade);
 }
+
+.message-box {
+  overflow: hidden;
+}
+
+.message-box p {
+  display: inline;
+}

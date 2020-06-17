@@ -1,0 +1,56 @@
+name: Client Build and Deploy Production
+
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - "**"
+      - ".github/workflows/client-prod.yaml"
+      - "!.github/workflows/api-prod.yaml"
+      - "!api/docs/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      # Build specific env vars
+      CONFIG_ID: prod
+      CONFIG_SITE_ROOT: ${{ secrets.PROD_CONFIG_SITE_ROOT }}
+      CONFIG_API_ENDPOINT: ${{ secrets.PROD_CONFIG_API_ENDPOINT }}
+      CONFIG_HOTJAR_ID: ${{ secrets.PROD_CONFIG_CLIENT_HOTJAR_ID }}
+      CONFIG_GOOGLE_ANALYTICS_ID: ${{ secrets.PROD_CONFIG_CLIENT_GOOGLE_ANALYTICS_ID }}
+      CONFIG_SEARCH_ENDPOINT: ${{ secrets.PROD_CONFIG_SEARCH_ENDPOINT }}
+      CONFIG_SEARCH_CORE: ${{ secrets.PROD_CONFIG_SEARCH_CORE }}
+      CONFIG_SEARCH_AUTHORIZATION: ${{ secrets.PROD_CONFIG_SEARCH_AUTHORIZATION }}
+      VERCEL_DOMAIN: ${{ secrets.VERCEL_CLIENT_PROD_DOMAIN }}
+
+      # Global Vercel env vars
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_CLIENT_PROJECT_ID }}
+      VERCEL_PROJECT_NAME: ${{ secrets.VERCEL_CLIENT_PROJECT_NAME }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+        with:
+          repository: iotaledger/documentation
+          ref: master
+          path: docs
+      - name: Client Config
+        run: |
+          cd src
+          mv config.template.json config.$CONFIG_ID.json
+          sed -i 's/SITE-ROOT/${{ env.CONFIG_SITE_ROOT }}/g' config.$CONFIG_ID.json
+          sed -i 's/API-ENDPOINT/${{ env.CONFIG_API_ENDPOINT }}/g' config.$CONFIG_ID.json
+          sed -i 's/HOTJAR-ID/${{ env.CONFIG_CLIENT_HOTJAR_ID }}/g' config.$CONFIG_ID.json
+          sed -i 's/GOOGLE-ANALYTICS-ID/${{ env.CONFIG_GOOGLE_ANALYTICS_ID }}/g' config.$CONFIG_ID.json
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12"
+      - name: Client Deploy
+        run: |
+          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_SCOPE }} --force -m githubCommitSha=${{ github.sha }} --build-env CONFIG_ID=$CONFIG_ID --build-env SEARCH_ENDPOINT=$CONFIG_SEARCH_ENDPOINT --build-env SEARCH_CORE=$CONFIG_SEARCH_CORE --build-env SEARCH_AUTHORIZATION=$CONFIG_SEARCH_AUTHORIZATION
+          VERCEL_DEPLOYMENT_URL=$(npx vercel ls --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_SCOPE }} -m githubCommitSha=${{ github.sha }} | grep $VERCEL_PROJECT_NAME | awk {'print $2'})
+          npx vercel alias --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_SCOPE }} $VERCEL_DEPLOYMENT_URL $VERCEL_DOMAIN

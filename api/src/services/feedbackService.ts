@@ -1,5 +1,5 @@
+import { IAWSConfiguration } from "../models/configuration/IAWSConfiguration";
 import { IFeedback } from "../models/db/IFeedback";
-import { IAWSConfiguration } from "../models/IAWSConfiguration";
 import { DbService } from "./dbService";
 
 /**

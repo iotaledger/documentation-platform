@@ -1,4 +1,15 @@
 {
-    "version": 1,
-    "name": "iota-documentation-api"
+    "version": 2,
+    "builds": [
+        {
+            "src": "src/api/handler.ts",
+            "use": "@now/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "(.*)",
+            "dest": "/src/api/handler.ts"
+        }
+    ]
 }

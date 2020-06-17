@@ -24,6 +24,7 @@ if (checkSpelling) {
 }
 
 let dictionary = {};
+let dictionaryPre = [];
 
 let errorCount = 0;
 let warningCount = 0;
@@ -274,7 +275,7 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
             const reTags = /> search-tags: (.*)/gm;
             const matchTags = reTags.exec(doc);
 
-            if(matchTags && matchTags.length === 2) {
+            if (matchTags && matchTags.length === 2) {
                 tags = matchTags[1].split(',').map(t => t.trim());
             }
 
@@ -527,11 +528,12 @@ function isValidWord(projectFolder, word) {
 
 async function spellCheck(projectFolder, markdown, docPath) {
     if (checkSpelling) {
-        let noCode = markdown.replace(/```[\s\S]*?```/g, '');
-        let noObjects = noCode.replace(/¬¬¬[\s\S]*?¬¬¬/g, '');
-        let noHtml = noObjects.replace(/<(?:.*?)>(.*?)<\/(?:.*?)>/g, ' $1 ');
+        let final = markdown;
+        for (const pre of dictionaryPre) {
+            final = final.replace(new RegExp(pre.from, 'gi'), pre.to);
+        }
 
-        const html = md({ html: true }).render(noHtml);
+        const html = md({ html: true }).render(final);
         const dom = cheerio.load(html);
         const plainText = dom.root().text().replace(/(:.*?:)/g, '');
 
@@ -763,6 +765,10 @@ function loadDictionary() {
                 for (let i = 0; i < dic[key].length; i++) {
                     dictionary[key].push(new RegExp(dic[key][i], 'i'));
                 }
+            }
+
+            if (dic.pre) {
+                dictionaryPre = dic.pre;
             }
         } catch (err) {
             console.error(chalk.red('ERROR: Failed loading dictionary.'));

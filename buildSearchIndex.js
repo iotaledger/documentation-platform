@@ -219,10 +219,13 @@ function findItem(elem, findType, minLength) {
 
 console.log(chalk.green.underline.bold('Build Search Index'));
 
-const searchServer = process.env.SEARCH_ENDPOINT || 'http://localhost:8983/';
+let searchServer = process.env.SEARCH_ENDPOINT || 'http://localhost:8983/';
 const searchCore = process.env.SEARCH_CORE || 'document-core-local';
 const searchAuth = process.env.SEARCH_AUTHORIZATION;
 const projectData = 'projects.json';
+
+searchServer = searchServer.replace(/\\\//g, '/');
+searchServer = searchServer.replace(/\\./g, '.');
 
 console.log('SEARCH_ENDPOINT', searchServer);
 console.log('SEARCH_CORE', searchCore);
@@ -239,5 +242,8 @@ indexDocs(searchServer, searchAuth, searchCore, projectData)
         console.error(chalk.red('\nPlease run the buildProjects script in the documentation repo to see if that can provide you with any more clues to the failure.'));
         console.error(chalk.red('*'.repeat(80)));
         console.error();
-        process.exit(1);
+        if (searchServer !== 'http://localhost:8983/') {
+            // Only fail the whole build on staging/prod
+            process.exit(1);
+        }
     });

@@ -540,7 +540,13 @@ class Markdown extends PureComponent {
                     output.push(this.inlineCodeBlock({ value: match[1] }, output.length));
                     content = content.substring(match.index + match[0].length);
                 } else {
-                    output.push((<span style={{ whiteSpace: 'pre-line' }} key={output.length}>{this.boldify(content)}</span>));
+                    output.push((<ReactMarkdown
+                        key={output.length}
+                        source={content.replace(/\n\n/g, '<br/><br/>')}
+                        skipHtml={false}
+                        escapeHtml={false}
+                    />));
+
                 }
             } while (match);
             return output;
@@ -631,11 +637,22 @@ class Markdown extends PureComponent {
         );
     }
 
+    inlineSpan(props, key) {
+        return (<span key={key}>{props.value || props.children}</span>);
+    }
+
+    inlineDiv(props, key) {
+        return (<div key={key}>{props.value || props.children}</div>);
+    }
+
     textRenderer(props) {
         return this.emojify(props.children);
     }
 
     emojify(item) {
+        if (!item) {
+            return null;
+        }
         return item.replace(/:\w+:/gi, name => emoji.getUnicode(name) || name);
     }
 
