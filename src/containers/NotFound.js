@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { Head, withRouteData, withRouter, withSiteData } from 'react-static';
+import { Head, withRouteData, withSiteData } from 'react-static';
 import ParallaxContainer from '../components/atoms/ParallaxContainer';
 import SideMenu from '../components/molecules/SideMenu';
 import StickyHeader from '../components/organisms/StickyHeader';
 import { submitMissing } from '../utils/api';
 import { localStorageGet } from '../utils/localStorage';
-import { ProjectsPropTypes, ViewDataPropTypes } from '../utils/propTypes.js';
+import ProjectsPropTypes from '../utils/projectsPropTypes';
+import ViewDataPropTypes from '../utils/viewDataPropTypes';
 import Container from './Container';
 import './notFound.css';
 

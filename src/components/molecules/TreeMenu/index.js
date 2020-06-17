@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { buildItemTree } from '../../../utils/projects';
-import { ContentMenuItemsPropTypes } from '../../../utils/propTypes';
+import ContentMenuItemsPropTypes from '../../../utils/contentMenuItemsPropTypes';
 import Link from '../../atoms/Link';
 
 class TreeMenu extends React.Component {

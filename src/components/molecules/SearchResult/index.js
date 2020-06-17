@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from 'react-static';
+import { Link } from 'react-router-dom';
 import { constructHighlights, constructSearchQuery } from '../../../utils/search';
 
 class SearchResult extends React.Component {
@@ -29,7 +29,7 @@ class SearchResult extends React.Component {
                 <div className="search-result__total">{`${this.props.foundResult.length} documents found for "${this.props.query}". ${res}`}</div>
                 {this.props.foundResult.slice(this.props.indexStart, this.props.indexEnd + 1).map(elm =>
                     (<section key={elm.id} className="search-result__item">
-                        <Link to={`/${elm.id}?${constructSearchQuery(this.props.query)}&${constructHighlights(elm.matches)}`} exact>
+                        <Link to={`/${elm.id}?${constructSearchQuery(this.props.query)}&${constructHighlights(elm.matches)}`}>
                             <div className="search-result-item__heading">{elm.title}</div>
                             <div className="search-result-item__link">{`/${elm.id}`}</div>
                         </Link>

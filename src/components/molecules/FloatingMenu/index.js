@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from 'react-static';
-import { ContentMenuItemsPropTypes } from '../../../utils/propTypes';
+import { Link } from 'react-router-dom';
+import ContentMenuItemsPropTypes from '../../../utils/contentMenuItemsPropTypes';
 
 class FloatingMenu extends React.Component {
     static propTypes = {
@@ -69,7 +69,7 @@ class FloatingMenu extends React.Component {
                                     'floating-menu__item--selected': this.props.highlightedItem === item.folder || this.state.activeTarget === item.name.toLowerCase().replace(/ /g, '_')
                                 })}
                     >
-                        <Link to={item.link} exact>
+                        <Link to={item.link}>
                             {item.name}
                         </Link>
                     </li>

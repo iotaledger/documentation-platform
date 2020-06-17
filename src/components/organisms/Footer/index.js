@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { createProjectLinks, parseProjectUrl } from '../../../utils/projects.js';
-import { FooterDataPropTypes, ProjectsPropTypes } from '../../../utils/propTypes.js';
+import FooterDataPropTypes from '../../../utils/footerDataPropTypes';
+import ProjectsPropTypes from '../../../utils/projectsPropTypes';
+import { createProjectLinks, parseProjectUrl } from '../../../utils/projects';
 import Heading from '../../atoms/Heading';
 import Link from '../../atoms/Link';
 import ScrollToTop from '../../atoms/ScrollToTop';

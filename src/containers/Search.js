@@ -1,17 +1,19 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { Head, withRouteData, withRouter, withSiteData } from 'react-static';
-import InputSearch from '../components//molecules/InputSearch';
+import { Head, withRouteData, withSiteData } from 'react-static';
 import BottomSticky from '../components/atoms/BottomSticky';
 import Feedback from '../components/molecules/Feedback';
+import InputSearch from '../components/molecules/InputSearch';
 import Pagination from '../components/molecules/Pagination';
 import SearchResult from '../components/molecules/SearchResult';
 import SideMenu from '../components/molecules/SideMenu';
 import StickyHeader from '../components/organisms/StickyHeader';
-import { submitFeedback, search as searchApi } from '../utils/api';
+import { search as searchApi, submitFeedback } from '../utils/api';
 import { localStorageSet } from '../utils/localStorage';
-import { ProjectsPropTypes, ViewDataPropTypes } from '../utils/propTypes.js';
+import ProjectsPropTypes from '../utils/projectsPropTypes';
+import ViewDataPropTypes from '../utils/viewDataPropTypes';
 import { constructSearchQuery, extractSearchQuery } from '../utils/search';
 import Container from './Container';
 
@@ -74,7 +76,7 @@ class Search extends React.Component {
             this.search();
         });
 
-        this.props.history.replace(`?${constructSearchQuery(query)}`);
+        this.props.history.push(`?${constructSearchQuery(query)}`);
     }
 
     handleKeyUp(e) {

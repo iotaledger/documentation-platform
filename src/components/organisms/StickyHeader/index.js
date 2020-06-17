@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { Link, withRouter } from 'react-static';
 import logo from '../../../assets/Logo.svg';
 import { performSearch } from '../../../utils/search';
 import InputSearch from '../../molecules/InputSearch';
-import { ViewDataPropTypes } from '../../../utils/propTypes';
+import ViewDataPropTypes from '../../../utils/viewDataPropTypes';
 
 class StickyHeader extends React.Component {
     static propTypes = {
@@ -61,7 +61,7 @@ class StickyHeader extends React.Component {
     render() {
         return (
             <header className={classNames('sticky-header', { 'sticky-header--expanded': this.state.inputExpanded })}>
-                <Link to="/" exact>
+                <Link to="/">
                     <img className="sticky-header__brand" src={logo} />
                 </Link>
                 <div className="sticky-header__control">
