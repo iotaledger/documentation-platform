@@ -242,5 +242,8 @@ indexDocs(searchServer, searchAuth, searchCore, projectData)
         console.error(chalk.red('\nPlease run the buildProjects script in the documentation repo to see if that can provide you with any more clues to the failure.'));
         console.error(chalk.red('*'.repeat(80)));
         console.error();
-        process.exit(1);
+        if (searchServer !== 'http://localhost:8983/') {
+            // Only fail the whole build on staging/prod
+            process.exit(1);
+        }
     });
