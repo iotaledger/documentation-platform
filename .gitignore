@@ -37,3 +37,5 @@ node_modules
 /projects-summary.log
 /*.bat
 .vercel
+dictionary.json
+artifacts

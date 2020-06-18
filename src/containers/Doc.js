@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { Head, withRouteData, withRouter, withSiteData } from 'react-static';
+import { Head, withRouteData, withSiteData } from 'react-static';
 import BottomSticky from '../components/atoms/BottomSticky';
 import DropSelector from '../components/atoms/DropSelector';
 import ScrollInContainer from '../components/atoms/ScrollInContainer';
@@ -17,7 +18,8 @@ import StickyHeader from '../components/organisms/StickyHeader';
 import { submitFeedback } from '../utils/api';
 import { localStorageSet } from '../utils/localStorage';
 import { createPageTableOfContents, createProjectLinks, getDocumentTagsAndDescription, getProjectTitle, getProjectVersionPagesUrl, getVersionsUrl, parseProjectUrl, replaceVersion } from '../utils/projects';
-import { ProjectsPropTypes, ViewDataPropTypes } from '../utils/propTypes.js';
+import ProjectsPropTypes from '../utils/projectsPropTypes';
+import ViewDataPropTypes from '../utils/viewDataPropTypes';
 import { extractHighlights, extractSearchQuery } from '../utils/search';
 import Container from './Container';
 

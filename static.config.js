@@ -18,13 +18,6 @@ if (homeData.cards) {
 const footerData = require('./docs/site-settings/footer.json');
 const viewData = require('./docs/site-settings/view.json');
 
-let staticHome;
-if (fs.existsSync('./docs/site-settings/home.html')) {
-    staticHome = fs.readFileSync('./docs/site-settings/home.html').toString();
-    staticHome = staticHome.replace(/(?:[\s\S]*)<body>([\s\S]*)<\/body>(?:[\s\S]*)/, '$1');
-    staticHome = staticHome.replace(/assets\//g, 'assets/docs/site-settings/');
-}
-
 export default {
     siteRoot: config.siteRoot,
     getSiteData: () => ({
@@ -32,17 +25,16 @@ export default {
         ...config,
         homeData,
         footerData,
-        viewData,
-        staticHome
+        viewData
     }),
     getRoutes: () => [
         {
             path: '/',
-            component: 'src/containers/Home'
+            template: 'src/containers/Home'
         },
         ...getDocPages().map(page => ({
             path: page.path,
-            component: 'src/containers/Doc',
+            template: 'src/containers/Doc',
             getData: async () => ({
                 markdown: processMarkdown(page.markdownSrc),
                 title: page.title
@@ -54,17 +46,30 @@ export default {
         })),
         {
             path: '/search',
-            component: 'src/containers/Search'
+            template: 'src/containers/Search'
         },
         {
-            is404: true,
             path: '/404',
-            component: 'src/containers/NotFound'
+            template: 'src/containers/NotFound'
         }
+    ],
+    plugins: [
+        'react-static-plugin-sitemap',
+        'react-static-plugin-react-router'
     ],
     Document: class CustomHtml extends Component {
         render() {
             const { Html, Head, Body, children } = this.props;
+            const searchScript = `{
+"@context": "https://schema.org",
+"@type": "WebSite",
+"url": "https://docs.iota.org/",
+"potentialAction": [{
+"@type": "SearchAction",
+"target": "https://docs.iota.org/search?q={search_term_string}",
+"query-input": "required name=search_term_string"
+}]
+}`;
 
             return (
                 <Html>
@@ -84,6 +89,9 @@ export default {
                         <meta name="msapplication-TileColor" content="#ffffff" />
                         <meta name="theme-color" content="#ffffff" />
                         <title>{viewData.siteName}</title>
+                        <script type="application/ld+json">
+                            {searchScript}
+                        </script>
                     </Head>
                     <Body>
                         {children}

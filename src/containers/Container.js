@@ -3,7 +3,8 @@ import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import Disclaimer from '../components/atoms/Disclaimer';
 import Footer from '../components/organisms/Footer';
-import { FooterDataPropTypes, ProjectsPropTypes } from '../utils/propTypes';
+import FooterDataPropTypes from '../utils/footerDataPropTypes';
+import ProjectsPropTypes from '../utils/projectsPropTypes';
 
 class Container extends React.PureComponent {
     static propTypes = {
