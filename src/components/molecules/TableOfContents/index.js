@@ -27,9 +27,11 @@ class TableOfContents extends React.PureComponent {
     componentDidMount() {
         this.handleScroll = this.handleScroll.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.handleHashChange = this.handleHashChange.bind(this);
 
         document.addEventListener('scroll', this.handleScroll);
         window.addEventListener('resize', this.handleScroll);
+        window.addEventListener('hashchange', this.handleHashChange, false);
     }
 
     componentDidUpdate(prevProps) {
@@ -73,7 +75,7 @@ class TableOfContents extends React.PureComponent {
                     if (defaultTarget) {
                         const elem = document.querySelector(defaultTarget);
                         if (elem) {
-                            scrollIntoView(elem);
+                            elem.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         }
                     }
                 }
@@ -84,6 +86,17 @@ class TableOfContents extends React.PureComponent {
     componentWillUnmount() {
         document.removeEventListener('scroll', this.handleScroll);
         window.removeEventListener('resize', this.handleScroll);
+        window.removeEventListener('hashchange', this.handleHashChange);
+    }
+
+    handleHashChange() {
+        let defaultTarget = this.props.history.location && this.props.history.location.hash;
+        if (defaultTarget) {
+            const elem = document.querySelector(defaultTarget);
+            if (elem) {
+                elem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
     }
 
     handleScroll() {
