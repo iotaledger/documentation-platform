@@ -93,35 +93,40 @@ export async function search(config: IConfiguration, request: ISearchRequest): P
         options.headers.Authorization = `Basic ${config.search.authorization}`;
     }
 
-    const res = await fetch(solrExec, options);
-    if (res.status === 200) {
-        const resData = await res.json();
-        if (resData.response && resData.response.docs) {
-            for (let i = 0; i < resData.response.docs.length; i++) {
-                const matches = [];
-                if (resData.highlighting && resData.highlighting[resData.response.docs[i].id]) {
-                    if (resData.highlighting[resData.response.docs[i].id].title) {
-                        extractMatches(resData.highlighting[resData.response.docs[i].id].title[0], matches);
+    try {
+        const res = await fetch(solrExec, options);
+        if (res.status === 200) {
+            const resData = await res.json();
+            if (resData.response && resData.response.docs) {
+                for (let i = 0; i < resData.response.docs.length; i++) {
+                    const matches = [];
+                    if (resData.highlighting && resData.highlighting[resData.response.docs[i].id]) {
+                        if (resData.highlighting[resData.response.docs[i].id].title) {
+                            extractMatches(resData.highlighting[resData.response.docs[i].id].title[0], matches);
+                        }
+                        if (resData.highlighting[resData.response.docs[i].id].body) {
+                            extractMatches(resData.highlighting[resData.response.docs[i].id].body[0], matches);
+                        }
                     }
-                    if (resData.highlighting[resData.response.docs[i].id].body) {
-                        extractMatches(resData.highlighting[resData.response.docs[i].id].body[0], matches);
+                    const searchResultItem: ISearchResultItem = {
+                        id: resData.response.docs[i].id,
+                        title: resData.response.docs[i].title[0],
+                        snippet: resData.response.docs[i].snippet[0],
+                        matches
+                    };
+                    // Boost overview pages to the start of the list if they contain the query
+                    if (searchResultItem.id.toLowerCase().indexOf(request.query.toLowerCase()) >= 0 &&
+                        searchResultItem.id.endsWith("overview")) {
+                        items.unshift(searchResultItem);
+                    } else {
+                        items.push(searchResultItem);
                     }
-                }
-                const searchResultItem: ISearchResultItem = {
-                    id: resData.response.docs[i].id,
-                    title: resData.response.docs[i].title[0],
-                    snippet: resData.response.docs[i].snippet[0],
-                    matches
-                };
-                // Boost overview pages to the start of the list if they contain the query
-                if (searchResultItem.id.toLowerCase().indexOf(request.query.toLowerCase()) >= 0 &&
-                    searchResultItem.id.endsWith("overview")) {
-                    items.unshift(searchResultItem);
-                } else {
-                    items.push(searchResultItem);
                 }
             }
         }
+    } catch (err) {
+        console.error("solr Query Failed", err);
+        throw new Error("Unable to query the search engine");
     }
 
     return {
