@@ -1,11 +1,11 @@
-import { IAWSConfiguration } from "../models/configuration/IAWSConfiguration";
+import { IAWSDynamoDbConfiguration } from "../models/configuration/IAWSDynamoDbConfiguration";
 import { IMissing } from "../models/db/IMissing";
-import { DbService } from "./dbService";
+import { AmazonDynamoDbService } from "./amazonDynamoDbService";
 
 /**
  * Service to handle the missing.
  */
-export class MissingService extends DbService<IMissing> {
+export class MissingService extends AmazonDynamoDbService<IMissing> {
     /**
      * The name of the database table.
      */
@@ -15,7 +15,7 @@ export class MissingService extends DbService<IMissing> {
      * Create a new instance of MissingService.
      * @param config The configuration for db connection.
      */
-    constructor(config: IAWSConfiguration) {
+    constructor(config: IAWSDynamoDbConfiguration) {
         super(config, MissingService.TABLE_NAME, "document");
     }
 }

@@ -1,11 +1,11 @@
-import { IAWSConfiguration } from "../models/configuration/IAWSConfiguration";
+import { IAWSDynamoDbConfiguration } from "../models/configuration/IAWSDynamoDbConfiguration";
 import { IEmail } from "../models/db/IEmail";
-import { DbService } from "./dbService";
+import { AmazonDynamoDbService } from "./amazonDynamoDbService";
 
 /**
  * Service to handle the emails.
  */
-export class EmailService extends DbService<IEmail> {
+export class EmailService extends AmazonDynamoDbService<IEmail> {
     /**
      * The name of the database table.
      */
@@ -15,7 +15,7 @@ export class EmailService extends DbService<IEmail> {
      * Create a new instance of EmailService.
      * @param config The configuration for db connection.
      */
-    constructor(config: IAWSConfiguration) {
+    constructor(config: IAWSDynamoDbConfiguration) {
         super(config, EmailService.TABLE_NAME, "email");
     }
 }

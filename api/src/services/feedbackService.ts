@@ -1,11 +1,11 @@
-import { IAWSConfiguration } from "../models/configuration/IAWSConfiguration";
+import { IAWSDynamoDbConfiguration } from "../models/configuration/IAWSDynamoDbConfiguration";
 import { IFeedback } from "../models/db/IFeedback";
-import { DbService } from "./dbService";
+import { AmazonDynamoDbService } from "./amazonDynamoDbService";
 
 /**
  * Service to handle the feedback.
  */
-export class FeedbackService extends DbService<IFeedback> {
+export class FeedbackService extends AmazonDynamoDbService<IFeedback> {
     /**
      * The name of the database table.
      */
@@ -15,7 +15,7 @@ export class FeedbackService extends DbService<IFeedback> {
      * Create a new instance of FeedbackService.
      * @param config The configuration for db connection.
      */
-    constructor(config: IAWSConfiguration) {
+    constructor(config: IAWSDynamoDbConfiguration) {
         super(config, FeedbackService.TABLE_NAME, "document");
     }
 }

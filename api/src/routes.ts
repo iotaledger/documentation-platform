@@ -16,7 +16,9 @@ export const routes: IRoute[] = [
     { path: "/init", method: "get", func: "init" },
     { path: "/email", method: "post", func: "emailCreate" },
     { path: "/feedback", method: "post", func: "feedbackCreate" },
+    { path: "/feedback", method: "get", func: "feedbackList", dataResponse: true },
     { path: "/missing", method: "post", func: "missingCreate" },
+    { path: "/missing", method: "get", func: "missingList", dataResponse: true },
     { path: "/search", method: "get", func: "search" }
 
 ];

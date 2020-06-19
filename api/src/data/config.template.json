@@ -10,6 +10,7 @@
         "core": "SEARCH-CORE",
         "authorization": "SEARCH-AUTHORIZATION"
     },
+    "adminKey": "ADMIN-KEY",
     "allowedDomains": [
         "ALLOWED-DOMAIN"
     ]

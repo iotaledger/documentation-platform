@@ -1,7 +1,7 @@
 /**
  * Definition of AWS configuration.
  */
-export interface IAWSConfiguration {
+export interface IAWSDynamoDbConfiguration {
     /**
      * The region for the AWS connection.
      */
