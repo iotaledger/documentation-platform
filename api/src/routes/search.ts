@@ -4,6 +4,7 @@ import { ISearchResponse } from "../models/api/ISearchResponse";
 import { ISearchResultItem } from "../models/api/ISearchResultItem";
 import { IConfiguration } from "../models/configuration/IConfiguration";
 import { SearchQueryService } from "../services/searchQueryService";
+import { ValidationHelper } from "../utils/validationHelper";
 
 /**
  * Search the documents.
@@ -12,6 +13,8 @@ import { SearchQueryService } from "../services/searchQueryService";
  * @returns The response.
  */
 export async function search(config: IConfiguration, request: ISearchRequest): Promise<ISearchResponse> {
+    ValidationHelper.string(request.query, "query");
+
     const items: ISearchResultItem[] = [];
 
     const q = (request.query || "").trim();

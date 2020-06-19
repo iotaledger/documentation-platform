@@ -1,11 +1,11 @@
-import { IAWSConfiguration } from "../models/configuration/IAWSConfiguration";
+import { IAWSDynamoDbConfiguration } from "../models/configuration/IAWSDynamoDbConfiguration";
 import { ISearchQuery } from "../models/db/ISearchQuery";
-import { DbService } from "./dbService";
+import { AmazonDynamoDbService } from "./amazonDynamoDbService";
 
 /**
  * Service to handle the queries.
  */
-export class SearchQueryService extends DbService<ISearchQuery> {
+export class SearchQueryService extends AmazonDynamoDbService<ISearchQuery> {
     /**
      * The name of the database table.
      */
@@ -15,7 +15,7 @@ export class SearchQueryService extends DbService<ISearchQuery> {
      * Create a new instance of SearchQueryService.
      * @param config The configuration for db connection.
      */
-    constructor(config: IAWSConfiguration) {
+    constructor(config: IAWSDynamoDbConfiguration) {
         super(config, SearchQueryService.TABLE_NAME, "query");
     }
 }

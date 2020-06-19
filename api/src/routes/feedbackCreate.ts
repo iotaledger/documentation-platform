@@ -2,14 +2,13 @@ import { IFeedbackCreateRequest } from "../models/api/IFeedbackCreateRequest";
 import { IResponse } from "../models/api/IResponse";
 import { IConfiguration } from "../models/configuration/IConfiguration";
 import { FeedbackService } from "../services/feedbackService";
+import { ValidationHelper } from "../utils/validationHelper";
 
 /**
  * Generate a feedback record from the request.
  */
 export async function feedbackCreate(config: IConfiguration, request: IFeedbackCreateRequest): Promise<IResponse> {
-    if (!request.document) {
-        throw new Error("Parameter document is missing");
-    }
+    ValidationHelper.string(request.document, "document");
 
     const feedbackService = new FeedbackService(config.dynamoDbConnection);
 

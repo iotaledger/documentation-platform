@@ -21,6 +21,7 @@ jobs:
       CONFIG_SEARCH_ENDPOINT: ${{ secrets.PROD_CONFIG_SEARCH_ENDPOINT }}
       CONFIG_SEARCH_CORE: ${{ secrets.PROD_CONFIG_SEARCH_CORE }}
       CONFIG_SEARCH_AUTHORIZATION: ${{ secrets.PROD_CONFIG_SEARCH_AUTHORIZATION }}
+      CONFIG_ADMIN_KEY: ${{ secrets.PROD_CONFIG_ADMIN_KEY }}
       CONFIG_ALLOWED_DOMAIN: ${{ secrets.PROD_CONFIG_ALLOWED_DOMAIN }}
       VERCEL_DOMAIN: ${{ secrets.VERCEL_API_PROD_DOMAIN }}
 
@@ -42,7 +43,8 @@ jobs:
           sed -i 's/SEARCH-ENDPOINT/${{ env.CONFIG_SEARCH_ENDPOINT }}/g' config.$CONFIG_ID.json
           sed -i 's/SEARCH-CORE/${{ env.CONFIG_SEARCH_CORE }}/g' config.$CONFIG_ID.json
           sed -i 's/SEARCH-AUTHORIZATION/${{ env.CONFIG_SEARCH_AUTHORIZATION }}/g' config.$CONFIG_ID.json
-            sed -i 's/ALLOWED-DOMAIN/${{ env.CONFIG_ALLOWED_DOMAIN }}/g' config.$CONFIG_ID.json
+          sed -i 's/ADMIN-KEY/${{ env.CONFIG_ADMIN_KEY }}/g' config.$CONFIG_ID.json
+          sed -i 's/ALLOWED-DOMAIN/${{ env.CONFIG_ALLOWED_DOMAIN }}/g' config.$CONFIG_ID.json
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:

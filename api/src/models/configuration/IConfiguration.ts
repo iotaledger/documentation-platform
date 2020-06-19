@@ -1,4 +1,4 @@
-import { IAWSConfiguration } from "./IAWSConfiguration";
+import { IAWSDynamoDbConfiguration } from "./IAWSDynamoDbConfiguration";
 import { ISolrConfiguration } from "./ISolrConfiguration";
 
 /**
@@ -8,7 +8,7 @@ export interface IConfiguration {
     /**
      * The dynamic db connection.
      */
-    dynamoDbConnection: IAWSConfiguration;
+    dynamoDbConnection: IAWSDynamoDbConfiguration;
 
     /**
      * The feeds configurations.
@@ -30,6 +30,11 @@ export interface IConfiguration {
      * Configuration for search.
      */
     search: ISolrConfiguration;
+
+    /**
+     * Key for admin routes.
+     */
+    adminKey: string;
 
     /**
      * A list of domains allowed to access the api.
