@@ -20,7 +20,7 @@ export async function searchQueryList(config: IConfiguration, request: ISearchQu
 
     items.sort((a, b) => b.count - a.count);
 
-    const head = `<html><head><title>Feedback</title><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous"></head><body>`;
+    const head = `<html><head><title>Search Queries</title><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous"></head><body>`;
     const body = `<div class="m-4"><table class="table table-striped"><thead><tr><th>Query</th><th>Count</th></tr></thead><tbody>`;
     let tc = "";
     for (const item of items) {
