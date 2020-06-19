@@ -1,7 +1,7 @@
 name: API Build and Deploy Production
 
 on:
-  pull_request:
+  push:
     branches: [master]
     paths:
       - "api/**"
