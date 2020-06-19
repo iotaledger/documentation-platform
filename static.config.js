@@ -61,14 +61,14 @@ export default {
         render() {
             const { Html, Head, Body, children } = this.props;
             const searchScript = `{
-"@context": "https://schema.org",
-"@type": "WebSite",
-"url": "https://docs.iota.org/",
-"potentialAction": [{
-"@type": "SearchAction",
-"target": "https://docs.iota.org/search?q={search_term_string}",
-"query-input": "required name=search_term_string"
-}]
+   "@context": "https://schema.org",
+   "@type": "WebSite",
+   "url": "${config.siteRoot}/",
+   "potentialAction": [{
+      "@type": "SearchAction",
+      "target": "${config.siteRoot}/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+   }]
 }`;
 
             return (
@@ -89,9 +89,10 @@ export default {
                         <meta name="msapplication-TileColor" content="#ffffff" />
                         <meta name="theme-color" content="#ffffff" />
                         <title>{viewData.siteName}</title>
-                        <script type="application/ld+json">
-                            {searchScript}
-                        </script>
+                        <script 
+                        type="application/ld+json"
+                        dangerouslySetInnerHTML={ { __html: searchScript}}
+                        />
                     </Head>
                     <Body>
                         {children}
