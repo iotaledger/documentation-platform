@@ -5,10 +5,10 @@ on:
     branches: [develop]
     paths:
       - "**"
-      - ".github/workflows/client-staging.yaml"
+      - "!.github/workflows/client-prod.yaml"
+      - "!.github/workflows/api-prod.yaml"
       - "!.github/workflows/api-staging.yaml"
-      - "!api/docs/**"
-    
+      - "!api/**"
 
 jobs:
   build:
