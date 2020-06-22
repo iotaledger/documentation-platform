@@ -16,16 +16,13 @@ if (homeData.cards) {
     }
 }
 
-const viewData = require('./docs/site-settings/view.json');
-
 export default {
     siteRoot: config.siteRoot,
     getSiteData: async () => ({
         projects,
         ...config,
         homeData,
-        foundationData: await (await fetch('https://webassets.iota.org/data/foundation.json')).json(),
-        viewData
+        foundationData: await (await fetch('https://webassets.iota.org/data/foundation.json')).json()
     }),
     getRoutes: () => [
         {
@@ -84,11 +81,11 @@ export default {
                         <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
                         <link rel="shortcut icon" href="/favicon/favicon.ico" />
                         <link rel="manifest" href="/favicon/site.webmanifest" />
-                        <meta name="apple-mobile-web-app-title" content={viewData.siteName} />
-                        <meta name="application-name" content={viewData.siteName} />
+                        <meta name="apple-mobile-web-app-title" content="IOTA Documentation" />
+                        <meta name="application-name" content="IOTA Documentation" />
                         <meta name="msapplication-TileColor" content="#ffffff" />
                         <meta name="theme-color" content="#ffffff" />
-                        <title>{viewData.siteName}</title>
+                        <title>IOTA Documentation</title>
                         <script 
                         type="application/ld+json"
                         dangerouslySetInnerHTML={ { __html: searchScript}}

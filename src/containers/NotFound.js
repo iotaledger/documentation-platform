@@ -9,13 +9,11 @@ import StickyHeader from '../components/organisms/StickyHeader';
 import { submitMissing } from '../utils/api';
 import { localStorageGet } from '../utils/localStorage';
 import ProjectsPropTypes from '../utils/projectsPropTypes';
-import ViewDataPropTypes from '../utils/viewDataPropTypes';
 import Container from './Container';
 import './notFound.css';
 
 class NotFound extends React.PureComponent {
     static propTypes = {
-        viewData: ViewDataPropTypes.isRequired,
         apiEndpoint: PropTypes.string.isRequired,
         projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
@@ -49,12 +47,11 @@ class NotFound extends React.PureComponent {
         return (
             <Container {...this.props}>
                 <Head>
-                    <title>Not Found | {this.props.viewData.siteName}</title>
+                    <title>Not Found | IOTA Documentation</title>
                 </Head>
                 <StickyHeader
                     history={this.props.history}
                     onBurgerClick={this.handleBurgerClick}
-                    viewData={this.props.viewData}
                 />
                 <SideMenu
                     isMenuOpen={this.state.isMenuOpen}

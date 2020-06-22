@@ -19,14 +19,12 @@ import { submitFeedback } from '../utils/api';
 import { localStorageSet } from '../utils/localStorage';
 import { createPageTableOfContents, createProjectLinks, getDocumentTagsAndDescription, getProjectTitle, getProjectVersionPagesUrl, getVersionsUrl, parseProjectUrl, replaceVersion } from '../utils/projects';
 import ProjectsPropTypes from '../utils/projectsPropTypes';
-import ViewDataPropTypes from '../utils/viewDataPropTypes';
 import { extractHighlights, extractSearchQuery } from '../utils/search';
 import Container from './Container';
 
 class Doc extends React.Component {
     static propTypes = {
         title: PropTypes.string.isRequired,
-        viewData: ViewDataPropTypes.isRequired,
         apiEndpoint: PropTypes.string.isRequired,
         googleMapsKey: PropTypes.string.isRequired,
         markdown: PropTypes.string.isRequired,
@@ -116,7 +114,7 @@ class Doc extends React.Component {
         return (
             <Container {...this.props}>
                 <Head>
-                    <title>{`${this.props.title} | ${this.props.viewData.siteName}`}</title>
+                    <title>{this.props.title} | IOTA Documentation</title>
                     {this.state.tags && (
                         <meta name="keywords" content={this.state.tags.join(',')} />
                     )}
@@ -127,7 +125,6 @@ class Doc extends React.Component {
                 <StickyHeader
                     history={this.props.history}
                     onBurgerClick={this.handleBurgerClick}
-                    viewData={this.props.viewData}
                 />
                 <SideMenu
                     isMenuOpen={this.state.isMenuOpen}
@@ -173,13 +170,11 @@ class Doc extends React.Component {
                             <TableOfContents items={this.state.pageTableOfContents} title="Sections On This Page" history={this.props.history} />
                         </ScrollInContainer>
                     </section>
-                    {this.props.viewData.enableFeedback && (
-                        <BottomSticky zIndex={10} horizontalAlign='right'>
-                            <div className="tablet-down-hidden">
-                                <Feedback onSubmit={(data) => submitFeedback(this.props.apiEndpoint, this.props.location.pathname, data)} />
-                            </div>
-                        </BottomSticky>
-                    )}
+                    <BottomSticky zIndex={10} horizontalAlign='right'>
+                        <div className="tablet-down-hidden">
+                            <Feedback onSubmit={(data) => submitFeedback(this.props.apiEndpoint, this.props.location.pathname, data)} />
+                        </div>
+                    </BottomSticky>
                 </div>
                 <Navigator
                     projects={this.props.projects}

@@ -28,7 +28,6 @@
         "google-map-react": "^1.1.7",
         "iota-css-theme": "github:iotaledger/iota-css-theme",
         "moment": "^2.27.0",
-        "nprogress": "^0.2.0",
         "parallax-js": "^3.1.0",
         "prismjs": "^1.20.0",
         "react": "^16.13.1",
