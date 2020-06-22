@@ -17,14 +17,12 @@ import HomeDataPropTypes from '../utils/homeDataPropTypes';
 import { localStorageSet } from '../utils/localStorage';
 import { createProjectLinks, createProjectTopics } from '../utils/projects';
 import ProjectsPropTypes from '../utils/projectsPropTypes';
-import ViewDataPropTypes from '../utils/viewDataPropTypes';
 import Container from './Container';
 
 class Home extends React.Component {
     static propTypes = {
         apiEndpoint: PropTypes.string.isRequired,
         homeData: HomeDataPropTypes.isRequired,
-        viewData: ViewDataPropTypes.isRequired,
         hideSignup: PropTypes.bool,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location,
@@ -66,15 +64,14 @@ class Home extends React.Component {
         return (
             <Container {...this.props}>
                 <Head>
-                    <title>Home | {this.props.viewData.siteName}</title>
+                    <title>Home | IOTA Documentation</title>
                 </Head>
                 <Header
                     history={this.props.history}
-                    headerTitle={this.props.homeData.headerTitle}
+                    headerTitle="Developer Documentation"
                     topTitles={this.props.homeData.headerTopLinks}
                     popularTopics={this.props.homeData.popularTopics}
                     onBurgerClick={this.handleBurgerClick}
-                    viewData={this.props.viewData}
                 />
                 <SideMenu
                     isMenuOpen={this.state.isMenuOpen}
@@ -96,17 +93,13 @@ class Home extends React.Component {
                             <ProjectTopicsContainer content={createProjectTopics(this.props.projects)} />
                         </article>
                     </div>
-                    {this.props.viewData.enableFeedback && (
-                        <BottomSticky zIndex={10} horizontalAlign='right'>
-                            <div className="tablet-down-hidden">
-                                <Feedback onSubmit={(data) => submitFeedback(this.props.apiEndpoint, '/home/', data)} />
-                            </div>
-                        </BottomSticky>
-                    )}
+                    <BottomSticky zIndex={10} horizontalAlign='right'>
+                        <div className="tablet-down-hidden">
+                            <Feedback onSubmit={(data) => submitFeedback(this.props.apiEndpoint, '/home/', data)} />
+                        </div>
+                    </BottomSticky>
                 </div>
-                {this.props.viewData.enableSignup && (
-                    <EmailSignup apiEndpoint={this.props.apiEndpoint} />
-                )}
+                <EmailSignup apiEndpoint={this.props.apiEndpoint} />
             </Container>
         );
     }

@@ -13,13 +13,11 @@ import StickyHeader from '../components/organisms/StickyHeader';
 import { search as searchApi, submitFeedback } from '../utils/api';
 import { localStorageSet } from '../utils/localStorage';
 import ProjectsPropTypes from '../utils/projectsPropTypes';
-import ViewDataPropTypes from '../utils/viewDataPropTypes';
 import { constructSearchQuery, extractSearchQuery } from '../utils/search';
 import Container from './Container';
 
 class Search extends React.Component {
     static propTypes = {
-        viewData: ViewDataPropTypes.isRequired,
         apiEndpoint: PropTypes.string.isRequired,
         projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
@@ -114,13 +112,12 @@ class Search extends React.Component {
         return (
             <Container {...this.props}>
                 <Head>
-                    <title>Search Results | {this.props.viewData.siteName}</title>
+                    <title>Search Results | IOTA Documentation</title>
                 </Head>
                 <div id="search-top" />
                 <StickyHeader
                     history={this.props.history}
                     onBurgerClick={this.handleBurgerClick}
-                    viewData={this.props.viewData}
                 />
                 <SideMenu
                     isMenuOpen={this.state.isMenuOpen}
@@ -165,13 +162,11 @@ class Search extends React.Component {
                             </React.Fragment>
                         )}
                     </div>
-                    {this.props.viewData.enableFeedback && (
-                        <BottomSticky zIndex={10} horizontalAlign='right'>
-                            <div className="tablet-down-hidden">
-                                <Feedback onSubmit={(data) => submitFeedback(this.props.apiEndpoint, this.props.location.pathname, data)} />
-                            </div>
-                        </BottomSticky>
-                    )}
+                    <BottomSticky zIndex={10} horizontalAlign='right'>
+                        <div className="tablet-down-hidden">
+                            <Feedback onSubmit={(data) => submitFeedback(this.props.apiEndpoint, this.props.location.pathname, data)} />
+                        </div>
+                    </BottomSticky>
                 </div>
             </Container>
         );

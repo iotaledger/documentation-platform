@@ -6,13 +6,11 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import logo from '../../../assets/Logo.svg';
 import { performSearch } from '../../../utils/search';
 import InputSearch from '../../molecules/InputSearch';
-import ViewDataPropTypes from '../../../utils/viewDataPropTypes';
 
 class StickyHeader extends React.Component {
     static propTypes = {
         onBurgerClick: PropTypes.func,
-        history: ReactRouterPropTypes.history,
-        viewData: ViewDataPropTypes.isRequired
+        history: ReactRouterPropTypes.history
     };
 
     constructor(props) {
@@ -65,26 +63,24 @@ class StickyHeader extends React.Component {
                     <img className="sticky-header__brand" src={logo} />
                 </Link>
                 <div className="sticky-header__control">
-                    {!this.props.viewData.disableSearch && (
-                        <div
-                            onClick={this.inputExpandHandler}
-                            className={classNames('input-sticky-wrapper', {
-                                'input-sticky-wrapper--expanded': this.state.inputExpanded
-                            })}
-                        >
-                            <InputSearch
-                                ref={(input) => { this.searchInput = input; }}
-                                className="input-search-sticky"
-                                placeholder="Search for topics"
-                                onKeyUp={this.handleKeyUp}
-                                onSearch={this.onSearch}
-                            />
-                            <button
-                                className="sticky-header__icon-close"
-                                onClick={this.handleCloseClick}
-                            />
-                        </div>
-                    )}
+                    <div
+                        onClick={this.inputExpandHandler}
+                        className={classNames('input-sticky-wrapper', {
+                            'input-sticky-wrapper--expanded': this.state.inputExpanded
+                        })}
+                    >
+                        <InputSearch
+                            ref={(input) => { this.searchInput = input; }}
+                            className="input-search-sticky"
+                            placeholder="Search for topics"
+                            onKeyUp={this.handleKeyUp}
+                            onSearch={this.onSearch}
+                        />
+                        <button
+                            className="sticky-header__icon-close"
+                            onClick={this.handleCloseClick}
+                        />
+                    </div>
                     <button
                         className="sticky-header__icon-burger"
                         onClick={this.handleBurgerClick}
