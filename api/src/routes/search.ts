@@ -17,7 +17,7 @@ export async function search(config: IConfiguration, request: ISearchRequest): P
 
     const items: ISearchResultItem[] = [];
 
-    const q = (request.query || "").trim();
+    const q = ValidationHelper.stripHtml(request.query || "").trim();
 
     if (!q) {
         return {

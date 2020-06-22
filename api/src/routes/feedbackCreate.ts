@@ -12,18 +12,20 @@ export async function feedbackCreate(config: IConfiguration, request: IFeedbackC
 
     const feedbackService = new FeedbackService(config.dynamoDbConnection);
 
-    let documentFeedback = await feedbackService.get(request.document);
+    const docName = ValidationHelper.stripHtml(request.document);
+
+    let documentFeedback = await feedbackService.get(docName);
 
     if (!documentFeedback) {
         documentFeedback = {
-            document: request.document,
+            document: docName,
             entries: []
         };
     }
 
     documentFeedback.entries.push({
         wasItUseful: request.wasItUseful,
-        comments: request.comments,
+        comments: ValidationHelper.stripHtml(request.comments.substr(4096)),
         timestamp: Date.now()
     });
 

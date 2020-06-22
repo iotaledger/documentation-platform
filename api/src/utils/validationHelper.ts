@@ -47,4 +47,13 @@ export class ValidationHelper {
             throw new Error(`The parameter '${name}' has an invalid value.`);
         }
     }
+
+    /**
+     * Strip any HTML entities from the content.
+     * @param content The content to process.
+     * @returns The content with html entities removed.
+     */
+    public static stripHtml(content: string): string {
+        return content ? content.replace(/<[^>]*>/g, "") : content;
+    }
 }
