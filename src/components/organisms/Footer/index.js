@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import FooterDataPropTypes from '../../../utils/footerDataPropTypes';
-import ProjectsPropTypes from '../../../utils/projectsPropTypes';
+import { FoundationDataHelper } from '../../../utils/foundationDataHelper';
+import FoundationDataPropTypes from '../../../utils/foundationDataPropTypes';
 import { createProjectLinks, parseProjectUrl } from '../../../utils/projects';
+import ProjectsPropTypes from '../../../utils/projectsPropTypes';
 import Heading from '../../atoms/Heading';
 import Link from '../../atoms/Link';
 import ScrollToTop from '../../atoms/ScrollToTop';
@@ -10,7 +11,7 @@ import Text from '../../atoms/Text';
 
 class Footer extends React.Component {
     static propTypes = {
-        footerData: FooterDataPropTypes,
+        foundationData: FoundationDataPropTypes,
         projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location
@@ -23,16 +24,23 @@ class Footer extends React.Component {
 
         const projectLinks = createProjectLinks(this.props.projects);
 
-        let dynamicSections = [ {
-            heading: props.footerData.footerDocsSectionTitle,
+        let dynamicSections = [{
+            heading: 'Developer Docs',
             links: projectLinks
-        } ];
+        }];
 
         this.state = {
             projectLinks: createProjectLinks(this.props.projects),
             currentProjectFolder: projectParts.projectFolder,
-            footerSections: dynamicSections.concat(props.footerData.footerSections),
-            footerStaticContent: props.footerData.footerStaticContent
+            footerSections: dynamicSections.concat(
+                props.foundationData.footerSections.map(fs => ({
+                    heading: fs.label,
+                    links: fs.items.map(l => ({
+                        name: l.label,
+                        link: l.url
+                    }))
+                }))
+            )
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -44,7 +52,7 @@ class Footer extends React.Component {
         } else {
             this.props.history.push(this.state.projectLinks.find(pl => pl.folder === urlOrProjectFolder).link);
         }
-        this.setState({currentProject: urlOrProjectFolder});
+        this.setState({ currentProject: urlOrProjectFolder });
     }
 
     render() {
@@ -96,28 +104,19 @@ class Footer extends React.Component {
                     <div className="footer-bottom-content">
                         <section className="footer-bottom-content__wrapper">
                             {
-                                this.state.footerStaticContent.address.map(text =>
-                                    <Text key={text} className="footer-bottom-content__item" html>
+                                this.props.foundationData.registeredAddress.value.map((text, idx) =>
+                                    <Text key={idx} className="footer-bottom-content__item" isHtml={true}>
                                         {text}
                                     </Text>
                                 )
                             }
                         </section>
-                        <section className="footer-bottom-content__wrapper legal">
+                        <section className="footer-bottom-content__wrapper">
                             {
-                                this.state.footerStaticContent.legal.map(text =>
-                                    <Text key={text} className="footer-bottom-content__item" html>
-                                        {text}
-                                    </Text>
-                                )
-                            }
-                        </section>
-                        <section className="footer-bottom-content__wrapper copyright">
-                            {
-                                this.state.footerStaticContent.copyright.map(text =>
-                                    <Text key={text} className="footer-bottom-content__item" html>
-                                        {text}
-                                    </Text>
+                                this.props.foundationData.information.map((item, idx) =>
+                                    <span key={idx} className="text footer-bottom-content__item">
+                                        {FoundationDataHelper.createValue(item)}
+                                    </span>
                                 )
                             }
                         </section>
