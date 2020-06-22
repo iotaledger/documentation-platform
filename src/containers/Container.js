@@ -3,7 +3,7 @@ import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import Disclaimer from '../components/atoms/Disclaimer';
 import Footer from '../components/organisms/Footer';
-import FooterDataPropTypes from '../utils/footerDataPropTypes';
+import FoundationDataPropTypes from '../utils/foundationDataPropTypes';
 import ProjectsPropTypes from '../utils/projectsPropTypes';
 
 class Container extends React.PureComponent {
@@ -15,14 +15,18 @@ class Container extends React.PureComponent {
         projects: ProjectsPropTypes.isRequired,
         history: ReactRouterPropTypes.history,
         location: ReactRouterPropTypes.location,
-        footerData: FooterDataPropTypes.isRequired
+        foundationData: FoundationDataPropTypes.isRequired
     };
 
     render() {
         return (
             <React.Fragment>
                 {this.props.children}
-                <Footer projects={this.props.projects} history={this.props.history} location={this.props.location} footerData={this.props.footerData} />
+                <Footer
+                    projects={this.props.projects}
+                    history={this.props.history}
+                    location={this.props.location}
+                    foundationData={this.props.foundationData} />
                 <Disclaimer />
             </React.Fragment>);
     }

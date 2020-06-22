@@ -1,4 +1,5 @@
 import fs from 'fs';
+import fetch from 'node-fetch';
 import path from 'path';
 import React, { Component } from 'react';
 import projects from './projects.json';
@@ -15,16 +16,15 @@ if (homeData.cards) {
     }
 }
 
-const footerData = require('./docs/site-settings/footer.json');
 const viewData = require('./docs/site-settings/view.json');
 
 export default {
     siteRoot: config.siteRoot,
-    getSiteData: () => ({
+    getSiteData: async () => ({
         projects,
         ...config,
         homeData,
-        footerData,
+        foundationData: await (await fetch('https://webassets.iota.org/data/foundation.json')).json(),
         viewData
     }),
     getRoutes: () => [
