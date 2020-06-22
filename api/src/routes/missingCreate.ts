@@ -12,11 +12,13 @@ export async function missingCreate(config: IConfiguration, request: IMissingCre
 
     const missingService = new MissingService(config.dynamoDbConnection);
 
-    let documentMissing = await missingService.get(request.document);
+    const docName = ValidationHelper.stripHtml(request.document);
+
+    let documentMissing = await missingService.get(docName);
 
     if (!documentMissing) {
         documentMissing = {
-            document: request.document
+            document: docName
         };
     }
 
@@ -25,6 +27,8 @@ export async function missingCreate(config: IConfiguration, request: IMissingCre
     if (!request.fromDocument) {
         request.fromDocument = "Unknown source";
     }
+
+    request.fromDocument = ValidationHelper.stripHtml(request.fromDocument);
 
     const current = documentMissing.fromDocumentTime.find(f => f.document === request.fromDocument);
 

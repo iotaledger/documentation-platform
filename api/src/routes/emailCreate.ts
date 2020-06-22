@@ -13,7 +13,7 @@ export async function emailCreate(config: IConfiguration, request: IEmailCreateR
     const emailService = new EmailService(config.dynamoDbConnection);
 
     await emailService.set({
-        email: request.email,
+        email: ValidationHelper.stripHtml(request.email.substr(128)),
         timestamp: Date.now()
     });
 
