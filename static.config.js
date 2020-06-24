@@ -39,6 +39,7 @@ export default {
         })),
         ...getRootPages().map(page => ({
             path: `/${page.folder}`,
+            noindex: true,
             redirect: page.root
         })),
         {
