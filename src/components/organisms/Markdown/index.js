@@ -1,16 +1,11 @@
 import emoji from 'emoji-dictionary';
 import GoogleMapReact from 'google-map-react';
-import 'prismjs/themes/prism.css';
-import PropTypes from 'prop-types';
-import React, { PureComponent } from 'react';
-import ReactMarkdown from 'react-markdown';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import * as Prism from 'prismjs';
 import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-c';
 import 'prismjs/components/prism-cpp';
-import 'prismjs/components/prism-css';
 import 'prismjs/components/prism-csharp';
+import 'prismjs/components/prism-css';
 import 'prismjs/components/prism-docker';
 import 'prismjs/components/prism-elixir';
 import 'prismjs/components/prism-go';
@@ -20,14 +15,18 @@ import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-json';
 import 'prismjs/components/prism-jsx';
-import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-markdown';
 import 'prismjs/components/prism-objectivec';
-import 'prismjs/components/prism-sql';
 import 'prismjs/components/prism-powershell';
 import 'prismjs/components/prism-python';
 import 'prismjs/components/prism-rust';
+import 'prismjs/components/prism-sql';
 import 'prismjs/components/prism-yaml';
+import 'prismjs/themes/prism.css';
+import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
+import ReactMarkdown from 'react-markdown';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import logoSmall from '../../../assets/logo-small.svg';
 import { copyToClipboard } from '../../../utils/clipboard';
 import { sanitizeHashId } from '../../../utils/paths';
@@ -65,6 +64,7 @@ class Markdown extends PureComponent {
         this.cards = [];
         this.messageBoxes = [];
         this.objects = [];
+        this.sups = [];
 
         this.html = this.html.bind(this);
         this.heading = this.heading.bind(this);
@@ -137,6 +137,11 @@ class Markdown extends PureComponent {
         const cardMatches = this.findCards(content);
         for (let i = 0; i < cardMatches.length; i++) {
             content = content.replace(cardMatches[i], `<card index="${i}"></card>`);
+        }
+
+        const supMatches = this.findSups(content);
+        for (let i = 0; i < supMatches.length; i++) {
+            content = content.replace(supMatches[i], `<sups index="${i}"></sup>`);
         }
 
         const messageBoxMatches = this.findMessageBoxes(content);
@@ -360,6 +365,24 @@ class Markdown extends PureComponent {
         return matches;
     }
 
+    findSups(content) {
+        const matches = [];
+        const re = /<sup>(.*?)<\/sup>/gm;
+
+        let match;
+        do {
+            match = re.exec(content);
+            if (match && match.length === 2) {
+                this.sups.push({
+                    content: match[1]
+                });
+                matches.push(match[0]);
+            }
+        } while (match);
+
+        return matches;
+    }
+
     findObjects(content) {
         const matches = [];
         const re = /¬¬¬\s\[(.*?)\]\s([\s\S]*?)\s¬¬¬/gm;
@@ -463,6 +486,15 @@ class Markdown extends PureComponent {
                 const messageBox = this.messageBoxes[index];
                 return (<MessageBox type={messageBox.type} title={messageBox.title} content={this.linkify(messageBox.content)} />);
             }
+        } else if (props.value.startsWith('<sups')) {
+            const re = /<sups index="(.*)">/;
+            let match = re.exec(props.value);
+
+            if (match && match.length === 2) {
+                const index = parseInt(match[1], 10);
+                const sup = this.sups[index];
+                return (<sup>{sup.content}</sup>);
+            }
         } else if (props.value.startsWith('<a name')) {
             const re = /<a name="(.*)"/i;
             let match = re.exec(props.value);
@@ -545,6 +577,9 @@ class Markdown extends PureComponent {
                         source={content.replace(/\n\n/g, '<br/><br/>')}
                         skipHtml={false}
                         escapeHtml={false}
+                        renderers={{
+                            html: this.html
+                        }}
                     />));
 
                 }
