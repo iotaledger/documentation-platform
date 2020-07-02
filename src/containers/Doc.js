@@ -54,6 +54,7 @@ class Doc extends React.Component {
         this.changeVersion = this.changeVersion.bind(this);
         this.handleBurgerClick = this.handleBurgerClick.bind(this);
         this.handleContentChanged = this.handleContentChanged.bind(this);
+        this.buildContent = this.buildContent.bind(this);
     }
 
     changeVersion(newVersion) {
@@ -66,6 +67,16 @@ class Doc extends React.Component {
     }
 
     componentDidMount() {
+        this.buildContent();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.location.pathname !== this.props.location.pathname) {
+            this.buildContent();
+        }
+    }
+
+    buildContent() {
         const projectParts = parseProjectUrl(this.props.location.pathname);
 
         const tagsAndDescription = getDocumentTagsAndDescription(projectParts, this.props.projects);
