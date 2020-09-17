@@ -133,10 +133,10 @@ export async function search(config: IConfiguration, request: ISearchRequest): P
                     const bVersion = parseFloat(bParts.splice(2, 1)[0]);
 
                     if (aParts.join("/") === bParts.join("/")) {
-                        return aVersion > bVersion ? -1 : 1;
+                        return bVersion - aVersion;
                     }
 
-                    return -1;
+                    return 0;
                 });
             }
         }

@@ -22,7 +22,7 @@
         "deploy-dev": "now --npm"
     },
     "engines": {
-        "node": "10.x.x"
+        "node": "12.x.x"
     },
     "dependencies": {
         "aws-sdk": "^2.754.0",
