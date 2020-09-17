@@ -138,7 +138,7 @@ export async function search(config: IConfiguration, request: ISearchRequest): P
                         console.log(aParts.join("/"), bParts.join("/"));
 
                         console.log(aVersion, bVersion);
-                        return bVersion - aVersion;
+                        return aVersion - bVersion;
                     }
 
                     return 0;
