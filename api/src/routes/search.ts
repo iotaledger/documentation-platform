@@ -122,6 +122,22 @@ export async function search(config: IConfiguration, request: ISearchRequest): P
                         items.push(searchResultItem);
                     }
                 }
+
+                // Sort the results so that different versions of the same document always show
+                // the newest one first
+                items.sort((a, b) => {
+                    const aParts = a.id.split("/");
+                    const bParts = b.id.split("/");
+
+                    const aVersion = parseFloat(aParts.splice(2, 1)[0]);
+                    const bVersion = parseFloat(bParts.splice(2, 1)[0]);
+
+                    if (aParts.join("/") === bParts.join("/")) {
+                        return bVersion - aVersion;
+                    }
+
+                    return 0;
+                });
             }
         }
     } catch (err) {
