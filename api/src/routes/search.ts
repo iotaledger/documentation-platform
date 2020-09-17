@@ -123,28 +123,28 @@ export async function search(config: IConfiguration, request: ISearchRequest): P
                     }
                 }
 
-                items.forEach(i => console.log(i.id));
+                // items.forEach(i => console.log(i.id));
 
-                // Sort the results so that different versions of the same document always show
-                // the newest one first
-                items.sort((a, b) => {
-                    const aParts = a.id.split("/");
-                    const bParts = b.id.split("/");
+                // // Sort the results so that different versions of the same document always show
+                // // the newest one first
+                // items.sort((a, b) => {
+                //     const aParts = a.id.split("/");
+                //     const bParts = b.id.split("/");
 
-                    const aVersion = parseFloat(aParts.splice(2, 1)[0]);
-                    const bVersion = parseFloat(bParts.splice(2, 1)[0]);
+                //     const aVersion = parseFloat(aParts.splice(2, 1)[0]);
+                //     const bVersion = parseFloat(bParts.splice(2, 1)[0]);
 
-                    if (aParts.join("/") === bParts.join("/")) {
-                        console.log(aParts.join("/"), bParts.join("/"));
+                //     if (aParts.join("/") === bParts.join("/")) {
+                //         console.log(aParts.join("/"), bParts.join("/"));
 
-                        console.log(aVersion, bVersion);
-                        return aVersion - bVersion;
-                    }
+                //         console.log(aVersion, bVersion);
+                //         return aVersion - bVersion;
+                //     }
 
-                    return 0;
-                });
+                //     return 0;
+                // });
 
-                items.forEach(i => console.log(i.id));
+                // items.forEach(i => console.log(i.id));
             }
         }
     } catch (err) {
