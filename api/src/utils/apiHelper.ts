@@ -143,7 +143,7 @@ export async function executeRoute(
     }
 
     console.log(`<=== duration: ${Date.now() - start}ms`);
-    console.log(inspect(response, false, null, false));
+    // console.log(inspect(response, false, null, false));
 
     if (route.dataResponse && status === 200) {
         const dataResponse = response as IDataResponse;

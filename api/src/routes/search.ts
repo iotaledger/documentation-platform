@@ -123,6 +123,8 @@ export async function search(config: IConfiguration, request: ISearchRequest): P
                     }
                 }
 
+                items.forEach(i => console.log(i.id));
+
                 // Sort the results so that different versions of the same document always show
                 // the newest one first
                 items.sort((a, b) => {
@@ -133,11 +135,16 @@ export async function search(config: IConfiguration, request: ISearchRequest): P
                     const bVersion = parseFloat(bParts.splice(2, 1)[0]);
 
                     if (aParts.join("/") === bParts.join("/")) {
+                        console.log(aParts.join("/"), bParts.join("/"));
+
+                        console.log(aVersion, bVersion);
                         return bVersion - aVersion;
                     }
 
                     return 0;
                 });
+
+                items.forEach(i => console.log(i.id));
             }
         }
     } catch (err) {
