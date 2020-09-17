@@ -136,7 +136,7 @@ export async function search(config: IConfiguration, request: ISearchRequest): P
                         return aVersion > bVersion ? -1 : 1;
                     }
 
-                    return 0;
+                    return -1;
                 });
             }
         }
