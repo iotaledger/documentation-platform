@@ -132,10 +132,12 @@ export async function search(config: IConfiguration, request: ISearchRequest): P
                     const aVersion = parseFloat(aParts.splice(2, 1)[0]);
                     const bVersion = parseFloat(bParts.splice(2, 1)[0]);
 
+                    // If the id without the version section is the same, then do a comparison of versions
                     if (aParts.join("/") === bParts.join("/")) {
                         return bVersion - aVersion;
                     }
 
+                    // Otherwise just keep the original ordering
                     return 0;
                 });
             }
