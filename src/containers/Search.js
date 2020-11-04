@@ -88,7 +88,7 @@ class Search extends React.Component {
             this.setState({ searching: true }, () => {
                 searchApi(this.props.apiEndpoint, this.state.query)
                     .then((res) => {
-                        if (res.items && res.items.length > 0) {
+                        if (res && res.items && res.items.length > 0) {
                             this.setState({
                                 searching: false,
                                 foundResult: res.items,
