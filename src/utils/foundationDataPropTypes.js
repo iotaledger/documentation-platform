@@ -1,20 +1,22 @@
 import PropTypes from 'prop-types';
 
 const FoundationDataPropTypes = PropTypes.shape({
-    footerSections: PropTypes.shape({
-        label: PropTypes.string.isRequired,
-        items: PropTypes.arrayOf(
-            PropTypes.shape({
-                heading: PropTypes.string.isRequired,
-                links: PropTypes.arrayOf(
-                    PropTypes.shape({
-                        link: PropTypes.string.isRequired,
-                        name: PropTypes.string.isRequired
-                    })
-                ).isRequired
-            })
-        ).isRequired
-    }),
+    footerSections: PropTypes.arrayOf(
+        PropTypes.shape({
+            label: PropTypes.string.isRequired,
+            items: PropTypes.arrayOf(
+                PropTypes.shape({
+                    heading: PropTypes.string.isRequired,
+                    links: PropTypes.arrayOf(
+                        PropTypes.shape({
+                            link: PropTypes.string.isRequired,
+                            name: PropTypes.string.isRequired
+                        })
+                    ).isRequired
+                })
+            ).isRequired
+        })
+    ),
     registeredAddress: PropTypes.shape({
         label: PropTypes.string.isRequired,
         value: PropTypes.arrayOf(PropTypes.string).isRequired
