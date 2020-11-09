@@ -23,6 +23,7 @@ import 'prismjs/components/prism-rust';
 import 'prismjs/components/prism-sql';
 import 'prismjs/components/prism-yaml';
 import 'prismjs/themes/prism.css';
+import gfm from 'remark-gfm';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -65,6 +66,7 @@ class Markdown extends PureComponent {
         this.messageBoxes = [];
         this.objects = [];
         this.sups = [];
+        this.lists = [];
 
         this.html = this.html.bind(this);
         this.heading = this.heading.bind(this);
@@ -142,6 +144,11 @@ class Markdown extends PureComponent {
         const supMatches = this.findSups(content);
         for (let i = 0; i < supMatches.length; i++) {
             content = content.replace(supMatches[i], `<sups index="${i}"></sup>`);
+        }
+
+        const listMatches = this.findLists(content);
+        for (let i = 0; i < listMatches.length; i++) {
+            content = content.replace(listMatches[i], `<list index="${i}"></list>`);
         }
 
         const messageBoxMatches = this.findMessageBoxes(content);
@@ -383,6 +390,39 @@ class Markdown extends PureComponent {
         return matches;
     }
 
+    findLists(content) {
+        const matches = [];
+        const re = /<ul>(.*?)<\/ul>/gm;
+
+        let match;
+        do {
+            match = re.exec(content);
+            if (match && match.length === 2) {
+                this.lists.push({
+                    items: this.findListItems(match[1])
+                });
+                matches.push(match[0]);
+            }
+        } while (match);
+
+        return matches;
+    }
+
+    findListItems(content) {
+        const re = /<li>(.*?)<\/li>/gm;
+
+        let match;
+        let listItems = [];
+        do {
+            match = re.exec(content);
+            if (match && match.length === 2) {
+                listItems.push(match[1]);
+            }
+        } while (match);
+
+        return listItems;
+    }
+
     findObjects(content) {
         const matches = [];
         const re = /¬¬¬\s\[(.*?)\]\s([\s\S]*?)\s¬¬¬/gm;
@@ -412,6 +452,7 @@ class Markdown extends PureComponent {
                 const content = this.tabContainers[index].map((tc, idx) => (
                     <ReactMarkdown
                         key={idx}
+                        plugins={[gfm]}
                         source={tc.content}
                         renderers={{
                             text: this.textRenderer,
@@ -495,6 +536,15 @@ class Markdown extends PureComponent {
                 const sup = this.sups[index];
                 return (<sup>{sup.content}</sup>);
             }
+        } else if (props.value.startsWith('<list')) {
+            const re = /<list index="(.*)">/;
+            let match = re.exec(props.value);
+
+            if (match && match.length === 2) {
+                const index = parseInt(match[1], 10);
+                const list = this.lists[index];
+            return (<ul>{list.items.map((i, idx) => <li key={idx}>{i}</li>)}</ul>);
+            }
         } else if (props.value.startsWith('<a name')) {
             const re = /<a name="(.*)"/i;
             let match = re.exec(props.value);
@@ -575,6 +625,7 @@ class Markdown extends PureComponent {
                     output.push((<ReactMarkdown
                         key={output.length}
                         source={content.replace(/\n\n/g, '<br/><br/>')}
+                        plugins={[gfm]}
                         skipHtml={false}
                         escapeHtml={false}
                         renderers={{
@@ -778,6 +829,7 @@ class Markdown extends PureComponent {
             <div className="markdown__wrapper">
                 <ReactMarkdown
                     source={this.state.content}
+                    plugins={[gfm]}
                     renderers={{
                         text: this.textRenderer,
                         code: (props) => this.codeBlock(props, true),
