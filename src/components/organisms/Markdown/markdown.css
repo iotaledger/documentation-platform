@@ -139,6 +139,11 @@ code, pre {
   font-weight: 600;
 }
 
+.markdown__wrapper table tbody tr td span ul {
+  margin-top: 0;
+  padding-left: 16px;
+}
+
 .markdown__wrapper a {
   word-break: break-all;
   word-break: break-word;

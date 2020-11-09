@@ -40,6 +40,7 @@
         "react-static": "^7.4.2",
         "react-static-plugin-react-router": "^7.4.2",
         "react-style-proptype": "^3.2.2",
+        "remark-gfm": "^1.0.0",
         "universal-cookie": "^4.0.4"
     },
     "devDependencies": {
