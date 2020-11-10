@@ -6,13 +6,8 @@ const FoundationDataPropTypes = PropTypes.shape({
             label: PropTypes.string.isRequired,
             items: PropTypes.arrayOf(
                 PropTypes.shape({
-                    heading: PropTypes.string.isRequired,
-                    links: PropTypes.arrayOf(
-                        PropTypes.shape({
-                            link: PropTypes.string.isRequired,
-                            name: PropTypes.string.isRequired
-                        })
-                    ).isRequired
+                    label: PropTypes.string.isRequired,
+                    url: PropTypes.string.isRequired
                 })
             ).isRequired
         })
@@ -25,16 +20,18 @@ const FoundationDataPropTypes = PropTypes.shape({
         label: PropTypes.string.isRequired,
         value: PropTypes.arrayOf(PropTypes.string).isRequired
     }),
-    information: PropTypes.shape({
-        label: PropTypes.string.isRequired,
-        value: PropTypes.string,
-        urls: PropTypes.arrayOf(
-            PropTypes.shape({
-                label: PropTypes.string.isRequired,
-                url: PropTypes.string.isRequired
-            })
-        )
-    }),
+    information: PropTypes.arrayOf(
+        PropTypes.shape({
+            label: PropTypes.string.isRequired,
+            value: PropTypes.string,
+            urls: PropTypes.arrayOf(
+                PropTypes.shape({
+                    label: PropTypes.string.isRequired,
+                    url: PropTypes.string.isRequired
+                })
+            )
+        })
+    ),
 });
 
 export default FoundationDataPropTypes;
