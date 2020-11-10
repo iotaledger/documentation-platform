@@ -47,6 +47,7 @@ class Markdown extends PureComponent {
         highlights: PropTypes.arrayOf(PropTypes.string),
         apiEndpoint: PropTypes.string,
         googleMapsKey: PropTypes.string,
+        isDeprecated: PropTypes.bool,
         history: ReactRouterPropTypes.history,
         onContentChanged: PropTypes.func
     };
@@ -98,6 +99,16 @@ class Markdown extends PureComponent {
     }
 
     componentDidMount() {
+        this.buildContent();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.source !== prevProps.source || this.props.isDeprecated != prevProps.isDeprecated) {
+            this.buildContent();
+        }
+    }
+
+    buildContent() {
         this.highlights = [];
         this.headingCounters = {};
         if (this.props.highlights) {
@@ -113,6 +124,10 @@ class Markdown extends PureComponent {
 
         // Strip the h1 from the start of the content
         content = content.trim().replace(/(^# .*)/, '').trim();
+
+        if (this.props.isDeprecated) {
+            content = '> *This content is deprecated, please read more relevant content.*\n\n' + content;
+        }
 
         const markdownMatches = this.findMarkdownContainers(content);
         for (let i = 0; i < markdownMatches.length; i++) {
@@ -170,11 +185,6 @@ class Markdown extends PureComponent {
         this.setState({
             content
         });
-    }
-
-    componentDidUpdate() {
-        this.highlights = [];
-        this.headingCounters = {};
     }
 
     fixPrismSyntaxHighlighting(content) {

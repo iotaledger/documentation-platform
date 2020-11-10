@@ -216,13 +216,16 @@ export function getDocumentTagsAndDescription(projectUrlParts, projects) {
     const indexItem = getPage(projectVersionPages, projectUrlParts.projectFullURL);
     let tags;
     let description;
+    let status;
     if (indexItem) {
         tags = indexItem.tags;
         description = indexItem.description;
+        status = indexItem.status;
     }
     return {
         tags,
-        description
+        description,
+        status
     };
 }
 
