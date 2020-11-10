@@ -158,6 +158,7 @@ function processMarkdown(markdownSrc) {
     markdown = assetHtmlImage(markdown, markdownSrc);
     markdown = replaceRootUrls(markdown);
     markdown = removeSearchTags(markdown);
+    markdown = removeStatus(markdown);
     return markdown;
 }
 
@@ -167,6 +168,10 @@ function replaceRootUrls(markdown) {
 
 function removeSearchTags(markdown) {
     return markdown.replace(/> search-tags: (.*)/gm, '');
+}
+
+function removeStatus(markdown) {
+    return markdown.replace(/> status: (.*)/gm, '');
 }
 
 function assetHtmlImage(markdown, docPath) {

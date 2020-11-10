@@ -1,5 +1,7 @@
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
+import './index.css';
 
 class VersionPicker extends React.Component {
     static propTypes = {
@@ -18,7 +20,10 @@ class VersionPicker extends React.Component {
             <div className="version-picker">
                 <div className="left-column"></div>
                 <div className="middle-column">
-                    <div className="version-picker__current">{`${
+                    <div className={classNames(
+                        'version-picker__current',
+                        { 'version-picker__not-current': currentVersion !== versions[versions.length - 1] }
+                    )}>{`${
                         currentVersion === versions[versions.length - 1] ? 'You are viewing the latest version of this documentation' : 'There are newer versions of this documentation available'}`
                     }</div>
                 </div>

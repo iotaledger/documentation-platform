@@ -48,6 +48,7 @@ class Doc extends React.Component {
             pageTableOfContents: [],
             tags: [],
             description: '',
+            isDeprecated: false,
             isMenuOpen: false
         };
 
@@ -87,7 +88,8 @@ class Doc extends React.Component {
             projectVersionPages: getProjectVersionPagesUrl(projectParts, projectParts.projectVersion, this.props.projects),
             pageTableOfContents: createPageTableOfContents(projectParts, this.props.projects),
             tags: tagsAndDescription.tags,
-            description: tagsAndDescription.description
+            description: tagsAndDescription.description,
+            isDeprecated: tagsAndDescription.status && tagsAndDescription.status.indexOf('deprecated') >= 0
         });
 
         // We must store last path in here as when we create react-static
@@ -169,6 +171,7 @@ class Doc extends React.Component {
                         </div>
                         <Markdown
                             source={this.props.markdown}
+                            isDeprecated={this.state.isDeprecated}
                             query={extractSearchQuery(this.props.location)}
                             highlights={extractHighlights(this.props.location)}
                             apiEndpoint={this.props.apiEndpoint}

@@ -27,7 +27,7 @@ async function indexDocs(searchServer, searchAuth, searchCore, projectDataFile) 
             for (let k = 0; k < version.pages.length; k++) {
                 if (!version.pages[k].link.startsWith('http')) {
                     console.log(chalk.cyan(`\t\tAdding '${version.pages[k].name}' in file '${version.pages[k].link}.md'`));
-                    await addFileToCorpus(path.join(__dirname, `${version.pages[k].link}.md`), version.pages[k].toc, version.pages[k].tags, corpus);
+                    await addFileToCorpus(path.join(__dirname, `${version.pages[k].link}.md`), version.pages[k].toc, version.pages[k].tags, version.pages[k].status, corpus);
                 }
             }
         }
@@ -90,6 +90,7 @@ async function populateSolr(searchServer, searchAuth, searchCore, corpus) {
         const bodyOp = resData.fields && resData.fields.find(f => f.name === 'body') ? 'replace-field' : 'add-field';
         const snippetOp = resData.fields && resData.fields.find(f => f.name === 'snippet') ? 'replace-field' : 'add-field';
         const tagsOp = resData.fields && resData.fields.find(f => f.name === 'tags') ? 'replace-field' : 'add-field';
+        const statusOp = resData.fields && resData.fields.find(f => f.name === 'status') ? 'replace-field' : 'add-field';
 
         console.log(`Solr: Update Schema ${searchCore}`);
 
@@ -120,6 +121,11 @@ async function populateSolr(searchServer, searchAuth, searchCore, corpus) {
             },
             "${tagsOp}" : {
                 "name": "tags",
+                "type": "text_general",
+                "stored": true
+            },
+            "${statusOp}" : {
+                "name": "status",
                 "type": "text_general",
                 "stored": true
             }
@@ -159,7 +165,7 @@ async function populateSolr(searchServer, searchAuth, searchCore, corpus) {
     }
 }
 
-async function addFileToCorpus(fileLocation, toc, tags, corpus) {
+async function addFileToCorpus(fileLocation, toc, tags, status, corpus) {
     try {
         const file = fs.readFileSync(fileLocation, 'utf8');
 
@@ -195,7 +201,8 @@ async function addFileToCorpus(fileLocation, toc, tags, corpus) {
             title: docTitle,
             snippet: docSnippet,
             body: resultStripped.toString(),
-            tags: (tags || []).join(', ')
+            tags: (tags || []).join(', '),
+            status
         });
     } catch (err) {
         throw new Error(`Failed processing '${fileLocation}'\n${err.message}`);

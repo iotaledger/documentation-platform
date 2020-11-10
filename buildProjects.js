@@ -190,12 +190,13 @@ async function buildSingleVersion(docsFolder, projectFolder, version) {
                         link: match[2]
                     });
                 } else {
-                    const { toc, assets, tags, description } = await extractTocAndValidateAssets(docsFolder, projectFolder, version, match[2], docIndexFile);
+                    const { toc, assets, tags, status, description } = await extractTocAndValidateAssets(docsFolder, projectFolder, version, match[2], docIndexFile);
                     versions.push({
                         name: match[1],
                         link: `/${docsFolder}/${projectFolder}/${version}/${sanitizeLink(match[2])}`,
                         toc,
                         tags,
+                        status,
                         description,
                         assets: assets.length > 0 ? assets : undefined
                     });
@@ -215,6 +216,7 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
     const toc = [];
     const assets = [];
     let tags;
+    let status;
     let description;
 
     const docName = webifyPath(path.join(`${docsFolder}/${projectFolder}/${version}/`, doc));
@@ -279,6 +281,13 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
                 tags = matchTags[1].split(',').map(t => t.trim());
             }
 
+            const reStatus = /> status: (.*)/gm;
+            const matchStatus = reStatus.exec(doc);
+
+            if (matchStatus && matchStatus.length === 2) {
+                status = matchStatus[1].split(',').map(t => t.trim());
+            }
+
             for (let i = 0; i < toc.length; i++) {
                 await reportEntry(`\t\t\t\t${toc[i].level}: ${toc[i].name}`);
             }
@@ -295,7 +304,7 @@ async function extractTocAndValidateAssets(docsFolder, projectFolder, version, d
         await reportError(`'${docIndexFile}' referenced '${docName}' but validating content failed see ${projectsFile} for more details`, err);
     }
 
-    return { toc, assets, tags, description };
+    return { toc, assets, tags, status, description };
 }
 
 function findItem(elem, findType, minLength) {

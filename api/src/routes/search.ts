@@ -58,7 +58,7 @@ export async function search(config: IConfiguration, request: ISearchRequest): P
     let boostMultiplier = 5;
     for (let i = 0; i < queries.length; i++) {
         const escapedQuery = `"${queries[i]}"`;
-        solrQuery += `tags:${escapedQuery}^${15 * boostMultiplier} `;  // Boost if exact match found in tags
+        solrQuery += `tags:${escapedQuery}^${100 * boostMultiplier} `;  // Boost if exact match found in tags
         solrQuery += `title:${escapedQuery}^${10 * boostMultiplier} `; // Boost if exact match found in title
         solrQuery += `id:${escapedQuery}^${10 * boostMultiplier} `;    // Boost if exact match found in id
         solrQuery += `body:${escapedQuery}^${5 * boostMultiplier} `;   // Boost if exact match found in body
@@ -108,18 +108,20 @@ export async function search(config: IConfiguration, request: ISearchRequest): P
                             extractMatches(resData.highlighting[resData.response.docs[i].id].body[0], matches);
                         }
                     }
-                    const searchResultItem: ISearchResultItem = {
-                        id: resData.response.docs[i].id,
-                        title: resData.response.docs[i].title[0],
-                        snippet: resData.response.docs[i].snippet[0],
-                        matches
-                    };
-                    // Boost overview pages to the start of the list if they contain the query
-                    if (searchResultItem.id.toLowerCase().indexOf(request.query.toLowerCase()) >= 0 &&
-                        searchResultItem.id.endsWith("overview")) {
-                        items.unshift(searchResultItem);
-                    } else {
-                        items.push(searchResultItem);
+                    if (!resData.response.docs[i].status || resData.response.docs[i].status[0] !== "deprecated") {
+                        const searchResultItem: ISearchResultItem = {
+                            id: resData.response.docs[i].id,
+                            title: resData.response.docs[i].title[0],
+                            snippet: resData.response.docs[i].snippet[0],
+                            matches
+                        };
+                            // Boost overview pages to the start of the list if they contain the query
+                        if (searchResultItem.id.toLowerCase().indexOf(request.query.toLowerCase()) >= 0 &&
+                            searchResultItem.id.endsWith("overview")) {
+                            items.unshift(searchResultItem);
+                        } else {
+                            items.push(searchResultItem);
+                        }
                     }
                 }
 
