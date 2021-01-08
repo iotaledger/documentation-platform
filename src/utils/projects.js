@@ -176,7 +176,7 @@ export function lookupProject(projectUrlParts, projects) {
 
 export function getVersionsUrl(projectUrlParts, projects) {
     const project = lookupProject(projectUrlParts, projects);
-    return project && project.versions ? project.versions.map(pv => pv.version) : [];
+    return project && project.versions ? project.versions.map(pv => pv.version).reverse() : [];
 }
 
 export function getLatestVersion(project) {

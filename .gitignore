@@ -39,3 +39,4 @@ node_modules
 .vercel
 dictionary.json
 artifacts
+client
