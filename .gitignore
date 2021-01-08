@@ -2,40 +2,13 @@
 node_modules
 .history
 
-# testing
-/coverage
-
-# production
-/dist
-/tmp
-
 # misc
 .DS_Store
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-
-*.log*
-
-.editorconfig
-.prettierrc
-
-/docs*
-/dist
-/src/config.dev.json
-/src/config.local.json
-/src/config.staging.json
-/src/config.prod.json
-/api/dist
-/api/src/data/config.local.json
-/api/src/data/config.dev.json
-/api/src/data/config.staging.json
-/api/src/data/config.prod.json
-/public/assets/docs
-/projects.json
-/projects-summary.log
-/*.bat
-.vercel
-dictionary.json
-artifacts
+config.local.json
+config.dev.json
+config.prod.json
+config.staging.json
