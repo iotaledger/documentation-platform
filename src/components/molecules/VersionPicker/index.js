@@ -22,9 +22,9 @@ class VersionPicker extends React.Component {
                 <div className="middle-column">
                     <div className={classNames(
                         'version-picker__current',
-                        { 'version-picker__not-current': currentVersion !== versions[versions.length - 1] }
+                        { 'version-picker__not-current': currentVersion !== versions[0] }
                     )}>{`${
-                        currentVersion === versions[versions.length - 1] ? 'You are viewing the latest version of this documentation' : 'There are newer versions of this documentation available'}`
+                        currentVersion === versions[0] ? 'You are viewing the latest version of this documentation' : 'There are newer versions of this documentation available'}`
                     }</div>
                 </div>
                 <div className="right-column">
@@ -33,7 +33,7 @@ class VersionPicker extends React.Component {
                             className="version-picker__select"
                             value={currentVersion}
                             onChange={(e) => this.props.onChange(e.target.value)}>
-                            {versions.map((version, indx) => (<option key={indx} value={version} >Version {version}</option>))}
+                            {versions.reverse().map((version, indx) => (<option key={indx} value={version} >Version {version}</option>))}
                         </select>
                     </div>
                 </div>
