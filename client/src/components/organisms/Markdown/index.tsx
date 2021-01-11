@@ -186,10 +186,8 @@ class Markdown extends PureComponent<MarkdownProps, MarkdownState> {
         if (this.props.highlights) {
             this.highlights = this.highlights.concat(this.props.highlights);
         }
-        if (this.props.query) {
-            if (!this.highlights.includes(this.props.query)) {
-                this.highlights.push(this.props.query);
-            }
+        if (this.props.query && !this.highlights.includes(this.props.query)) {
+            this.highlights.push(this.props.query);
         }
 
         let content = this.fixPrismSyntaxHighlighting(this.props.source);
@@ -537,11 +535,9 @@ class Markdown extends PureComponent<MarkdownProps, MarkdownState> {
         let match;
         do {
             match = re.exec(content);
-            if (match && match.length === 3) {
-                if (match[1] === "map") {
-                    this.objects.push(JSON.parse(match[2]));
-                    matches.push({ type: match[1], content: match[0] });
-                }
+            if (match && match.length === 3 && match[1] === "map") {
+                this.objects.push(JSON.parse(match[2]));
+                matches.push({ type: match[1], content: match[0] });
             }
         } while (match);
 
@@ -567,7 +563,8 @@ class Markdown extends PureComponent<MarkdownProps, MarkdownState> {
                         }}
                     />
                 ));
-                return (<Tabs headers={headers} contents={content} />);
+                const source = this.tabContainers[index].map(tc => tc.content);
+                return (<Tabs headers={headers} contents={content} source={source} />);
             }
         } else if (props.value.startsWith("<project-topics")) {
             const re = /<project-topics index="(.*)">/;
@@ -800,12 +797,10 @@ class Markdown extends PureComponent<MarkdownProps, MarkdownState> {
         // eslint-disable-next-line no-script-url
         if (localProps.href.startsWith("javascript:void(0)")) {
             if (typeof (localProps.children) !== "string" &&
-                localProps.children && localProps.children.length > 0) {
-                if (localProps.children[0].props?.value) {
-                    localProps.href = localProps.children[0].props.value;
-                    localProps.target = "_blank";
-                    localProps.rel = "noopener noreferrer";
-                }
+                localProps.children && localProps.children.length > 0 && localProps.children[0].props?.value) {
+                localProps.href = localProps.children[0].props.value;
+                localProps.target = "_blank";
+                localProps.rel = "noopener noreferrer";
             }
         } else if (localProps.href.startsWith("http") || localProps.href.startsWith("iota")) {
             localProps.target = "_blank";
@@ -884,13 +879,13 @@ class Markdown extends PureComponent<MarkdownProps, MarkdownState> {
     }
 
     private textRenderer(props: { value: string; children: ReactElement[] }): ReactElement {
-        if (props.value) {
-            props.value = this.emojify(props.value);
+        const localProps = { value: props.value, children: props.children };
+        if (localProps.value) {
+            localProps.value = this.emojify(localProps.value);
+        } else if (localProps.children) {
+            localProps.children = localProps.children.map(c => this.textRenderer(c.props));
         }
-        if (props.children) {
-            props.children = props.children.map(c => this.textRenderer(c.props));
-        }
-        return React.createElement("span", this.getCoreProps(props), props.children);
+        return React.createElement("span", this.getCoreProps(localProps), localProps.children);
     }
 
     private emojify(item: string): string {

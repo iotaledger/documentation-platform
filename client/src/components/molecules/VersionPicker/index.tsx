@@ -14,11 +14,11 @@ class VersionPicker extends React.Component<VersionPickerProps> {
                         <div className="middle-column">
                             <div className={classNames(
                                 "version-picker__current",
-                                { "version-picker__not-current": currentVersion !== versions[versions.length - 1] }
+                                { "version-picker__not-current": currentVersion !== versions[0] }
                             )}
                             >
                                 {
-                                    `${currentVersion === versions[versions.length - 1]
+                                    `${currentVersion === versions[0]
                                         ? "You are viewing the latest version of this documentation"
                                         : "There are newer versions of this documentation available"}`
                                 }

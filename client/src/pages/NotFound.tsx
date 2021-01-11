@@ -4,12 +4,12 @@ import { Head, withRouteData, withSiteData } from "react-static";
 import ParallaxContainer from "../components/atoms/ParallaxContainer";
 import SideMenu from "../components/molecules/SideMenu";
 import StickyHeader from "../components/organisms/StickyHeader";
+import Container from "../pagesPropsState/Container";
+import { NotFoundProps } from "../pagesPropsState/NotFoundProps";
+import { NotFoundState } from "../pagesPropsState/NotFoundState";
 import { submitMissing } from "../utils/api";
 import { localStorageGet } from "../utils/localStorage";
-import Container from "./Container";
 import "./notFound.css";
-import { NotFoundProps } from "./NotFoundProps";
-import { NotFoundState } from "./NotFoundState";
 
 class NotFound extends React.PureComponent<NotFoundProps, NotFoundState> {
     constructor(props: NotFoundProps) {

@@ -1,5 +1,7 @@
 /**
- * @param text
+ * Copy the text to the clipboard.
+ * @param text The text to copy.
+ * @returns True if the copy was successful.
  */
 export function copyToClipboard(text: string): boolean {
     try {

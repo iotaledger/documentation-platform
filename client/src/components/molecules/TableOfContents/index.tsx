@@ -144,7 +144,7 @@ class TableOfContents extends React.PureComponent<TableOfContentsProps, TableOfC
             // eslint-disable-next-line no-console
             console.error(`Unable to find TOC link '${href}' in content`);
         } else {
-            scrollIntoView(target, () => {
+            scrollIntoView(target as HTMLElement, () => {
                 this.props.history.push(
                     `${this.props.history.location.pathname
                     }${this.props.history.location.search}${href === "#root" ? "" : href}`);

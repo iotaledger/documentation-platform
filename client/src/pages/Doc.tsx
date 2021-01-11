@@ -13,13 +13,13 @@ import TreeMenu from "../components/molecules/TreeMenu";
 import VersionPicker from "../components/molecules/VersionPicker";
 import Markdown from "../components/organisms/Markdown";
 import StickyHeader from "../components/organisms/StickyHeader";
+import Container from "../pagesPropsState/Container";
+import { DocProps } from "../pagesPropsState/DocProps";
+import { DocState } from "../pagesPropsState/DocState";
 import { submitFeedback } from "../utils/api";
 import { localStorageSet } from "../utils/localStorage";
 import { createPageTableOfContents, createProjectLinks, getDocumentTagsAndDescription, getProjectTitle, getProjectVersionPagesUrl, getVersionsUrl, parseProjectUrl, replaceVersion } from "../utils/projects";
 import { extractHighlights, extractSearchQuery } from "../utils/search";
-import Container from "./Container";
-import { DocProps } from "./DocProps";
-import { DocState } from "./DocState";
 
 class Doc extends React.Component<DocProps, DocState> {
     constructor(props: DocProps) {

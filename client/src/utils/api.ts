@@ -1,8 +1,16 @@
 import { ISearchResult } from "../models/ISearchResult";
 
+/**
+ * Send a request to the api.
+ * @param apiEndpoint The api endpoint.
+ * @param route The route in the api.
+ * @param method The method.
+ * @param data The data to send.
+ * @returns The response.
+ */
 async function sendRequest<T>(
-    apiEndpoint: string, endpoint: string, method: string, data?: unknown): Promise<T | undefined> {
-    const response = await fetch(`${apiEndpoint}/${endpoint}`, {
+    apiEndpoint: string, route: string, method: string, data?: unknown): Promise<T | undefined> {
+    const response = await fetch(`${apiEndpoint}/${route}`, {
         method,
         headers: {
             "Content-Type": "application/json"
@@ -16,6 +24,15 @@ async function sendRequest<T>(
     }
 }
 
+/**
+ * Submit feedback to the api.
+ * @param apiEndpoint The api endpoint.
+ * @param document The document to reference.
+ * @param data The data to send.
+ * @param data.wasItUseful Was the information useful.
+ * @param data.comments The comment in the data.
+ * @returns The response.
+ */
 export async function submitFeedback(
     apiEndpoint: string,
     document: string,
@@ -34,6 +51,13 @@ export async function submitFeedback(
     }
 }
 
+/**
+ * Submit missing page data.
+ * @param apiEndpoint The api endpoint.
+ * @param document The document to reference.
+ * @param fromDocument The document the page was referenced from.
+ * @returns The response.
+ */
 export async function submitMissing(
     apiEndpoint: string,
     document: string,
@@ -52,6 +76,12 @@ export async function submitMissing(
     }
 }
 
+/**
+ * Submit an email for subscription.
+ * @param apiEndpoint The api endpoint.
+ * @param email The email address to subscribe.
+ * @returns The response.
+ */
 export async function submitEmail(
     apiEndpoint: string,
     email: string): Promise<{ success: boolean; message: string }> {
@@ -69,6 +99,12 @@ export async function submitEmail(
     }
 }
 
+/**
+ * Perform a search.
+ * @param apiEndpoint The api endpoint.
+ * @param query The quest to search for.
+ * @returns The response.
+ */
 export async function search(
     apiEndpoint: string,
     query: string): Promise<{ success: boolean; message: string; items?: ISearchResult[] }> {

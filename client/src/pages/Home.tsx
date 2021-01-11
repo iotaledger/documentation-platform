@@ -10,12 +10,12 @@ import CardContainer from "../components/molecules/HomePageCard";
 import ProjectTopicsContainer from "../components/molecules/ProjectTopicsContainer";
 import SideMenu from "../components/molecules/SideMenu";
 import Header from "../components/organisms/Header";
+import Container from "../pagesPropsState/Container";
+import { HomeProps } from "../pagesPropsState/HomeProps";
+import { HomeState } from "../pagesPropsState/HomeState";
 import { submitFeedback } from "../utils/api";
 import { localStorageSet } from "../utils/localStorage";
 import { createProjectLinks, createProjectTopics } from "../utils/projects";
-import Container from "./Container";
-import { HomeProps } from "./HomeProps";
-import { HomeState } from "./HomeState";
 
 class Home extends React.Component<HomeProps, HomeState> {
     constructor(props: HomeProps) {

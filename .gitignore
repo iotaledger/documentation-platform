@@ -1,7 +1,7 @@
 # dependencies
 node_modules
 .history
-
+distribution
 # misc
 .DS_Store
 .env.local

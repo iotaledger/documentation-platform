@@ -1434,6 +1434,9 @@ module.exports = {
         "unicorn/error-message": [
             "error"
         ],
+        "unicorn/empty-brace-spaces": [
+            "off"
+        ],
         "unicorn/escape-case": [
             "error"
         ],

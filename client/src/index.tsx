@@ -8,37 +8,33 @@ import App from "./App";
 // Export your top level component as JSX (for static rendering)
 export default App;
 
-// // Render your app
-// if (typeof document !== "undefined") {
-//   const target = document.querySelector("#root");
+// Render your app
+if (typeof document !== "undefined") {
+  const target = document.querySelector("#root");
 
-//   const renderMethod = target.hasChildNodes()
-//     ? ReactDOM.hydrate
-//     : ReactDOM.render;
+  const renderMethod = target.hasChildNodes()
+    ? ReactDOM.hydrate
+    : ReactDOM.render;
 
-//   const render = Comp => {
-//     renderMethod(
-//         <AppContainer>
-//             <Comp />
-//         </AppContainer>,
-//       target
-//     );
-//   };
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  const render = (Comp: Function): void => {
+    renderMethod(
+        <AppContainer>
+            <Comp />
+        </AppContainer>,
+      target
+    );
+  };
 
-//   // Render!
-//   render(App);
+  // Render!
+  render(App);
 
-//   // Hot Module Replacement
-//   if (module?.hot) {
-//     module.hot.accept("./App", () => {
-//       render(App);
-//     });
-//   }
-// }
-
-ReactDOM.render(
-    <AppContainer>
-        <App />
-    </AppContainer>,
-  document.querySelector("#root")
-);
+  // Hot Module Replacement
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const mod = module as any;
+  if (mod?.hot) {
+    mod.hot.accept("./App", () => {
+      render(App);
+    });
+  }
+}

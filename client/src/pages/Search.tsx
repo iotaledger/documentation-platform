@@ -8,12 +8,12 @@ import Pagination from "../components/molecules/Pagination";
 import SearchResult from "../components/molecules/SearchResult";
 import SideMenu from "../components/molecules/SideMenu";
 import StickyHeader from "../components/organisms/StickyHeader";
+import Container from "../pagesPropsState/Container";
+import { SearchProps } from "../pagesPropsState/SearchProps";
+import { SearchState } from "../pagesPropsState/SearchState";
 import { search as searchApi, submitFeedback } from "../utils/api";
 import { localStorageSet } from "../utils/localStorage";
 import { constructSearchQuery, extractSearchQuery } from "../utils/search";
-import Container from "./Container";
-import { SearchProps } from "./SearchProps";
-import { SearchState } from "./SearchState";
 
 class Search extends React.Component<SearchProps, SearchState> {
     constructor(props: SearchProps) {

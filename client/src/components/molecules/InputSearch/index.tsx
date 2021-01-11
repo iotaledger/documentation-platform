@@ -39,10 +39,8 @@ class InputSearch extends React.Component<InputSearchProps, InputSearchState> {
         if (this.props.onKeyUp) {
             this.props.onKeyUp(e);
         }
-        if (e.key === "Enter") {
-            if (this.props.onSearch) {
-                this.props.onSearch(this.state.query);
-            }
+        if (e.key === "Enter" && this.props.onSearch) {
+            this.props.onSearch(this.state.query);
         }
     }
 }

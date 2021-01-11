@@ -8,6 +8,11 @@ import { ITableOfContentsItem } from "../models/ITableOfContentsItem";
 import { ITreeMenuEntry } from "../models/ITreeMenuEntry";
 import { sanitizeHashId } from "./paths";
 
+/**
+ * Parse the url into its parts.
+ * @param projectFullURL The full url.
+ * @returns The parts.
+ */
 export function parseProjectUrl(projectFullURL: string): IProjectUrl {
     // /docs/hub/2.0/something/something/something
 
@@ -27,11 +32,22 @@ export function parseProjectUrl(projectFullURL: string): IProjectUrl {
     };
 }
 
+/**
+ * Combine the parts of a project url.
+ * @param projectParts The project parts to combine.
+ * @returns The combined url.
+ */
 export function combineProjectUrl(projectParts: IProjectUrl): string {
     // /docs/hub/2.0/something/something/something
     return `/docs/${projectParts.projectFolder}/${projectParts.projectVersion}/${projectParts.projectDoc}`;
 }
 
+/**
+ * Create the table of contents for a project.
+ * @param projectUrlParts The project url parts.
+ * @param projects The projects.
+ * @returns The table of contents items.
+ */
 export function createPageTableOfContents(projectUrlParts: IProjectUrl, projects: IProject[]): ITableOfContentsItem[] {
     const project = lookupProject(projectUrlParts, projects);
 
@@ -55,6 +71,11 @@ export function createPageTableOfContents(projectUrlParts: IProjectUrl, projects
     return toc;
 }
 
+/**
+ * Create all the links for the projects.
+ * @param projects The projects to create the links for.
+ * @returns The project links.
+ */
 export function createProjectLinks(projects: IProject[]): IProjectLink[] {
     const menuEntries = [];
 
@@ -76,6 +97,11 @@ export function createProjectLinks(projects: IProject[]): IProjectLink[] {
     return menuEntries;
 }
 
+/**
+ * Create the project topics.
+ * @param projects The project to create the topics for.
+ * @returns The project topics.
+ */
 export function createProjectTopics(projects: IProject[]): ({ name: string } & IProjectHome)[] {
     const projectTopics: ({ name: string } & IProjectHome)[] = [];
 
@@ -91,7 +117,13 @@ export function createProjectTopics(projects: IProject[]): ({ name: string } & I
     return projectTopics;
 }
 
-export function createSideMenuEntries(projects: IProject[], projectFullURL: string): ISideMenuEntry[] {
+/**
+ * Create the entries for the side menu.
+ * @param projects The project to create the side menu for.
+ * @param currentFullURL The current project url to highlighte.
+ * @returns The side menu entries.
+ */
+export function createSideMenuEntries(projects: IProject[], currentFullURL: string): ISideMenuEntry[] {
     const menuEntries: ISideMenuEntry[] = [];
 
     for (let i = 0; i < projects.length; i++) {
@@ -100,12 +132,12 @@ export function createSideMenuEntries(projects: IProject[], projectFullURL: stri
             if (latestVersion) {
                 const projectVersionPages = getProjectVersionPages(projects[i], latestVersion);
                 if (projectVersionPages) {
-                    const isChildActive = getPage(projectVersionPages, projectFullURL) !== undefined;
+                    const isChildActive = getPage(projectVersionPages, currentFullURL) !== undefined;
                     menuEntries.push({
                         name: projects[i].name,
                         expanded: isChildActive,
                         selected: isChildActive,
-                        items: buildItemTree(projectVersionPages, projectFullURL)
+                        items: buildItemTree(projectVersionPages, currentFullURL)
                     });
                 }
             }
@@ -114,8 +146,14 @@ export function createSideMenuEntries(projects: IProject[], projectFullURL: stri
     return menuEntries;
 }
 
+/**
+ * Build the tree for navigation.
+ * @param projectVersionPages The version page to create.
+ * @param currentFullURL The current url to highlight.
+ * @returns The tree menu entries.
+ */
 export function buildItemTree(
-    projectVersionPages: IProjectVersionPage[], projectFullURL: string): ITreeMenuEntry[] {
+    projectVersionPages: IProjectVersionPage[], currentFullURL: string): ITreeMenuEntry[] {
     if (!projectVersionPages) {
         return [];
     }
@@ -131,7 +169,7 @@ export function buildItemTree(
                 type: "section-link",
                 link: projectVersionPages[i].link,
                 name: projectVersionPages[i].name,
-                selected: projectVersionPages[i].link === projectFullURL
+                selected: projectVersionPages[i].link === currentFullURL
             });
             inSection = undefined;
             inSectionSub = undefined;
@@ -147,7 +185,7 @@ export function buildItemTree(
                 tree.push(inSection);
                 inSectionSub = undefined;
             }
-            if (projectVersionPages[i].link === projectFullURL) {
+            if (projectVersionPages[i].link === currentFullURL) {
                 inSection.selected = true;
             }
 
@@ -156,7 +194,7 @@ export function buildItemTree(
                     type: "section-header-item",
                     name: nameParts.slice(1).join("/"),
                     link: projectVersionPages[i].link,
-                    selected: projectVersionPages[i].link === projectFullURL
+                    selected: projectVersionPages[i].link === currentFullURL
                 });
             } else {
                 const currentSectionSub = inSectionSub ? inSectionSub.name : "";
@@ -169,13 +207,13 @@ export function buildItemTree(
                     };
                     inSection.items.push(inSectionSub);
                 }
-                if (projectVersionPages[i].link === projectFullURL) {
+                if (projectVersionPages[i].link === currentFullURL) {
                     inSectionSub.selected = true;
                 }
                 inSectionSub.items.push({
                     name: nameParts.slice(2).join("/"),
                     link: projectVersionPages[i].link,
-                    selected: projectVersionPages[i].link === projectFullURL
+                    selected: projectVersionPages[i].link === currentFullURL
                 });
             }
         }
@@ -184,39 +222,66 @@ export function buildItemTree(
     return tree;
 }
 
-export function lookupProject(projectUrlParts: IProjectUrl, projects: IProject[]): IProject {
+/**
+ * Find a project using its folder.
+ * @param projectUrlParts The url parts.
+ * @param projects The project to lookup in.
+ * @returns The found project.
+ */
+export function lookupProject(projectUrlParts: IProjectUrl, projects: IProject[]): IProject | undefined {
     return projects.find(p => p.folder === projectUrlParts.projectFolder);
 }
 
+/**
+ * Get the version urls for the project.
+ * @param projectUrlParts The url parts.
+ * @param projects All the projects.
+ * @returns The version with the newest version first.
+ */
 export function getVersionsUrl(projectUrlParts: IProjectUrl, projects: IProject[]): string[] {
     const project = lookupProject(projectUrlParts, projects);
     return project?.versions ? project.versions.map(pv => pv.version).reverse() : [];
 }
 
+/**
+ * Gt the most recent version of the project.
+ * @param project The project data.
+ * @returns The most recent version.
+ */
 export function getLatestVersion(project: IProject): string {
     return project?.versions && project.versions.length > 0
         ? project.versions[project.versions.length - 1].version
         : "";
 }
 
+/**
+ * The the title of the project.
+ * @param projectUrlParts The project url parts.
+ * @param projects The projects.
+ * @returns The title of the project.
+ */
 export function getProjectTitle(projectUrlParts: IProjectUrl, projects: IProject[]): string {
     const project = lookupProject(projectUrlParts, projects);
 
     return project ? project.name : projectUrlParts.projectFolder;
 }
 
+/**
+ * Get the title of the document.
+ * @param projectUrlParts The project url parts.
+ * @param projects The projects.
+ * @returns The title of the document.
+ */
 export function getDocumentTitle(projectUrlParts: IProjectUrl, projects: IProject[]): string {
     const project = lookupProject(projectUrlParts, projects);
 
     const projectVersionPages = getProjectVersionPages(project, projectUrlParts.projectVersion);
     const indexItem = getPage(projectVersionPages, projectUrlParts.projectFullURL);
     let docTitle;
-    if (indexItem) {
-        if (indexItem.toc) {
-            const h1 = indexItem.toc.find(docHeader => docHeader.level === 1);
-            if (h1) {
-                docTitle = h1.name;
-            }
+    if (indexItem?.toc) {
+        const h1 = indexItem.toc.find(docHeader => docHeader.level === 1);
+        if (h1) {
+            docTitle = h1.name;
         }
     }
     if (!docTitle) {
@@ -225,6 +290,12 @@ export function getDocumentTitle(projectUrlParts: IProjectUrl, projects: IProjec
     return docTitle;
 }
 
+/**
+ * Get the tags and description for the project.
+ * @param projectUrlParts The project url parts.
+ * @param projects The project.
+ * @returns The tags and description.
+ */
 export function getDocumentTagsAndDescription(projectUrlParts: IProjectUrl, projects: IProject[]): {
     tags: string[];
     description: string;
@@ -249,11 +320,24 @@ export function getDocumentTagsAndDescription(projectUrlParts: IProjectUrl, proj
     };
 }
 
+/**
+ * Get the version pages url.
+ * @param projectPartsUrlPart The project url parts.
+ * @param projectVersion The project version.
+ * @param projects The projects.
+ * @returns The project versions page url.
+ */
 export function getProjectVersionPagesUrl(
     projectPartsUrlPart: IProjectUrl, projectVersion: string, projects: IProject[]): IProjectVersionPage[] | undefined {
     return getProjectVersionPages(lookupProject(projectPartsUrlPart, projects), projectVersion);
 }
 
+/**
+ * Get the project versions.
+ * @param project The project.
+ * @param projectVersion The project version.
+ * @returns The page for the project version.
+ */
 export function getProjectVersionPages(project: IProject, projectVersion: string): IProjectVersionPage[] | undefined {
     if (project?.versions) {
         const version = project.versions.find(pv => pv.version === projectVersion);
@@ -264,10 +348,23 @@ export function getProjectVersionPages(project: IProject, projectVersion: string
     }
 }
 
+/**
+ * Get the page.
+ * @param versionPages The version pages.
+ * @param itemUrl The item url.
+ * @returns The page for the versioned content.
+ */
 export function getPage(versionPages: IProjectVersionPage[], itemUrl: string): IProjectVersionPage | undefined {
     return versionPages ? versionPages.find(indexItem => indexItem.link === itemUrl) : undefined;
 }
 
+/**
+ * Replace the version in the current peoject url.
+ * @param projectUrlParts The project url parts.
+ * @param newVersion The new version.
+ * @param projects The projects.
+ * @returns The url with the version replaced.
+ */
 export function replaceVersion(projectUrlParts: IProjectUrl, newVersion: string, projects: IProject[]): string {
     const project = lookupProject(projectUrlParts, projects);
 
@@ -285,6 +382,12 @@ export function replaceVersion(projectUrlParts: IProjectUrl, newVersion: string,
     }
 }
 
+/**
+ * Get the next page url.
+ * @param projectUrlParts The project url parts.
+ * @param projects The projects.
+ * @returns The next page details.
+ */
 export function getNextPage(projectUrlParts: IProjectUrl, projects: IProject[]): IProjectVersionPage {
     let nextPage;
     const project = lookupProject(projectUrlParts, projects);
@@ -323,6 +426,12 @@ export function getNextPage(projectUrlParts: IProjectUrl, projects: IProject[]):
     return nextPage;
 }
 
+/**
+ * Get the previous page url.
+ * @param projectUrlParts The project url parts.
+ * @param projects The projects.
+ * @returns The previous page details.
+ */
 export function getPreviousPage(projectUrlParts: IProjectUrl, projects: IProject[]): IProjectVersionPage {
     let prevPage;
     const project = lookupProject(projectUrlParts, projects);

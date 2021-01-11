@@ -17,6 +17,7 @@ if (homeData.cards) {
 }
 
 export default {
+    entry: path.join(__dirname, 'src', 'index.tsx'),
     siteRoot: config.siteRoot,
     getSiteData: async () => ({
         projects,
@@ -27,11 +28,11 @@ export default {
     getRoutes: () => [
         {
             path: '/',
-            template: 'src/containers/Home'
+            template: 'src/pages/Home'
         },
         ...getDocPages().map(page => ({
             path: page.path,
-            template: 'src/containers/Doc',
+            template: 'src/pages/Doc',
             getData: async () => ({
                 markdown: processMarkdown(page.markdownSrc),
                 title: page.title
@@ -44,15 +45,21 @@ export default {
         })),
         {
             path: '/search',
-            template: 'src/containers/Search'
+            template: 'src/pages/Search'
         },
         {
             path: '/404',
-            template: 'src/containers/NotFound'
+            template: 'src/pages/NotFound'
         }
     ],
     plugins: [
         'react-static-plugin-typescript',
+        [
+            require.resolve('react-static-plugin-source-filesystem'),
+            {
+              location: path.resolve('./src/pages'),
+            }
+          ],
         'react-static-plugin-sitemap',
         'react-static-plugin-react-router'
     ],

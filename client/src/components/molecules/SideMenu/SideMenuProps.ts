@@ -3,6 +3,6 @@ import { IProject } from "../../../models/IProject";
 export interface SideMenuProps {
     projects: IProject[];
     isMenuOpen: boolean;
-    highlightedItem: string;
+    highlightedItem?: string;
     onCloseClick: () => void;
 }

@@ -1,24 +1,17 @@
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import React from 'react';
+import classNames from "classnames";
+import React, { ReactNode } from "react";
+import { FeedbackOverlayProps } from "./FeedbackOverlayProps";
 
-class FeedbackOverlay extends React.Component {
-    static propTypes = {
-        isExpanded: PropTypes.bool,
-        children: PropTypes.oneOfType([
-            PropTypes.arrayOf(PropTypes.node),
-            PropTypes.node
-        ])
-    };
-
-    render() {
+class FeedbackOverlay extends React.Component<FeedbackOverlayProps> {
+    public render(): ReactNode {
         return (
             <div className={
                 classNames(
-                    'feedback-overlay',
-                    { 'feedback-overlay--expanded': this.props.isExpanded }
+                    "feedback-overlay",
+                    { "feedback-overlay--expanded": this.props.isExpanded }
                 )
-            }>
+            }
+            >
                 {this.props.children}
             </div>
         );
