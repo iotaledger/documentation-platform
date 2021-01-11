@@ -33,7 +33,7 @@ class VersionPicker extends React.Component {
                             className="version-picker__select"
                             value={currentVersion}
                             onChange={(e) => this.props.onChange(e.target.value)}>
-                            {versions.map((version, indx) => (<option key={indx} value={version} >Version {version}</option>))}
+                            {versions.reverse().map((version, indx) => (<option key={indx} value={version} >Version {version}</option>))}
                         </select>
                     </div>
                 </div>
