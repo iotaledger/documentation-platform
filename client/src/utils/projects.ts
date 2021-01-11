@@ -240,7 +240,7 @@ export function lookupProject(projectUrlParts: IProjectUrl, projects: IProject[]
  */
 export function getVersionsUrl(projectUrlParts: IProjectUrl, projects: IProject[]): string[] {
     const project = lookupProject(projectUrlParts, projects);
-    return project?.versions ? project.versions.map(pv => pv.version).reverse() : [];
+    return project?.versions ? project.versions.map(pv => pv.version) : [];
 }
 
 /**
