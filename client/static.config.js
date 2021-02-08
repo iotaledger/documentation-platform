@@ -30,6 +30,14 @@ export default {
             path: '/',
             template: 'src/pages/Home'
         },
+        {
+            path: '/search',
+            template: 'src/pages/Search'
+        },
+        {
+            path: '/404',
+            template: 'src/pages/NotFound'
+        },
         ...getDocPages().map(page => ({
             path: page.path,
             template: 'src/pages/Doc',
@@ -42,24 +50,10 @@ export default {
             path: `/${page.folder}`,
             noindex: true,
             redirect: page.root
-        })),
-        {
-            path: '/search',
-            template: 'src/pages/Search'
-        },
-        {
-            path: '/404',
-            template: 'src/pages/NotFound'
-        }
+        }))
     ],
     plugins: [
         'react-static-plugin-typescript',
-        [
-            require.resolve('react-static-plugin-source-filesystem'),
-            {
-              location: path.resolve('./src/pages'),
-            }
-          ],
         'react-static-plugin-sitemap',
         'react-static-plugin-react-router'
     ],
