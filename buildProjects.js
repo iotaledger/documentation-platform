@@ -469,7 +469,7 @@ async function markdownLinks(markdown, docPath) {
 
         if (match && match.length === 3) {
             if (isRemote(match[2])) {
-                if (match[2].indexOf('docs.iota.org') >= 0) {
+                if (/https?:\/\/docs\.iota\.org/.test(match[2])) {
                     await reportError(`You should not use absolute paths for docs content: '${match[2]}' in '${docPath}'`);
                 } else {
                     const response = await checkRemote(match[2]);
