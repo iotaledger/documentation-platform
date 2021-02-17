@@ -54,4 +54,5 @@ jobs:
         run: |
           npx vercel --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_SCOPE }} --force -m githubCommitSha=${{ github.sha }} --build-env CONFIG_ID=$CONFIG_ID --build-env SEARCH_ENDPOINT=$CONFIG_SEARCH_ENDPOINT --build-env SEARCH_CORE=$CONFIG_SEARCH_CORE --build-env SEARCH_AUTHORIZATION=$CONFIG_SEARCH_AUTHORIZATION
           VERCEL_DEPLOYMENT_URL=$(npx vercel ls --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_SCOPE }} -m githubCommitSha=${{ github.sha }} | grep $VERCEL_PROJECT_NAME | awk {'print $2'})
+          npx vercel logs --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_SCOPE }} $VERCEL_DEPLOYMENT_URL
           npx vercel alias --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_SCOPE }} $VERCEL_DEPLOYMENT_URL $VERCEL_DOMAIN
