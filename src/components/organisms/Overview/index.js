@@ -20,7 +20,7 @@ class Overview extends React.Component {
             },
             {
                 name: "Identity",
-                link: "http://identity.docs.iots.org/",
+                link: "http://identity.docs.iota.org/",
                 description: ""
             },
             {
@@ -94,7 +94,7 @@ class Overview extends React.Component {
     render() {
         return (
             <div className="overview">
-                <h2 className="heading project_heading">Overview</h2>
+                <h2 className="heading project_heading">Quicklinks</h2>
                 <div className="overview__wrapper">
                 {
                     this.state.realProjects.map((c, idx) =>
