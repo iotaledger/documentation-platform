@@ -2,3 +2,28 @@
   min-height: 100vh;
 }
 
+.overview {
+  color: #000;
+}
+.overview__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+.overview__item {
+  flex: 1 0 21%;
+  max-width: 25%;
+  width: auto;
+  padding: 20px 16px;
+  border-radius: 0.5rem;
+  display: flex;
+  align-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  text-decoration: none;
+  font-size: 0.875rem;
+  color: rgb(72, 87, 118);
+  font-weight: bold;
+  box-sizing: border-box;
+}

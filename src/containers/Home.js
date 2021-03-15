@@ -12,6 +12,7 @@ import CardContainer from '../components/molecules/HomePageCard';
 import ProjectTopicsContainer from '../components/molecules/ProjectTopicsContainer';
 import SideMenu from '../components/molecules/SideMenu';
 import Header from '../components/organisms/Header';
+import Overview from '../components/organisms/Overview';
 import { submitFeedback } from '../utils/api';
 import HomeDataPropTypes from '../utils/homeDataPropTypes';
 import { localStorageSet } from '../utils/localStorage';
@@ -78,6 +79,11 @@ class Home extends React.Component {
                     projects={this.props.projects}
                     onCloseClick={this.handleBurgerClick}
                     highlightedItem={this.state.projectFullURL} />
+                <div className="layouts--1-column">
+                    <Overview 
+                        projects={this.props.projects}
+                />
+                </div>
                 <div id='image-background' style={{ background: '#f3f2f1', width: '100%', height: '0px', position: 'absolute' }} />
                 <div className="layouts--2-column">
                     <div className="left-column">
