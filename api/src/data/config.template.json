@@ -12,6 +12,6 @@
     },
     "adminKey": "ADMIN-KEY",
     "allowedDomains": [
-        "ALLOWED-DOMAIN"
+        ALLOWED-DOMAIN
     ]
 }
