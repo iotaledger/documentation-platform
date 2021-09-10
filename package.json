@@ -51,7 +51,7 @@
         "emoji-unicode": "^2.0.1",
         "eslint": "^7.20.0",
         "eslint-config-react-tools": "1.x.x",
-        "eslint-plugin-react": "^7.22.0",
+        "eslint-plugin-react": "^7.24.0",
         "mkdirp": "^1.0.4",
         "node-emoji": "^1.10.0",
         "node-fetch": "^2.6.1",
