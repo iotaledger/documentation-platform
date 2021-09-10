@@ -50,7 +50,7 @@
         "emoji-regex": "^9.2.1",
         "emoji-unicode": "^2.0.1",
         "eslint": "^7.20.0",
-        "eslint-config-react-tools": "1.x.x",
+        "eslint-config-react-tools": "1.2.5",
         "eslint-plugin-react": "^7.22.0",
         "mkdirp": "^1.0.4",
         "node-emoji": "^1.10.0",
