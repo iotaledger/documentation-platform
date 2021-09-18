@@ -29,7 +29,7 @@
         "iota-css-theme": "github:iotaledger/iota-css-theme",
         "moment": "^2.29.1",
         "parallax-js": "^3.1.0",
-        "prismjs": "^1.23.0",
+        "prismjs": "^1.25.0",
         "react": "^17.0.1",
         "react-click-outside": "^3.0.1",
         "react-dom": "^17.0.1",
